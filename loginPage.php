@@ -14,18 +14,12 @@
     <main>
         <form action="login.php" method="POST">
             <label for="username">Username</label>
-            <input type="email" name="email" id="email" required>
-
-            <br>
+            <input type="email" name="email" id="email" required><br>
 
             <label for="password">Password</label>
-            <input type="password" name="password" id="password" required>
+            <input type="password" name="password" id="password" required><br>
 
-            <br>
-
-            <input type="submit" value="ACCEDI">
-
-            <br><br>
+            <input type="submit" value="ACCEDI"><br><br>
         </form>
     </main>
 

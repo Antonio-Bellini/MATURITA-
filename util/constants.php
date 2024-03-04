@@ -1,4 +1,3 @@
 <?php
-    define("DB_NAME", "testMatura");
-
+    define("DB_NAME", "my_esercizibellini");
 ?>

@@ -73,4 +73,20 @@
     function check_password($dbPassword, $password) {
         return hash('sha256', $password) === $dbPassword;
     }
+
+    // FUNZIONE per DARE il BENVENUTO SCRIVENDO il NOME
+    function welcome($email) {
+        $connection = connectToDatabase(DB_NAME);
+
+        $query = "SELECT nome
+                    FROM utenti u
+                    INNER JOIN username_password up ON u.id = up.id_utente
+                    WHERE up.username = '$email';";
+        $result = dbQuery($connection, $query);
+
+        if ($result) {
+            while ($row = ($result->fetch_assoc()))
+                echo "<h2>Benvenuto " . $row["nome"] . "</h2>";
+        }
+    }
 ?>
