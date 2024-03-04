@@ -1,5 +1,5 @@
 <?php 
-    // funzione per connettersi al database
+    // FUNZIONE per CONNETTERSI al DATABASE
     function connectToDatabase($dbName) {
         $hostName = "localhost";
         $username = "root";
