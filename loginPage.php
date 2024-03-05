@@ -14,7 +14,7 @@
     <main>
         <form action="login.php" method="POST">
             <label for="username">Username</label>
-            <input type="email" name="email" id="email" required><br>
+            <input type="text" name="email" id="email" required><br>
 
             <label for="password">Password</label>
             <input type="password" name="password" id="password" required><br>
@@ -22,11 +22,5 @@
             <input type="submit" value="ACCEDI"><br><br>
         </form>
     </main>
-
-    <!-- SEZIONE per REGISTRARSI se NON ANCORA REGISTRATI -->
-    <section>
-        <label for="registrati">Non sei ancora registrato?</label>
-        <button><a href="registerPage.php">Registrati ora</a></button>
-    </section>
 </body>
 </html>
