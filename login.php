@@ -24,8 +24,7 @@
             $result = dbQuery($connection, $query);
 
             if ($result) {
-                $password_enc = $password;
-                //$password_enc = HASH("sha256", $password);
+                $password_enc = HASH("sha256", $password);
                 
                 while ($row = ($result->fetch_assoc())) {
                     if ($row["password"] === $password_enc) {
@@ -33,29 +32,32 @@
 
                         welcome($username);
 
-                        $query = "SELECT u.numero_accessi, 
-                                        p.tipo_profilo, 
-                                        p.tipo_funzione, 
-                                        p.tipo_operazione,
-                                        tp.tipo, 
-                                        tf.tipo
-                                    FROM utenti u
-                                    INNER JOIN profili p ON p.id = u.id_profilo
-                                    INNER JOIN tipi_profilo tp ON p.tipo_profilo = tp.id
-                                    INNER JOIN tipi_funzione tf ON p.tipo_funzione = tf.id
-                                    WHERE u.username = '$username';";
-                        $result = dbQuery($connection, $query);
+                        $query = "SELECT u.numero_accessi AS accessi_utente,
+                                            tp.tipo AS tipo_profilo,
+                                            tf.tipo AS tipo_funzione,
+                                            p.tipo_operazione AS operazione_permessa
+                                    FROM utenti u 
+                                    INNER JOIN profili p ON u.id_profilo = p.id
+                                    INNER JOIN tipi_profilo tp ON tp.id = p.tipo_profilo
+                                    INNER JOIN tipi_funzione tf ON tf.id = p.tipo_funzione
+                                    WHERE username = '$username';";
+                                    $result = dbQuery($connection, $query);
 
                         if ($result) {
-                            createTable($result);
                             while ($row = ($result->fetch_assoc())) {
-                                
+                                $numero_accessi = $row["accessi_utente"];
+                                $tipo_profilo = $row["tipo_profilo"];
+                                $tipo_funzione = $row["tipo_funzione"];
+                                $operazione_permessa = $row["operazione_permessa"];
+
+                                echo $numero_accessi . ", " . $tipo_profilo . ", " . $tipo_funzione . ", " . $operazione_permessa;
                             }
-                        } else {
-                            echo "errore";
+                        } {
+                    
                         }
                     } else {
-                        echo "password errata";
+                        echo "La password é errata, stai per essere reindirizzato..."
+                        header("Refresh: 3; url: loginPage.php");
                     }
                 }
             } else
