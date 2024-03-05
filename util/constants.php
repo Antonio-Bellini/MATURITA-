@@ -1,3 +1,3 @@
 <?php
-    define("DB_NAME", "my_esercizibellini");
+    define("DB_NAME", "associazione_zerotre");
 ?>
