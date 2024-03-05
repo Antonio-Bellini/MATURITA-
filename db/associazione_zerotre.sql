@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Mar 05, 2024 alle 18:59
+-- Creato il: Mar 05, 2024 alle 20:07
 -- Versione del server: 10.4.28-MariaDB
 -- Versione PHP: 8.2.4
 
@@ -122,6 +122,16 @@ CREATE TABLE `tipi_evento` (
   `tipo` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dump dei dati per la tabella `tipi_evento`
+--
+
+INSERT INTO `tipi_evento` (`id`, `tipo`) VALUES
+(1, 'Piscina'),
+(2, 'Montagna'),
+(3, 'Mare'),
+(4, 'Sedute fisioterapiche');
+
 -- --------------------------------------------------------
 
 --
@@ -133,6 +143,16 @@ CREATE TABLE `tipi_funzione` (
   `tipo` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dump dei dati per la tabella `tipi_funzione`
+--
+
+INSERT INTO `tipi_funzione` (`id`, `tipo`) VALUES
+(1, 'gestione DB'),
+(2, 'bacheca'),
+(3, 'newsletter'),
+(4, 'anamnesi');
+
 -- --------------------------------------------------------
 
 --
@@ -143,6 +163,17 @@ CREATE TABLE `tipi_profilo` (
   `id` int(11) NOT NULL,
   `tipo` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dump dei dati per la tabella `tipi_profilo`
+--
+
+INSERT INTO `tipi_profilo` (`id`, `tipo`) VALUES
+(1, 'presidente'),
+(2, 'admin'),
+(3, 'terapista'),
+(4, 'fisioterapista'),
+(5, 'genitore');
 
 -- --------------------------------------------------------
 
@@ -321,31 +352,31 @@ ALTER TABLE `newsletter`
 -- AUTO_INCREMENT per la tabella `profili`
 --
 ALTER TABLE `profili`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT per la tabella `tipi_evento`
 --
 ALTER TABLE `tipi_evento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT per la tabella `tipi_funzione`
 --
 ALTER TABLE `tipi_funzione`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT per la tabella `tipi_profilo`
 --
 ALTER TABLE `tipi_profilo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT per la tabella `utenti`
 --
 ALTER TABLE `utenti`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT per la tabella `volontari`
