@@ -6,6 +6,14 @@
         return $connection -> query($query);
     }
 
+    // FUNZIONE per MOSTRARE il MENU per MOSTRARE le OPERAZIONI POSSIBILI
+    function showMenu() {
+        echo "<button><a href='newsletter.php'>NEWSLETTER</a></button>
+                <button><a href='bacheca.php'>BACHECA</a></button>
+                <button><a href='area_personale.php'>AREA PERSONALE</a></button>
+                <button><a href='crud.php?operation=LOGOUT'>LOGOUT</a></button><br><br>";
+    }
+
     // FUNZIONE per CREARE UNA TABELLA HTML in BASE ai DATI RICEVUTI dal DATABASE
     function createTable($result) {
         if (!$result)
@@ -91,6 +99,24 @@
         $password_salted = $password . $DBsalt;
         $password_enc = hash("sha512", $password_salted);
 
-        return $password_enc === $DBpassword;
+        return $password_enc === $DBpassword_hashed;
+    }
+
+    // FUNZIONE per OTTENERE le AUTORIZZAZIONI che l'UTENTE HA
+    function getUserAuth($connection, $username) {
+        $query = "SELECT u.numero_accessi AS accessi_utente,
+                        u.id_profilo, 
+                        tp.tipo AS tipo_profilo,
+                        GROUP_CONCAT(tf.tipo SEPARATOR ',<br>') AS tipo_funzione,
+                        p.tipo_operazione AS operazione_permessa
+                FROM utenti u 
+                INNER JOIN profili p ON p.tipo_profilo = u.id_profilo
+                INNER JOIN tipi_profilo tp ON tp.id = p.tipo_profilo
+                INNER JOIN tipi_funzione tf ON tf.id = p.tipo_funzione
+                WHERE u.username = '$username'
+                GROUP BY u.id;";
+        $result = dbQuery($connection, $query);
+
+        return $result;
     }
 ?>

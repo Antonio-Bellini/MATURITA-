@@ -172,8 +172,7 @@ INSERT INTO `tipi_profilo` (`id`, `tipo`) VALUES
 (1, 'presidente'),
 (2, 'admin'),
 (3, 'terapista'),
-(4, 'fisioterapista'),
-(5, 'genitore');
+(4, 'genitore');
 
 -- --------------------------------------------------------
 
@@ -352,7 +351,7 @@ ALTER TABLE `newsletter`
 -- AUTO_INCREMENT per la tabella `profili`
 --
 ALTER TABLE `profili`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT per la tabella `tipi_evento`
@@ -370,13 +369,13 @@ ALTER TABLE `tipi_funzione`
 -- AUTO_INCREMENT per la tabella `tipi_profilo`
 --
 ALTER TABLE `tipi_profilo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT per la tabella `utenti`
 --
 ALTER TABLE `utenti`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT per la tabella `volontari`

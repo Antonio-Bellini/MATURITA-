@@ -12,8 +12,8 @@
 ?>
     <!-- SEZIONE PRINCIPALE della PAGINA INDEX -->
     <main>
-        <button><a href="loginPage.php">Accedi</a></button>
-        <button><a href="registerPage.php">Registrati</a></button>
+        <button><a href="loginPage.php">Accedi al tuo account</a></button>
+        <button><a href="register_user.php">Registrati come utente</a></button>
     </main>
 </body>
 </html>

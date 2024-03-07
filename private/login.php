@@ -25,21 +25,12 @@
 
             if ($result) {
                 while ($row = $result->fetch_assoc()) {
-                    if (checkPassword($row["password"])) {
+                    if (checkPassword($password, $row["password"])) {
                         $_SESSION["is_logged"] = true;
 
                         welcome($username);
 
-                        $query = "SELECT u.numero_accessi AS accessi_utente,
-                                            tp.tipo AS tipo_profilo,
-                                            tf.tipo AS tipo_funzione,
-                                            p.tipo_operazione AS operazione_permessa
-                                    FROM utenti u 
-                                    INNER JOIN profili p ON u.id_profilo = p.id
-                                    INNER JOIN tipi_profilo tp ON tp.id = p.tipo_profilo
-                                    INNER JOIN tipi_funzione tf ON tf.id = p.tipo_funzione
-                                    WHERE username = '$username';";
-                                    $result = dbQuery($connection, $query);
+                        $result = getUserAuth($connection, $username);
 
                         if ($result) {
                             while ($row = ($result->fetch_assoc())) {
@@ -50,42 +41,32 @@
 
                                 echo $numero_accessi . ", " . $tipo_profilo . ", " . $tipo_funzione . ", " . $operazione_permessa;
                             }
-                        } {
-                    
-                        }
-                    } else {
+                        } else 
+                            echo "Si é veriricato un errore recuperando i dati dal database, riprova piú tardi.";
+                    } else
                         echo "La password é errata, stai per essere reindirizzato...";
-                        header("Refresh: 3; url: loginPage.php");
-                    }
                 }
             } else
-                echo "Il server ha restituito un errore, riprova piú tardi";
+                echo "Si é veriricato un errore recuperando i dati dal database, riprova piú tardi.";
         } catch(Exception) {
             echo "Problema interno, riprova piú tardi";
         }
     } else {
         welcome($username);
+        showMenu();
 
-        $query = "SELECT u.numero_accessi AS accessi_utente,
-                            tp.tipo AS tipo_profilo,
-                            tf.tipo AS tipo_funzione,
-                            p.tipo_operazione AS operazione_permessa
-                    FROM utenti u 
-                    INNER JOIN profili p ON u.id_profilo = p.id
-                    INNER JOIN tipi_profilo tp ON tp.id = p.tipo_profilo
-                    INNER JOIN tipi_funzione tf ON tf.id = p.tipo_funzione
-                    WHERE username = '$username';";
-                    $result = dbQuery($connection, $query);
+        $result = getUserAuth($connection, $username);
 
         if ($result) {
+            createTable($result);
             while ($row = ($result->fetch_assoc())) {
                 $numero_accessi = $row["accessi_utente"];
                 $tipo_profilo = $row["tipo_profilo"];
                 $tipo_funzione = $row["tipo_funzione"];
                 $operazione_permessa = $row["operazione_permessa"];
-
-                echo $numero_accessi . ", " . $tipo_profilo . ", " . $tipo_funzione . ", " . $operazione_permessa;
             }
-        }
+
+        } else 
+            echo "Si é veriricato un errore recuperando i dati dal database, riprova piú tardi.";
     }
 ?>

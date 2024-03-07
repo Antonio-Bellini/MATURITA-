@@ -22,12 +22,13 @@
         // inserimento  dell'utente nel db
         $password_enc = encryptPassword($password_clear);
         $query = "INSERT INTO utenti(nome, cognome, username, password, email, telefono_fisso, telefono_mobile, note, numero_accessi, id_profilo)
-                    VALUES ('$name', '$surname', '$username', '$password_enc', '$email', '$phone_f', '$phone_m', '$notes', 0, 5);";
+                    VALUES ('$name', '$surname', '$username', '$password_enc', '$email', '$phone_f', '$phone_m', '$notes', 0, 4);";
         $result = dbQuery($connection, $query);
 
         if ($result) {
             echo "account creato con successo";
-        }
+        } else
+        echo "ciao";
     } else if (isset($_POST["form_volunteer"])) {
         // ottengo i dati scritti nel form
         $name = $_POST["name"];
@@ -39,5 +40,6 @@
         // inserimento dell'utente nel db
         $query = "INSERT INTO volontari(nome, cognome, email, telefono_fisso, telefono_mobile)
                     VALUES('$name', '$surname', '$email', '$phone_f', '$phone_m');";
-    }
+    } else 
+        echo "Non é stato compilato nessun form";
 ?>
