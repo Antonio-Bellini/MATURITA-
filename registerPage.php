@@ -12,10 +12,10 @@
     include "util/cookie.php";
     importActualStyle();
 ?>
-    <!-- SEZIONE PRINCIPALE della PAGINA DI LOGIN -->
+    <!-- SEZIONE PRINCIPALE della PAGINA DI REGISTRAZIONE -->
     <main>
         <h1>Ti stai registrando all'associazione ZeroTre</h1>
-        <form action="register.php" id="form_register__user" method="POST">
+        <form action="register.php" name="form_user" id="form_register__user" method="POST">
             <label for="nome">Inserisci il tuo nome</label>
             <input type="text" name="name" id="name" required> <br>
 
