@@ -19,7 +19,7 @@
     // eseguo la query sul db per controllare se username e password sono corretti
     if (!$_SESSION['is_logged']) {
         try {
-            $query = "SELECT password
+            $query = "SELECT id, password
                         FROM utenti
                         WHERE username = '$username';";
             $result = dbQuery($connection, $query);
@@ -28,6 +28,7 @@
                 while ($row = $result->fetch_assoc()) {
                     if (checkPassword($password, $row["password"])) {
                         $_SESSION["is_logged"] = true;
+                        $_SESSION["user_id"] = $row["id"];
 
                         welcome($username);
                         showMenu();
@@ -41,6 +42,7 @@
                                 $tipo_funzione = $row["tipo_funzione"];
                                 $operazione_permessa = $row["operazione_permessa"];
                             }
+                            echo "<button><a href='private/area_personale.php'>Area personale</a></button>";
                         } else 
                             echo "Si é veriricato un errore recuperando i dati dal database, riprova piú tardi.";
                     } else
@@ -64,6 +66,7 @@
                 $tipo_funzione = $row["tipo_funzione"];
                 $operazione_permessa = $row["operazione_permessa"];
             }
+            echo "<button><a href='area_personale.php'>Area personale</a></button>";
         } else 
             echo "Si é veriricato un errore recuperando i dati dal database, riprova piú tardi.";
     }

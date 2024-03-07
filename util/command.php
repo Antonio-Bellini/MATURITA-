@@ -105,7 +105,6 @@
     // FUNZIONE per OTTENERE le AUTORIZZAZIONI che l'UTENTE HA
     function getUserAuth($connection, $username) {
         $query = "SELECT u.numero_accessi AS accessi_utente,
-                        u.id_profilo, 
                         tp.tipo AS tipo_profilo,
                         GROUP_CONCAT(tf.tipo SEPARATOR ',<br>') AS tipo_funzione,
                         p.tipo_operazione AS operazione_permessa
