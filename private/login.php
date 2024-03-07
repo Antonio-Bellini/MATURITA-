@@ -12,6 +12,7 @@
     if (!isset($_SESSION["is_logged"]))
         $_SESSION["is_logged"] = false;
 
+    // dati forniti dall'utente
     $username = $_POST["username"];
     $password = $_POST["password"];
 
