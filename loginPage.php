@@ -11,16 +11,27 @@
     importActualStyle();
 ?>
     <!-- SEZIONE PRINCIPALE della PAGINA DI LOGIN -->
-    <main>
-        <form action="private/login.php" id="form_login" method="POST">
-            <label for="username">Username</label>
-            <input type="text" name="username" id="username" required><br>
+    <?php
+        include "util/connection.php";
+        include "util/command.php";
+        session_start();
 
-            <label for="password">Password</label>
-            <input type="password" name="password" id="password" required><br>
+        if ($_SESSION["is_logged"]) {
+            welcome($_SESSION["username"]);
+            showMenu2();
+        } else {
+            echo "<main>
+                    <form action='private/login.php' id='form_login' method='POST'>
+                        <label for='username'>Username</label>
+                        <input type='text' name='username' id='username' required><br>
 
-            <input type="submit" value="ACCEDI"><br><br>
-        </form>
-    </main>
+                        <label for='password'>Password</label>
+                        <input type='password' name='password' id='password' required><br>
+
+                        <input type='submit' value='ACCEDI'><br><br>
+                    </form>
+                </main>";
+        }
+    ?>
 </body>
 </html>

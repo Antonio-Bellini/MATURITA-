@@ -12,13 +12,17 @@
     if (!isset($_SESSION["is_logged"]))
         $_SESSION["is_logged"] = false;
 
-    // dati forniti dall'utente
-    $username = $_POST["username"];
-    $password = $_POST["password"];
+    if (isset($_POST["username"]) && isset($_POST["password"])) {
+        $username = $_POST["username"];
+        $password = $_POST["password"];
+    }
 
     // eseguo la query sul db per controllare se username e password sono corretti
     if (!$_SESSION['is_logged']) {
         try {
+            $username = $_POST["username"];
+            $password = $_POST["password"];
+        
             $query = "SELECT id, password
                         FROM utenti
                         WHERE username = '$username';";
@@ -28,23 +32,11 @@
                 while ($row = $result->fetch_assoc()) {
                     if (checkPassword($password, $row["password"])) {
                         $_SESSION["is_logged"] = true;
+                        $_SESSION["username"] = $username;
                         $_SESSION["user_id"] = $row["id"];
 
                         welcome($username);
                         showMenu();
-                        $result = getUserAuth($connection, $username);
-
-                        if ($result) {
-                            createTable($result);
-                            while ($row = ($result->fetch_assoc())) {
-                                $numero_accessi = $row["accessi_utente"];
-                                $tipo_profilo = $row["tipo_profilo"];
-                                $tipo_funzione = $row["tipo_funzione"];
-                                $operazione_permessa = $row["operazione_permessa"];
-                            }
-                            echo "<button><a href='private/area_personale.php'>Area personale</a></button>";
-                        } else 
-                            echo "Si é veriricato un errore recuperando i dati dal database, riprova piú tardi.";
                     } else
                         echo "La password é errata, riprova";
                 }
@@ -54,20 +46,7 @@
             echo "Qualcosa é andato storto, riprova piú tardi";
         }
     } else {
-        welcome($username);
+        welcome($_SESSION["username"]);
         showMenu();
-        $result = getUserAuth($connection, $username);
-
-        if ($result) {
-            createTable($result);
-            while ($row = ($result->fetch_assoc())) {
-                $numero_accessi = $row["accessi_utente"];
-                $tipo_profilo = $row["tipo_profilo"];
-                $tipo_funzione = $row["tipo_funzione"];
-                $operazione_permessa = $row["operazione_permessa"];
-            }
-            echo "<button><a href='area_personale.php'>Area personale</a></button>";
-        } else 
-            echo "Si é veriricato un errore recuperando i dati dal database, riprova piú tardi.";
     }
 ?>

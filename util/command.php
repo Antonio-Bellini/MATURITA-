@@ -8,10 +8,19 @@
 
     // FUNZIONE per MOSTRARE il MENU per MOSTRARE le OPERAZIONI POSSIBILI
     function showMenu() {
-        echo "<button><a href='../newsletter.php'>NEWSLETTER</a></button>
+        
+        echo "  <button><a href='../loginPage.php'>HOME</a></button>
+                <button><a href='../newsletter.php'>NEWSLETTER</a></button>
                 <button><a href='../bacheca.php'>BACHECA</a></button>
                 <button><a href='area_personale.php'>AREA PERSONALE</a></button>
                 <button><a href='../crud.php?operation=LOGOUT'>LOGOUT</a></button><br><br>";
+    }
+    function showMenu2() {
+        echo "  <button><a href='private/login.php'>HOME</a></button>
+                <button><a href='newsletter.php'>NEWSLETTER</a></button>
+                <button><a href='bacheca.php'>BACHECA</a></button>
+                <button><a href='private/area_personale.php'>AREA PERSONALE</a></button>
+                <button><a href='crud.php?operation=LOGOUT'>LOGOUT</a></button><br><br>";
     }
 
     // FUNZIONE per CREARE UNA TABELLA HTML in BASE ai DATI RICEVUTI dal DATABASE
