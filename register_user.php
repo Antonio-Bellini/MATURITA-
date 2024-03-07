@@ -14,7 +14,7 @@
 ?>
     <!-- SEZIONE PRINCIPALE della PAGINA DI REGISTRAZIONE -->
     <main>
-        <h1>Ti stai registrando all'associazione ZeroTre</h1>
+        <h1>Crea il tuo account</h1>
         <form action="private/register.php" id="form_register__user" method="POST">
             <input type="hidden" name="form_user">
             
