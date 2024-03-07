@@ -30,32 +30,30 @@
                         $_SESSION["is_logged"] = true;
 
                         welcome($username);
-
+                        showMenu();
                         $result = getUserAuth($connection, $username);
 
                         if ($result) {
+                            createTable($result);
                             while ($row = ($result->fetch_assoc())) {
                                 $numero_accessi = $row["accessi_utente"];
                                 $tipo_profilo = $row["tipo_profilo"];
                                 $tipo_funzione = $row["tipo_funzione"];
                                 $operazione_permessa = $row["operazione_permessa"];
-
-                                echo $numero_accessi . ", " . $tipo_profilo . ", " . $tipo_funzione . ", " . $operazione_permessa;
                             }
                         } else 
                             echo "Si é veriricato un errore recuperando i dati dal database, riprova piú tardi.";
                     } else
-                        echo "La password é errata, stai per essere reindirizzato...";
+                        echo "La password é errata, riprova";
                 }
             } else
                 echo "Si é veriricato un errore recuperando i dati dal database, riprova piú tardi.";
         } catch(Exception) {
-            echo "Problema interno, riprova piú tardi";
+            echo "Qualcosa é andato storto, riprova piú tardi";
         }
     } else {
         welcome($username);
         showMenu();
-
         $result = getUserAuth($connection, $username);
 
         if ($result) {
@@ -66,7 +64,6 @@
                 $tipo_funzione = $row["tipo_funzione"];
                 $operazione_permessa = $row["operazione_permessa"];
             }
-
         } else 
             echo "Si é veriricato un errore recuperando i dati dal database, riprova piú tardi.";
     }
