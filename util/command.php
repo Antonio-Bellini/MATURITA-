@@ -43,35 +43,10 @@
         $connection = connectToDatabase(DB_NAME);
 
         switch($key) {
-            case "data_di_nascita":
-                echo "<td>" . date('d/m/Y', strtotime($value)) . "</td>";
-                break;
-
-            case "regione_di_residenza":
-                $qRegion = "SELECT nome FROM regioni WHERE codice = '$value'";
-                $queryR = dbQuery($connection, $qRegion);
-                $result = $queryR -> fetch_assoc();
-
-                foreach($result as $key => $value)
-                    echo "<td>" . $value . "</td>";
-                break;
-
-            case "sesso":
-                if ($value === "M")
-                    echo "<td>Maschio</td>";
-                else 
-                    echo "<td>Femmina</td>";
-                break;
-
             default:
                 echo "<td>" . $value . "</td>";
                 break;
         }
-    }
-
-    // FUNZIONE per CONTROLLARE che la PASSWORD INSERITA sia CORRETTA
-    function check_password($dbPassword, $password) {
-        return hash('sha256', $password) === $dbPassword;
     }
 
     // FUNZIONE per DARE il BENVENUTO SCRIVENDO il NOME
@@ -87,5 +62,24 @@
             while ($row = ($result->fetch_assoc()))
                 echo "<h2>Benvenuto " . $row["nome"] . "</h2>";
         }
+    }
+
+    // FUNZIONE per CRIPTARE la PASSWORD
+    function encryptPassword($password) {
+        $salt = generateSalt(32);
+        $password .= $salt;
+
+        return hash("sha512", $password) . ":" . $salt;
+    }
+
+    // FUNZIONE che GENERA un SALE per RENDERE piu SICURA la PASSWORD
+    function generateSalt($length) {
+        $chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()-_[]{}<>~`+=,.;/?|';
+        $salt = '';
+
+        for ($i = 0; $i < $length; $i++)
+            $salt .= $chars[rand(0, strlen($chars) - 1)];
+        
+        return $salt;
     }
 ?>

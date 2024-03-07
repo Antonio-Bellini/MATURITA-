@@ -24,11 +24,12 @@
             $result = dbQuery($connection, $query);
 
             if ($result) {
-                $password_enc = HASH("sha256", $password);
+                $password_enc = encryptPassword($password);
                 
                 while ($row = ($result->fetch_assoc())) {
                     if ($row["password"] === $password_enc) {
                         $_SESSION["is_logged"] = true;
+                        echo "ciao";
 
                         welcome($username);
 
@@ -56,7 +57,7 @@
                     
                         }
                     } else {
-                        echo "La password é errata, stai per essere reindirizzato..."
+                        echo "La password é errata, stai per essere reindirizzato...";
                         header("Refresh: 3; url: loginPage.php");
                     }
                 }
@@ -66,6 +67,7 @@
             echo "Problema interno, riprova piú tardi";
         }
     } else {
+        echo "ciao";
         welcome($username);
 
         $query = "SELECT u.numero_accessi AS accessi_utente,
