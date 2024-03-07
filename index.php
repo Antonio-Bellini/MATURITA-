@@ -13,6 +13,7 @@
     <!-- SEZIONE PRINCIPALE della PAGINA INDEX -->
     <main>
         <button><a href="loginPage.php">Accedi</a></button>
+        <button><a href="registerPage.php">Registrati</a></button>
     </main>
 </body>
 </html>

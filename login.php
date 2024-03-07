@@ -20,16 +20,13 @@
         try {
             $query = "SELECT password
                         FROM utenti
-                        WHERE email = '$username';";
+                        WHERE username = '$username';";
             $result = dbQuery($connection, $query);
 
             if ($result) {
-                $password_enc = encryptPassword($password);
-                
-                while ($row = ($result->fetch_assoc())) {
-                    if ($row["password"] === $password_enc) {
+                while ($row = $result->fetch_assoc()) {
+                    if (checkPassword($row["password"])) {
                         $_SESSION["is_logged"] = true;
-                        echo "ciao";
 
                         welcome($username);
 
@@ -67,7 +64,6 @@
             echo "Problema interno, riprova piú tardi";
         }
     } else {
-        echo "ciao";
         welcome($username);
 
         $query = "SELECT u.numero_accessi AS accessi_utente,

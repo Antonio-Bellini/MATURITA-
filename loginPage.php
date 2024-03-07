@@ -12,7 +12,7 @@
 ?>
     <!-- SEZIONE PRINCIPALE della PAGINA DI LOGIN -->
     <main>
-        <form action="login.php" method="POST">
+        <form action="login.php" id="form_login" method="POST">
             <label for="username">Username</label>
             <input type="text" name="username" id="username" required><br>
 

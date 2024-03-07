@@ -82,4 +82,15 @@
         
         return $salt;
     }
+
+    // FUNZIONE per VERIFICARE che DUE PASSWORD CORRISPONDANO
+    function checkPassword($password, $DBpassword) {
+        $parts = explode(':', $DBpassword);
+        $DBpassword_hashed = $parts[0];
+        $DBsalt = $parts[1];
+        $password_salted = $password . $DBsalt;
+        $password_enc = hash("sha512", $password_salted);
+
+        return $password_enc === $DBpassword;
+    }
 ?>

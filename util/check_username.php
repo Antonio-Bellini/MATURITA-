@@ -4,11 +4,11 @@
     require_once("constants.php");
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $email = $_POST['email'];
+        $username = $_POST['username'];
 
         $connection = connectToDatabase(DB_NAME);
 
-        $query = "SELECT username FROM username_password WHERE username = '$email'";
+        $query = "SELECT username FROM utenti WHERE username = '$username'";
         $result = dbQuery($connection, $query);
 
         if (mysqli_num_rows($result) > 0)
