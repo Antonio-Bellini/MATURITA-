@@ -127,4 +127,40 @@
 
         return $result;
     }
+
+    // FUNZIONE per OTTENERE i DATI di un UTENTE
+    function getUserData($connection, $userId) {
+        $query = "SELECT u.nome,
+                    u.cognome,
+                    u.username,
+                    u.email,
+                    u.telefono_fisso,
+                    u.telefono_mobile,
+                    u.note,
+                    tp.tipo AS tipo_profilo,
+                    GROUP_CONCAT(tf.tipo SEPARATOR ',<br>') AS tipo_funzione,
+                    p.tipo_operazione AS permesso
+                FROM utenti u
+                INNER JOIN profili p ON u.id_profilo = p.tipo_profilo
+                INNER JOIN tipi_profilo tp ON p.tipo_profilo = tp.id
+                INNER JOIN tipi_funzione tf ON p.tipo_funzione = tf.id
+                WHERE u.id = '$userId'";
+        $result = dbQuery($connection, $query);
+
+        return $result;
+    }
+
+    // FUNZIONE per OTTENERE i DATI degli ASSISTITI COLLEGATI a un DETERMINATO UTENTE
+    function getUserAssisted($connection, $userId) {
+        $query = "SELECT a.nome,
+                    a.cognome, 
+                    a.anamnesi,
+                    a.note
+                FROM assistiti a 
+                INNER JOIN utenti u ON a.id_referente = u.id
+                WHERE u.id = '$userId'";
+        $result = dbQuery($connection, $query);
+
+        return $result;
+    }
 ?>

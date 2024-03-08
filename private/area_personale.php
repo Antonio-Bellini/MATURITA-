@@ -10,37 +10,53 @@
 
     showMenu();
 
-    echo "QUESTA PAGINA CONTERRÁ L'AREA PERSONALE DELL'UTENTE";
+    $profile_type = null;
+    $profile_func = null;
+    $auth = null;
 
-    // query per ottenere i dati dell'utente
-    $query = "SELECT u.nome,
-                    u.cognome,
-                    u.username,
-                    u.email,
-                    u.telefono_fisso,
-                    u.telefono_mobile,
-                    u.note,
-                    tp.tipo AS tipo_profilo,
-                    GROUP_CONCAT(tf.tipo SEPARATOR ',<br>') AS tipo_funzione,
-                    p.tipo_operazione AS permesso
-                FROM utenti u
-                INNER JOIN profili p ON u.id_profilo = p.tipo_profilo
-                INNER JOIN tipi_profilo tp ON p.tipo_profilo = tp.id
-                INNER JOIN tipi_funzione tf ON p.tipo_funzione = tf.id
-                WHERE u.id = '" . $_SESSION["user_id"] . "'";
-    $result = dbQuery($connection, $query);
-    createTable($result);
+    $result = getUserAuth($connection, $_SESSION["username"]);
 
-    echo "<br>";
+    // salvo i permessi che l'utente che ha effettuato il login ha
+    if ($result) {
+        while($row = ($result->fetch_assoc())) {
+            $profile_type = $row["tipo_profilo"];
+            $profyle_func = $row["tipo_funzione"];
+            $auth = $row["operazione_permessa"];
+        }
+    } else
+        echo "Si é verificato un problema recuperando i dati dal database, riprova piú tardi";
 
-    // query per ottenere i dati degli assistiti che hanno come referente un certo utente
-    $query = "SELECT a.nome,
-                    a.cognome, 
-                    a.anamnesi,
-                    a.note
-                FROM assistiti a 
-                INNER JOIN utenti u ON a.id_referente = u.id
-                WHERE u.id = '" . $_SESSION["user_id"] . "'";
-    $result = dbQuery($connection, $query);
-    createTable($result);
+    // permetto determinate funzioni in base al tipo di profilo
+    switch($profile_type) {
+        case "presidente":
+        break;
+
+        case "admin":
+        break;
+
+        case "terapista":
+        break;
+
+        case "genitore":
+            welcome($_SESSION["username"]);
+
+            // ottengo i dati dell'utente e li stampo in forma tabellare
+            $result = getUserData($connection, $_SESSION["user_id"]);
+            if ($result) {
+                createTable($result);
+
+                // ottengo i dati degli assistiti collegati a questo utente
+                $result = getUserAssisted($connection, $_SESSION["user_id"]);
+                if ($result)
+                    createTable($result);
+                else 
+                    echo "Si é verificato un problema recuperando i dati dal database, riprova piú tardi";
+
+                // bottone per inserire un nuovo assistito
+                echo "<br><br><label>Inserisci un nuovo assistito</label><br>";
+                echo "<button><a href='register_assisted.php'>Vai alla pagina</a></button>";
+            } else 
+                echo "Si é verificato un problema recuperando i dati dal database, riprova piú tardi";
+        break;
+    }
 ?>

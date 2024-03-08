@@ -40,6 +40,16 @@
         // inserimento dell'utente nel db
         $query = "INSERT INTO volontari(nome, cognome, email, telefono_fisso, telefono_mobile)
                     VALUES('$name', '$surname', '$email', '$phone_f', '$phone_m');";
+    } else if (isset($_POST["form_assisted"])) {
+        // ottengo i dati scritti nel form
+        $name = $_POST["name"];
+        $surname = $_POST["surname"];
+        $med = $_POST["med"];
+        $notes = $_POST["notes"];
+
+        // inserimento dell'assistito nel db
+        $query = "INSERT INTO assistiti(nome, cognome, anamnesi, note, id_referente)
+                VALUES('$name', '$surname', '$med', '$notes', '{$_SESSION['user_id']}');";
     } else 
         echo "Non é stato compilato nessun form";
 ?>

@@ -16,6 +16,10 @@
         include "util/command.php";
         session_start();
 
+        if (!isset($_SESSION["is_logged"]))
+            $_SESSION["is_logged"] = false;
+
+        // controllo cosa mostrare in base a se é gia loggato oppure ancora no
         if ($_SESSION["is_logged"]) {
             welcome($_SESSION["username"]);
             showMenu2();
