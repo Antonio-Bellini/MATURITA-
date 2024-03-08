@@ -30,6 +30,9 @@
         // permetto determinate funzioni in base al tipo di profilo
         switch($profile_type) {
             case "presidente":
+                echo "<label>Effettua una delle seguenti operazioni</label><br><br>";
+                echo "<button><a href='crud.php?operation=read_med'>READ su anamnesi</a></button><br><br>";
+                echo "<button><a href='crud.php?operation=ins_adm'>Gestione Admin</a></button><br><br>";
             break;
 
             case "admin":

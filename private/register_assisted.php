@@ -16,10 +16,10 @@
         include "../util/command.php";
 
         session_start();
+        if (!isset($_SESSION["is_parent"]))
+            $_SESSION["is_parent"] = false;
         
-        if (!isset($_SESSION["is_parente"]))
-            $_SESSION["is_parente"] = false;
-
+        $_SESSION["is_parent"] = true;
         if ($_SESSION["is_parent"] || $_SESSION["is_admin"]) {
             showMenu();
             echo "<h1>Pagina di registrazione di un assistito</h1>";

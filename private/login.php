@@ -35,7 +35,6 @@
                             $_SESSION["is_logged"] = true;
                             $_SESSION["username"] = $username;
                             $_SESSION["user_id"] = $row["id"];
-                            $_SESSION["is_parent"] = true;
                             
                             showMenu();
                             welcome($username);
