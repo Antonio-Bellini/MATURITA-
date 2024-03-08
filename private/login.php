@@ -48,11 +48,6 @@
                 showMenu();
                 echo "Prima devi effettuare il login";
             }
-        
-            $query = "SELECT id, password
-                        FROM utenti
-                        WHERE username = '$username';";
-            $result = dbQuery($connection, $query);
         } catch(Exception) {
             echo "Qualcosa é andato storto, riprova piú tardi";
         }
