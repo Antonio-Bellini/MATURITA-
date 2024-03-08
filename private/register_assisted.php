@@ -13,12 +13,15 @@
     importActualStyle();
 ?>
     <?php
+        include "../util/command.php";
+
         session_start();
-        $_SESSION["is_parent"] = true;
+        
         if (!isset($_SESSION["is_parente"]))
             $_SESSION["is_parente"] = false;
 
         if ($_SESSION["is_parent"] || $_SESSION["is_admin"]) {
+            showMenu();
             echo "<h1>Pagina di registrazione di un assistito</h1>";
             echo "<main>
                     <form action='register.php' name='form_assisted' id='form_register__assisted' method='POST'>
@@ -34,7 +37,9 @@
                         <input type='text' name='med' id='med' required> <br>
 
                         <label for='notes'>Inserisci qualche nota aggiuntiva</label> <br>
-                        <textarea name='notes' id='notes' cols='30' rows='10' placeholder='Altre info utili'></textarea>
+                        <textarea name='notes' id='notes' cols='30' rows='10' placeholder='Altre info utili'></textarea><br><br>
+
+                        <input type='submit' value='REGISTRA'><br><br>
                     </form>
                 </main>";
         } else 

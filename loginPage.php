@@ -21,8 +21,8 @@
 
         // controllo cosa mostrare in base a se é gia loggato oppure ancora no
         if ($_SESSION["is_logged"]) {
-            welcome($_SESSION["username"]);
             showMenu2();
+            welcome($_SESSION["username"]);
         } else {
             echo "<main>
                     <form action='private/login.php' id='form_login' method='POST'>

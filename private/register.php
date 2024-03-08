@@ -50,6 +50,13 @@
         // inserimento dell'assistito nel db
         $query = "INSERT INTO assistiti(nome, cognome, anamnesi, note, id_referente)
                 VALUES('$name', '$surname', '$med', '$notes', '{$_SESSION['user_id']}');";
+        $result = dbQuery($connection, $query);
+
+        if ($result) {
+            showMenu();
+            echo "Account creato con successo";
+        } else 
+            echo "Si é verificato un errore in inserimento, riprova piú tardi";
     } else 
         echo "Non é stato compilato nessun form";
 ?>
