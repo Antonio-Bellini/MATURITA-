@@ -31,22 +31,30 @@
         switch($profile_type) {
             case "presidente":
                 welcome($_SESSION["username"]);
+                $_SESSION["is_president"] = true;
 
                 echo "<label>Effettua una delle seguenti operazioni</label><br><br>";
                 echo "<button><a href='crud.php?operation=read_med'>READ su anamnesi</a></button><br><br>";
-                echo "<button><a href='crud.php?operation=ins_adm'>Gestione Admin</a></button><br><br>";
+                echo "<button><a href='crud.php?operation=mng_adm'>Gestione Admin</a></button><br><br>";
             break;
 
             case "admin":
+                welcome($_SESSION["username"]);
+                $_SESSION["is_admin"] = true;
+
                 echo "se leggi sei un admin";
             break;
 
             case "terapista":
+                welcome($_SESSION["username"]);
+                $_SESSION["is_terapist"] = true;
+
                 echo "se leggi sei un terapista";
             break;
 
             case "genitore":
                 welcome($_SESSION["username"]);
+                $_SESSION["is_parent"] = true;
 
                 // ottengo i dati dell'utente e li stampo in forma tabellare
                 $result = getUserData($connection, $_SESSION["user_id"]);

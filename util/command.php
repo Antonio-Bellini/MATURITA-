@@ -69,7 +69,7 @@
 
         if ($result) {
             while ($row = ($result->fetch_assoc()))
-                echo "<h2>Benvenuto " . $row["nome"] . "</h2>";
+                echo "<h2>Benvenuto " . $row["nome"] . " " . $row["cognome"] . "</h2>";
         }
     }
 

@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style/style.css">
     <title>Associazione ZeroTre</title>
 </head>
 <!-- STAMPA del BODY in BASE al COOKIE SALVATO -->
@@ -26,7 +27,7 @@
         } else {
             echo "<main>
                     <h1>Accedi al tuo account</h1>
-                    <form action='private/login.php' id='form_login' method='POST'>
+                    <form action='login.php' id='form_login' method='POST'>
                         <label for='username'>Username</label>
                         <input type='text' name='username' id='username' required><br>
 

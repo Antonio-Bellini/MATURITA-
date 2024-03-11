@@ -8,6 +8,8 @@
     $connection = connectToDatabase(DB_NAME);
     session_start();
 
+    $operation = null;
+
     if (isset($_GET["operation"]))
         $operation = $_GET["operation"];
 
@@ -28,10 +30,10 @@
             echo "</select>";
         break;
 
-        case "ins_adm":
+        case "mng_adm":
             showMenu();
             
-            echo "Ecco una tabella di tutti i dati degli admin presenti:<br><br>";
+            echo "Ecco una tabella di tutti i dati degli admin presenti<br><br>";
             $query = "SELECT nome, cognome, username, email, telefono_fisso, telefono_mobile, note, numero_accessi
                     FROM utenti u
                     WHERE u.id_profilo = 2";
@@ -43,13 +45,16 @@
         break;
 
         case "LOGOUT":
-            $_SESSION["is_logged"] = false;
-            $_SESSION["username"] = null;
-            $_SESSION["user_id"] = null;
-            if (session_destroy()) {
-                showMenu();
-                echo "Disconnessione avvenuta con successo"; 
-            }
+            if (isset($_SESSION["is_logged"]) && $_SESSION["is_logged"]) {
+                $_SESSION["is_logged"] = false;
+                $_SESSION["username"] = null;
+                $_SESSION["user_id"] = null;
+                if (session_destroy()) {
+                    showMenu();
+                    echo "Disconnessione avvenuta con successo"; 
+                }
+            } else
+                header("Location: loginPage.php");
         break;
     }
 ?>
