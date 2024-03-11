@@ -25,6 +25,7 @@
             welcome($_SESSION["username"]);
         } else {
             echo "<main>
+                    <h1>Accedi al tuo account</h1>
                     <form action='private/login.php' id='form_login' method='POST'>
                         <label for='username'>Username</label>
                         <input type='text' name='username' id='username' required><br>
