@@ -8,6 +8,6 @@
     $connection = connectToDatabase(DB_NAME);
     session_start();
 
-    showMenu2();
+    showMenu();
     echo "QUESTA PAGINA CONTERRÁ LA NEWSLETTER DELL'ASSOCIAZIONE";
 ?>

@@ -21,7 +21,7 @@
 
         // controllo cosa mostrare in base a se é gia loggato oppure ancora no
         if ($_SESSION["is_logged"]) {
-            showMenu2();
+            showMenu();
             welcome($_SESSION["username"]);
         } else {
             echo "<main>

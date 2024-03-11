@@ -1,8 +1,8 @@
 <?php 
-    require_once("../util/constants.php");
-    include("../util/connection.php");
-    include("../util/command.php");
-    include("../util/cookie.php");
+    require_once("util/constants.php");
+    include("util/connection.php");
+    include("util/command.php");
+    include("util/cookie.php");
 
     importActualStyle();
     $connection = connectToDatabase(DB_NAME);
@@ -25,10 +25,8 @@
                     VALUES ('$name', '$surname', '$username', '$password_enc', '$email', '$phone_f', '$phone_m', '$notes', 0, 4);";
         $result = dbQuery($connection, $query);
 
-        if ($result) {
+        if ($result)
             echo "account creato con successo";
-        } else
-        echo "ciao";
     } else if (isset($_POST["form_volunteer"])) {
         // ottengo i dati scritti nel form
         $name = $_POST["name"];
