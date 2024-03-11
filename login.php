@@ -39,14 +39,13 @@
                             showMenu();
                             welcome($username);
                         } else
-                            echo "La password é errata, riprova";
+                            echo "La password é errata, riprova...";
+                            header("Location: loginPage.php; Refresh: 3");
                     }
                 } else
                     echo "Si é veriricato un errore recuperando i dati dal database, riprova piú tardi.";
-            } else {
-                showMenu();
-                echo "Prima devi effettuare il login";
-            }
+            } else
+                header("Location: loginPage.php");
         } catch(Exception) {
             echo "Qualcosa é andato storto, riprova piú tardi";
         }
