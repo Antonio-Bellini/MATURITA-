@@ -16,32 +16,10 @@
     switch ($operation) {
         case "read_med":
             showMenu();
-            
-            echo "<label>Di quale assistito vuoi leggere l'anamnesi?</label><br>";
-            echo "<select name='assisted' id='assistedOption'>";
-                $query = "SELECT id, nome, cognome, anamnesi, note
-                            FROM assistiti a";
-                $result = dbQuery($connection, $query);
-
-                if ($result) {
-                    while ($row = ($result->fetch_assoc()))
-                        echo "<option id='assisted' name='assisted_" . $row["id"] . "'>" . $row["nome"] . " " . $row["cognome"] . "</option>";
-                }
-            echo "</select>";
         break;
 
         case "mng_adm":
             showMenu();
-            
-            echo "Ecco una tabella di tutti i dati degli admin presenti<br><br>";
-            $query = "SELECT nome, cognome, username, email, telefono_fisso, telefono_mobile, note, numero_accessi
-                    FROM utenti u
-                    WHERE u.id_profilo = 2";
-            $result = dbQuery($connection, $query);
-
-            if ($result) {
-                createTable($result);
-            }
         break;
 
         case "LOGOUT":
@@ -55,6 +33,10 @@
                 }
             } else
                 header("Location: loginPage.php");
+        break;
+
+        case null:
+            header("Location: index.php");
         break;
     }
 ?>

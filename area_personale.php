@@ -21,7 +21,7 @@
         if ($result) {
             while($row = ($result->fetch_assoc())) {
                 $profile_type = $row["tipo_profilo"];
-                $profyle_func = $row["tipo_funzione"];
+                $profile_func = $row["tipo_funzione"];
                 $auth = $row["operazione_permessa"];
             }
         } else

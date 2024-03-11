@@ -16,8 +16,8 @@
             echo "same_password";
         else {
             $query = "SELECT password
-                        FROM username_password
-                        WHERE id_utente = '" . $_SESSION['id_utente'] . "'";
+                        FROM utenti
+                        WHERE id = '" . $_SESSION['user_id'] . "'";
             $result = dbQuery($connection, $query);
             
             if (($result->num_rows) > 0) {
