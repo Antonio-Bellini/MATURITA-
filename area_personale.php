@@ -17,7 +17,7 @@
     if (isset($_SESSION["is_logged"]) && $_SESSION["is_logged"]) {
         $result = getUserAuth($connection, $_SESSION["username"]);
 
-        // salvo i permessi che l'utente che ha effettuato il login ha
+        // salvo i permessi che ha l'utente che ha effettuato il login
         if ($result) {
             while($row = ($result->fetch_assoc())) {
                 $profile_type = $row["tipo_profilo"];
@@ -30,15 +30,19 @@
         // permetto determinate funzioni in base al tipo di profilo
         switch($profile_type) {
             case "presidente":
+                welcome($_SESSION["username"]);
+
                 echo "<label>Effettua una delle seguenti operazioni</label><br><br>";
                 echo "<button><a href='crud.php?operation=read_med'>READ su anamnesi</a></button><br><br>";
                 echo "<button><a href='crud.php?operation=ins_adm'>Gestione Admin</a></button><br><br>";
             break;
 
             case "admin":
+                echo "se leggi sei un admin";
             break;
 
             case "terapista":
+                echo "se leggi sei un terapista";
             break;
 
             case "genitore":
@@ -65,7 +69,6 @@
                     echo "Si é verificato un problema recuperando i dati dal database, riprova piú tardi";
             break;
         }
-    } else {
-        echo "prima devi effettuare il login";
-    }
+    } else
+        header("Location: loginPage.php");
 ?>
