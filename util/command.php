@@ -25,19 +25,25 @@
                     echo "<tr>";
                         foreach ($header as $key => $value)
                             echo "<th>" . $key . "</th>";
+
+                            echo "<th>bottoni</th>";
                     echo "</tr>";
 
                     // riga appena inserita
                     echo "<tr>";
                         foreach ($header as $key => $value)
                             printField($key, $value);
+                            
+                        echo "<td><button><a href='crud.php?operation=modify&id=" . $_SESSION['user_id'] . "'>Modifica</a></button></td>";                    
                     echo "</tr>";
 
                 // inserimento delle altre righe della tabella
                 while($header = $result->fetch_assoc()) {
                     echo "<tr>";
-                        foreach ($header as $key => $value) 
+                        foreach ($header as $key => $value)
                             printField($key, $value);
+                        
+                        echo "<td><button><a href='crud.php?operation=modify&id=" . $_SESSION['user_id'] . "'>Modifica</a></button></td>"; 
                     echo "</tr>";
                 }
 
@@ -53,8 +59,8 @@
 
         switch($key) {
             default:
-                echo "<td>" . $value . "</td>";
-                break;
+                echo "<td align='middle'>" . $value . "</td>";
+            break;
         }
     }
 
