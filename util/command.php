@@ -16,7 +16,7 @@
     }
 
     // FUNZIONE per CREARE UNA TABELLA HTML in BASE ai DATI RICEVUTI dal DATABASE
-    function createTable($result) {
+    function createTable($result, $type) {
         if (!$result)
             echo "Errore nella query: " . $result;
         else {
@@ -33,8 +33,14 @@
                     echo "<tr>";
                         foreach ($header as $key => $value)
                             printField($key, $value);
-                            
-                        echo "<td><button><a href='crud.php?operation=modify&id=" . $_SESSION['user_id'] . "'>Modifica</a></button></td>";                    
+
+                        if ($type == "is_user")
+                            echo "<td><button><a href='crud.php?operation=modify&id=" . $_SESSION['user_id'] . "&type=user'>Modifica</a></button></td>";
+                        else if ($type == "is_assisted")
+                        echo "<td><button><a href='crud.php?operation=modify&id=" . $_SESSION['user_id'] . "&type=assisted'>Modifica</a></button></td>";
+                    else 
+                        echo "<td><button><a href='crud.php?operation=modify&id=" . $_SESSION['user_id'] . "&type=volunteer'>Modifica</a></button></td>";
+
                     echo "</tr>";
 
                 // inserimento delle altre righe della tabella
@@ -43,7 +49,12 @@
                         foreach ($header as $key => $value)
                             printField($key, $value);
                         
-                        echo "<td><button><a href='crud.php?operation=modify&id=" . $_SESSION['user_id'] . "'>Modifica</a></button></td>"; 
+                        if ($type == "is_user")
+                            echo "<td><button><a href='crud.php?operation=modify&id=" . $_SESSION['user_id'] . "&type=user'>Modifica</a></button></td>";
+                        else if ($type == "is_assisted")
+                            echo "<td><button><a href='crud.php?operation=modify&id=" . $_SESSION['user_id'] . "&type=assisted'>Modifica</a></button></td>";
+                        else 
+                            echo "<td><button><a href='crud.php?operation=modify&id=" . $_SESSION['user_id'] . "&type=volunteer'>Modifica</a></button></td>";
                     echo "</tr>";
                 }
 
@@ -160,5 +171,53 @@
         $result = dbQuery($connection, $query);
 
         return $result;
+    }
+
+    //
+    function modifyForm($type, $userId) {
+        $connection = connectToDatabase(DB_NAME);
+
+        echo "<label>Cosa vuoi modificare?<br><br></label>";
+
+        switch ($type) {
+            case "user":
+                $query = "SELECT nome, cognome, email, telefono_fisso, telefono_mobile
+                        FROM utenti 
+                        WHERE id = '$userId'";
+                $result = dbQuery($connection, $query);
+
+                if ($result){
+                    while ($row = ($result->fetch_assoc())) {
+                        echo "<b>NOME: </b>" . $row["nome"] . "<br>";
+                        echo "<b>COGNOME: </b>" . $row["cognome"] . "<br>";
+                        echo "<b>EMAIL: </b>" . $row["email"] . "<br>";
+                        echo "<b>TELEFONO FISSO: </b>" . $row["telefono_fisso"] . "<br>";
+                        echo "<b>TELEFONO MOBILE: </b>" . $row["telefono_mobile"] . "<br><br><br>";
+                    }
+
+                    echo "<label><b>NUOVI DATI</b></label>";
+                    echo "<form action='update.php' method='POST'>
+                            <input type='hidden' name='type' value='user'>
+
+                            <label><br>Nome</label><br>
+                            <input type='text' name='new_name'>
+
+                            <label><br>Cognome</label><br>
+                            <input type='text' name='new_surname'>
+
+                            <label><br>Email</label><br>
+                            <input type='email' name='new_email'>
+
+                            <label><br>Telefono fisso</label><br>
+                            <input type='text' name='new_tf'>
+
+                            <label><br>Telefono mobile</label><br>
+                            <input type='text' name='new_tm'><br><br><br>
+
+                            <input type='submit' value='ESEGUI'>
+                        </form>";
+                }
+            break;
+        }
     }
 ?>

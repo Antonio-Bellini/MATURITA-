@@ -9,10 +9,19 @@
     session_start();
 
     $operation = null;
+    $userId = null;
+    $profileType = null;
 
     if (isset($_GET["operation"]))
         $operation = $_GET["operation"];
 
+    if (isset($_GET["id"]))
+        $userId = $_GET["id"];
+
+    if (isset($_GET["type"]))
+        $profileType = $_GET["type"];
+
+    // possibili bottoni cliccati
     switch ($operation) {
         case "read_med":
             showMenu();
@@ -22,11 +31,29 @@
             showMenu();
         break;
 
+        case "modify":
+            showMenu();
+            
+            echo "<h2>Modifica anagrafica</h2>";
+            switch ($profileType) {
+                case "user":
+                    modifyForm("user", $userId);
+                break;
+
+                case "assisted":
+                    modifyForm("assisted", $userId);
+                break;
+
+                case "volunteer":
+                    modifyForm("volunteer", $userId);
+                break;
+            }
+        break;
+
         case "LOGOUT":
             if (isset($_SESSION["is_logged"]) && $_SESSION["is_logged"]) {
                 $_SESSION["is_logged"] = false;
-                $_SESSION["username"] = null;
-                $_SESSION["user_id"] = null;
+
                 if (session_destroy()) {
                     showMenu();
                     echo "Disconnessione avvenuta con successo"; 
