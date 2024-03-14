@@ -9,5 +9,9 @@
     session_start();
 
     showMenu();
-    echo "QUESTA PAGINA CONTERRÁ LA NEWSLETTER DELL'ASSOCIAZIONE";
+
+    if (isset($_SESSION["is_logged"]) && $_SESSION["is_logged"]) {
+        echo "QUESTA PAGINA CONTERRÁ LA NEWSLETTER DELL'ASSOCIAZIONE";
+    } else 
+        header("Location: loginPage.php");
 ?>
