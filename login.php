@@ -46,7 +46,7 @@
                     echo "Si é veriricato un errore recuperando i dati dal database, riprova piú tardi.";
             } else
                 header("Location: loginPage.php");
-        } catch(Exception) {
+        } catch(Exception $e) {
             echo "Qualcosa é andato storto, riprova piú tardi";
         }
     } else {
