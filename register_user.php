@@ -16,7 +16,7 @@
     <!-- SEZIONE PRINCIPALE della PAGINA DI REGISTRAZIONE -->
     <main>
         <h1>Crea il tuo account</h1>
-        <form action="private/register.php" id="form_register__user" method="POST">
+        <form action="register.php" id="form_register__user" method="POST">
             <input type="hidden" name="form_user">
             
             <label for="nome">Inserisci il tuo nome</label>

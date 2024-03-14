@@ -58,13 +58,13 @@
         }
     }
 
-    // FUNZIONE per DARE il BENVENUTO SCRIVENDO il NOME
+    // FUNZIONE per DARE il BENVENUTO SCRIVENDO il NOME e il COGNOME
     function welcome($username) {
         $connection = connectToDatabase(DB_NAME);
 
         $query = "SELECT nome, cognome
-                    FROM utenti u
-                    WHERE u.username = '$username';";
+                    FROM utenti
+                    WHERE username = '$username';";
         $result = dbQuery($connection, $query);
 
         if ($result) {
