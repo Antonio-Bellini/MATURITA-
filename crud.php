@@ -34,7 +34,6 @@
         case "modify":
             showMenu();
             
-            echo "<h2>Modifica anagrafica</h2>";
             switch ($profileType) {
                 case "user":
                     modifyForm("user", $userId);

@@ -7,7 +7,6 @@
     importActualStyle();
     $connection = connectToDatabase(DB_NAME);
     session_start();
-
     showMenu();
 
     $profile_type = null;
@@ -56,23 +55,28 @@
                 welcome($_SESSION["username"]);
                 $_SESSION["is_parent"] = true;
 
-                // ottengo i dati dell'utente e li stampo in forma tabellare
-                $result = getUserData($connection, $_SESSION["user_id"]);
+                // ottengo i dati dell'utente e li stampo
                 echo "I tuoi dati:<br>";
+                $result = getUserData($connection, $_SESSION["user_id"]);
                 if ($result) {
                     createTable($result, "is_user");
 
-                    // ottengo i dati degli assistiti collegati a questo utente
-                    $result = getUserAssisted($connection, $_SESSION["user_id"]);
+                    // ottengo i dati degli assistiti collegati a questo utente e li stampo
                     echo "<br><br>I tuoi assistiti:<br>";
-                    if ($result)
+                    $result = getUserAssisted($connection, $_SESSION["user_id"]);
+                    if ($result) {
                         createTable($result, "is_assisted");
+                    }
                     else 
                         echo "Si é verificato un problema recuperando i dati dal database, riprova piú tardi";
 
                     // bottone per inserire un nuovo assistito
                     echo "<br><br><label>Inserisci un nuovo assistito</label><br>";
                     echo "<button><a href='register_assisted.php'>Vai alla pagina</a></button>";
+
+                    // bottone per caricare la liberatoria
+                    echo "<br><br><label>Inserisci la liberatoria firmata</label><br>";
+                    echo "<button><a href='uploadPage.php'>Vai alla pagina</a></button>";
                 } else 
                     echo "Si é verificato un problema recuperando i dati dal database, riprova piú tardi";
             break;

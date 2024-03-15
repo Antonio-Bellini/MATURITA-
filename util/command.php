@@ -173,14 +173,15 @@
         return $result;
     }
 
-    //
+    // FUNZIONE per MOSTRARE il FORM di MODIFICA dei DATI
     function modifyForm($type, $userId) {
         $connection = connectToDatabase(DB_NAME);
 
-        echo "<label>Cosa vuoi modificare?<br><br></label>";
-
         switch ($type) {
             case "user":
+                echo "<h1>Modifica anagrafica utente</h1>";
+                echo "<label>Cosa vuoi modificare?<br><br></label>";
+
                 $query = "SELECT nome, cognome, email, telefono_fisso, telefono_mobile
                         FROM utenti 
                         WHERE id = '$userId'";
@@ -213,6 +214,36 @@
 
                             <label><br>Telefono mobile</label><br>
                             <input type='text' name='new_tm'><br><br><br>
+
+                            <input type='submit' value='ESEGUI'>
+                        </form>";
+                }
+            break;
+
+            case "assisted":
+                echo "<h1>Modifica anagrafica assistito</h1>";
+                echo "<label>Cosa vuoi modificare?<br><br></label>";
+            
+                $query = "SELECT nome, cognome
+                        FROM assistiti 
+                        WHERE id_referente = '$userId'";
+                $result = dbQuery($connection, $query);
+
+                if ($result){
+                    while ($row = ($result->fetch_assoc())) {
+                        echo "<b>NOME: </b>" . $row["nome"] . "<br>";
+                        echo "<b>COGNOME: </b>" . $row["cognome"] . "<br>";
+                    }
+
+                    echo "<label><b>NUOVI DATI</b></label>";
+                    echo "<form action='update.php' method='POST'>
+                            <input type='hidden' name='type' value='assisted'>
+
+                            <label><br>Nome</label><br>
+                            <input type='text' name='new_name'>
+
+                            <label><br>Cognome</label><br>
+                            <input type='text' name='new_surname'>
 
                             <input type='submit' value='ESEGUI'>
                         </form>";
