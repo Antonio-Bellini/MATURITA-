@@ -4,6 +4,9 @@ $(document).ready(function () {
         let username = $(this).val();
         checkInputUsername(username);
     });
+
+    // controllo per la modifica della password
+    
 });
 
 // AJAX per il controllo live dell'email inserita

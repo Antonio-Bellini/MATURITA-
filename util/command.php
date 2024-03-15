@@ -213,7 +213,13 @@
                             <input type='text' name='new_tf'>
 
                             <label><br>Telefono mobile</label><br>
-                            <input type='text' name='new_tm'><br><br><br>
+                            <input type='text' name='new_tm'>
+
+                            <label><br>Password attuale</label><br>
+                            <input type='password' name='old_psw'><br>
+
+                            <label><br>Nuova password</label><br>
+                            <input type='password' name='new_psw'><br><br><br>
 
                             <input type='submit' value='ESEGUI'>
                         </form>";
