@@ -48,8 +48,10 @@
                         WHERE id = '$assistedId';";
             $result = dbQuery($connection, $query);
 
-            if ($result)
-                echo "Liberatoria caricata correttamente";
+            if ($result) {
+                echo "Liberatoria caricata correttamente, stai per essere reindirizzato";
+                header("Refresh: 3; URL=loginPage.php");
+            }
         }
     } else 
         echo "errore di caricamento del file";
