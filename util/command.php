@@ -35,11 +35,17 @@
                             printField($key, $value);
 
                         if ($type == "is_user")
-                            echo "<td><button><a href='crud.php?operation=modify&id=" . $_SESSION['user_id'] . "&type=user'>Modifica</a></button></td>";
-                        else if ($type == "is_assisted")
-                        echo "<td><button><a href='crud.php?operation=modify&id=" . $_SESSION['user_id'] . "&type=assisted'>Modifica</a></button></td>";
-                    else 
-                        echo "<td><button><a href='crud.php?operation=modify&id=" . $_SESSION['user_id'] . "&type=volunteer'>Modifica</a></button></td>";
+                            echo "<td>
+                                    <button>
+                                        <a href='crud.php?operation=modify&id=" . $_SESSION['user_id'] . "&type=user'>Modifica</a>
+                                    </button>
+                                </td>";
+                        else if ($type == "is_volunteer")
+                            echo "<td>
+                                    <button>
+                                        <a href='crud.php?operation=modify&id=" . $_SESSION['user_id'] . "&type=volunteer'>Modifica</a>
+                                    </button>
+                                </td>";
 
                     echo "</tr>";
 
@@ -50,11 +56,17 @@
                             printField($key, $value);
                         
                         if ($type == "is_user")
-                            echo "<td><button><a href='crud.php?operation=modify&id=" . $_SESSION['user_id'] . "&type=user'>Modifica</a></button></td>";
-                        else if ($type == "is_assisted")
-                            echo "<td><button><a href='crud.php?operation=modify&id=" . $_SESSION['user_id'] . "&type=assisted'>Modifica</a></button></td>";
-                        else 
-                            echo "<td><button><a href='crud.php?operation=modify&id=" . $_SESSION['user_id'] . "&type=volunteer'>Modifica</a></button></td>";
+                            echo "<td>
+                                    <button>
+                                        <a href='crud.php?operation=modify&id=" . $_SESSION['user_id'] . "&type=user'>Modifica</a>
+                                    </button>
+                                </td>";
+                        else if ($type == "is_volunteer")
+                            echo "<td>
+                                    <button>
+                                        <a href='crud.php?operation=modify&id=" . $_SESSION['user_id'] . "&type=volunteer'>Modifica</a>
+                                    </button>
+                                </td>";
                     echo "</tr>";
                 }
 
@@ -222,36 +234,6 @@
                             <label>Nuova password</label><br>
                             <input type='password' name='new_psw' id='new_psw'>
                             <span id='passwordError'></span><br><br><br>
-
-                            <input type='submit' value='ESEGUI'>
-                        </form>";
-                }
-            break;
-
-            case "assisted":
-                echo "<h1>Modifica anagrafica assistito</h1>";
-                echo "<label>Cosa vuoi modificare?<br><br></label>";
-            
-                $query = "SELECT nome, cognome
-                        FROM assistiti 
-                        WHERE id_referente = '$userId'";
-                $result = dbQuery($connection, $query);
-
-                if ($result){
-                    while ($row = ($result->fetch_assoc())) {
-                        echo "<b>NOME: </b>" . $row["nome"] . "<br>";
-                        echo "<b>COGNOME: </b>" . $row["cognome"] . "<br>";
-                    }
-
-                    echo "<label><b>NUOVI DATI</b></label>";
-                    echo "<form action='update.php' method='POST'>
-                            <input type='hidden' name='type' value='assisted'>
-
-                            <label><br>Nome</label><br>
-                            <input type='text' name='new_name'>
-
-                            <label><br>Cognome</label><br>
-                            <input type='text' name='new_surname'>
 
                             <input type='submit' value='ESEGUI'>
                         </form>";
