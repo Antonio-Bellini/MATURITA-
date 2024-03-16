@@ -24,7 +24,7 @@
                 showMenu();
                 echo "<h1>Pagina di registrazione di un assistito</h1>";
                 echo "<main>
-                        <form action='register.php' name='form_assisted' id='form_register__assisted' method='POST'>
+                        <form action='register.php' name='form_assisted' id='form_register__assisted' method='POST' enctype='multipart/form-data'>
                             <input type='hidden' name='form_assisted'>
 
                             <label for='name'>Inserisci il nome</label>
@@ -33,8 +33,8 @@
                             <label for='surname'>Inserisci il cognome</label>
                             <input type='text' name='surname' id='surname' required> <br>
 
-                            <label for='med'>Inserisci il nome del file dell'anamnesi</label>
-                            <input type='text' name='med' id='med' required> <br>
+                            <label for='med'>Inserisci il file dell'anamnesi</label>
+                            <input type='file' name='med' id='med' accept='.pdf' enctype='multipart/form-data' required> <br>
 
                             <label for='notes'>Inserisci qualche nota aggiuntiva</label> <br>
                             <textarea name='notes' id='notes' cols='30' rows='10' placeholder='Altre info utili'></textarea><br><br>

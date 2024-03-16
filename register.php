@@ -41,22 +41,40 @@
         $query = "INSERT INTO volontari(nome, cognome, email, telefono_fisso, telefono_mobile)
                     VALUES('$name', '$surname', '$email', '$phone_f', '$phone_m');";
     } else if (isset($_POST["form_assisted"])) {
-        // ottengo i dati scritti nel form
+        $uploadedFileName = null;
+        $fileUploaded = false;
         $name = $_POST["name"];
         $surname = $_POST["surname"];
-        $med = $_POST["med"];
         $notes = $_POST["notes"];
-
+        
+        if(isset($_FILES['med'])) {
+            $uploadDirectory = 'medical_module/'; 
+        
+            $fileName = $_FILES['med']['name'];
+            $fileTmpName = $_FILES['med']['tmp_name'];
+        
+            // Aggiungi il nome del file al percorso della cartella di destinazione
+            $newFilePath = $uploadDirectory . $fileName;
+        
+            if(move_uploaded_file($fileTmpName, $newFilePath)) {
+                $fileUploaded = true;
+                $uploadedFileName = "/".$fileName;
+            } else
+                echo "Si è verificato un errore durante il caricamento del file.";
+        } else
+            echo "Nessun file selezionato";
+        
         // inserimento dell'assistito nel db
         $query = "INSERT INTO assistiti(nome, cognome, anamnesi, note, id_referente)
-                VALUES('$name', '$surname', '$med', '$notes', '{$_SESSION['user_id']}');";
+                  VALUES('$name', '$surname', '$uploadedFileName', '$notes', '{$_SESSION['user_id']}');";
         $result = dbQuery($connection, $query);
-
-        if ($result) {
+        
+        if ($result && $fileUploaded) {
             showMenu();
-            echo "Account creato con successo";
-        } else 
-            echo "Si é verificato un errore in inserimento, riprova piú tardi";
+            echo "Account creato con successo<br>";
+            echo "File dell'anamnesi caricato correttamente";
+        } else
+            echo "Si è verificato un errore durante l'inserimento, riprova più tardi";
     } else 
         echo "Non é stato compilato nessun form";
 ?>
