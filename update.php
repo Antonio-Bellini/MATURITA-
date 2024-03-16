@@ -51,25 +51,5 @@
                 echo "Nessuna modifica eseguita";
 
         break;
-
-        case "assisted":
-            if (!empty($_POST["new_name"]))
-                $new_data[] = "nome = '{$_POST["new_name"]}'";
-
-            if (!empty($_POST["new_surname"]))
-                $new_data[] = "cognome = '{$_POST["new_surname"]}'";
-
-            if (!empty($new_data)) {
-                $update_query .= implode(", ", $new_data);
-                $update_query .= " WHERE id = $userId";
-                $result = dbQuery($connection, $update_query);
-
-                if ($result)
-                    echo "modifiche eseguite con successo";
-                else
-                    echo "si é verificato un errore";
-            } else 
-                echo "Nessuna modifica eseguita";
-        break;
     }
 ?>
