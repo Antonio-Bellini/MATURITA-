@@ -182,7 +182,7 @@
                 echo "<h1>Modifica anagrafica utente</h1>";
                 echo "<label>Cosa vuoi modificare?<br><br></label>";
 
-                $query = "SELECT nome, cognome, email, telefono_fisso, telefono_mobile
+                $query = "SELECT nome, cognome, password, email, telefono_fisso, telefono_mobile
                         FROM utenti 
                         WHERE id = '$userId'";
                 $result = dbQuery($connection, $query);
@@ -197,8 +197,9 @@
                     }
 
                     echo "<label><b>NUOVI DATI</b></label>";
-                    echo "<form action='update.php' method='POST'>
+                    echo "<form action='update.php' method='POST' id='form_update__user'>
                             <input type='hidden' name='type' value='user'>
+                            <input type='hidden' name='user_id' value='$userId'>
 
                             <label><br>Nome</label><br>
                             <input type='text' name='new_name'>
@@ -216,10 +217,11 @@
                             <input type='text' name='new_tm'>
 
                             <label><br>Password attuale</label><br>
-                            <input type='password' name='old_psw'><br>
+                            <input type='password' name='old_psw' id='old_psw'><br>
 
-                            <label><br>Nuova password</label><br>
-                            <input type='password' name='new_psw'><br><br><br>
+                            <label>Nuova password</label><br>
+                            <input type='password' name='new_psw' id='new_psw'>
+                            <span id='passwordError'></span><br><br><br>
 
                             <input type='submit' value='ESEGUI'>
                         </form>";

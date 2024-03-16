@@ -6,8 +6,8 @@
     session_start();
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $oldPassword = $_POST['oldPsw'];
-        $newPassword = $_POST['newPsw'];
+        $oldPassword = $_POST['old_psw'];
+        $newPassword = $_POST['new_psw'];
 
         $connection = connectToDatabase(DB_NAME);
 
@@ -22,7 +22,7 @@
             
             if (($result->num_rows) > 0) {
                 while ($row = ($result->fetch_assoc())) {
-                    if (check_password($row['password'], $oldPassword))
+                    if (checkPassword($oldPassword, $row['password']))
                         echo "correct";
                     else
                         echo "not_correct";

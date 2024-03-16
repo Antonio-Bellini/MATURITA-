@@ -4,6 +4,8 @@
     include("util/command.php");
     include("util/cookie.php");
 
+    echo "<script src='https://code.jquery.com/jquery-3.6.4.min.js'></script>";
+    echo "<script src='script/script.js'></script>";
     importActualStyle();
     $connection = connectToDatabase(DB_NAME);
     session_start();

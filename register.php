@@ -25,8 +25,10 @@
                     VALUES ('$name', '$surname', '$username', '$password_enc', '$email', '$phone_f', '$phone_m', '$notes', 0, 4);";
         $result = dbQuery($connection, $query);
 
-        if ($result)
+        if ($result) {
+            showMenu();
             echo "account creato con successo";
+        }
     } else if (isset($_POST["form_volunteer"])) {
         // ottengo i dati scritti nel form
         $name = $_POST["name"];
