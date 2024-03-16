@@ -173,7 +173,8 @@
 
     // FUNZIONE per OTTENERE i DATI degli ASSISTITI COLLEGATI a un DETERMINATO UTENTE
     function getUserAssisted($connection, $userId) {
-        $query = "SELECT a.nome,
+        $query = "SELECT a.id,
+                    a.nome,
                     a.cognome, 
                     a.anamnesi,
                     a.note

@@ -17,7 +17,7 @@
 ?>
     <main>
         <h1>Pagina di caricamento delle liberatorie</h1>
-        <h4>Assicurati di caricare solo file PDF firmati</h4>
+        <h4>Assicurati di caricare solo il file PDF firmato</h4>
         <form action="util/upload.php" method="POST" enctype="multipart/form-data">
             <label for="assisted">Per quale assistito vuoi caricare la liberatoria?</label><br>
             <select name="assisted" id="assisted">
@@ -32,7 +32,11 @@
                     echo "<option>Nessun risultato trovato</option>";
             ?>
             </select><br><br>
-            <input type="file" name="file" accept=".pdf" required><br><br>
+            <input type="file" name="release" accept=".pdf" enctype="multipart/form-data" required><br><br>
+
+            <label for="notes">Inserisci qualche nota aggiuntiva</label> <br>
+            <textarea name="notes" id="notes" cols="30" rows="10" placeholder="info utili sul file"></textarea> <br><br><br>
+
             <button type="submit">Carica File</button>
         </form>
     </main>
