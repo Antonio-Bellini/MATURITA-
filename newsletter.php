@@ -8,9 +8,9 @@
     $connection = connectToDatabase(DB_NAME);
     session_start();
 
-    showMenu();
-
     if (isset($_SESSION["is_logged"]) && $_SESSION["is_logged"]) {
+        showMenu_logged();
+
         echo "QUESTA PAGINA CONTERRÁ LA NEWSLETTER DELL'ASSOCIAZIONE";
     } else 
         header("Location: loginPage.php");

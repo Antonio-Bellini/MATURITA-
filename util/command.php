@@ -7,7 +7,15 @@
     }
 
     // FUNZIONE per MOSTRARE il MENU per MOSTRARE le OPERAZIONI POSSIBILI
-    function showMenu() {
+    function showMenu_notLogged() {
+        echo "  <button><a href='index.php'>HOME</a></button>
+                <button><a href='newsletter.php'>NEWSLETTER</a></button>
+                <button><a href='bacheca.php'>BACHECA</a></button>
+                <button><a href='area_personale.php'>AREA PERSONALE</a></button>";
+    }
+
+    // FUNZIONE per MOSTRARE il MENU per MOSTRARE le OPERAZIONI POSSIBILI
+    function showMenu_logged() {
         echo "  <button><a href='index.php'>HOME</a></button>
                 <button><a href='newsletter.php'>NEWSLETTER</a></button>
                 <button><a href='bacheca.php'>BACHECA</a></button>

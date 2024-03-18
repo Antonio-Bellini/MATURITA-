@@ -37,11 +37,6 @@
                         <input type='submit' value='ACCEDI'><br><br><br>
                     </form>
                 </main>";
-
-            echo "<section>
-                    <label>Non sei ancora registrato? Registrati ora</label><br>
-                    <button><a href='register_user.php'>REGISTRATI</a></button>
-                </section>";
         }
     ?>
 </body>

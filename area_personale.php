@@ -7,13 +7,14 @@
     importActualStyle();
     $connection = connectToDatabase(DB_NAME);
     session_start();
-    showMenu();
 
     $profile_type = null;
     $profile_func = null;
     $auth = null;
 
     if (isset($_SESSION["is_logged"]) && $_SESSION["is_logged"]) {
+        showMenu_logged();
+
         $result = getUserAuth($connection, $_SESSION["username"]);
 
         // salvo i permessi che ha l'utente che ha effettuato il login

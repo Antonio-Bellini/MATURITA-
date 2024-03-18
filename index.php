@@ -11,7 +11,7 @@
     include "util/cookie.php";
     include "util/command.php";
     importActualStyle();
-    showMenu();
+    showMenu_notLogged();
 ?>
     <!-- SEZIONE PRINCIPALE della PAGINA INDEX -->
     <main>
