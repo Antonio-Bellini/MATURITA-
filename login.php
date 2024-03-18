@@ -36,7 +36,7 @@
                             $_SESSION["username"] = $username;
                             $_SESSION["user_id"] = $row["id"];
                             
-                            showMenu();
+                            showMenu_logged();
                             welcome($username);
                         } else {
                             echo "La password é errata, riprova...";
@@ -51,7 +51,7 @@
             echo "Qualcosa é andato storto, riprova piú tardi";
         }
     } else {
-        showMenu();
+        showMenu_logged();
         welcome($_SESSION["username"]);
     }
 ?>

@@ -70,14 +70,6 @@
                     }
                     else 
                         echo "Si é verificato un problema recuperando i dati dal database, riprova piú tardi";
-
-                    // bottone per inserire un nuovo assistito
-                    echo "<br><br><label>Inserisci un nuovo assistito</label><br>";
-                    echo "<button><a href='register_assisted.php'>Vai alla pagina</a></button>";
-
-                    // bottone per caricare la liberatoria
-                    echo "<br><br><label>Inserisci la liberatoria firmata</label><br>";
-                    echo "<button><a href='uploadPage.php'>Vai alla pagina</a></button>";
                 } else 
                     echo "Si é verificato un problema recuperando i dati dal database, riprova piú tardi";
             break;

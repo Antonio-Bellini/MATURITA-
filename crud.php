@@ -34,7 +34,7 @@
         break;
 
         case "modify":
-            showMenu();
+            showMenu_logged();
             
             switch ($profileType) {
                 case "user":
