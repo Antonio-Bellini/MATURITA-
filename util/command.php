@@ -6,7 +6,7 @@
         return $connection -> query($query);
     }
 
-    // FUNZIONE per MOSTRARE il MENU per MOSTRARE le OPERAZIONI POSSIBILI
+    // FUNZIONE per MOSTRARE il MENU per MOSTRARE le OPERAZIONI POSSIBILI da NON LOGGATI
     function showMenu_notLogged() {
         echo "  <button><a href='index.php'>HOME</a></button>
                 <button><a href='newsletter.php'>NEWSLETTER</a></button>
@@ -14,7 +14,7 @@
                 <button><a href='area_personale.php'>AREA PERSONALE</a></button>";
     }
 
-    // FUNZIONE per MOSTRARE il MENU per MOSTRARE le OPERAZIONI POSSIBILI
+    // FUNZIONE per MOSTRARE il MENU per MOSTRARE le OPERAZIONI POSSIBILI da LOGGATI
     function showMenu_logged() {
         echo "  <button><a href='index.php'>HOME</a></button>
                 <button><a href='newsletter.php'>NEWSLETTER</a></button>
@@ -23,75 +23,35 @@
                 <button><a href='crud.php?operation=LOGOUT'>LOGOUT</a></button><br><br>";
     }
 
-    // FUNZIONE per CREARE UNA TABELLA HTML in BASE ai DATI RICEVUTI dal DATABASE
-    function createTable($result, $type) {
-        if (!$result)
-            echo "Errore nella query: " . $result;
-        else {
-            if ($header = ($result->fetch_assoc())) {
+    // FUNZIONE per STAMPARE in FORMA TABELLARE i DATI OTTENUTI da una QUERY sul DATABASE
+    function createTable($result) {
+        if ($result) {
+            if (mysqli_num_rows($result) > 0) {
                 echo "<table border='1'>";
+                
+                // colonne ottenute dalla query
+                $column = mysqli_fetch_fields($result);
+                
+                // stampa intestazione della tabella in base alle colonne ottenute dalla query
+                echo "<tr>";
+                foreach ($column as $colonna)
+                    echo "<th>" . $colonna->name . "</th>";
+                    echo "<th>Bottoni</th>";
+                echo "</tr>";
+                
+                while ($row = mysqli_fetch_assoc($result)) {
                     echo "<tr>";
-                        foreach ($header as $key => $value)
-                            echo "<th>" . $key . "</th>";
-
-                            echo "<th>bottoni</th>";
-                    echo "</tr>";
-
-                    // riga appena inserita
-                    echo "<tr>";
-                        foreach ($header as $key => $value)
-                            printField($key, $value);
-
-                        if ($type == "is_user")
-                            echo "<td>
-                                    <button>
-                                        <a href='crud.php?operation=modify&id=" . $_SESSION['user_id'] . "&type=user'>Modifica</a>
-                                    </button>
-                                </td>";
-                        else if ($type == "is_volunteer")
-                            echo "<td>
-                                    <button>
-                                        <a href='crud.php?operation=modify&id=" . $_SESSION['user_id'] . "&type=volunteer'>Modifica</a>
-                                    </button>
-                                </td>";
-
-                    echo "</tr>";
-
-                // inserimento delle altre righe della tabella
-                while($header = $result->fetch_assoc()) {
-                    echo "<tr>";
-                        foreach ($header as $key => $value)
-                            printField($key, $value);
-                        
-                        if ($type == "is_user")
-                            echo "<td>
-                                    <button>
-                                        <a href='crud.php?operation=modify&id=" . $_SESSION['user_id'] . "&type=user'>Modifica</a>
-                                    </button>
-                                </td>";
-                        else if ($type == "is_volunteer")
-                            echo "<td>
-                                    <button>
-                                        <a href='crud.php?operation=modify&id=" . $_SESSION['user_id'] . "&type=volunteer'>Modifica</a>
-                                    </button>
-                                </td>";
+                    foreach ($row as $value) 
+                        echo "<td>" . $value . "</td>";
+                    echo "<td>
+                            <button><a href='crud.php?operation=modify&user=" . $row["id"] . "'>Modifica</a></button>
+                            <button><a href='crud.php?operation=delete&user=" . $row["id"] . "'>Elimina</a></button>
+                        </td>";
                     echo "</tr>";
                 }
-
                 echo "</table>";
-            } else
-                echo "Nessun risultato trovato.";
-        }
-    }
-
-    // FUNZIONE che FORMATTA in MODO da STAMPARE in una MANIERA piú LEGGIBILE il DATO
-    function printField($key, $value) {
-        $connection = connectToDatabase(DB_NAME);
-
-        switch($key) {
-            default:
-                echo "<td align='middle'>" . $value . "</td>";
-            break;
+            } else 
+                echo "<br><br>Nessun risultato trovato";
         }
     }
 
@@ -152,43 +112,6 @@
                 INNER JOIN tipi_funzione tf ON tf.id = p.tipo_funzione
                 WHERE u.username = '$username'
                 GROUP BY u.id;";
-        $result = dbQuery($connection, $query);
-
-        return $result;
-    }
-
-    // FUNZIONE per OTTENERE i DATI di un UTENTE
-    function getUserData($connection, $userId) {
-        $query = "SELECT u.nome,
-                    u.cognome,
-                    u.username,
-                    u.email,
-                    u.telefono_fisso,
-                    u.telefono_mobile,
-                    u.note,
-                    tp.tipo AS tipo_profilo,
-                    GROUP_CONCAT(tf.tipo SEPARATOR ',<br>') AS tipo_funzione,
-                    p.tipo_operazione AS permesso
-                FROM utenti u
-                INNER JOIN profili p ON u.id_profilo = p.tipo_profilo
-                INNER JOIN tipi_profilo tp ON p.tipo_profilo = tp.id
-                INNER JOIN tipi_funzione tf ON p.tipo_funzione = tf.id
-                WHERE u.id = '$userId'";
-        $result = dbQuery($connection, $query);
-
-        return $result;
-    }
-
-    // FUNZIONE per OTTENERE i DATI degli ASSISTITI COLLEGATI a un DETERMINATO UTENTE
-    function getUserAssisted($connection, $userId) {
-        $query = "SELECT a.id,
-                    a.nome,
-                    a.cognome, 
-                    a.anamnesi,
-                    a.note
-                FROM assistiti a 
-                INNER JOIN utenti u ON a.id_referente = u.id
-                WHERE u.id = '$userId'";
         $result = dbQuery($connection, $query);
 
         return $result;

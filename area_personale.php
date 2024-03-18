@@ -42,7 +42,11 @@
                 welcome($_SESSION["username"]);
                 $_SESSION["is_admin"] = true;
 
-                echo "se leggi sei un admin";
+                echo "<button><a href='admin_operation.php?operation=view_user'>Visualizza utenti</a></button><br><br>";
+                echo "<button><a href='admin_operation.php?operation=view_volu'>Visualizza volontari</a></button><br><br>";
+                echo "<button><a href='admin_operation.php?operation=view_assi'>Visualizza assistiti</a></button><br><br>";
+                echo "<button><a href='uploadPage.php'>Carica liberatorie</a></button><br><br>";
+                echo "<button><a href='admin_operation.php?operation=mng_event'>Pagina eventi</a></button><br><br>";
             break;
 
             case "terapista":
@@ -58,15 +62,33 @@
 
                 // ottengo i dati dell'utente e li stampo
                 echo "I tuoi dati:<br>";
-                $result = getUserData($connection, $_SESSION["user_id"]);
+                $query = "SELECT u.id,
+                                u.nome,
+                                u.cognome,
+                                u.username,
+                                u.email,
+                                u.telefono_fisso,
+                                u.telefono_mobile,
+                                u.note
+                            FROM utenti u
+                            WHERE u.id = '" . $_SESSION["user_id"] . "'";
+                $result = dbQuery($connection, $query);
                 if ($result) {
-                    createTable($result, "is_user");
+                    createTable($result);
 
                     // ottengo i dati degli assistiti collegati a questo utente e li stampo
                     echo "<br><br>I tuoi assistiti:<br>";
-                    $result = getUserAssisted($connection, $_SESSION["user_id"]);
+                    $query = "SELECT a.id,
+                                    a.nome,
+                                    a.cognome, 
+                                    a.anamnesi,
+                                    a.note
+                                FROM assistiti a 
+                                INNER JOIN utenti u ON a.id_referente = u.id
+                                WHERE u.id = '" . $_SESSION["user_id"] . "'";
+                    $result = dbQuery($connection, $query);
                     if ($result) {
-                        createTable($result, "is_assisted");
+                        createTable($result);
                     }
                     else 
                         echo "Si é verificato un problema recuperando i dati dal database, riprova piú tardi";

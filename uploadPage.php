@@ -23,7 +23,8 @@
             <select name="assisted" id="assisted">
             <?php
                 $connection = connectToDatabase(DB_NAME);
-                $result = getUserAssisted($connection, $_SESSION["user_id"]);
+                $query = "SELECT id, nome, cognome FROM assistiti";
+                $result = dbQuery($connection, $query);
 
                 if ($result) {
                     while ($row = ($result->fetch_assoc()))

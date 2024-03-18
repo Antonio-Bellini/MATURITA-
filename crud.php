@@ -17,50 +17,34 @@
     if (isset($_GET["operation"]))
         $operation = $_GET["operation"];
 
-    if (isset($_GET["id"]))
-        $userId = $_GET["id"];
+    if (isset($_GET["user"]))
+        $userId = $_GET["user"];
 
-    if (isset($_GET["type"]))
-        $profileType = $_GET["type"];
-
-    // possibili bottoni cliccati
+        // possibili bottoni cliccati
     switch ($operation) {
-        case "read_med":
-            showMenu();
-        break;
-
-        case "mng_adm":
-            showMenu();
-        break;
-
         case "modify":
             showMenu_logged();
-            
-            switch ($profileType) {
-                case "user":
-                    modifyForm("user", $userId);
-                break;
-
-                case "volunteer":
-                    modifyForm("volunteer", $userId);
-                break;
-            }
+            modifyForm("user", $userId);
         break;
+
+        case "delete":
+            echo "hai cliccato il bottone per eliminare uno user";
+            break;
 
         case "LOGOUT":
             if (isset($_SESSION["is_logged"]) && $_SESSION["is_logged"]) {
                 $_SESSION["is_logged"] = false;
 
                 if (session_destroy()) {
-                    showMenu();
-                    echo "Disconnessione avvenuta con successo"; 
+                    showMenu_notLogged();
+                    echo "<br>Disconnessione avvenuta con successo"; 
                 }
             } else
                 header("Location: loginPage.php");
-        break;
+            break;
 
         case null:
             header("Location: index.php");
-        break;
+            break;
     }
 ?>
