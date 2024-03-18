@@ -24,6 +24,35 @@
     }
 
     // FUNZIONI per STAMPARE in FORMA TABELLARE i DATI OTTENUTI da una QUERY sul DATABASE
+    function createTable($result) {
+        if ($result) {
+            if (mysqli_num_rows($result) > 0) {
+                echo "<table border='1'>";
+                
+                // colonne ottenute dalla query
+                $column = mysqli_fetch_fields($result);
+                
+                // stampa intestazione della tabella in base alle colonne ottenute dalla query
+                echo "<tr>";
+                foreach ($column as $colonna)
+                    echo "<th>" . $colonna->name . "</th>";
+                    echo "<th>Bottoni</th>";
+                echo "</tr>";
+                
+                while ($row = mysqli_fetch_assoc($result)) {
+                    echo "<tr>";
+                    foreach ($row as $value) 
+                        echo "<td>" . $value . "</td>";
+                    echo "<td>
+                            <button><a href='crud.php?operation=modify&user=" . $row["id"] . "'>Modifica</a></button>
+                        </td>";
+                    echo "</tr>";
+                }
+                echo "</table>";
+            } else 
+                echo "<br><br>Nessun risultato trovato";
+        }
+    }
     function createTableUser($result) {
         if ($result) {
             if (mysqli_num_rows($result) > 0) {

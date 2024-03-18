@@ -24,7 +24,7 @@
                                 FROM UTENTI";
                     $result = dbQuery($connection, $query);
                     if ($result)
-                        createTable2($result);
+                        createTable($result);
                     break;
 
                 case "view_volu":
@@ -35,7 +35,7 @@
                                 FROM volontari";
                     $result = dbQuery($connection, $query);
                     if ($result)
-                        createTable2($result);
+                        createTable($result);
                     break;
 
                 case "view_assi":
@@ -48,7 +48,7 @@
                                 INNER JOIN utenti u ON a.id_referente = u.id";
                     $result = dbQuery($connection, $query);
                     if ($result)
-                        createTable2($result);
+                        createTable($result);
                     break;
 
 
