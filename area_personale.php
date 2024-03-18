@@ -74,7 +74,7 @@
                             WHERE u.id = '" . $_SESSION["user_id"] . "'";
                 $result = dbQuery($connection, $query);
                 if ($result) {
-                    createTable($result);
+                    createTableUser($result);
 
                     // ottengo i dati degli assistiti collegati a questo utente e li stampo
                     echo "<br><br>I tuoi assistiti:<br>";
@@ -88,7 +88,7 @@
                                 WHERE u.id = '" . $_SESSION["user_id"] . "'";
                     $result = dbQuery($connection, $query);
                     if ($result) {
-                        createTable($result);
+                        createTableAssisted($result);
                     }
                     else 
                         echo "Si é verificato un problema recuperando i dati dal database, riprova piú tardi";

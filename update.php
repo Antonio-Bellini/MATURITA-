@@ -8,7 +8,7 @@
     $connection = connectToDatabase(DB_NAME);
     session_start();
 
-    showMenu();
+    showMenu_logged();
 
     $type = $_POST["type"];
     $userId = $_POST["user_id"];
@@ -49,7 +49,6 @@
                     echo "si é verificato un errore";
             } else 
                 echo "Nessuna modifica eseguita";
-
         break;
     }
 ?>

@@ -12,7 +12,7 @@
 
     $operation = null;
     $userId = null;
-    $profileType = null;
+    $profile = null;
 
     if (isset($_GET["operation"]))
         $operation = $_GET["operation"];
@@ -20,17 +20,24 @@
     if (isset($_GET["user"]))
         $userId = $_GET["user"];
 
-        // possibili bottoni cliccati
+    if (isset($_GET["profile"]))
+        $profile = $_GET["profile"];
+
+    // possibili bottoni cliccati
     switch ($operation) {
         case "modify":
             showMenu_logged();
-            modifyForm("user", $userId);
+            switch ($profile) {
+                case "user":
+                    modifyForm("user", $userId);
+                    break;
+
+                case "assisted":
+                    modifyForm("assisted", $userId);
+                    break;
+            }
         break;
-
-        case "delete":
-            echo "hai cliccato il bottone per eliminare uno user";
-            break;
-
+        
         case "LOGOUT":
             if (isset($_SESSION["is_logged"]) && $_SESSION["is_logged"]) {
                 $_SESSION["is_logged"] = false;
