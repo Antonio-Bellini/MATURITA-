@@ -24,7 +24,7 @@
     }
 
     // FUNZIONI per STAMPARE in FORMA TABELLARE i DATI OTTENUTI da una QUERY sul DATABASE
-    function createTable($result) {
+    function createTable($result, $userType) {
         if ($result) {
             if (mysqli_num_rows($result) > 0) {
                 echo "<table border='1'>";
@@ -43,9 +43,8 @@
                     echo "<tr>";
                     foreach ($row as $value) 
                         echo "<td>" . $value . "</td>";
-                    echo "<td>
-                            <button><a href='crud.php?operation=modify&user=" . $row["id"] . "'>Modifica</a></button>
-                        </td>";
+
+                    printButton($userType, $row["id"]);
                     echo "</tr>";
                 }
                 echo "</table>";
@@ -53,62 +52,27 @@
                 echo "<br><br>Nessun risultato trovato";
         }
     }
-    function createTableUser($result) {
-        if ($result) {
-            if (mysqli_num_rows($result) > 0) {
-                echo "<table border='1'>";
-                
-                // colonne ottenute dalla query
-                $column = mysqli_fetch_fields($result);
-                
-                // stampa intestazione della tabella in base alle colonne ottenute dalla query
-                echo "<tr>";
-                foreach ($column as $colonna)
-                    echo "<th>" . $colonna->name . "</th>";
-                    echo "<th>Bottoni</th>";
-                echo "</tr>";
-                
-                while ($row = mysqli_fetch_assoc($result)) {
-                    echo "<tr>";
-                    foreach ($row as $value) 
-                        echo "<td>" . $value . "</td>";
-                    echo "<td>
-                            <button><a href='crud.php?operation=modify&user=" . $row["id"] . "&profile=user'>Modifica</a></button>
-                        </td>";
-                    echo "</tr>";
-                }
-                echo "</table>";
-            } else 
-                echo "<br><br>Nessun risultato trovato";
-        }
-    }
-    function createTableAssisted($result) {
-        if ($result) {
-            if (mysqli_num_rows($result) > 0) {
-                echo "<table border='1'>";
-                
-                // colonne ottenute dalla query
-                $column = mysqli_fetch_fields($result);
-                
-                // stampa intestazione della tabella in base alle colonne ottenute dalla query
-                echo "<tr>";
-                foreach ($column as $colonna)
-                    echo "<th>" . $colonna->name . "</th>";
-                    echo "<th>Bottoni</th>";
-                echo "</tr>";
-                
-                while ($row = mysqli_fetch_assoc($result)) {
-                    echo "<tr>";
-                    foreach ($row as $value) 
-                        echo "<td>" . $value . "</td>";
-                    echo "<td>
-                            <button><a href='crud.php?operation=modify&user=" . $row["id"] . "&profile=assisted'>Modifica</a></button>
-                        </td>";
-                    echo "</tr>";
-                }
-                echo "</table>";
-            } else 
-                echo "<br><br>Nessun risultato trovato";
+
+    // FUNZIONE per la STAMPA dei BOTTONI di MODIFICA
+    function printButton($userType, $userId) {
+        switch ($userType) {
+            case "user" :
+                echo "<td>
+                        <button><a href='crud.php?operation=modify&user={$userId}&profile=user'>Modifica</a></button>
+                    </td>";
+                break;
+
+            case "assisted":
+                echo "<td>
+                        <button><a href='crud.php?operation=modify&user={$userId}&profile=assisted'>Modifica</a></button>
+                    </td>";
+                break;
+
+            case null:
+                echo "<td>
+                        <button><a href='crud.php?operation=modify&user={$userId}'>Modifica</a></button>
+                    </td>";
+                break;
         }
     }
 
@@ -230,7 +194,34 @@
             break;
 
             case "assisted":
-                echo "assisted form";
+                echo "<h1>Modifica anagrafica Assistito</h1>";
+                echo "<label>Cosa vuoi modificare?<br><br></label>";
+
+                $query = "SELECT a.nome, a.cognome
+                        FROM assistiti a
+                        INNER JOIN utenti u ON a.id_referente = u.id
+                        WHERE u.id = '$userId'";
+                $result = dbQuery($connection, $query);
+
+                if ($result) {
+                    while ($row = ($result->fetch_assoc())) {
+                        echo "<b>NOME: </b>" . $row["nome"] . "<br>";
+                        echo "<b>COGNOME: </b>" . $row["cognome"] . "<br><br><br>";
+                    }
+
+                    echo "<label><b>NUOVI DATI</b></label>";
+                    echo "<form action='update.php' method='POST' id='form_update__assisted'>
+                            <input type='hidden' name='type' value='assisted'>
+                            <input type='hidden' name='user_id' value='$userId'>
+
+                            <label><br>Nome</label><br>
+                            <input type='text' name='new_name'>
+
+                            <label><br>Cognome</label><br>
+                            <input type='text' name='new_surname'><br><br><br>
+                            
+                            <input type='submit' value='ESEGUI'>";
+                }
                 break;
         }
     }

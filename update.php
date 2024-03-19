@@ -12,11 +12,16 @@
 
     $type = $_POST["type"];
     $userId = $_POST["user_id"];
-    $update_query = "UPDATE utenti SET ";
+    $update_query = null;
     $new_data = array();
+
+    if (!empty($new_data)) 
+        $new_data = array();
 
     switch ($type) {
         case "user":
+            $update_query = "UPDATE utenti SET ";
+
             if (!empty($_POST["new_name"]))
                 $new_data[] = "nome = '{$_POST["new_name"]}'";
 
@@ -49,6 +54,28 @@
                     echo "si é verificato un errore";
             } else 
                 echo "Nessuna modifica eseguita";
-        break;
+            break;
+
+        case "assisted":
+            $update_query = "UPDATE assistiti SET ";
+
+            if (!empty($_POST["new_name"]))
+                $new_data[] = "nome = '{$_POST["new_name"]}'";
+
+            if (!empty($_POST["new_surname"]))
+                $new_data[] = "cognome = '{$_POST["new_surname"]}'";
+
+            if (!empty($new_data)) {
+                $update_query .= implode(", ", $new_data);
+                $update_query .= " WHERE id = $userId";
+                $result = dbQuery($connection, $update_query);
+
+                if ($result)
+                    echo "modifiche eseguite con successo";
+                else
+                    echo "si é verificato un errore";
+            } else 
+                echo "Nessuna modifica eseguita";
+            break;
     }
 ?>
