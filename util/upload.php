@@ -10,10 +10,14 @@
 
     $fileUploaded = false;
     $assistedId = null;
+    $volunteerId = null;
     $notes = null;
 
     if (isset($_POST["assisted"]))
         $assistedId = $_POST["assisted"];
+
+    if (isset($_POST["volunteer"]))
+        $volunteerId = $_POST["volunteer"];
 
     if (isset($_POST["notes"]))
         $notes = $_POST["notes"];
@@ -43,15 +47,29 @@
         if ($result) {
             $module_id = $connection->insert_id;
 
-            $query = "UPDATE assistiti
-                        SET id_liberatoria = '$module_id'
-                        WHERE id = '$assistedId';";
-            $result = dbQuery($connection, $query);
+            if ($assistedId != null) {
+                $query = "UPDATE assistiti
+                SET id_liberatoria = '$module_id'
+                WHERE id = '$assistedId';";
+                $result = dbQuery($connection, $query);
 
-            if ($result) {
-                echo "Liberatoria caricata correttamente, stai per essere reindirizzato";
-                header("Refresh: 3; URL=loginPage.php");
+                if ($result) {
+                    echo "Liberatoria caricata correttamente, stai per essere reindirizzato";
+                    header("Refresh: 3; URL=../loginPage.php");
+                }
+            } else if ($volunteerId != null) {
+                $query = "UPDATE volontari
+                SET id_liberatoria = '$module_id'
+                WHERE id = '$volunteerId';";
+                $result = dbQuery($connection, $query);
+
+                if ($result) {
+                    echo "Liberatoria caricata correttamente, stai per essere reindirizzato";
+                    header("Refresh: 3; URL=../loginPage.php");
+                }
             }
+
+            
         }
     } else 
         echo "errore di caricamento del file";
