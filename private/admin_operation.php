@@ -1,9 +1,12 @@
 <?php
-    require_once("util/constants.php");
-    include("util/connection.php");
-    include("util/command.php");
-    include("util/cookie.php");
+    require_once("../util/constants.php");
+    include("../util/connection.php");
+    include("../util/command.php");
+    include("../util/cookie.php");
 
+    echo "<script src='https://code.jquery.com/jquery-3.6.4.min.js'></script>";
+    echo "<script src='../script/script.js'></script>";
+    
     importActualStyle();
     $connection = connectToDatabase(DB_NAME);
     session_start();
@@ -34,8 +37,9 @@
                     showMenu_logged();
                     
                     echo "<label><b>VOLONTARI REGISTRATI</b></label>";
-                    $query = "SELECT id, nome, cognome, email, telefono_fisso, telefono_mobile
-                                FROM volontari";
+                    $query = "SELECT v.id, v.nome, v.cognome, v.email, v.telefono_fisso, v.telefono_mobile, l.liberatoria
+                                FROM volontari v
+                                INNER JOIN liberatorie l ON v.id_liberatoria = l.id";
                     $result = dbQuery($connection, $query);
                     if ($result)
                         createTable($result, "volunteer");
@@ -62,20 +66,32 @@
 
 
                 case "mng_event":
-                    showMenu_logged();
-                    
                     echo "<label><b>PAGINA EVENTI</b></label>";
                     echo "<br>Quale operazione vuoi eseguire?<br><br>";
-                    echo "<select name=''>";
+                    echo "<select id='mng_event__selected'>";
                         echo "<option value='1'>Assegna volonatrio a evento</option>";
-                        echo "<option value='1'>Aggiungi assistito a evento</option>";
-                        echo "<option value='1'>Crea nuovo evento</option>";
-                        echo "<option value='1'>Aggiungi un nuovo tipo di evento</option>";
+                        echo "<option value='2'>Aggiungi assistito a evento</option>";
+                        echo "<option value='3'>Crea nuovo evento</option>";
+                        echo "<option value='4'>Aggiungi un nuovo tipo di evento</option>";
                     echo "</select>";
+
+                    addVolunteerToEvent();
+                    addAssistedToEvent();
+                    createNewEvent();
+                    addNewEventType();
                     break;
             }
 
         } else
             header("Location: index.php");
+    }
+
+    // funzione per mostrare il menu di navigazione
+    function showMenu_logged() {
+        echo "  <button><a href='../index.php'>HOME</a></button>
+                <button><a href='../newsletter.php'>NEWSLETTER</a></button>
+                <button><a href='../bacheca.php'>BACHECA</a></button>
+                <button><a href='area_personale.php'>AREA PERSONALE</a></button>
+                <button><a href='crud.php?operation=LOGOUT'>LOGOUT</a></button><br><br>";
     }
 ?>

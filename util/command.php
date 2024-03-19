@@ -6,23 +6,6 @@
         return $connection -> query($query);
     }
 
-    // FUNZIONE per MOSTRARE il MENU per MOSTRARE le OPERAZIONI POSSIBILI da NON LOGGATI
-    function showMenu_notLogged() {
-        echo "  <button><a href='index.php'>HOME</a></button>
-                <button><a href='newsletter.php'>NEWSLETTER</a></button>
-                <button><a href='bacheca.php'>BACHECA</a></button>
-                <button><a href='area_personale.php'>AREA PERSONALE</a></button>";
-    }
-
-    // FUNZIONE per MOSTRARE il MENU per MOSTRARE le OPERAZIONI POSSIBILI da LOGGATI
-    function showMenu_logged() {
-        echo "  <button><a href='index.php'>HOME</a></button>
-                <button><a href='newsletter.php'>NEWSLETTER</a></button>
-                <button><a href='bacheca.php'>BACHECA</a></button>
-                <button><a href='area_personale.php'>AREA PERSONALE</a></button>
-                <button><a href='crud.php?operation=LOGOUT'>LOGOUT</a></button><br><br>";
-    }
-
     // FUNZIONI per STAMPARE in FORMA TABELLARE i DATI OTTENUTI da una QUERY sul DATABASE
     function createTable($result, $userType) {
         if ($result) {
@@ -57,9 +40,9 @@
     function printField($value) {
         if (substr($value, 0, 1) === "/") {
             if (substr($value, 1, (strpos($value, "_")) - 1) === "anamnesi") {
-                return "</button><a href='medical_module" . $value . "'>Apri il file</a></button>";
+                return "</button><a href='../medical_module" . $value . "'>Apri il file</a></button>";
             } else 
-                return "</button><a href='release_module". $value . "'>Apri il file</a></button>";
+                return "</button><a href='../release_module". $value . "'>Apri il file</a></button>";
         } else 
             return $value;
     }
@@ -283,5 +266,33 @@
                 }
                 break;
         }
+    }
+
+    // FUNZIONE che MOSTRA il FORM per AGGIUNGERE un VOLONTARIO a un evento
+    function addVolunteerToEvent() {
+        echo "<form name='' id='addVolunteerToEvent' method='POST'>
+                ciao1
+            </form>";
+    }
+
+    //
+    function addAssistedToEvent() {
+        echo "<form name='' id='addAssistedToEvent' method='POST'>
+                ciao2
+            </form>";
+    }
+
+    // 
+    function createNewEvent() {
+        echo "<form name='' id='createNewEvent' method='POST'>
+                ciao3
+            </form>";
+    } 
+
+    //
+    function addNewEventType() {
+        echo "<form name='' id='addNewEventType' method='POST'>
+                ciao4
+            </form>";
     }
 ?>

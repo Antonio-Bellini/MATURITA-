@@ -1,8 +1,8 @@
 <?php
-    require_once("util/constants.php");
-    include("util/connection.php");
-    include("util/command.php");
-    include("util/cookie.php");
+    require_once("../util/constants.php");
+    include("../util/connection.php");
+    include("../util/command.php");
+    include("../util/cookie.php");
 
     importActualStyle();
     $connection = connectToDatabase(DB_NAME);
@@ -13,7 +13,11 @@
     $auth = null;
 
     if (isset($_SESSION["is_logged"]) && $_SESSION["is_logged"]) {
-        showMenu_logged();
+        echo "  <button><a href='../index.php'>HOME</a></button>
+                <button><a href='../newsletter.php'>NEWSLETTER</a></button>
+                <button><a href='../bacheca.php'>BACHECA</a></button>
+                <button><a href='area_personale.php'>AREA PERSONALE</a></button>
+                <button><a href='crud.php?operation=LOGOUT'>LOGOUT</a></button><br><br>";
 
         $result = getUserAuth($connection, $_SESSION["username"]);
 
@@ -45,7 +49,7 @@
                 echo "<button><a href='admin_operation.php?operation=view_user'>Visualizza utenti</a></button><br><br>";
                 echo "<button><a href='admin_operation.php?operation=view_volu'>Visualizza volontari</a></button><br><br>";
                 echo "<button><a href='admin_operation.php?operation=view_assi'>Visualizza assistiti</a></button><br><br>";
-                echo "<button><a href='uploadPage.php'>Carica liberatorie</a></button><br><br>";
+                echo "<button><a href='../upload/uploadPage.php'>Carica liberatorie</a></button><br><br>";
                 echo "<button><a href='admin_operation.php?operation=mng_event'>Pagina eventi</a></button><br><br>";
             break;
 

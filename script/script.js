@@ -48,6 +48,39 @@ $(document).ready(function () {
             $('#form_volunteer').hide();
         }
     });
+
+    //
+    $('#addVolunteerToEvent').show();
+    $('#addAssistedToEvent').hide();
+    $('#createNewEvent').hide();
+    $('#addNewEventType').hide();
+
+    $('#mng_event__selected').change(function() {
+        let selectedOption = $(this).val();
+
+        if (selectedOption === '1') {
+            alert("ciao")
+            $('#addVolunteerToEvent').show();
+            $('#addAssistedToEvent').hide();
+            $('#createNewEvent').hide();
+            $('#addNewEventType').hide();
+        } else if (selectedOption === '2') {
+            $('#addVolunteerToEvent').hide();
+            $('#addAssistedToEvent').show();
+            $('#createNewEvent').hide();
+            $('#addNewEventType').hide();
+        } else if (selectedOption === '3') {
+            $('#addVolunteerToEvent').hide();
+            $('#addAssistedToEvent').hide();
+            $('#createNewEvent').show();
+            $('#addNewEventType').hide();
+        } else if (selectedOption === '4') {
+            $('#addVolunteerToEvent').hide();
+            $('#addAssistedToEvent').hide();
+            $('#createNewEvent').hide();
+            $('#addNewEventType').show();
+        }
+    });
 });
 
 // AJAX per il controllo live dell'email inserita
