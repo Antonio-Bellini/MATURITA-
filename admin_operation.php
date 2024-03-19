@@ -24,7 +24,10 @@
                                 FROM UTENTI";
                     $result = dbQuery($connection, $query);
                     if ($result)
-                        createTable($result);
+                        createTable($result, "user");
+
+                    echo "<br><br><br><label>Crea un nuovo account genitore</label><br>";
+                    echo "<button><a href='register_user.php'>Vai alla pagina</a></button>";
                     break;
 
                 case "view_volu":
@@ -35,7 +38,10 @@
                                 FROM volontari";
                     $result = dbQuery($connection, $query);
                     if ($result)
-                        createTable($result);
+                        createTable($result, "volunteer");
+
+                    echo "<br><br><br><label>Crea un nuovo account volontario</label><br>";
+                    echo "<button><a href='register_volunteer.php'>Vai alla pagina</a></button>";
                     break;
 
                 case "view_assi":
@@ -48,12 +54,24 @@
                                 INNER JOIN utenti u ON a.id_referente = u.id";
                     $result = dbQuery($connection, $query);
                     if ($result)
-                        createTable($result);
+                        createTable($result, "assisted");
+
+                    echo "<br><br><br><label>Aggiungi un nuovo assistito</label><br>";
+                    echo "<button><a href='register_assisted.php'>Vai alla pagina</a></button>";
                     break;
 
 
                 case "mng_event":
-                    echo "pagina ud";
+                    showMenu_logged();
+                    
+                    echo "<label><b>PAGINA EVENTI</b></label>";
+                    echo "<br>Quale operazione vuoi eseguire?<br><br>";
+                    echo "<select name=''>";
+                        echo "<option value='1'>Assegna volonatrio a evento</option>";
+                        echo "<option value='1'>Aggiungi assistito a evento</option>";
+                        echo "<option value='1'>Crea nuovo evento</option>";
+                        echo "<option value='1'>Aggiungi un nuovo tipo di evento</option>";
+                    echo "</select>";
                     break;
             }
 

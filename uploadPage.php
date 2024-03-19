@@ -15,10 +15,21 @@
     importActualStyle();
     session_start();
 ?>
-    <main>
-        <h1>Pagina di caricamento delle liberatorie</h1>
-        <h4>Assicurati di caricare solo il file PDF firmato</h4>
-        <form action="util/upload.php" method="POST" enctype="multipart/form-data">
+
+    <h1>Pagina di caricamento delle liberatorie</h1>
+    <h4>Assicurati di caricare solo il file PDF firmato</h4>
+    <label for="choice">Per chi vuoi caricare la liberatoria?</label><br>
+    <select name="choice" id="choice">
+        <option value="1">Assistito</option>
+        <option value="2">Volontario</option>
+    </select>
+
+    <br><br>
+
+    <section id="form_assisted">
+        <form action="util/upload.php" method="POST" enctype="multipart/form-data" name="release_assisted">
+            <input type="hidden" name="user_type" value="assisted">
+
             <label for="assisted">Per quale assistito vuoi caricare la liberatoria?</label><br>
             <select name="assisted" id="assisted">
             <?php
@@ -40,6 +51,33 @@
 
             <button type="submit">Carica File</button>
         </form>
-    </main>
+    </section>
+
+    <section id="form_volunteer">
+        <form action="util/upload.php" method="POST" enctype="multipart/form-data" name="release_volunteer">
+            <input type="hidden" name="user_type" value="volunteer">
+
+            <label for="assisted">Per quale volontario vuoi caricare la liberatoria?</label><br>
+            <select name="volunteer" id="volunteer">
+            <?php
+                $connection = connectToDatabase(DB_NAME);
+                $query = "SELECT id, nome, cognome FROM volontari";
+                $result = dbQuery($connection, $query);
+
+                if ($result) {
+                    while ($row = ($result->fetch_assoc()))
+                        echo "<option value=" . $row["id"] . ">" . $row["nome"] . " " . $row["cognome"] . "</option>";
+                } else 
+                    echo "<option>Nessun risultato trovato</option>";
+            ?>
+            </select><br><br>
+            <input type="file" name="release" accept=".pdf" enctype="multipart/form-data" required><br><br>
+
+            <label for="notes">Inserisci qualche nota aggiuntiva</label> <br>
+            <textarea name="notes" id="notes" cols="30" rows="10" placeholder="info utili sul file"></textarea> <br><br><br>
+
+            <button type="submit">Carica File</button>
+        </form>
+    </section>
 </body>
 </html>

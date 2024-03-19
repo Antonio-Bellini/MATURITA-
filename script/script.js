@@ -62,3 +62,24 @@ function checkNewPassword(old_psw, new_psw) {
         }
     })
 }
+
+$(document).ready(function() {
+    $('#form_assisted').show();
+    $('#form_volunteer').hide();
+
+    // gestisco la visualizzazione dei form in base alla selezione dell'utente
+    $('#choice').change(function() {
+        let selectedOption = $(this).val();
+
+        if (selectedOption === '1') {
+            $('#form_assisted').show();
+            $('#form_volunteer').hide();
+        } else if (selectedOption === '2') {
+            $('#form_volunteer').show();
+            $('#form_assisted').hide();
+        } else {
+            $('#form_assisted').hide();
+            $('#form_volunteer').hide();
+        }
+    });
+});

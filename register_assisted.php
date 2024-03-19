@@ -21,7 +21,7 @@
         
         if (isset($_SESSION["is_logged"]) && $_SESSION["is_logged"]) {
             if ($_SESSION["is_parent"] || $_SESSION["is_admin"]) {
-                showMenu();
+                showMenu_logged();
                 echo "<h1>Pagina di registrazione di un assistito</h1>";
                 echo "<main>
                         <form action='register.php' name='form_assisted' id='form_register__assisted' method='POST' enctype='multipart/form-data'>

@@ -22,7 +22,7 @@
             if ($_SESSION["is_admin"] || $_SESSION["is_president"]) {
                 echo "<h1>Pagina di registrazione di un volontario</h1>";
                 echo "<main>
-                        <form action='register.php' name='form_volunteer' id='form_register__volunteer' method='POST'>
+                        <form action='register.php' name='form_volunteer' id='form_register__volunteer' method='POST' enctype='multipart/form-data'>
                             <input type='hidden' name='form_volunteer'>
 
                             <label for='name'>Inserisci il nome</label>
@@ -38,7 +38,10 @@
                             <input type='text' name='phone_f' id='phone_f'> <br>
 
                             <label for='phone_m'>Inserisci il numero di telefono</label>
-                            <input type='text' name='phone_m' id='phone_m' required> <br><br>
+                            <input type='text' name='phone_m' id='phone_m' required> <br>
+
+                            <label for='release'>Carica la liberatoria</label>
+                            <input type='file' name='release' id='release' accept='.pdf' enctype='multipart/form-data' required> <br><br>
 
                             <input type='submit' value='Crea Account Volontario'>
                         </form>
