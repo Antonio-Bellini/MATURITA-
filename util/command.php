@@ -42,7 +42,7 @@
                 while ($row = mysqli_fetch_assoc($result)) {
                     echo "<tr>";
                     foreach ($row as $value) 
-                        echo "<td>" . $value . "</td>";
+                        echo "<td>" . printField($value) . "</td>";
 
                     printButton($userType, $row["id"]);
                     echo "</tr>";
@@ -51,6 +51,17 @@
             } else 
                 echo "<br><br>Nessun risultato trovato";
         }
+    }
+
+    // FUNZIONE per STAMPARE una VARIABILE o CREARE un BOTTONE che REINDIRIZZA a un FILE
+    function printField($value) {
+        if (substr($value, 0, 1) === "/") {
+            if (substr($value, 1, (strpos($value, "_")) - 1) === "anamnesi") {
+                return "</button><a href='medical_module" . $value . "'>Apri il file</a></button>";
+            } else 
+                return "</button><a href='release_module". $value . "'>Apri il file</a></button>";
+        } else 
+            return $value;
     }
 
     // FUNZIONE per la STAMPA dei BOTTONI di MODIFICA
