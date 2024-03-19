@@ -19,7 +19,7 @@
             $_SESSION["is_admin"] = false;
 
         if (isset($_SESSION["is_logged"]) && $_SESSION["is_logged"]) {
-            if ($_SESSION["is_admin"] || $_SESSION["is_president"]) {
+            if ($_SESSION["is_admin"]) {
                 echo "<h1>Pagina di registrazione di un volontario</h1>";
                 echo "<main>
                         <form action='register.php' name='form_volunteer' id='form_register__volunteer' method='POST' enctype='multipart/form-data'>

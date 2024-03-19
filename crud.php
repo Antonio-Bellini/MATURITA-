@@ -35,6 +35,10 @@
                 case "assisted":
                     modifyForm("assisted", $userId);
                     break;
+
+                case "volunteer":
+                    modifyForm("volunteer", $userId);
+                    break;
             }
         break;
         

@@ -79,6 +79,12 @@
                     </td>";
                 break;
 
+            case "volunteer":
+                echo "<td>
+                        <button><a href='crud.php?operation=modify&user={$userId}&profile=volunteer'>Modifica</a></button>
+                    </td>";
+                break;
+
             case null:
                 echo "<td>
                         <button><a href='crud.php?operation=modify&user={$userId}'>Modifica</a></button>
@@ -202,7 +208,7 @@
                             <input type='submit' value='ESEGUI'>
                         </form>";
                 }
-            break;
+                break;
 
             case "assisted":
                 echo "<h1>Modifica anagrafica Assistito</h1>";
@@ -230,6 +236,48 @@
 
                             <label><br>Cognome</label><br>
                             <input type='text' name='new_surname'><br><br><br>
+                            
+                            <input type='submit' value='ESEGUI'>";
+                }
+                break;
+
+            case "volunteer":
+                echo "<h1>Modifica anagrafica Volontario</h1>";
+                echo "<label>Cosa vuoi modificare?<br><br></label>";
+
+                $query = "SELECT nome, cognome, email, telefono_fisso, telefono_mobile
+                        FROM volontari
+                        WHERE id = '$userId'";
+                $result = dbQuery($connection, $query);
+
+                if ($result) {
+                    while ($row = ($result->fetch_assoc())) {
+                        echo "<b>NOME: </b>" . $row["nome"] . "<br>";
+                        echo "<b>COGNOME: </b>" . $row["cognome"] . "<br>";
+                        echo "<b>EMAIL: </b>" . $row["email"] . "<br>";
+                        echo "<b>TELEFONO FISSO: </b>" . $row["telefono_fisso"] . "<br>";
+                        echo "<b>TELEFONO MOBILE: </b>" . $row["telefono_mobile"] . "<br><br><br>";
+                    }
+
+                    echo "<label><b>NUOVI DATI</b></label>";
+                    echo "<form action='update.php' method='POST' id='form_update__volunteer'>
+                            <input type='hidden' name='type' value='volunteer'>
+                            <input type='hidden' name='user_id' value='$userId'>
+
+                            <label><br>Nome</label><br>
+                            <input type='text' name='new_name'>
+
+                            <label><br>Cognome</label><br>
+                            <input type='text' name='new_surname'>
+                            
+                            <label><br>Email</label><br>
+                            <input type='email' name='new_email'>
+
+                            <label><br>Telefono fisso</label><br>
+                            <input type='text' name='new_tf'>
+
+                            <label><br>Telefono mobile</label><br>
+                            <input type='text' name='new_tm'><br><br><br>
                             
                             <input type='submit' value='ESEGUI'>";
                 }

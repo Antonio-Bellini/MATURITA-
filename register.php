@@ -40,6 +40,13 @@
         // inserimento dell'utente nel db
         $query = "INSERT INTO volontari(nome, cognome, email, telefono_fisso, telefono_mobile)
                     VALUES('$name', '$surname', '$email', '$phone_f', '$phone_m');";
+        $result = dbQuery($connection, $query);
+
+        if ($result) {
+            showMenu_logged();
+            echo "Account creato con successo";
+        } else 
+            echo "si é verificato un errore, riprova piú tardi";
     } else if (isset($_POST["form_assisted"])) {
         $uploadedFileName = null;
         $fileUploaded = false;

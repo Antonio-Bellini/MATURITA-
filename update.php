@@ -77,5 +77,36 @@
             } else 
                 echo "Nessuna modifica eseguita";
             break;
+
+        case "volunteer":
+            $update_query = "UPDATE volontari SET ";
+
+            if (!empty($_POST["new_name"]))
+                $new_data[] = "nome = '{$_POST["new_name"]}'";
+
+            if (!empty($_POST["new_surname"]))
+                $new_data[] = "cognome = '{$_POST["new_surname"]}'";
+
+            if (!empty($_POST["new_email"]))
+                $new_data[] = "email = '{$_POST["new_email"]}'";
+
+            if (!empty($_POST["new_tf"])) 
+                $new_data[] = "telefono_fisso = '{$_POST["new_tf"]}'";
+
+            if (!empty($_POST["new_tm"])) 
+                $new_data[] = "telefono_mobile = '{$_POST["new_tm"]}'";
+
+            if (!empty($new_data)) {
+                $update_query .= implode(", ", $new_data);
+                $update_query .= " WHERE id = $userId";
+                $result = dbQuery($connection, $update_query);
+
+                if ($result)
+                    echo "modifiche eseguite con successo";
+                else
+                    echo "si é verificato un errore";
+            } else 
+                echo "Nessuna modifica eseguita";
+            break;
     }
 ?>
