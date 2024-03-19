@@ -1,7 +1,7 @@
 <?php
-    include "command.php";
-    include "connection.php";
-    require_once("constants.php");
+    include "../command.php";
+    include "../connection.php";
+    require_once("../constants.php");
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $username = $_POST['username'];

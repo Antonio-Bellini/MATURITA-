@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="script/script.js"></script>
+    <script src="../script/script.js"></script>
     <title>Associazione ZeroTre</title>
 </head>
 <!-- STAMPA del BODY in BASE al COOKIE SALVATO -->
@@ -23,6 +23,7 @@
         else
             echo "<h2>NON SEI AUTORIZZATO AD ENTRARE IN QUESTA PAGINA</h2>"; 
     ?>
+    
     <!-- SEZIONE PRINCIPALE della PAGINA DI REGISTRAZIONE -->
     <main>
         <h1>Registrazione di un utente</h1>
@@ -55,6 +56,5 @@
             <input type="submit" value="Registrati">
         </form>
     </main>
-    
 </body>
 </html>

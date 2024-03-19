@@ -4,16 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="script/script.js"></script>
+    <script src="../script/script.js"></script>
     <title>Associazione ZeroTre</title>
 </head>
 <!-- STAMPA del BODY in BASE al COOKIE SALVATO -->
 <?php
-    include "util/cookie.php";
+    include "../util/cookie.php";
     importActualStyle();
 ?>
     <?php
-        include "util/command.php";
+        include "../util/command.php";
 
         session_start();
         if (!isset($_SESSION["is_parent"]))
@@ -21,7 +21,12 @@
         
         if (isset($_SESSION["is_logged"]) && $_SESSION["is_logged"]) {
             if ($_SESSION["is_parent"] || $_SESSION["is_admin"]) {
-                showMenu_logged();
+                echo "  <button><a href='../index.php'>HOME</a></button>
+                        <button><a href='../newsletter.php'>NEWSLETTER</a></button>
+                        <button><a href='../bacheca.php'>BACHECA</a></button>
+                        <button><a href='private/area_personale.php'>AREA PERSONALE</a></button>
+                        <button><a href='private/crud.php?operation=LOGOUT'>LOGOUT</a></button><br><br>";
+
                 echo "<h1>Pagina di registrazione di un assistito</h1>";
                 echo "<main>
                         <form action='register.php' name='form_assisted' id='form_register__assisted' method='POST' enctype='multipart/form-data'>
@@ -45,8 +50,7 @@
             } else 
                 echo "<h2>NON SEI AUTORIZZATO AD ENTRARE IN QUESTA PAGINA</h2>";
         } else 
-            header("Location: loginPage.php");
+            header("Location: ../private/loginPage.php");
     ?>
-    
 </body>
 </html>

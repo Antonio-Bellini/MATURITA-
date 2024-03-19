@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="script/script.js"></script>
+    <script src="../script/script.js"></script>
     <title>Associazione ZeroTre</title>
 </head>
 <!-- STAMPA del BODY in BASE al COOKIE SALVATO -->
@@ -47,7 +47,7 @@
                         </form>
                     </main>";
             } else
-                header("Location: index.php");
+                header("Location: ../index.php");
         }
     ?>    
 </body>

@@ -16,5 +16,5 @@
 
         echo "<br><br>QUESTA PAGINA CONTERRÁ LA NEWSLETTER DELL'ASSOCIAZIONE";
     } else 
-        header("Location: loginPage.php");
+        header("Location: private/loginPage.php");
 ?>

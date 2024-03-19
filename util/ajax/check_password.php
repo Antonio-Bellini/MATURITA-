@@ -1,7 +1,7 @@
 <?php
-    include "command.php";
-    include "connection.php";
-    require_once("constants.php");
+    include "../command.php";
+    include "../connection.php";
+    require_once("../constants.php");
 
     session_start();
 

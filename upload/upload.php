@@ -1,8 +1,8 @@
 <?php
-    require_once("constants.php");
-    include("connection.php");
-    include("command.php");
-    include("cookie.php");
+    require_once("../util/constants.php");
+    include("../util/connection.php");
+    include("../util/command.php");
+    include("../util/cookie.php");
 
     importActualStyle();
     $connection = connectToDatabase(DB_NAME);
@@ -23,7 +23,7 @@
         $notes = $_POST["notes"];
 
     if(isset($_FILES['release'])) {
-        $uploadDirectory = '../release_module/'; 
+        $uploadDirectory = 'release_module/'; 
     
         $fileName = $_FILES['release']['name'];
         $fileTmpName = $_FILES['release']['tmp_name'];
@@ -55,7 +55,7 @@
 
                 if ($result) {
                     echo "Liberatoria caricata correttamente, stai per essere reindirizzato";
-                    header("Refresh: 3; URL=../loginPage.php");
+                    header("Refresh: 3; URL=../private/loginPage.php");
                 }
             } else if ($volunteerId != null) {
                 $query = "UPDATE volontari
@@ -65,7 +65,7 @@
 
                 if ($result) {
                     echo "Liberatoria caricata correttamente, stai per essere reindirizzato";
-                    header("Refresh: 3; URL=../loginPage.php");
+                    header("Refresh: 3; URL=../private/loginPage.php");
                 }
             }
 

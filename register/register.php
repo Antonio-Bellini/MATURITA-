@@ -1,8 +1,8 @@
 <?php 
-    require_once("util/constants.php");
-    include("util/connection.php");
-    include("util/command.php");
-    include("util/cookie.php");
+    require_once("../util/constants.php");
+    include("../util/connection.php");
+    include("../util/command.php");
+    include("../util/cookie.php");
 
     importActualStyle();
     $connection = connectToDatabase(DB_NAME);
@@ -26,7 +26,11 @@
         $result = dbQuery($connection, $query);
 
         if ($result) {
-            showMenu();
+            echo "  <button><a href='../index.php'>HOME</a></button>
+                    <button><a href='../newsletter.php'>NEWSLETTER</a></button>
+                    <button><a href='../bacheca.php'>BACHECA</a></button>
+                    <button><a href='../private/area_personale.php'>AREA PERSONALE</a></button>
+                    <button><a href='../private/crud.php?operation=LOGOUT'>LOGOUT</a></button><br><br>";
             echo "account creato con successo";
         }
     } else if (isset($_POST["form_volunteer"])) {
@@ -43,7 +47,11 @@
         $result = dbQuery($connection, $query);
 
         if ($result) {
-            showMenu_logged();
+            echo "  <button><a href='../index.php'>HOME</a></button>
+                    <button><a href='../newsletter.php'>NEWSLETTER</a></button>
+                    <button><a href='../bacheca.php'>BACHECA</a></button>
+                    <button><a href='../private/area_personale.php'>AREA PERSONALE</a></button>
+                    <button><a href='../private/crud.php?operation=LOGOUT'>LOGOUT</a></button><br><br>";
             echo "Account creato con successo";
         } else 
             echo "si é verificato un errore, riprova piú tardi";
@@ -77,7 +85,11 @@
         $result = dbQuery($connection, $query);
         
         if ($result && $fileUploaded) {
-            showMenu();
+            echo "  <button><a href='../index.php'>HOME</a></button>
+                    <button><a href='../newsletter.php'>NEWSLETTER</a></button>
+                    <button><a href='../bacheca.php'>BACHECA</a></button>
+                    <button><a href='../private/area_personale.php'>AREA PERSONALE</a></button>
+                    <button><a href='../private/crud.php?operation=LOGOUT'>LOGOUT</a></button><br><br>";
             echo "Account creato con successo<br>";
             echo "File dell'anamnesi caricato correttamente";
         } else

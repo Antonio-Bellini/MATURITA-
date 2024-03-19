@@ -1,8 +1,8 @@
 <?php
-    require_once("util/constants.php");
-    include("util/connection.php");
-    include("util/command.php");
-    include("util/cookie.php");
+    require_once("../util/constants.php");
+    include("../util/connection.php");
+    include("../util/command.php");
+    include("../util/cookie.php");
 
     echo "<script src='https://code.jquery.com/jquery-3.6.4.min.js'></script>";
     echo "<script src='script/script.js'></script>";
@@ -47,7 +47,11 @@
                 $_SESSION["is_logged"] = false;
 
                 if (session_destroy()) {
-                    showMenu_notLogged();
+                    echo "  <button><a href='../index.php'>HOME</a></button>
+                            <button><a href='../newsletter.php'>NEWSLETTER</a></button>
+                            <button><a href='../bacheca.php'>BACHECA</a></button>
+                            <button><a href='area_personale.php'>AREA PERSONALE</a></button>
+                            <button><a href='crud.php?operation=LOGOUT'>LOGOUT</a></button><br><br>";
                     echo "<br>Disconnessione avvenuta con successo"; 
                 }
             } else

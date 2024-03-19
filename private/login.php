@@ -1,8 +1,8 @@
 <?php
-    require_once("util/constants.php");
-    include("util/connection.php");
-    include("util/command.php");
-    include("util/cookie.php");
+    require_once("../util/constants.php");
+    include("../util/connection.php");
+    include("../util/command.php");
+    include("../util/cookie.php");
 
     importActualStyle();
     $connection = connectToDatabase(DB_NAME);
@@ -53,5 +53,14 @@
     } else {
         showMenu_logged();
         welcome($_SESSION["username"]);
+    }
+
+    // funzione per mostrare il menu
+    function showMenu_logged() {
+        echo "  <button><a href='../index.php'>HOME</a></button>
+                <button><a href='../newsletter.php'>NEWSLETTER</a></button>
+                <button><a href='../bacheca.php'>BACHECA</a></button>
+                <button><a href='area_personale.php'>AREA PERSONALE</a></button>
+                <button><a href='crud.php?operation=LOGOUT'>LOGOUT</a></button><br><br>";
     }
 ?>
