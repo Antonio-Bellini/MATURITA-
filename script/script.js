@@ -49,7 +49,7 @@ $(document).ready(function () {
         }
     });
 
-    //
+    // visualizzazione form degli eventi
     $('#addVolunteerToEvent').show();
     $('#addAssistedToEvent').hide();
     $('#createNewEvent').hide();
@@ -59,7 +59,6 @@ $(document).ready(function () {
         let selectedOption = $(this).val();
 
         if (selectedOption === '1') {
-            alert("ciao")
             $('#addVolunteerToEvent').show();
             $('#addAssistedToEvent').hide();
             $('#createNewEvent').hide();
