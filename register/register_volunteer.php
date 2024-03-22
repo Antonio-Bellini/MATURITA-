@@ -21,6 +21,11 @@
 
         if (isset($_SESSION["is_logged"]) && $_SESSION["is_logged"]) {
             if ($_SESSION["is_admin"]) {
+                echo "  <button><a href='../index.php'>HOME</a></button>
+                        <button><a href='../newsletter.php'>NEWSLETTER</a></button>
+                        <button><a href='../bacheca.php'>BACHECA</a></button>
+                        <button><a href='../private/area_personale.php'>AREA PERSONALE</a></button>
+                        <button><a href='../private/crud.php?operation=LOGOUT'>LOGOUT</a></button><br><br>";
                 echo "<h1>Pagina di registrazione di un volontario</h1>";
                 echo "<main>
                         <form action='register.php' name='form_volunteer' id='form_register__volunteer' method='POST' enctype='multipart/form-data'>

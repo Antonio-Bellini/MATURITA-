@@ -14,6 +14,12 @@
     include "../util/connection.php";
     importActualStyle();
     session_start();
+
+    echo "  <button><a href='../index.php'>HOME</a></button>
+            <button><a href='../newsletter.php'>NEWSLETTER</a></button>
+            <button><a href='../bacheca.php'>BACHECA</a></button>
+            <button><a href='../private/area_personale.php'>AREA PERSONALE</a></button>
+            <button><a href='../private/crud.php?operation=LOGOUT'>LOGOUT</a></button><br><br>";
 ?>
 
     <h1>Pagina di caricamento delle liberatorie</h1>
@@ -27,7 +33,7 @@
     <br><br>
 
     <section id="form_assisted">
-        <form action="util/upload.php" method="POST" enctype="multipart/form-data" name="release_assisted">
+        <form action="upload.php" method="POST" enctype="multipart/form-data" name="release_assisted">
             <input type="hidden" name="user_type" value="assisted">
 
             <label for="assisted">Per quale assistito vuoi caricare la liberatoria?</label><br>
@@ -54,7 +60,7 @@
     </section>
 
     <section id="form_volunteer">
-        <form action="util/upload.php" method="POST" enctype="multipart/form-data" name="release_volunteer">
+        <form action="upload.php" method="POST" enctype="multipart/form-data" name="release_volunteer">
             <input type="hidden" name="user_type" value="volunteer">
 
             <label for="assisted">Per quale volontario vuoi caricare la liberatoria?</label><br>

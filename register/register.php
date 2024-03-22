@@ -92,6 +92,7 @@
         $name = $_POST["name"];
         $surname = $_POST["surname"];
         $notes = $_POST["notes"];
+        $parent = null;
         
         if(isset($_FILES['med'])) {
             $uploadDirectory = '../upload/medical_module/'; 
@@ -109,10 +110,17 @@
                 echo "Si è verificato un errore durante il caricamento del file.";
         } else
             echo "Nessun file selezionato";
+
+        if (isset($_POST["parent"]))
+            $parent = $_POST["parent"];
+        else 
+            $parent = $_SESSION["user_id"];
+
+            echo $parent;
         
         // inserimento dell'assistito nel db
         $query = "INSERT INTO assistiti(nome, cognome, anamnesi, note, id_referente)
-                  VALUES('$name', '$surname', '$uploadedFileName', '$notes', '{$_SESSION['user_id']}');";
+                  VALUES('$name', '$surname', '$uploadedFileName', '$notes', '$parent');";
         $result = dbQuery($connection, $query);
         
         if ($result && $fileUploaded) {
