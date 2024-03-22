@@ -5,7 +5,7 @@
     include("../util/cookie.php");
 
     echo "<script src='https://code.jquery.com/jquery-3.6.4.min.js'></script>";
-    echo "<script src='script/script.js'></script>";
+    echo "<script src='../script/script.js'></script>";
     importActualStyle();
     $connection = connectToDatabase(DB_NAME);
     session_start();
@@ -31,8 +31,16 @@
                             <button><a href='../bacheca.php'>BACHECA</a></button>
                             <button><a href='area_personale.php'>AREA PERSONALE</a></button>
                             <button><a href='crud.php?operation=LOGOUT'>LOGOUT</a></button><br><br>";
+
+            if (!isset($userId))
+                $userId = $_SESSION["user_id"];
+            
             switch ($profile) {
                 case "user":
+                    if (isset($_SESSION["is_parent"]) && $_SESSION["is_parent"]) {
+                        if ($userId != $_SESSION["user_id"])
+                            $userId = $_SESSION["user_id"];
+                    }
                     modifyForm("user", $userId);
                     break;
 
@@ -41,6 +49,10 @@
                     break;
 
                 case "volunteer":
+                    if (isset($_SESSION["is_volunteer"]) && $_SESSION["is_volunteer"]) {
+                        if ($userId != $_SESSION["user_id"])
+                            $userId = $_SESSION["user_id"];
+                    }
                     modifyForm("volunteer", $userId);
                     break;
             }
@@ -54,8 +66,7 @@
                     echo "  <button><a href='../index.php'>HOME</a></button>
                             <button><a href='../newsletter.php'>NEWSLETTER</a></button>
                             <button><a href='../bacheca.php'>BACHECA</a></button>
-                            <button><a href='area_personale.php'>AREA PERSONALE</a></button>
-                            <button><a href='crud.php?operation=LOGOUT'>LOGOUT</a></button><br><br>";
+                            <button><a href='area_personale.php'>AREA PERSONALE</a></button><br><br>";
                     echo "<br>Disconnessione avvenuta con successo"; 
                 }
             } else

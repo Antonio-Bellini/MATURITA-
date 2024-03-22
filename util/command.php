@@ -64,7 +64,7 @@
 
             case "volunteer":
                 echo "<td>
-                        <button><a href='crud.php?operation=modify&user={$userId}&profile=volunteer'>Modifica</a></button>
+                        <button><a href='crud.php?operation=modify&profile=volunteer'>Modifica</a></button>
                     </td>";
                 break;
 

@@ -66,7 +66,7 @@
 
                 // ottengo i dati dell'utente e li stampo
                 echo "I tuoi dati:<br>";
-                $query = "SELECT u.id,
+                $query = "SELECT u.id, 
                                 u.nome,
                                 u.cognome,
                                 u.username,

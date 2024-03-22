@@ -8,7 +8,11 @@
     $connection = connectToDatabase(DB_NAME);
     session_start();
 
-    showMenu_logged();
+    echo "  <button><a href='../index.php'>HOME</a></button>
+            <button><a href='../newsletter.php'>NEWSLETTER</a></button>
+            <button><a href='../bacheca.php'>BACHECA</a></button>
+            <button><a href='area_personale.php'>AREA PERSONALE</a></button>
+            <button><a href='crud.php?operation=LOGOUT'>LOGOUT</a></button><br><br>";
 
     $type = $_POST["type"];
     $userId = $_POST["user_id"];

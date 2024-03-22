@@ -87,7 +87,7 @@ $(document).ready(function () {
 function checkInputUsername(username) {
     $.ajax({
         type: "POST",
-        url: "util/check_username.php",
+        url: "../util/ajax/check_username.php",
         data: { username: username },
         success: function (response) {
             if (response === "exists")
@@ -102,7 +102,7 @@ function checkInputUsername(username) {
 function checkNewPassword(old_psw, new_psw) {
     $.ajax({
         type: "POST",
-        url: "util/check_password.php",
+        url: "../util/ajax/check_password.php",
         data: { old_psw: old_psw, new_psw: new_psw },
         success: function (response) {
             if (response === "same_password")
