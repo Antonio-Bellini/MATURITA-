@@ -49,10 +49,6 @@
                     break;
 
                 case "volunteer":
-                    if (isset($_SESSION["is_volunteer"]) && $_SESSION["is_volunteer"]) {
-                        if ($userId != $_SESSION["user_id"])
-                            $userId = $_SESSION["user_id"];
-                    }
                     modifyForm("volunteer", $userId);
                     break;
             }

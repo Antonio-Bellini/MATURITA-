@@ -40,21 +40,52 @@
         $email = $_POST["email"];
         $phone_f = $_POST["phone_f"];
         $phone_m = $_POST["phone_m"];
+        $notes = " ";
+        
+        if (isset($_POST["notes"]))
+            $notes = $_POST["notes"];
 
-        // inserimento dell'utente nel db
-        $query = "INSERT INTO volontari(nome, cognome, email, telefono_fisso, telefono_mobile)
-                    VALUES('$name', '$surname', '$email', '$phone_f', '$phone_m');";
-        $result = dbQuery($connection, $query);
+        if(isset($_FILES['release'])) {
+            $fileUploaded = false;
+            $uploadDirectory = '../upload/release_module/'; 
+        
+            $fileName = $_FILES['release']['name'];
+            $fileTmpName = $_FILES['release']['tmp_name'];
+        
+            // Aggiungi il nome del file al percorso della cartella di destinazione
+            $newFilePath = $uploadDirectory . $fileName;
+        
+            if(move_uploaded_file($fileTmpName, $newFilePath)) {
+                $fileUploaded = true;
+                $uploadedFileName = "/" . $fileName;
+            } else
+                echo "Si è verificato un errore durante il caricamento del file.";
 
-        if ($result) {
-            echo "  <button><a href='../index.php'>HOME</a></button>
-                    <button><a href='../newsletter.php'>NEWSLETTER</a></button>
-                    <button><a href='../bacheca.php'>BACHECA</a></button>
-                    <button><a href='../private/area_personale.php'>AREA PERSONALE</a></button>
-                    <button><a href='../private/crud.php?operation=LOGOUT'>LOGOUT</a></button><br><br>";
-            echo "Account creato con successo";
-        } else 
-            echo "si é verificato un errore, riprova piú tardi";
+            if ($fileUploaded) {
+                $query = "INSERT INTO liberatorie(liberatoria, note) VALUES('$uploadedFileName', '$notes')";
+                $result = dbQuery($connection, $query);
+
+                if ($result) {
+                    $lastId = $connection -> insert_id;
+                    // inserimento dell'utente nel db
+                    $query = "INSERT INTO volontari(nome, cognome, email, telefono_fisso, telefono_mobile, id_liberatoria)
+                                VALUES('$name', '$surname', '$email', '$phone_f', '$phone_m', '$lastId');";
+                    $result = dbQuery($connection, $query);
+
+                    if ($result) {
+                        echo "  <button><a href='../index.php'>HOME</a></button>
+                                <button><a href='../newsletter.php'>NEWSLETTER</a></button>
+                                <button><a href='../bacheca.php'>BACHECA</a></button>
+                                <button><a href='../private/area_personale.php'>AREA PERSONALE</a></button>
+                                <button><a href='../private/crud.php?operation=LOGOUT'>LOGOUT</a></button><br><br>";
+                        echo "Account creato con successo";
+                    }  else 
+                        echo "si é verificato un errore, riprova piú tardi";
+                }  else 
+                    echo "si é verificato un errore, riprova piú tardi";
+            }
+        } else
+            echo "Nessun file selezionato";
     } else if (isset($_POST["form_assisted"])) {
         $uploadedFileName = null;
         $fileUploaded = false;
@@ -63,7 +94,7 @@
         $notes = $_POST["notes"];
         
         if(isset($_FILES['med'])) {
-            $uploadDirectory = 'medical_module/'; 
+            $uploadDirectory = '../upload/medical_module/'; 
         
             $fileName = $_FILES['med']['name'];
             $fileTmpName = $_FILES['med']['tmp_name'];
@@ -73,7 +104,7 @@
         
             if(move_uploaded_file($fileTmpName, $newFilePath)) {
                 $fileUploaded = true;
-                $uploadedFileName = "/".$fileName;
+                $uploadedFileName = "/" . $fileName;
             } else
                 echo "Si è verificato un errore durante il caricamento del file.";
         } else

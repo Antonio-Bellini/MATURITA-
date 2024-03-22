@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link rel="stylesheet" href="../style/style.css">
     <script src="../script/script.js"></script>
     <title>Associazione ZeroTre</title>
 </head>
 <!-- STAMPA del BODY in BASE al COOKIE SALVATO -->
 <?php
-    include "util/cookie.php";
+    include "../util/cookie.php";
     importActualStyle();
 ?>
     <?php
@@ -41,7 +42,10 @@
                             <input type='text' name='phone_m' id='phone_m' required> <br>
 
                             <label for='release'>Carica la liberatoria</label>
-                            <input type='file' name='release' id='release' accept='.pdf' enctype='multipart/form-data' required> <br><br>
+                            <input type='file' name='release' id='release' accept='.pdf' enctype='multipart/form-data' required> <br>
+
+                            <label for='notes'>Note utili</label> <br>
+                            <textarea name='notes' id='notes' cols='30' rows='10' placeholder='Altre info utili'></textarea> <br><br>
 
                             <input type='submit' value='Crea Account Volontario'>
                         </form>

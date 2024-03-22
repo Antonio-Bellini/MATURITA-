@@ -40,9 +40,9 @@
     function printField($value) {
         if (substr($value, 0, 1) === "/") {
             if (substr($value, 1, (strpos($value, "_")) - 1) === "anamnesi") {
-                return "</button><a href='../medical_module" . $value . "'>Apri il file</a></button>";
+                return "</button><a href='../upload/medical_module" . $value . "'>Apri il file</a></button>";
             } else 
-                return "</button><a href='../release_module". $value . "'>Apri il file</a></button>";
+                return "</button><a href='../upload/release_module". $value . "'>Apri il file</a></button>";
         } else 
             return $value;
     }
@@ -64,7 +64,7 @@
 
             case "volunteer":
                 echo "<td>
-                        <button><a href='crud.php?operation=modify&profile=volunteer'>Modifica</a></button>
+                        <button><a href='crud.php?operation=modify&user={$userId}&profile=volunteer'>Modifica</a></button>
                     </td>";
                 break;
 

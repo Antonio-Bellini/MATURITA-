@@ -30,7 +30,7 @@
                         createTable($result, "user");
 
                     echo "<br><br><br><label>Crea un nuovo account genitore</label><br>";
-                    echo "<button><a href='register_user.php'>Vai alla pagina</a></button>";
+                    echo "<button><a href='../register/register_user.php'>Vai alla pagina</a></button>";
                     break;
 
                 case "view_volu":
@@ -45,7 +45,7 @@
                         createTable($result, "volunteer");
 
                     echo "<br><br><br><label>Crea un nuovo account volontario</label><br>";
-                    echo "<button><a href='register_volunteer.php'>Vai alla pagina</a></button>";
+                    echo "<button><a href='../register/register_volunteer.php'>Vai alla pagina</a></button>";
                     break;
 
                 case "view_assi":
@@ -53,7 +53,8 @@
                     
                     echo "<label><b>ASSISTITI REGISTRATI</b></label>";
                     $query = "SELECT a.id, a.nome, a.cognome, a.anamnesi, a.note, 
-                                    u.nome AS nome_genitore, u.cognome AS cognome_genitore
+                                    u.nome AS nome_genitore, 
+                                    u.cognome AS cognome_genitore
                                 FROM assistiti a
                                 INNER JOIN utenti u ON a.id_referente = u.id";
                     $result = dbQuery($connection, $query);
@@ -61,7 +62,7 @@
                         createTable($result, "assisted");
 
                     echo "<br><br><br><label>Aggiungi un nuovo assistito</label><br>";
-                    echo "<button><a href='register_assisted.php'>Vai alla pagina</a></button>";
+                    echo "<button><a href='../register/register_assisted.php'>Vai alla pagina</a></button>";
                     break;
 
 
