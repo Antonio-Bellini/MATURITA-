@@ -270,8 +270,8 @@
 
     // FUNZIONE che MOSTRA il FORM per AGGIUNGERE un VOLONTARIO a un evento
     function addVolunteerToEvent() {
-        echo "<form name='' id='addVolunteerToEvent' method='POST'>
-                ciao1
+        echo "<form name='voluToEvent' action='event.php' id='addVolunteerToEvent' method='POST'>
+                <br><br><label>Quale volontario vuoi assegnare all'evento?</label><br>
             </form>";
     }
 

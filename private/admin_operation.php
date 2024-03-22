@@ -69,6 +69,8 @@
 
 
                 case "mng_event":
+                    showMenu_logged();
+
                     echo "<label><b>PAGINA EVENTI</b></label>";
                     echo "<br>Quale operazione vuoi eseguire?<br><br>";
                     echo "<select id='mng_event__selected'>";
@@ -83,6 +85,9 @@
                     createNewEvent();
                     addNewEventType();
                     break;
+
+                case null:
+                    header("Location: ../index.php");
             }
 
         } else
