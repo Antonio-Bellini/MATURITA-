@@ -269,29 +269,57 @@
 
     // funzione per mostrare il form per aggiungere un volontario a un evento
     function addVolunteerToEvent() {
-        echo "<form name='voluToEvent' action='event.php' id='addVolunteerToEvent' method='POST'>
+        $connection = connectToDatabase("localhost", "root", "", DB_NAME);
+        $query = "SELECT id, nome, cognome FROM volontari";
+        $result = dbQuery($connection, $query);
+
+        echo "<form action='../private/event.php?function=addVolunteerToEvent' id='addVolunteerToEvent' method='POST'>
                 <br><br><label>Quale volontario vuoi assegnare all'evento?</label><br>
-            </form>";
+                <select name='volunteer'>";
+                    if ($result) {
+                        while ($row = ($result->fetch_assoc()))
+                            echo "<option value=" . $row["id"] . ">" . $row["nome"] . " " . $row["cognome"] . "</option>";
+                    }
+        echo    "</select>
+                </form>";
     }
 
     // funzione per mostrare il form per aggiungere un assistito a un evento
     function addAssistedToEvent() {
-        echo "<form name='' id='addAssistedToEvent' method='POST'>
+        echo "<form action='../private/event.php?function=addAssistedToEvent' id='addAssistedToEvent' method='POST'>
                 ciao2
             </form>";
     }
 
     // funzione per mostrare il form per creare un nuovo evento
     function createNewEvent() {
-        echo "<form name='' id='createNewEvent' method='POST'>
-                ciao3
+        $connection = connectToDatabase("localhost", "root", "", DB_NAME);
+        $query = "SELECT id, tipo FROM tipi_evento";
+        $result = dbQuery($connection, $query);
+
+        echo "<form action='../private/event.php?function=createNewEvent' id='createNewEvent' method='POST'>
+                    <br><br><label for='event_type'>Che tipo di evento sará?</label><br>
+                    <select name='event_type'>";
+                        if ($result) {
+                            while ($row = ($result->fetch_assoc()))
+                                echo "<option value=" . $row["id"] . ">" . $row["tipo"] . "</option>";
+                        }
+        echo        "</select>
+
+                    <br><br><label for='event_date'>Quando si terrá?</label><br>
+                    <input type='date' name='event_date' required>
+
+                    <br><br><label for='event_notes'>Aggiungi qualche nota utile sull'evento</label><br>
+                    <textarea name='event_notes' id='notes' cols='30' rows='10' placeholder='Altre info utili'></textarea> <br><br><br><br>
+
+                    <input type='submit' value='Aggiungi'>
             </form>";
     } 
 
     // funzione per mostrare il form per creare un nuovo tipo di evento
     function addNewEventType() {
-        echo "<form name='' id='addNewEventType' method='POST'>
-                ciao4
+        echo "<form action='../private/event.php?function=addNewEventType' id='addNewEventType' method='POST'>
+                <br><br><label>Che tipo di nuovo evento vuoi creare?</label><br>
             </form>";
     }
 ?>
