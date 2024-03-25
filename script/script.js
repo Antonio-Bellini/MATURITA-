@@ -54,6 +54,7 @@ $(document).ready(function () {
     $('#addAssistedToEvent').hide();
     $('#createNewEvent').hide();
     $('#addNewEventType').hide();
+    $('#viewVoluEventAssi').hide();
 
     $('#mng_event__selected').change(function() {
         let selectedOption = $(this).val();
@@ -63,21 +64,31 @@ $(document).ready(function () {
             $('#addAssistedToEvent').hide();
             $('#createNewEvent').hide();
             $('#addNewEventType').hide();
+            $('#viewVoluEventAssi').hide();
         } else if (selectedOption === '2') {
             $('#addVolunteerToEvent').hide();
             $('#addAssistedToEvent').show();
             $('#createNewEvent').hide();
             $('#addNewEventType').hide();
+            $('#viewVoluEventAssi').hide();
         } else if (selectedOption === '3') {
             $('#addVolunteerToEvent').hide();
             $('#addAssistedToEvent').hide();
             $('#createNewEvent').show();
             $('#addNewEventType').hide();
+            $('#viewVoluEventAssi').hide();
         } else if (selectedOption === '4') {
             $('#addVolunteerToEvent').hide();
             $('#addAssistedToEvent').hide();
             $('#createNewEvent').hide();
             $('#addNewEventType').show();
+            $('#viewVoluEventAssi').hide();
+        } else if (selectedOption === '5') {
+            $('#addVolunteerToEvent').hide();
+            $('#addAssistedToEvent').hide();
+            $('#createNewEvent').hide();
+            $('#addNewEventType').hide();
+            $('#viewVoluEventAssi').show();
         }
     });
 

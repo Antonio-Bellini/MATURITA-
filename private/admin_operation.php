@@ -79,12 +79,14 @@
                         echo "<option value='2'>Aggiungi assistito a evento</option>";
                         echo "<option value='3'>Crea nuovo evento</option>";
                         echo "<option value='4'>Aggiungi un nuovo tipo di evento</option>";
+                        echo "<option value='5'>Visualizza associazione volontari-eventi-assistiti</option>";
                     echo "</select>";
 
                     addVolunteerToEvent();
                     addAssistedToEvent();
                     createNewEvent();
                     addNewEventType();
+                    viewVoluEventAssi();
                     break;
 
                 case null:

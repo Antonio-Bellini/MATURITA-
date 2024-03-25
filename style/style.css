@@ -73,6 +73,10 @@ body {
   background-color: var(--background);
 }
 
+td {
+  padding: 5px;
+}
+
 h1 {
   color: var(--black);
   font-size: var(--title);
