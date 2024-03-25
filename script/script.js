@@ -80,6 +80,18 @@ $(document).ready(function () {
             $('#addNewEventType').show();
         }
     });
+
+    // scorimento immagini nella pagina index
+    const images = $('.image-slider img');
+    let index = 0;
+
+    function showImage() {
+        images.removeClass('active');
+        images.eq(index).addClass('active');
+        index = (index + 1) % images.length;
+    }
+
+    setInterval(showImage, 3000);
 });
 
 // AJAX per il controllo live dell'email inserita

@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src='https://code.jquery.com/jquery-3.6.4.min.js'></script>
     <link rel="stylesheet" href="style/style.css">
     <script src="script/script.js"></script>
-    <link rel="icon" href="style/loghi/logo.png" type="x-icon">
+    <link rel="icon" href="image/logos/logo.png" type="x-icon">
     <title>ZeroTre</title>
 </head>
 <!-- STAMPA del BODY in BASE al COOKIE SALVATO -->
@@ -21,7 +22,7 @@
             <nav>
                 <a href='index.php'>
                     <img 
-                        src="style/loghi/logo.png"
+                        src="image/logos/logo.png"
                         class="logo"
                         id="logoImg"
                         alt="logo associazione"
@@ -35,13 +36,18 @@
                         <li><a href="private/area_personale.php" class="btn">Area Personale</a></li>
                     </ul>
                 </div>
-            </nav>
-
-            <!--Central section-->
-            <div class="text">
-                <h1>ZeroTre</h1>
-            </div>
+            </nav>            
         </section>
+        
+        <header>
+            <h1>ZeroTre</h1>
+        </header>
+
+        <div class="image-slider">
+                <img src="image/content/image1.jpg" alt="Image 1">
+                <img src="image/content/image2.jpg" alt="Image 2">
+                <img src="image/content/image3.jpg" alt="Image 3">
+            </div>
     </main>
 </body>
 </html>
