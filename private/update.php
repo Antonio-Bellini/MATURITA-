@@ -5,7 +5,7 @@
     include("../util/cookie.php");
 
     importActualStyle();
-    $connection = connectToDatabase(DB_NAME);
+    $connection = connectToDatabase("localhost", "root", "", DB_NAME);
     echo "<link rel='stylesheet' href='../style/style.css'>";
     session_start();
 
@@ -74,7 +74,7 @@
                 if ($result)
                     echo MOD_OK;
                 else
-                    echo GEN_ERROR;
+                    echo ERROR_GEN;
             } else 
                 echo MOD_NONE;
             break;

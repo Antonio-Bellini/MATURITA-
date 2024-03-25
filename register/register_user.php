@@ -31,7 +31,7 @@
                             <li><a href='../newsletter.php'             class='btn'>Newsletter   </a></li>
                             <li><a href='../bacheca.php'                class='btn'>Bacheca       </a></li>
                             <li><a href='https://stripe.com/it'         class='btn'>Donazioni     </a></li>
-                            <li><a href='private/area_personale.php'    class='btn'>Area Personale</a></li>
+                            <li><a href='../private/area_personale.php'    class='btn'>Area Personale</a></li>
                         </ul>
                     </div>
                 </nav>            

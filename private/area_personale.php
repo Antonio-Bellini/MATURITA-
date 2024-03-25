@@ -5,7 +5,7 @@
     include("../util/cookie.php");
 
     importActualStyle();
-    $connection = connectToDatabase(DB_NAME);
+    $connection = connectToDatabase("localhost", "root", "", DB_NAME);
     echo "<link rel='stylesheet' href='../style/style.css'>";
     session_start();
 
@@ -49,7 +49,7 @@
                 $auth = $row["operazione_permessa"];
             }
         } else
-            echo DB_ERROR;
+            echo ERROR_DB;
 
         // permetto determinate funzioni in base al tipo di profilo
         switch($profile_type) {
@@ -58,7 +58,6 @@
                 $_SESSION["is_president"] = true;
 
                 echo "<label>Effettua una delle seguenti operazioni</label><br><br>";
-                
             break;
 
             case "admin":
@@ -112,11 +111,10 @@
                     $result = dbQuery($connection, $query);
                     if ($result) {
                         createTable($result, "assisted");
-                    }
-                    else 
-                        echo DB_ERROR;
+                    } else 
+                        echo ERROR_DB;
                 } else 
-                    echo DB_ERROR;
+                    echo ERROR_DB;
             break;
         }
     } else

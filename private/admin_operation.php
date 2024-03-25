@@ -9,7 +9,7 @@
     echo "<link rel='stylesheet' href='../style/style.css'>";
     
     importActualStyle();
-    $connection = connectToDatabase(DB_NAME);
+    $connection = connectToDatabase("localhost", "root", "", DB_NAME);
     session_start();
 
     $operation = null;

@@ -1,12 +1,12 @@
 <?php
     require_once("constants.php");
 
-    // FUNZIONE per ESEGUIRE una QUERY sul DATABASE
+    // funzione per eseguire una query sul db
     function dbQuery($connection, $query) {
         return $connection -> query($query);
     }
 
-    // FUNZIONI per STAMPARE in FORMA TABELLARE i DATI OTTENUTI da una QUERY sul DATABASE
+    // funzione per stampare in forma tabellare il risultato di una query
     function createTable($result, $userType) {
         if ($result) {
             if (mysqli_num_rows($result) > 0) {
@@ -27,27 +27,27 @@
                     foreach ($row as $value) 
                         echo "<td>" . printField($value) . "</td>";
 
-                    printButton($userType, $row["id"]);
+                        printButton($userType, $row["id"]);
                     echo "</tr>";
                 }
                 echo "</table>";
             } else 
-                echo "<br><br>Nessun risultato trovato";
+                echo RESULT_NONE;
         }
     }
 
-    // FUNZIONE per STAMPARE una VARIABILE o CREARE un BOTTONE che REINDIRIZZA a un FILE
+    // funzionio per la stampa di alcuni dati
     function printField($value) {
         if (substr($value, 0, 1) === "/") {
-            if (substr($value, 1, (strpos($value, "_")) - 1) === "anamnesi") {
+            if (substr($value, 1, (strpos($value, "_")) - 1) === "anamnesi")
                 return "</button><a href='../upload/medical_module" . $value . "'>Apri il file</a></button>";
-            } else 
+            else 
                 return "</button><a href='../upload/release_module". $value . "'>Apri il file</a></button>";
         } else 
             return $value;
     }
 
-    // FUNZIONE per la STAMPA dei BOTTONI di MODIFICA
+    // funzione per la stampa dei bottoni di modifica
     function printButton($userType, $userId) {
         switch ($userType) {
             case "user" :
@@ -76,9 +76,9 @@
         }
     }
 
-    // FUNZIONE per DARE il BENVENUTO SCRIVENDO il NOME e il COGNOME
+    // funzione per dare il benvenuto stampando nome e cognome
     function welcome($username) {
-        $connection = connectToDatabase(DB_NAME);
+        $connection = connectToDatabase("localhost", "root", "", DB_NAME);
 
         $query = "SELECT nome, cognome
                     FROM utenti
@@ -91,7 +91,7 @@
         }
     }
 
-    // FUNZIONE per CRIPTARE la PASSWORD
+    // funzione per criptare la password
     function encryptPassword($password) {
         $salt = generateSalt(32);
         $password .= $salt;
@@ -99,7 +99,7 @@
         return hash("sha512", $password) . ":" . $salt;
     }
 
-    // FUNZIONE che GENERA un SALE per RENDERE piu SICURA la PASSWORD
+    // funzione per generare il salt della password
     function generateSalt($length) {
         $chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()-_[]{}<>~`+=,.;/?|';
         $salt = '';
@@ -110,7 +110,7 @@
         return $salt;
     }
 
-    // FUNZIONE per VERIFICARE che DUE PASSWORD CORRISPONDANO
+    // funzione per verificare se due password corrispondano
     function checkPassword($password, $DBpassword) {
         $parts = explode(':', $DBpassword);
         $DBpassword_hashed = $parts[0];
@@ -121,10 +121,9 @@
         return $password_enc === $DBpassword_hashed;
     }
 
-    // FUNZIONE per OTTENERE le AUTORIZZAZIONI che l'UTENTE HA
+    // funzione per ottenere i permessi di un utente
     function getUserAuth($connection, $username) {
-        $query = "SELECT u.numero_accessi AS accessi_utente,
-                        tp.tipo AS tipo_profilo,
+        $query = "SELECT tp.tipo AS tipo_profilo,
                         GROUP_CONCAT(tf.tipo SEPARATOR ',<br>') AS tipo_funzione,
                         p.tipo_operazione AS operazione_permessa
                 FROM utenti u 
@@ -138,9 +137,9 @@
         return $result;
     }
 
-    // FUNZIONE per MOSTRARE il FORM di MODIFICA dei DATI
+    // funzione per mostrare il form di modifica
     function modifyForm($type, $userId) {
-        $connection = connectToDatabase(DB_NAME);
+        $connection = connectToDatabase("localhost", "root", "", DB_NAME);
 
         switch ($type) {
             case "user":
@@ -268,28 +267,28 @@
         }
     }
 
-    // FUNZIONE che MOSTRA il FORM per AGGIUNGERE un VOLONTARIO a un evento
+    // funzione per mostrare il form per aggiungere un volontario a un evento
     function addVolunteerToEvent() {
         echo "<form name='voluToEvent' action='event.php' id='addVolunteerToEvent' method='POST'>
                 <br><br><label>Quale volontario vuoi assegnare all'evento?</label><br>
             </form>";
     }
 
-    //
+    // funzione per mostrare il form per aggiungere un assistito a un evento
     function addAssistedToEvent() {
         echo "<form name='' id='addAssistedToEvent' method='POST'>
                 ciao2
             </form>";
     }
 
-    // 
+    // funzione per mostrare il form per creare un nuovo evento
     function createNewEvent() {
         echo "<form name='' id='createNewEvent' method='POST'>
                 ciao3
             </form>";
     } 
 
-    //
+    // funzione per mostrare il form per creare un nuovo tipo di evento
     function addNewEventType() {
         echo "<form name='' id='addNewEventType' method='POST'>
                 ciao4

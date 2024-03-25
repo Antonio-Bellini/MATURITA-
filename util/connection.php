@@ -1,9 +1,10 @@
 <?php 
     // FUNZIONE per CONNETTERSI al DATABASE
-    function connectToDatabase($dbName) {
-        $hostName = "localhost";
-        $username = "root";
-        $password = "";
+    function connectToDatabase($hN, $uN, $pw, $dN) {
+        $hostName = $hN;
+        $username = $uN;
+        $password = $pw;
+        $dbName = $dN;
         
         $connection = new mysqli($hostName, $username, $password, $dbName);
         

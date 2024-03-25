@@ -16,6 +16,7 @@
     importActualStyle();
     session_start();
 
+    // menu di navigazione
     echo "<main>
             <section class='header'>
                 <nav>
@@ -32,7 +33,7 @@
                             <li><a href='../newsletter.php'             class='btn'>Newsletter   </a></li>
                             <li><a href='../bacheca.php'                class='btn'>Bacheca       </a></li>
                             <li><a href='https://stripe.com/it'         class='btn'>Donazioni     </a></li>
-                            <li><a href='private/area_personale.php'    class='btn'>Area Personale</a></li>
+                            <li><a href='../private/area_personale.php'    class='btn'>Area Personale</a></li>
                         </ul>
                     </div>
                 </nav>            
@@ -58,7 +59,7 @@
             <label for="assisted">Per quale assistito vuoi caricare la liberatoria?</label><br>
             <select name="assisted" id="assisted">
             <?php
-                $connection = connectToDatabase(DB_NAME);
+                $connection = connectToDatabase("localhost", "root", "", DB_NAME);
                 $query = "SELECT id, nome, cognome FROM assistiti";
                 $result = dbQuery($connection, $query);
 
@@ -86,7 +87,7 @@
             <label for="assisted">Per quale volontario vuoi caricare la liberatoria?</label><br>
             <select name="volunteer" id="volunteer">
             <?php
-                $connection = connectToDatabase(DB_NAME);
+                $connection = connectToDatabase("localhost", "root", "", DB_NAME);
                 $query = "SELECT id, nome, cognome FROM volontari";
                 $result = dbQuery($connection, $query);
 

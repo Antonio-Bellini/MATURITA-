@@ -5,7 +5,7 @@
     include("../util/cookie.php");
 
     importActualStyle();
-    $connection = connectToDatabase(DB_NAME);
+    $connection = connectToDatabase("localhost", "root", "", DB_NAME);
     echo "<link rel='stylesheet' href='../style/style.css'>";
     session_start();
 
@@ -40,16 +40,16 @@
                             showMenu_logged();
                             welcome($username);
                         } else {
-                            echo PW_WRONG;
+                            echo ERROR_PW;
                             header("Refresh: 3; URL=loginPage.php");
                         }
                     }
                 } else
-                    echo DB_ERROR;
+                    echo ERROR_DB;
             } else
                 header("Location: loginPage.php");
         } catch(Exception $e) {
-            echo GEN_ERROR;
+            echo ERROR_GEN;
         }
     } else {
         showMenu_logged();

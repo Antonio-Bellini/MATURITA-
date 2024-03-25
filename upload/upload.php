@@ -5,7 +5,7 @@
     include("../util/cookie.php");
 
     importActualStyle();
-    $connection = connectToDatabase(DB_NAME);
+    $connection = connectToDatabase("localhost", "root", "", DB_NAME);
     session_start();
 
     $assistedId = null;
@@ -47,10 +47,10 @@
                     $result = dbQuery($connection, $query);
 
                     if ($result) {
-                        echo REL_OK;
+                        echo FILE_OK;
                         header("Refresh: 3; URL=../private/loginPage.php");
                     } else {
-                        echo REL_ERROR;
+                        echo ERROR_FILE;
                         header("Refresh: 3; URL=../private/loginPage.php");
                     }
                 } else if ($volunteerId != null) {
@@ -60,10 +60,10 @@
                     $result = dbQuery($connection, $query);
 
                     if ($result) {
-                        echo REL_OK;
+                        echo FILE_OK;
                         header("Refresh: 3; URL=../private/loginPage.php");
                     } else {
-                        echo REL_ERROR;
+                        echo ERROR_FILE;
                         header("Refresh: 3; URL=../private/loginPage.php");
                     }
                 }

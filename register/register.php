@@ -50,7 +50,8 @@
                     </section>
                 </main>";
             echo ACC_OK;
-        }
+        } else 
+            echo ERROR_GEN;
     } else if (isset($_POST["form_volunteer"])) {
         // ottengo i dati scritti nel form
         $name = $_POST["name"];
@@ -58,13 +59,12 @@
         $email = $_POST["email"];
         $phone_f = $_POST["phone_f"];
         $phone_m = $_POST["phone_m"];
-        $notes = " ";
+        $notes = "";
         
         if (isset($_POST["notes"]))
             $notes = $_POST["notes"];
 
         if(isset($_FILES['release'])) {
-            $fileUploaded = false;
             $uploadDirectory = '../upload/release_module/'; 
         
             $fileName = $_FILES['release']['name'];
@@ -74,12 +74,7 @@
             $newFilePath = $uploadDirectory . $fileName;
         
             if(move_uploaded_file($fileTmpName, $newFilePath)) {
-                $fileUploaded = true;
                 $uploadedFileName = "/" . $fileName;
-            } else
-                echo "Si è verificato un errore durante il caricamento del file.";
-
-            if ($fileUploaded) {
                 $query = "INSERT INTO liberatorie(liberatoria, note) VALUES('$uploadedFileName', '$notes')";
                 $result = dbQuery($connection, $query);
 
@@ -91,6 +86,7 @@
                     $result = dbQuery($connection, $query);
 
                     if ($result) {
+                        // menu di navigazione
                         echo "<main>
                                 <section class='header'>
                                     <nav>
@@ -114,14 +110,14 @@
                                 </section>
                             </main>";
                         echo ACC_OK;
-                    }  else 
-                        echo GEN_ERROR;
-                }  else 
-                    echo GEN_ERROR;
-            }
+                    }
+                }
+            } else
+                echo ERROR_FILE;
         } else
             echo NO_FILE;
     } else if (isset($_POST["form_assisted"])) {
+        // ottengo i dati dal form
         $uploadedFileName = null;
         $fileUploaded = false;
         $name = $_POST["name"];
@@ -139,52 +135,50 @@
             $newFilePath = $uploadDirectory . $fileName;
         
             if(move_uploaded_file($fileTmpName, $newFilePath)) {
-                $fileUploaded = true;
                 $uploadedFileName = "/" . $fileName;
+
+                if (isset($_POST["parent"]))
+                    $parent = $_POST["parent"];
+                else 
+                    $parent = $_SESSION["user_id"];
+
+                // inserimento dell'assistito nel db
+                $query = "INSERT INTO assistiti(nome, cognome, anamnesi, note, id_referente)
+                                VALUES('$name', '$surname', '$uploadedFileName', '$notes', '$parent');";
+                $result = dbQuery($connection, $query);
+
+                if ($result) {
+                    // menu di navigazione
+                    echo "<main>
+                            <section class='header'>
+                                <nav>
+                                    <a href='../index.php'>
+                                        <img 
+                                            src='../image/logos/logo.png'
+                                            class='logo'
+                                            id='logoImg'
+                                            alt='logo associazione'
+                                        />
+                                    </a>
+                                    <div class='nav_links' id='navLinks'>
+                                        <ul>
+                                            <li><a href='../newsletter.php'             class='btn'>Newsletter   </a></li>
+                                            <li><a href='../bacheca.php'                class='btn'>Bacheca       </a></li>
+                                            <li><a href='https://stripe.com/it'         class='btn'>Donazioni     </a></li>
+                                            <li><a href='private/area_personale.php'    class='btn'>Area Personale</a></li>
+                                        </ul>
+                                    </div>
+                                </nav>            
+                            </section>
+                        </main>";
+                    echo ACC_OK;
+                    echo FILE_OK;
+                } else
+                    echo GEN_ERROR;
             } else
-                echo FILE_ERROR;
+                echo ERROR_FILE;
         } else
             echo NO_FILE;
-
-        if (isset($_POST["parent"]))
-            $parent = $_POST["parent"];
-        else 
-            $parent = $_SESSION["user_id"];
-
-            echo $parent;
-        
-        // inserimento dell'assistito nel db
-        $query = "INSERT INTO assistiti(nome, cognome, anamnesi, note, id_referente)
-                  VALUES('$name', '$surname', '$uploadedFileName', '$notes', '$parent');";
-        $result = dbQuery($connection, $query);
-        
-        if ($result && $fileUploaded) {
-            echo "<main>
-                    <section class='header'>
-                        <nav>
-                            <a href='../index.php'>
-                                <img 
-                                    src='../image/logos/logo.png'
-                                    class='logo'
-                                    id='logoImg'
-                                    alt='logo associazione'
-                                />
-                            </a>
-                            <div class='nav_links' id='navLinks'>
-                                <ul>
-                                    <li><a href='../newsletter.php'             class='btn'>Newsletter   </a></li>
-                                    <li><a href='../bacheca.php'                class='btn'>Bacheca       </a></li>
-                                    <li><a href='https://stripe.com/it'         class='btn'>Donazioni     </a></li>
-                                    <li><a href='private/area_personale.php'    class='btn'>Area Personale</a></li>
-                                </ul>
-                            </div>
-                        </nav>            
-                    </section>
-                </main>";
-            echo ACC_OK;
-            echo FILE_OK;
-        } else
-            echo GEN_ERROR;
     } else 
         echo NO_FORM;
 ?>

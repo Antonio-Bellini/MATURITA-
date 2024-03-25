@@ -9,7 +9,7 @@
         $oldPassword = $_POST['old_psw'];
         $newPassword = $_POST['new_psw'];
 
-        $connection = connectToDatabase(DB_NAME);
+        $connection = connectToDatabase("localhost", "root", "", DB_NAME);
 
         // CONFRONTO tra PASSWORD VECCHIA e NUOVA
         if ($oldPassword === $newPassword)
