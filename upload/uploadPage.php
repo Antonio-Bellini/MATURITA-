@@ -40,9 +40,7 @@
             </section>
         </main>";
 ?>
-
-    <h1>Pagina di caricamento delle liberatorie</h1>
-    <h4>Assicurati di caricare solo il file PDF firmato</h4>
+    <h4><br><br>PAGINA CARICAMENTO LIBERATORIE <br> Assicurati di caricare solo il file PDF firmato <br><br></h4>
     <label for="choice">Per chi vuoi caricare la liberatoria?</label><br>
     <select name="choice" id="choice">
         <option value="1">Assistito</option>

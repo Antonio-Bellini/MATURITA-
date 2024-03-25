@@ -64,10 +64,10 @@
                                 echo "</select><br>
 
                                 <label for='name'>Inserisci il nome</label>
-                                <input type='text' name='name' id='name' required> <br>
+                                <input type='text' name='name' id='name' maxlength='30' required> <br>
 
                                 <label for='surname'>Inserisci il cognome</label>
-                                <input type='text' name='surname' id='surname' required> <br>
+                                <input type='text' name='surname' id='surname' maxlength='30' required> <br>
 
                                 <label for='med'>Inserisci il file dell'anamnesi</label>
                                 <input type='file' name='med' id='med' accept='.pdf' enctype='multipart/form-data' required> <br>

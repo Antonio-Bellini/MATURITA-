@@ -23,5 +23,5 @@
 
     define("RESULT_NONE", "Nessun risultato trovato");
 
-    define("DISCONNECTION", "Disconnessione eseguita con successo, a presto!;")
+    define("DISCONNECTION", "Disconnessione eseguita con successo, a presto!");
 ?>

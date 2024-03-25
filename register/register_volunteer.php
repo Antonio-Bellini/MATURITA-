@@ -52,19 +52,19 @@
                             <input type='hidden' name='form_volunteer'>
 
                             <label for='name'>Inserisci il nome</label>
-                            <input type='text' name='name' id='name' required> <br>
+                            <input type='text' name='name' id='name' maxlength='30' required> <br>
 
                             <label for='surname'>Inserisci il cognome</label>
-                            <input type='text' name='surname' id='surname' required> <br>
+                            <input type='text' name='surname' id='surname' maxlength='30' required> <br>
 
                             <label for='email'>Inserisci l'email</label>
-                            <input type='email' name='email' id='email' required> <br>
+                            <input type='email' name='email' id='email' maxlength='30' required> <br>
 
                             <label for='phone_f'>Inserisci il numero del telefono fisso</label>
-                            <input type='text' name='phone_f' id='phone_f'> <br>
+                            <input type='text' name='phone_f' id='phone_f' maxlength='9'> <br>
 
                             <label for='phone_m'>Inserisci il numero di telefono</label>
-                            <input type='text' name='phone_m' id='phone_m' required> <br>
+                            <input type='text' name='phone_m' id='phone_m' maxlength='9' required> <br>
 
                             <label for='release'>Carica la liberatoria</label>
                             <input type='file' name='release' id='release' accept='.pdf' enctype='multipart/form-data' required> <br>

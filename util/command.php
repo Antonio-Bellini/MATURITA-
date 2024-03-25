@@ -166,25 +166,25 @@
                             <input type='hidden' name='user_id' value='$userId'>
 
                             <label><br>Nome</label><br>
-                            <input type='text' name='new_name'>
+                            <input type='text' name='new_name' maxlength='30'>
 
                             <label><br>Cognome</label><br>
-                            <input type='text' name='new_surname'>
+                            <input type='text' name='new_surname' maxlength='30'>
 
                             <label><br>Email</label><br>
-                            <input type='email' name='new_email'>
+                            <input type='email' name='new_email' maxlength='30'>
 
                             <label><br>Telefono fisso</label><br>
-                            <input type='text' name='new_tf'>
+                            <input type='text' name='new_tf' maxlength='9'>
 
                             <label><br>Telefono mobile</label><br>
-                            <input type='text' name='new_tm'>
+                            <input type='text' name='new_tm' maxlength='9'>
 
                             <label><br>Password attuale</label><br>
                             <input type='password' name='old_psw' id='old_psw'><br>
 
                             <label>Nuova password</label><br>
-                            <input type='password' name='new_psw' id='new_psw'>
+                            <input type='password' name='new_psw' id='new_psw' maxlength='255'>
                             <span id='passwordError'></span><br><br><br>
 
                             <input type='submit' value='ESEGUI'>
@@ -214,10 +214,10 @@
                             <input type='hidden' name='user_id' value='$userId'>
 
                             <label><br>Nome</label><br>
-                            <input type='text' name='new_name'>
+                            <input type='text' name='new_name' maxlength='30'>
 
                             <label><br>Cognome</label><br>
-                            <input type='text' name='new_surname'><br><br><br>
+                            <input type='text' name='new_surname' maxlength='30'><br><br><br>
                             
                             <input type='submit' value='ESEGUI'>";
                 }
@@ -247,19 +247,19 @@
                             <input type='hidden' name='user_id' value='$userId'>
 
                             <label><br>Nome</label><br>
-                            <input type='text' name='new_name'>
+                            <input type='text' name='new_name' maxlength='30'>
 
                             <label><br>Cognome</label><br>
-                            <input type='text' name='new_surname'>
+                            <input type='text' name='new_surname' maxlength='30'>
                             
                             <label><br>Email</label><br>
-                            <input type='email' name='new_email'>
+                            <input type='email' name='new_email' maxlength='30'>
 
                             <label><br>Telefono fisso</label><br>
-                            <input type='text' name='new_tf'>
+                            <input type='text' name='new_tf' maxlength='9'>
 
                             <label><br>Telefono mobile</label><br>
-                            <input type='text' name='new_tm'><br><br><br>
+                            <input type='text' name='new_tm' maxlength='9'><br><br><br>
                             
                             <input type='submit' value='ESEGUI'>";
                 }
