@@ -47,10 +47,10 @@
                     $result = dbQuery($connection, $query);
 
                     if ($result) {
-                        echo "Liberatoria caricata correttamente, stai per essere reindirizzato";
+                        echo REL_OK;
                         header("Refresh: 3; URL=../private/loginPage.php");
                     } else {
-                        echo "Errore nel caricamento, stai per essere reindirizzato";
+                        echo REL_ERROR;
                         header("Refresh: 3; URL=../private/loginPage.php");
                     }
                 } else if ($volunteerId != null) {
@@ -60,20 +60,20 @@
                     $result = dbQuery($connection, $query);
 
                     if ($result) {
-                        echo "Liberatoria caricata correttamente, stai per essere reindirizzato";
+                        echo REL_OK;
                         header("Refresh: 3; URL=../private/loginPage.php");
                     } else {
-                        echo "Errore nel caricamento, stai per essere reindirizzato";
+                        echo REL_ERROR;
                         header("Refresh: 3; URL=../private/loginPage.php");
                     }
                 }
             }
         } else {
-            echo "Si è verificato un errore durante il caricamento del file, stai per essere reindirizzato...";
+            echo GEN_ERROR;
             header("Refresh: 3; URL=../private/loginPage.php");
         }
     } else {
-        echo "Nessun file selezionato, stai per essere reindirizzato";
+        echo NO_FILE;
         header("Refresh: 3; URL=../private/loginPage.php");
     }
 ?>

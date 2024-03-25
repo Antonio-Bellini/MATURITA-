@@ -26,12 +26,30 @@
         $result = dbQuery($connection, $query);
 
         if ($result) {
-            echo "  <button><a href='../index.php'>HOME</a></button>
-                    <button><a href='../newsletter.php'>NEWSLETTER</a></button>
-                    <button><a href='../bacheca.php'>BACHECA</a></button>
-                    <button><a href='../private/area_personale.php'>AREA PERSONALE</a></button>
-                    <button><a href='../private/crud.php?operation=LOGOUT'>LOGOUT</a></button><br><br>";
-            echo "account creato con successo";
+            // menu di navigazione
+            echo "<main>
+                    <section class='header'>
+                        <nav>
+                            <a href='../index.php'>
+                                <img 
+                                    src='../image/logos/logo.png'
+                                    class='logo'
+                                    id='logoImg'
+                                    alt='logo associazione'
+                                />
+                            </a>
+                            <div class='nav_links' id='navLinks'>
+                                <ul>
+                                    <li><a href='../newsletter.php'             class='btn'>Newsletter   </a></li>
+                                    <li><a href='../bacheca.php'                class='btn'>Bacheca       </a></li>
+                                    <li><a href='https://stripe.com/it'         class='btn'>Donazioni     </a></li>
+                                    <li><a href='private/area_personale.php'    class='btn'>Area Personale</a></li>
+                                </ul>
+                            </div>
+                        </nav>            
+                    </section>
+                </main>";
+            echo ACC_OK;
         }
     } else if (isset($_POST["form_volunteer"])) {
         // ottengo i dati scritti nel form
@@ -73,19 +91,36 @@
                     $result = dbQuery($connection, $query);
 
                     if ($result) {
-                        echo "  <button><a href='../index.php'>HOME</a></button>
-                                <button><a href='../newsletter.php'>NEWSLETTER</a></button>
-                                <button><a href='../bacheca.php'>BACHECA</a></button>
-                                <button><a href='../private/area_personale.php'>AREA PERSONALE</a></button>
-                                <button><a href='../private/crud.php?operation=LOGOUT'>LOGOUT</a></button><br><br>";
-                        echo "Account creato con successo";
+                        echo "<main>
+                                <section class='header'>
+                                    <nav>
+                                        <a href='../index.php'>
+                                            <img 
+                                                src='../image/logos/logo.png'
+                                                class='logo'
+                                                id='logoImg'
+                                                alt='logo associazione'
+                                            />
+                                        </a>
+                                        <div class='nav_links' id='navLinks'>
+                                            <ul>
+                                                <li><a href='../newsletter.php'             class='btn'>Newsletter   </a></li>
+                                                <li><a href='../bacheca.php'                class='btn'>Bacheca       </a></li>
+                                                <li><a href='https://stripe.com/it'         class='btn'>Donazioni     </a></li>
+                                                <li><a href='private/area_personale.php'    class='btn'>Area Personale</a></li>
+                                            </ul>
+                                        </div>
+                                    </nav>            
+                                </section>
+                            </main>";
+                        echo ACC_OK;
                     }  else 
-                        echo "si é verificato un errore, riprova piú tardi";
+                        echo GEN_ERROR;
                 }  else 
-                    echo "si é verificato un errore, riprova piú tardi";
+                    echo GEN_ERROR;
             }
         } else
-            echo "Nessun file selezionato";
+            echo NO_FILE;
     } else if (isset($_POST["form_assisted"])) {
         $uploadedFileName = null;
         $fileUploaded = false;
@@ -107,9 +142,9 @@
                 $fileUploaded = true;
                 $uploadedFileName = "/" . $fileName;
             } else
-                echo "Si è verificato un errore durante il caricamento del file.";
+                echo FILE_ERROR;
         } else
-            echo "Nessun file selezionato";
+            echo NO_FILE;
 
         if (isset($_POST["parent"]))
             $parent = $_POST["parent"];
@@ -124,15 +159,32 @@
         $result = dbQuery($connection, $query);
         
         if ($result && $fileUploaded) {
-            echo "  <button><a href='../index.php'>HOME</a></button>
-                    <button><a href='../newsletter.php'>NEWSLETTER</a></button>
-                    <button><a href='../bacheca.php'>BACHECA</a></button>
-                    <button><a href='../private/area_personale.php'>AREA PERSONALE</a></button>
-                    <button><a href='../private/crud.php?operation=LOGOUT'>LOGOUT</a></button><br><br>";
-            echo "Account creato con successo<br>";
-            echo "File dell'anamnesi caricato correttamente";
+            echo "<main>
+                    <section class='header'>
+                        <nav>
+                            <a href='../index.php'>
+                                <img 
+                                    src='../image/logos/logo.png'
+                                    class='logo'
+                                    id='logoImg'
+                                    alt='logo associazione'
+                                />
+                            </a>
+                            <div class='nav_links' id='navLinks'>
+                                <ul>
+                                    <li><a href='../newsletter.php'             class='btn'>Newsletter   </a></li>
+                                    <li><a href='../bacheca.php'                class='btn'>Bacheca       </a></li>
+                                    <li><a href='https://stripe.com/it'         class='btn'>Donazioni     </a></li>
+                                    <li><a href='private/area_personale.php'    class='btn'>Area Personale</a></li>
+                                </ul>
+                            </div>
+                        </nav>            
+                    </section>
+                </main>";
+            echo ACC_OK;
+            echo FILE_OK;
         } else
-            echo "Si è verificato un errore durante l'inserimento, riprova più tardi";
+            echo GEN_ERROR;
     } else 
-        echo "Non é stato compilato nessun form";
+        echo NO_FORM;
 ?>

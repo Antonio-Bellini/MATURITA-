@@ -10,12 +10,14 @@
     <link rel="icon" href="image/logos/logo.png" type="x-icon">
     <title>ZeroTre</title>
 </head>
+
 <!-- STAMPA del BODY in BASE al COOKIE SALVATO -->
 <?php
     include "util/cookie.php";
     include "util/command.php";
     importActualStyle();
 ?>
+
     <!-- SEZIONE PRINCIPALE della PAGINA INDEX -->
     <main>
         <section class="header">
@@ -38,16 +40,12 @@
                 </div>
             </nav>            
         </section>
-        
+
         <header>
             <h1>ZeroTre</h1>
         </header>
 
-        <div class="image-slider">
-                <img src="image/content/image1.jpg" alt="Image 1">
-                <img src="image/content/image2.jpg" alt="Image 2">
-                <img src="image/content/image3.jpg" alt="Image 3">
-            </div>
+        <div class="image-slider"></div>
     </main>
 </body>
 </html>

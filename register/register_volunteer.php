@@ -6,6 +6,7 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <link rel="stylesheet" href="../style/style.css">
     <script src="../script/script.js"></script>
+    <link rel="stylesheet" href="../style/style.css">
     <title>Associazione ZeroTre</title>
 </head>
 <!-- STAMPA del BODY in BASE al COOKIE SALVATO -->
@@ -21,11 +22,29 @@
 
         if (isset($_SESSION["is_logged"]) && $_SESSION["is_logged"]) {
             if ($_SESSION["is_admin"]) {
-                echo "  <button><a href='../index.php'>HOME</a></button>
-                        <button><a href='../newsletter.php'>NEWSLETTER</a></button>
-                        <button><a href='../bacheca.php'>BACHECA</a></button>
-                        <button><a href='../private/area_personale.php'>AREA PERSONALE</a></button>
-                        <button><a href='../private/crud.php?operation=LOGOUT'>LOGOUT</a></button><br><br>";
+                echo "<main>
+                        <section class='header'>
+                            <nav>
+                                <a href='../index.php'>
+                                    <img 
+                                        src='../image/logos/logo.png'
+                                        class='logo'
+                                        id='logoImg'
+                                        alt='logo associazione'
+                                    />
+                                </a>
+                                <div class='nav_links' id='navLinks'>
+                                    <ul>
+                                        <li><a href='../newsletter.php'             class='btn'>Newsletter   </a></li>
+                                        <li><a href='../bacheca.php'                class='btn'>Bacheca       </a></li>
+                                        <li><a href='https://stripe.com/it'         class='btn'>Donazioni     </a></li>
+                                        <li><a href='private/area_personale.php'    class='btn'>Area Personale</a></li>
+                                    </ul>
+                                </div>
+                            </nav>            
+                        </section>
+                    </main>";
+
                 echo "<h1>Pagina di registrazione di un volontario</h1>";
                 echo "<main>
                         <form action='register.php' name='form_volunteer' id='form_register__volunteer' method='POST' enctype='multipart/form-data'>

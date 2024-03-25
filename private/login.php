@@ -6,6 +6,7 @@
 
     importActualStyle();
     $connection = connectToDatabase(DB_NAME);
+    echo "<link rel='stylesheet' href='../style/style.css'>";
     session_start();
 
     // inizalizzo la sessione per salvare il login dell'utente
@@ -39,16 +40,16 @@
                             showMenu_logged();
                             welcome($username);
                         } else {
-                            echo "La password é errata, riprova...";
+                            echo PW_WRONG;
                             header("Refresh: 3; URL=loginPage.php");
                         }
                     }
                 } else
-                    echo "Si é veriricato un errore recuperando i dati dal database, riprova piú tardi.";
+                    echo DB_ERROR;
             } else
                 header("Location: loginPage.php");
         } catch(Exception $e) {
-            echo "Qualcosa é andato storto, riprova piú tardi";
+            echo GEN_ERROR;
         }
     } else {
         showMenu_logged();
@@ -57,9 +58,27 @@
 
     // funzione per mostrare il menu
     function showMenu_logged() {
-        echo "  <button><a href='../index.php'>HOME</a></button>
-                <button><a href='../newsletter.php'>NEWSLETTER</a></button>
-                <button><a href='../bacheca.php'>BACHECA</a></button>
-                <button><a href='area_personale.php'>AREA PERSONALE</a></button><br><br>";
+        echo "<main>
+                <section class='header'>
+                    <nav>
+                        <a href='../index.php'>
+                            <img 
+                                src='../image/logos/logo.png'
+                                class='logo'
+                                id='logoImg'
+                                alt='logo associazione'
+                            />
+                        </a>
+                        <div class='nav_links' id='navLinks'>
+                            <ul>
+                                <li><a href='../newsletter.php'     class='btn'>Newsletter   </a></li>
+                                <li><a href='../bacheca.php'        class='btn'>Bacheca       </a></li>
+                                <li><a href='https://stripe.com/it' class='btn'>Donazioni     </a></li>
+                                <li><a href='area_personale.php'    class='btn'>Area Personale</a></li>
+                            </ul>
+                        </div>
+                    </nav>            
+                </section>
+            </main>";
     }
 ?>

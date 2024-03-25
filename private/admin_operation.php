@@ -6,6 +6,7 @@
 
     echo "<script src='https://code.jquery.com/jquery-3.6.4.min.js'></script>";
     echo "<script src='../script/script.js'></script>";
+    echo "<link rel='stylesheet' href='../style/style.css'>";
     
     importActualStyle();
     $connection = connectToDatabase(DB_NAME);
@@ -89,17 +90,34 @@
                 case null:
                     header("Location: ../index.php");
             }
-
         } else
-            header("Location: index.php");
+            header("Location: ../index.php");
     }
 
     // funzione per mostrare il menu di navigazione
     function showMenu_logged() {
-        echo "  <button><a href='../index.php'>HOME</a></button>
-                <button><a href='../newsletter.php'>NEWSLETTER</a></button>
-                <button><a href='../bacheca.php'>BACHECA</a></button>
-                <button><a href='area_personale.php'>AREA PERSONALE</a></button>
-                <button><a href='crud.php?operation=LOGOUT'>LOGOUT</a></button><br><br>";
+        echo "<main>
+                <section class='header'>
+                    <nav>
+                        <a href='../index.php'>
+                            <img 
+                                src='../image/logos/logo.png'
+                                class='logo'
+                                id='logoImg'
+                                alt='logo associazione'
+                            />
+                        </a>
+                        <div class='nav_links' id='navLinks'>
+                            <ul>
+                                <li><a href='../newsletter.php'         class='btn'>Newsletter   </a></li>
+                                <li><a href='../bacheca.php'            class='btn'>Bacheca       </a></li>
+                                <li><a href='https://stripe.com/it'     class='btn'>Donazioni     </a></li>
+                                <li><a href='area_personale.php'        class='btn'>Area Personale</a></li>
+                                <li><a href='crud.php?operation=LOGOUT' class='btn'>Logout</a></li>
+                            </ul>
+                        </div>
+                    </nav>            
+                </section>
+            </main><br><br>";
     }
 ?>

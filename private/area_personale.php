@@ -6,6 +6,7 @@
 
     importActualStyle();
     $connection = connectToDatabase(DB_NAME);
+    echo "<link rel='stylesheet' href='../style/style.css'>";
     session_start();
 
     $profile_type = null;
@@ -13,11 +14,30 @@
     $auth = null;
 
     if (isset($_SESSION["is_logged"]) && $_SESSION["is_logged"]) {
-        echo "  <button><a href='../index.php'>HOME</a></button>
-                <button><a href='../newsletter.php'>NEWSLETTER</a></button>
-                <button><a href='../bacheca.php'>BACHECA</a></button>
-                <button><a href='area_personale.php'>AREA PERSONALE</a></button>
-                <button><a href='crud.php?operation=LOGOUT'>LOGOUT</a></button><br><br>";
+        // menu di navigazione
+        echo "<main>
+                <section class='header'>
+                    <nav>
+                        <a href='../index.php'>
+                            <img 
+                                src='../image/logos/logo.png'
+                                class='logo'
+                                id='logoImg'
+                                alt='logo associazione'
+                            />
+                        </a>
+                        <div class='nav_links' id='navLinks'>
+                            <ul>
+                                <li><a href='../newsletter.php'         class='btn'>Newsletter   </a></li>
+                                <li><a href='../bacheca.php'            class='btn'>Bacheca       </a></li>
+                                <li><a href='https://stripe.com/it'     class='btn'>Donazioni     </a></li>
+                                <li><a href='area_personale.php'        class='btn'>Area Personale</a></li>
+                                <li><a href='crud.php?operation=LOGOUT' class='btn'>Logout</a></li>
+                            </ul>
+                        </div>
+                    </nav>            
+                </section>
+            </main>";
 
         $result = getUserAuth($connection, $_SESSION["username"]);
 
@@ -29,7 +49,7 @@
                 $auth = $row["operazione_permessa"];
             }
         } else
-            echo "Si é verificato un problema recuperando i dati dal database, riprova piú tardi";
+            echo DB_ERROR;
 
         // permetto determinate funzioni in base al tipo di profilo
         switch($profile_type) {
@@ -38,8 +58,7 @@
                 $_SESSION["is_president"] = true;
 
                 echo "<label>Effettua una delle seguenti operazioni</label><br><br>";
-                echo "<button><a href='crud.php?operation=read_med'>READ su anamnesi</a></button><br><br>";
-                echo "<button><a href='crud.php?operation=mng_adm'>Gestione Admin</a></button><br><br>";
+                
             break;
 
             case "admin":
@@ -95,9 +114,9 @@
                         createTable($result, "assisted");
                     }
                     else 
-                        echo "Si é verificato un problema recuperando i dati dal database, riprova piú tardi";
+                        echo DB_ERROR;
                 } else 
-                    echo "Si é verificato un problema recuperando i dati dal database, riprova piú tardi";
+                    echo DB_ERROR;
             break;
         }
     } else

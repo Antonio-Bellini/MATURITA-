@@ -6,11 +6,13 @@
     <link rel="stylesheet" href="../style/style.css">
     <title>Associazione ZeroTre</title>
 </head>
+
 <!-- STAMPA del BODY in BASE al COOKIE SALVATO -->
 <?php
     include "../util/cookie.php";
     importActualStyle();
 ?>
+
     <!-- SEZIONE PRINCIPALE della PAGINA DI LOGIN -->
     <?php
         include "../util/connection.php";
@@ -22,10 +24,29 @@
 
         // controllo cosa mostrare in base a se é gia loggato oppure ancora no
         if ($_SESSION["is_logged"]) {
-            echo "  <button><a href='../index.php'>HOME</a></button>
-                    <button><a href='../newsletter.php'>NEWSLETTER</a></button>
-                    <button><a href='../bacheca.php'>BACHECA</a></button>
-                    <button><a href='area_personale.php'>AREA PERSONALE</a></button><br><br>";
+            // menu di navigazione
+            echo "<main>
+                    <section class='header'>
+                        <nav>
+                            <a href='../index.php'>
+                                <img 
+                                    src='../image/logos/logo.png'
+                                    class='logo'
+                                    id='logoImg'
+                                    alt='logo associazione'
+                                />
+                            </a>
+                            <div class='nav_links' id='navLinks'>
+                                <ul>
+                                    <li><a href='../newsletter.php'     class='btn'>Newsletter   </a></li>
+                                    <li><a href='../bacheca.php'        class='btn'>Bacheca       </a></li>
+                                    <li><a href='https://stripe.com/it' class='btn'>Donazioni     </a></li>
+                                    <li><a href='area_personale.php'    class='btn'>Area Personale</a></li>
+                                </ul>
+                            </div>
+                        </nav>            
+                    </section>
+                </main>";
             welcome($_SESSION["username"]);
         } else {
             echo "<main>
@@ -37,7 +58,7 @@
                         <label for='password'>Password</label>
                         <input type='password' name='password' id='password' required><br>
 
-                        <input type='submit' value='ACCEDI'><br><br><br>
+                        <input class='btn' type='submit' value='ACCEDI'><br><br><br>
                     </form>
                 </main>";
         }

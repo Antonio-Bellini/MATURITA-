@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="../script/script.js"></script>
+    <link rel="stylesheet" href="../style/style.css">
     <title>Associazione ZeroTre</title>
 </head>
 <!-- STAMPA del BODY in BASE al COOKIE SALVATO -->
@@ -15,11 +16,28 @@
     importActualStyle();
     session_start();
 
-    echo "  <button><a href='../index.php'>HOME</a></button>
-            <button><a href='../newsletter.php'>NEWSLETTER</a></button>
-            <button><a href='../bacheca.php'>BACHECA</a></button>
-            <button><a href='../private/area_personale.php'>AREA PERSONALE</a></button>
-            <button><a href='../private/crud.php?operation=LOGOUT'>LOGOUT</a></button><br><br>";
+    echo "<main>
+            <section class='header'>
+                <nav>
+                    <a href='../index.php'>
+                        <img 
+                            src='../image/logos/logo.png'
+                            class='logo'
+                            id='logoImg'
+                            alt='logo associazione'
+                        />
+                    </a>
+                    <div class='nav_links' id='navLinks'>
+                        <ul>
+                            <li><a href='../newsletter.php'             class='btn'>Newsletter   </a></li>
+                            <li><a href='../bacheca.php'                class='btn'>Bacheca       </a></li>
+                            <li><a href='https://stripe.com/it'         class='btn'>Donazioni     </a></li>
+                            <li><a href='private/area_personale.php'    class='btn'>Area Personale</a></li>
+                        </ul>
+                    </div>
+                </nav>            
+            </section>
+        </main>";
 ?>
 
     <h1>Pagina di caricamento delle liberatorie</h1>
@@ -32,6 +50,7 @@
 
     <br><br>
 
+    <!-- form per caricamento del file per gli assistiti -->
     <section id="form_assisted">
         <form action="upload.php" method="POST" enctype="multipart/form-data" name="release_assisted">
             <input type="hidden" name="user_type" value="assisted">
@@ -59,6 +78,7 @@
         </form>
     </section>
 
+    <!-- form per caricamento del file per i volontari -->
     <section id="form_volunteer">
         <form action="upload.php" method="POST" enctype="multipart/form-data" name="release_volunteer">
             <input type="hidden" name="user_type" value="volunteer">
