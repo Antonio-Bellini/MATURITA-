@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Mar 16, 2024 alle 16:24
+-- Creato il: Mar 25, 2024 alle 22:58
 -- Versione del server: 10.4.28-MariaDB
 -- Versione PHP: 8.2.4
 
@@ -42,7 +42,8 @@ CREATE TABLE `assistiti` (
 --
 
 INSERT INTO `assistiti` (`id`, `nome`, `cognome`, `anamnesi`, `note`, `id_referente`, `id_liberatoria`) VALUES
-(1, 'Alessandro', 'Circhetta', '/anamnesi_a1.txt', 'bravo ragazzo', 1, 1);
+(1, 'Alessandro', 'Circhetta', '/anamnesi_a1.pdf', 'bravo ragazzo', 1, 1),
+(2, 'Guglielmo', 'Pansini', '/anamnesi_a2.pdf', 'cew', 2, 2);
 
 -- --------------------------------------------------------
 
@@ -55,6 +56,15 @@ CREATE TABLE `assistiti_evento` (
   `id_assistito` int(11) NOT NULL,
   `note` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dump dei dati per la tabella `assistiti_evento`
+--
+
+INSERT INTO `assistiti_evento` (`id_evento`, `id_assistito`, `note`) VALUES
+(1, 1, ''),
+(1, 2, ''),
+(2, 2, '');
 
 -- --------------------------------------------------------
 
@@ -81,6 +91,14 @@ CREATE TABLE `eventi` (
   `note` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dump dei dati per la tabella `eventi`
+--
+
+INSERT INTO `eventi` (`id`, `tipo_evento`, `data`, `note`) VALUES
+(1, 1, '2024-04-01', 'evento prova'),
+(2, 2, '2023-04-23', 'evento prova 2');
+
 -- --------------------------------------------------------
 
 --
@@ -98,7 +116,8 @@ CREATE TABLE `liberatorie` (
 --
 
 INSERT INTO `liberatorie` (`id`, `liberatoria`, `note`) VALUES
-(1, '/liberatoria_a1.txt', 'note varie');
+(1, '/liberatoria_a1.pdf', 'prova liberatoria'),
+(2, '/liberatoria_a1.pdf', 'prova liberatoria 2');
 
 -- --------------------------------------------------------
 
@@ -160,7 +179,8 @@ INSERT INTO `tipi_evento` (`id`, `tipo`) VALUES
 (1, 'Piscina'),
 (2, 'Montagna'),
 (3, 'Mare'),
-(4, 'Sedute fisioterapiche');
+(4, 'Sedute fisioterapiche'),
+(5, 'evento test');
 
 -- --------------------------------------------------------
 
@@ -220,7 +240,6 @@ CREATE TABLE `utenti` (
   `telefono_fisso` varchar(9) DEFAULT NULL,
   `telefono_mobile` varchar(9) DEFAULT NULL,
   `note` text DEFAULT NULL,
-  `numero_accessi` int(11) DEFAULT NULL,
   `id_profilo` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -229,8 +248,10 @@ CREATE TABLE `utenti` (
 --
 
 INSERT INTO `utenti` (`id`, `nome`, `cognome`, `username`, `password`, `email`, `telefono_fisso`, `telefono_mobile`, `note`, `numero_accessi`, `id_profilo`) VALUES
-(1, 'Antonio', 'Bellini', 'anto', 'cdd9f293d68759b7245c03f319c30cb70eaf833be3d4c9fcd1643d73ab67a279a327ee9c6b6c6de7e6785a48e540c5ede84c9603dcbf20228f2b5c609a1ef5b6:a^3xA%T{,%jdJ5Z}&gB4*Pb}1l81FA`s', 'anto@gmail.com', '', '123456789', 'sono antonio bellini\r\n', 0, 4),
-(2, 'Jacopo', 'Bordoni', 'bordo', 'f4fe48ee352b291c8eed01cc05f571391f600fa88173b27e8ba824e2788bb9e04ad9949be4afd5d6552a69ba250592a602f1395aca9e6ba298b7d55fa299ab15:at!<3W,N6M5S}(.yhTr*-d[vT1xqP*4F', 'bordo@gmail.com', '', '123456789', 'sono il presidente di prova', 0, 1);
+(1, 'Antonio', 'Bellini', 'anto', '32664e46830f538684e8255d05dc8938797695be3aecfaa29ce4d3bb8bf8d5f355dbe2051b5bc11cb051537d87cca9d7e39856a3a56df24dd1a9912255a39866:$=@|&YX*^ht2g7T8Bc*)XX[mNX^|0o5$', 'anto@gmail.com', '', '123456789', 'sono antonio bellini\r\n', 0, 4),
+(2, 'Jacopo', 'Bordoni', 'bordo', 'f4fe48ee352b291c8eed01cc05f571391f600fa88173b27e8ba824e2788bb9e04ad9949be4afd5d6552a69ba250592a602f1395aca9e6ba298b7d55fa299ab15:at!<3W,N6M5S}(.yhTr*-d[vT1xqP*4F', 'bordo@gmail.com', '', '123456789', 'sono il presidente di prova', 0, 2),
+(3, 'Vincenzo Pio', 'D Agostino', 'dago', '00b3fe3b548c426e40ea48a468e4e6644e90375761654e9a405ac183a2c7649cb6cac01aae5b0a4900acc3829b0f128a73b5cc50c4628679e8cebbb80f6b090e:4i&3V&gk=C2zo|e+<1dF[[d+}ToD}}u}', 'dago@gmail.com', '', '123456789', 'vinc', 0, 4),
+(4, 'Xiang', 'Zhenjie', 'xiang', 'f3bdb05632e68fa06223bb4e128fd15bfee5ad29adf790a633436141c396776617dab0ef413f5667ddaeb1a58f3382ed7c32c9c04f0eb6cb032bf73022f85c9f:IsxFSxn~RfMDCea7xsJ599>R$EX}djx^', 'xiang@gmail.com', '', '123456789', '', 0, 4);
 
 -- --------------------------------------------------------
 
@@ -248,6 +269,14 @@ CREATE TABLE `volontari` (
   `id_liberatoria` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dump dei dati per la tabella `volontari`
+--
+
+INSERT INTO `volontari` (`id`, `nome`, `cognome`, `email`, `telefono_fisso`, `telefono_mobile`, `id_liberatoria`) VALUES
+(1, 'Luca', 'Pillitu', 'pillo@gmail.com', '', '123456789', 1),
+(2, 'Andrea', 'Perotti', 'pero@gmail.com', '', '123456789', 2);
+
 -- --------------------------------------------------------
 
 --
@@ -259,6 +288,14 @@ CREATE TABLE `volontari_evento` (
   `id_volontario` int(11) NOT NULL,
   `note` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dump dei dati per la tabella `volontari_evento`
+--
+
+INSERT INTO `volontari_evento` (`id_evento`, `id_volontario`, `note`) VALUES
+(1, 1, ''),
+(1, 2, '');
 
 --
 -- Indici per le tabelle scaricate
@@ -360,7 +397,7 @@ ALTER TABLE `volontari_evento`
 -- AUTO_INCREMENT per la tabella `assistiti`
 --
 ALTER TABLE `assistiti`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT per la tabella `bacheca`
@@ -372,13 +409,13 @@ ALTER TABLE `bacheca`
 -- AUTO_INCREMENT per la tabella `eventi`
 --
 ALTER TABLE `eventi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT per la tabella `liberatorie`
 --
 ALTER TABLE `liberatorie`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT per la tabella `newsletter`
@@ -396,7 +433,7 @@ ALTER TABLE `profili`
 -- AUTO_INCREMENT per la tabella `tipi_evento`
 --
 ALTER TABLE `tipi_evento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT per la tabella `tipi_funzione`
@@ -414,13 +451,13 @@ ALTER TABLE `tipi_profilo`
 -- AUTO_INCREMENT per la tabella `utenti`
 --
 ALTER TABLE `utenti`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT per la tabella `volontari`
 --
 ALTER TABLE `volontari`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Limiti per le tabelle scaricate
