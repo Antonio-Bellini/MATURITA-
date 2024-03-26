@@ -1,66 +1,5 @@
 /*COLOR PALETTE DELLE PAGINE*/
 @import url("https://fonts.googleapis.com/css2?family=Oswald:wght@300;400&family=Raleway:wght@100;200&family=Roboto+Condensed:ital,wght@0,400;1,300&family=Roboto+Mono:ital,wght@0,200;1,200&display=swap");
-:root {
-  /*Light Theme*/
-  --background-light: white;
-  --logo-light: rgb(226, 33, 33);
-  --black-light: black;
-  --black2-light: black;
-  --white-light: #fff;
-  --paragraph-light: rgb(125, 123, 123);
-  --text-important-light: #e7ce45;
-  --opacity-light: rgba(4, 9, 30, 0.7);
-  --secondaryOpacity-light: rgba(0, 0, 0 , 0.7);
-  --thirdOpacity-light: rgba(0, 0, 0, 0.554);
-  --menuBar-light: #aaa;
-  --buttonText-light: #fff;
-  --buttonBorder-light: #fff;
-  --buttonHover-light: #ccc;
-  /*Contact color*/
-  --contact-field-light: rgb(101, 101, 101);
-  --contact-text-light: #aaa;
-  --contact-text2-light: #fff;
-  --contact-input-light: rgb(200,200,200);
-  /*Maps color*/
-  --maps-color1-light: #59d3b4;
-  /*Dark theme*/
-  --background-dark: rgb(37, 37, 37);
-  --logo-dark: rgb(15, 136, 0);
-  --black-dark: rgb(192, 192, 192);
-  --black2-dark: black;
-  --white-dark: rgb(192, 192, 192);
-  --paragraph-dark: rgb(125, 123, 123);
-  --text-important-dark: #FFD700;
-  --opacity-dark: rgba(4,9,30,0.7);
-  --secondaryOpacity-dark: rgba(0,0,0,0.7);
-  --thirdOpacity-dark: rgba(0, 0, 0, 0.554);
-  --menuBar-dark: #aaa;
-  --buttonText-dark: #fff;
-  --buttonBorder-dark: #fff;
-  --buttonHover-dark: #ccc;
-  /*Contact color*/
-  --contact-field-dark: rgb(101, 101, 101);
-  --contact-text-dark: #aaa;
-  --contact-text2-dark: #fff;
-  --contact-input-dark: rgb(70, 70, 70);
-  /*Maps color*/
-  --maps-color1-dark: #59d3b4;
-}
-
-/* GRANDEZZA DEL TESTO E ALTRO */
-:root {
-  --title: 62px;
-  --importantTitle: 35px;
-  --secondaryTitle: 30px;
-  --mainParagraph: 25px;
-  --secondaryText: 20px;
-  --thirdText: 17px;
-  --mapsSelector: 15px;
-  --radius: 15px;
-  --radiusTwo: 10px;
-  --secondaryParagraph: 14px;
-  --smallText: 12px;
-}
 
 * {
   margin: 0;
@@ -70,7 +9,7 @@
 }
 
 body {
-  background-color: var(--background);
+  background-color: white;
 }
 
 td {
@@ -78,15 +17,15 @@ td {
 }
 
 h1 {
-  color: var(--black);
-  font-size: var(--title);
+  color: black;
+  font-size: 50px;
   font-weight: 1200;
 }
 
 h2 {
-  color: var(--white);
+  color: white;
   font-weight: 1000;
-  font-size: var(--secondaryTitle);
+  font-size: 30px;
 }
 
 h3 {
