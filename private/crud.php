@@ -9,7 +9,7 @@
     echo "<link rel='stylesheet' href='../style/style.css'>";
 
     importActualStyle();
-    $connection = connectToDatabase("localhost", "root", "", DB_NAME);
+    $connection = connectToDatabase(DB_HOST, USER_ADMIN, ADMIN_PW, DB_NAME);
     session_start();
 
     $operation = null;
@@ -58,19 +58,27 @@
             
             switch ($profile) {
                 case "user":
-                    if (isset($_SESSION["is_parent"]) && $_SESSION["is_parent"]) {
-                        if ($userId != $_SESSION["user_id"])
-                            $userId = $_SESSION["user_id"];
+                    if ((isset($_SESSION["is_parent"]) && $_SESSION["is_parent"]) ||
+                        (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"])) {
+                        
+                        if (isset($_SESSION["is_parent"]) && $_SESSION["is_parent"]) {
+                            if ($userId != $_SESSION["user_id"])
+                                $userId = $_SESSION["user_id"];
+                        }
+                        modifyForm("user", $userId);
                     }
-                    modifyForm("user", $userId);
                     break;
 
                 case "assisted":
-                    modifyForm("assisted", $userId);
+                    if ((isset($_SESSION["is_parent"]) && $_SESSION["is_parent"]) ||
+                        (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]))
+
+                        modifyForm("assisted", $userId);
                     break;
 
                 case "volunteer":
-                    modifyForm("volunteer", $userId);
+                    if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"])
+                        modifyForm("volunteer", $userId);
                     break;
             }
         break;

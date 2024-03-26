@@ -5,7 +5,7 @@
     include("../util/cookie.php");
 
     importActualStyle();
-    $connection = connectToDatabase("localhost", "root", "", DB_NAME);
+    $connection = connectToDatabase(DB_HOST, USER_ADMIN, ADMIN_PW, DB_NAME);
     session_start();
 
     $assistedId = null;

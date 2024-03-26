@@ -17,6 +17,7 @@
     <?php
         include "../util/connection.php";
         include "../util/command.php";
+        $connection = connectToDatabase(DB_HOST, "root", "", DB_NAME);
         session_start();
 
         if (!isset($_SESSION["is_logged"]))
@@ -47,7 +48,7 @@
                         </nav>            
                     </section>
                 </main>";
-            welcome($_SESSION["username"]);
+            welcome($connection, $_SESSION["username"]);
         } else {
             echo "<main>
                     <h1>Accedi al tuo account</h1>

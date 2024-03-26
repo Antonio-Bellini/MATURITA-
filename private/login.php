@@ -5,7 +5,7 @@
     include("../util/cookie.php");
 
     importActualStyle();
-    $connection = connectToDatabase("localhost", "root", "", DB_NAME);
+    $connection = connectToDatabase(DB_HOST, "root", "", DB_NAME);
     echo "<link rel='stylesheet' href='../style/style.css'>";
     session_start();
 
@@ -38,7 +38,7 @@
                             $_SESSION["user_id"] = $row["id"];
                             
                             showMenu_logged();
-                            welcome($username);
+                            welcome($connection, $username);
                         } else {
                             echo ERROR_PW;
                             header("Refresh: 3; URL=loginPage.php");
@@ -53,7 +53,7 @@
         }
     } else {
         showMenu_logged();
-        welcome($_SESSION["username"]);
+        welcome($connection, $_SESSION["username"]);
     }
 
     // funzione per mostrare il menu

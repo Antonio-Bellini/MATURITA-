@@ -5,7 +5,6 @@
     include("util/cookie.php");
 
     importActualStyle();
-    $connection = connectToDatabase("localhost", "root", "", DB_NAME);
     echo "<link rel='stylesheet' href='style/style.css'>";
     session_start();
 

@@ -13,6 +13,7 @@
 <?php
     include "../util/cookie.php";
     importActualStyle();
+    session_start();
 
     // menu di navigazione
     echo "<main>
@@ -38,40 +39,47 @@
             </section>
         </main>";
 ?>
-
-    <!-- SEZIONE PRINCIPALE della PAGINA DI REGISTRAZIONE -->
-    <main>
-        <h1>CREA ACCOUNT GENITORE</h1>
-        <form action="register.php" id="form_register__user" method="POST">
-            <input type="hidden" name="form_user">
-            
-            <label for="nome">Inserisci il nome</label>
-            <input type="text" name="name" id="name" maxlength="30" required> <br>
-
-            <label for="cognome">Inserisci il cognome</label>
-            <input type="text" name="surname" id="surname" maxlength="30" required> <br>
-
-            <label for="username">Inserisci lo username</label>
-            <input type="text" name="username" id="username" maxlength="20" required>
-            <span id="usernameError"></span> <br>
-
-            <label for="password">Crea una password</label>
-            <input type="password" name="password" id="password" maxlength="255" required> <br>
-
-            <label for="email">Inserisci l'email</label>
-            <input type="email" name="email" id="email" maxlength="30" required> <br>
-
-            <label for="phone_f">Inserisci il numero di telefono fisso</label>
-            <input type="text" name="phone_f" id="phone_f" maxlength="9"> <br>
-
-            <label for="phone_m">Inserisci il numero di telefono</label>
-            <input type="text" name="phone_m" id="phone_m" maxlength="9" required> <br>
-
-            <label for="notes">Inserisci qualche nota aggiuntiva</label> <br>
-            <textarea name="notes" id="notes" cols="30" rows="10" placeholder="Altre info utili"></textarea> <br><br><br>
-
-            <input type="submit" value="Registra">
-        </form>
-    </main>  
+<?php
+    if (isset($_SESSION["is_logged"]) && $_SESSION["is_logged"]) {
+        if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) {
+            if (($_SESSION["profile_func"] === "gestione DB") && ($_SESSION["user_auth"] === "CRUD")) {
+                echo "<section>
+                        <h1>CREA ACCOUNT GENITORE</h1>
+                        <form action='register.php' id='form_register__user' method='POST'>
+                            <input type='hidden' name='form_user'>
+                            
+                            <label for='nome'>Inserisci il nome</label>
+                            <input type='text' name='name' id='name' maxlength='30' required> <br>
+                
+                            <label for='cognome'>Inserisci il cognome</label>
+                            <input type='text' name='surname' id='surname' maxlength='30' required> <br>
+                
+                            <label for='username'>Inserisci lo username</label>
+                            <input type='text' name='username' id='username' maxlength='20' required>
+                            <span id='usernameError'></span> <br>
+                
+                            <label for='password'>Crea una password</label>
+                            <input type='password' name='password' id='password' maxlength='255' required> <br>
+                
+                            <label for='email'>Inserisci l'email</label>
+                            <input type='email' name='email' id='email' maxlength='30' required> <br>
+                
+                            <label for='phone_f'>Inserisci il numero di telefono fisso</label>
+                            <input type='text' name='phone_f' id='phone_f' maxlength='9'> <br>
+                
+                            <label for='phone_m'>Inserisci il numero di telefono</label>
+                            <input type='text' name='phone_m' id='phone_m' maxlength='9' required> <br>
+                
+                            <label for='notes'>Inserisci qualche nota aggiuntiva</label> <br>
+                            <textarea name='notes' id='notes' cols='30' rows='10' placeholder='Altre info utili'></textarea> <br><br><br>
+                
+                            <input type='submit' value='Registra'>
+                        </form>
+                    </section>";
+            }
+        } else 
+            header("Location: ../index.php");
+    }
+?>    
 </body>
 </html>

@@ -1,9 +1,19 @@
 <?php
+    define("DB_HOST", "localhost");
     define("DB_NAME", "associazione_zerotre");
     define("DB_USER", "user");
     define("DB_ADMIN", "admin");
     define("DB_PRESIDENT", "president");
     define("DB_TERAPIST", "terapist");
+
+    define("USER_PRESIDENT", "president");
+    define("PRESIDENT_PW", "nuova_password");
+    define("USER_ADMIN", "admin");
+    define("ADMIN_PW", "nuova_password");
+    define("USER_TERAPIST", "admin");
+    define("TERAPIST_PW", "nuova_password");
+    define("USER_USER", "user");
+    define("USER_PW", "nuova_password");
 
     define("ERROR_GEN", "Si é verificato un errore imprevisto, riprova piú tardi");
     define("ERROR_DB", "Si é verificato un problema recuperando i dati dal database, riprova piú tardi");

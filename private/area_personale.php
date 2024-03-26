@@ -5,7 +5,6 @@
     include("../util/cookie.php");
 
     importActualStyle();
-    $connection = connectToDatabase("localhost", "root", "", DB_NAME);
     echo "<link rel='stylesheet' href='../style/style.css'>";
     session_start();
 
@@ -54,15 +53,23 @@
         // permetto determinate funzioni in base al tipo di profilo
         switch($profile_type) {
             case "presidente":
-                welcome($_SESSION["username"]);
+                $connection = connectToDatabase(DB_HOST, USER_PRESIDENT, PRESIDENT_PW, DB_NAME);
+                welcome($connection, $_SESSION["username"]);
+
                 $_SESSION["is_president"] = true;
+                $_SESSION["profile_func"] = $profile_func;
+                $_SESSION["user_auth"] = $auth;
 
                 echo "<label>Effettua una delle seguenti operazioni</label><br><br>";
             break;
 
             case "admin":
-                welcome($_SESSION["username"]);
+                $connection = connectToDatabase(DB_HOST, USER_ADMIN, ADMIN_PW, DB_NAME);
+                welcome($connection, $_SESSION["username"]);
+
                 $_SESSION["is_admin"] = true;
+                $_SESSION["profile_func"] = $profile_func;
+                $_SESSION["user_auth"] = $auth;
 
                 echo "<button><a href='admin_operation.php?operation=view_user'>Visualizza utenti</a></button><br><br>";
                 echo "<button><a href='admin_operation.php?operation=view_volu'>Visualizza volontari</a></button><br><br>";
@@ -72,15 +79,23 @@
             break;
 
             case "terapista":
-                welcome($_SESSION["username"]);
+                $connection = connectToDatabase(DB_HOST, USER_TERAPIST, TERAPIST_PW, DB_NAME);
+                welcome($connection, $_SESSION["username"]);
+
                 $_SESSION["is_terapist"] = true;
+                $_SESSION["profile_func"] = $profile_func;
+                $_SESSION["user_auth"] = $auth;
 
                 echo "se leggi sei un terapista";
             break;
 
             case "genitore":
-                welcome($_SESSION["username"]);
+                $connection = connectToDatabase(DB_HOST, USER_USER, USER_PW, DB_NAME);
+                welcome($connection, $_SESSION["username"]);
+                
                 $_SESSION["is_parent"] = true;
+                $_SESSION["profile_func"] = $profile_func;
+                $_SESSION["user_auth"] = $auth;
 
                 // ottengo i dati dell'utente e li stampo
                 echo "I tuoi dati:<br>";

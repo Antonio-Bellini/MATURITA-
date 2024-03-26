@@ -77,9 +77,7 @@
     }
 
     // funzione per dare il benvenuto stampando nome e cognome
-    function welcome($username) {
-        $connection = connectToDatabase("localhost", "root", "", DB_NAME);
-
+    function welcome($connection, $username) {
         $query = "SELECT nome, cognome
                     FROM utenti
                     WHERE username = '$username';";

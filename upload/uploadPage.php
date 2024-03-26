@@ -57,7 +57,7 @@
             <label for="assisted">Per quale assistito vuoi caricare la liberatoria?</label><br>
             <select name="assisted" id="assisted">
             <?php
-                $connection = connectToDatabase("localhost", "root", "", DB_NAME);
+                $connection = connectToDatabase(DB_HOST, USER_ADMIN, ADMIN_PW, DB_NAME);
                 $query = "SELECT id, nome, cognome FROM assistiti";
                 $result = dbQuery($connection, $query);
 
@@ -85,7 +85,7 @@
             <label for="assisted">Per quale volontario vuoi caricare la liberatoria?</label><br>
             <select name="volunteer" id="volunteer">
             <?php
-                $connection = connectToDatabase("localhost", "root", "", DB_NAME);
+                $connection = connectToDatabase(DB_HOST, USER_ADMIN, ADMIN_PW, DB_NAME);
                 $query = "SELECT id, nome, cognome FROM volontari";
                 $result = dbQuery($connection, $query);
 

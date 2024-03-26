@@ -7,9 +7,8 @@
     echo "<script src='https://code.jquery.com/jquery-3.6.4.min.js'></script>";
     echo "<script src='../script/script.js'></script>";
     echo "<link rel='stylesheet' href='../style/style.css'>";
-    
     importActualStyle();
-    $connection = connectToDatabase("localhost", "root", "", DB_NAME);
+    $connection = connectToDatabase(DB_HOST, USER_ADMIN, ADMIN_PW, DB_NAME);
     session_start();
 
     $operation = null;
@@ -18,7 +17,7 @@
         $operation = $_GET["operation"];
 
     if (isset($_SESSION["is_logged"]) && $_SESSION["is_logged"]) {
-        if ($_SESSION["is_admin"]) {
+        if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) {
             switch ($operation){
                 case "view_user":
                     showMenu_logged();
