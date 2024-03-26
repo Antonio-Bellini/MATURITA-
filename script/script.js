@@ -91,9 +91,6 @@ $(document).ready(function () {
             $('#viewVoluEventAssi').show();
         }
     });
-
-    // scorimento immagini nella pagina index
-    
 });
 
 // AJAX per il controllo live dell'email inserita
@@ -126,4 +123,3 @@ function checkNewPassword(old_psw, new_psw) {
                 $("#passwordError").text("");
         }
     })
-}
