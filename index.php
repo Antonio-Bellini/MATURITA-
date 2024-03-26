@@ -44,12 +44,6 @@
         <header>
             <h1>ZEROTRE</h1>
         </header>
-
-        <div class="image-slider">
-            <img class="image" src="image/content/image1.jpg" alt="Immagine 1">
-            <img class="image" src="image/content/image2.jpg" alt="Immagine 2">
-            <img class="image" src="image/content/image3.jpg" alt="Immagine 3">
-        </div>
     </main>
 
     <footer>
