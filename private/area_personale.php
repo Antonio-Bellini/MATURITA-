@@ -54,15 +54,19 @@
         // permetto determinate funzioni in base al tipo di profilo
         switch($profile_type) {
             case "presidente":
-                $connection = connectToDatabase(DB_HOST, USER_PRESIDENT, PRESIDENT_PW, DB_NAME);
-                welcome($connection, $_SESSION["username"]);
+                try {
+                    $connection = connectToDatabase(DB_HOST, USER_PRESIDENT, PRESIDENT_PW, DB_NAME);
+                    welcome($connection, $_SESSION["username"]);
 
-                $_SESSION["is_president"] = true;
-                $_SESSION["profile_type"] = $profile_type;
-                $_SESSION["profile_func"] = $profile_func;
-                $_SESSION["user_auth"] = $auth;
+                    $_SESSION["is_president"] = true;
+                    $_SESSION["profile_type"] = $profile_type;
+                    $_SESSION["profile_func"] = $profile_func;
+                    $_SESSION["user_auth"] = $auth;
 
-                echo "<label>Effettua una delle seguenti operazioni</label><br><br>";
+                    echo "<label>Effettua una delle seguenti operazioni</label><br><br>";
+                } catch (Exception $e) {
+                    echo ERROR_GEN . ": " . $e;
+                }
             break;
 
             case "admin":
@@ -86,15 +90,19 @@
             break;
 
             case "terapista":
-                $connection = connectToDatabase(DB_HOST, USER_TERAPIST, TERAPIST_PW, DB_NAME);
-                welcome($connection, $_SESSION["username"]);
+                try {
+                    $connection = connectToDatabase(DB_HOST, USER_TERAPIST, TERAPIST_PW, DB_NAME);
+                    welcome($connection, $_SESSION["username"]);
 
-                $_SESSION["is_terapist"] = true;
-                $_SESSION["profile_type"] = $profile_type;
-                $_SESSION["profile_func"] = $profile_func;
-                $_SESSION["user_auth"] = $auth;
+                    $_SESSION["is_terapist"] = true;
+                    $_SESSION["profile_type"] = $profile_type;
+                    $_SESSION["profile_func"] = $profile_func;
+                    $_SESSION["user_auth"] = $auth;
 
-                echo "se leggi sei un terapista";
+                    echo "se leggi sei un terapista";
+                } catch (Exception $e) {
+                    echo ERROR_GEN . ": " . $e;
+                }
             break;
 
             case "genitore":
