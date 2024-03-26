@@ -92,22 +92,20 @@ $(document).ready(function () {
         }
     });
 
-    // scorimento immagini nella pagina index
-    var container = $('#container');
-    var images = $('.image');
-    var imageWidth = images.outerWidth(true); // Larghezza effettiva dell'immagine incluso il margine
-    var containerWidth = container.outerWidth(); // Larghezza del contenitore visibile
-  
-    var scrollPos = 0;
-  
-    setInterval(function() {
-      scrollPos += 1; // Modifica la velocità di scorrimento modificando questo valore
-      if (scrollPos >= (containerWidth - imageWidth * images.length)) {
-        // Se arriva alla fine, riporta all'inizio
-        scrollPos = 0;
-      }
-      container.scrollLeft(scrollPos);
-    }, 20); // Modifica la velocità di scorrimento modificando questo valore    
+    var gallery = $('.gallery');
+    var photoWidth = $('.photo').outerWidth(true); // Includo il margine
+    var scrollInterval = setInterval(function() {
+        gallery.scrollLeft(gallery.scrollLeft() + photoWidth);
+    }, 2000); // Scorre ogni 2 secondi
+
+    // Pausa lo scorrimento quando il mouse passa sopra la galleria
+    gallery.hover(function() {
+        clearInterval(scrollInterval);
+    }, function() {
+        scrollInterval = setInterval(function() {
+            gallery.scrollLeft(gallery.scrollLeft() + photoWidth);
+        }, 2000);
+    });
 });
 
 // AJAX per il controllo live dell'email inserita
@@ -140,20 +138,4 @@ function checkNewPassword(old_psw, new_psw) {
                 $("#passwordError").text("");
         }
     })
-}
-
-//
-let slideIndex = 0;
-showSlides();
-
-function showSlides() {
-  let i;
-  let slides = document.getElementsByClassName("mySlides");
-  for (i = 0; i < slides.length; i++) {
-    slides[i].style.display = "none";
-  }
-  slideIndex++;
-  if (slideIndex > slides.length) {slideIndex = 1}
-  slides[slideIndex-1].style.display = "block";
-  setTimeout(showSlides, 2000); // Change image every 2 seconds
 }
