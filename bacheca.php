@@ -33,7 +33,26 @@
                 </section>
             </main>";
 
-        echo "<br><br>QUESTA PAGINA CONTERRÁ LA BACHECA DELL'ASSOCIAZIONE";
+        if ((isset($_SESSION["is_admin"]) && $_SESSION["is_admin"])) {
+            $connection = connectToDatabase(DB_HOST, USER_ADMIN, ADMIN_PW, DB_NAME);
+
+            if (($_SESSION["profile_func"] === "gestione DB") && ($_SESSION["user_auth"] === "CRUD")) {
+                echo "<br><br><button><a href='bacheca/manage_bacheca.php?operation=add'>Aggiungi contenuto</a></button>";
+                echo "&nbsp;<button><a href='bacheca/manage_bacheca.php?operation=del'>Elimina contenuto</a></button>";
+            }
+
+            $query = "SELECT bacheca, data FROM bacheca";
+            $result = dbQuery($connection, $query);
+            echo "<br><br><label>Ecco cosa é presente in bacheca</label><br><br>";
+
+            if ($result) {
+                while ($row = ($result->fetch_assoc())) {
+                    echo "<div id='bacheca'>
+                            <embed src='bacheca/files/" . $row["bacheca"] . "' type='application/pdf' width='80%' height='100%'>
+                        </div>";
+                }
+            }
+        } 
     } else 
         header("Location: private/loginPage.php");
 ?>

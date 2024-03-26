@@ -72,6 +72,28 @@
             echo GEN_ERROR;
             header("Refresh: 3; URL=../private/loginPage.php");
         }
+    } else if (isset($_FILES['bacheca'])) {
+        $uploadDirectory = '../bacheca/files/'; 
+    
+        $fileName = $_FILES['bacheca']['name'];
+        $fileTmpName = $_FILES['bacheca']['tmp_name'];
+        $date = date("Y-m-d");
+
+        // aggiungo il nome del file al percorso della cartella di destinazione
+        $newFilePath = $uploadDirectory . $fileName;
+    
+        if(move_uploaded_file($fileTmpName, $newFilePath)) {
+            $uploadedFileName = "/" . $fileName;
+
+            $query = "INSERT INTO bacheca(bacheca, data)
+                            VALUES('$uploadedFileName', '$date');";
+            $result = dbQuery($connection, $query);
+
+            if ($result) {
+                echo FILE_OK;
+                header("Refresh: 3; URL=../bacheca.php");
+            }
+        }
     } else {
         echo NO_FILE;
         header("Refresh: 3; URL=../private/loginPage.php");

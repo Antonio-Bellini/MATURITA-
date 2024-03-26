@@ -38,6 +38,7 @@
                 </section>
             </main>";
 
+        $connection = connectToDatabase(DB_HOST, "root", "", DB_NAME);
         $result = getUserAuth($connection, $_SESSION["username"]);
 
         // salvo i permessi che ha l'utente che ha effettuato il login
@@ -57,6 +58,7 @@
                 welcome($connection, $_SESSION["username"]);
 
                 $_SESSION["is_president"] = true;
+                $_SESSION["profile_type"] = $profile_type;
                 $_SESSION["profile_func"] = $profile_func;
                 $_SESSION["user_auth"] = $auth;
 
@@ -64,18 +66,23 @@
             break;
 
             case "admin":
-                $connection = connectToDatabase(DB_HOST, USER_ADMIN, ADMIN_PW, DB_NAME);
-                welcome($connection, $_SESSION["username"]);
+                try {
+                    $connection = connectToDatabase(DB_HOST, USER_ADMIN, ADMIN_PW, DB_NAME);
+                    welcome($connection, $_SESSION["username"]);
 
-                $_SESSION["is_admin"] = true;
-                $_SESSION["profile_func"] = $profile_func;
-                $_SESSION["user_auth"] = $auth;
+                    $_SESSION["is_admin"] = true;
+                    $_SESSION["profile_type"] = $profile_type;
+                    $_SESSION["profile_func"] = $profile_func;
+                    $_SESSION["user_auth"] = $auth;
 
-                echo "<button><a href='admin_operation.php?operation=view_user'>Visualizza utenti</a></button><br><br>";
-                echo "<button><a href='admin_operation.php?operation=view_volu'>Visualizza volontari</a></button><br><br>";
-                echo "<button><a href='admin_operation.php?operation=view_assi'>Visualizza assistiti</a></button><br><br>";
-                echo "<button><a href='../upload/uploadPage.php'>Carica liberatorie</a></button><br><br>";
-                echo "<button><a href='admin_operation.php?operation=mng_event'>Pagina eventi</a></button><br><br>";
+                    echo "<button><a href='admin_operation.php?operation=view_user'>Visualizza utenti</a></button><br><br>";
+                    echo "<button><a href='admin_operation.php?operation=view_volu'>Visualizza volontari</a></button><br><br>";
+                    echo "<button><a href='admin_operation.php?operation=view_assi'>Visualizza assistiti</a></button><br><br>";
+                    echo "<button><a href='../upload/uploadPage.php'>Carica liberatorie</a></button><br><br>";
+                    echo "<button><a href='admin_operation.php?operation=mng_event'>Pagina eventi</a></button><br><br>";
+                } catch (Exception $e) {
+                    echo ERROR_GEN . ": " . $e;
+                }
             break;
 
             case "terapista":
@@ -83,6 +90,7 @@
                 welcome($connection, $_SESSION["username"]);
 
                 $_SESSION["is_terapist"] = true;
+                $_SESSION["profile_type"] = $profile_type;
                 $_SESSION["profile_func"] = $profile_func;
                 $_SESSION["user_auth"] = $auth;
 
@@ -90,46 +98,51 @@
             break;
 
             case "genitore":
-                $connection = connectToDatabase(DB_HOST, USER_USER, USER_PW, DB_NAME);
-                welcome($connection, $_SESSION["username"]);
-                
-                $_SESSION["is_parent"] = true;
-                $_SESSION["profile_func"] = $profile_func;
-                $_SESSION["user_auth"] = $auth;
+                try {
+                    $connection = connectToDatabase(DB_HOST, USER_USER, USER_PW, DB_NAME);
+                    welcome($connection, $_SESSION["username"]);
+                    
+                    $_SESSION["is_parent"] = true;
+                    $_SESSION["profile_type"] = $profile_type;
+                    $_SESSION["profile_func"] = $profile_func;
+                    $_SESSION["user_auth"] = $auth;
 
-                // ottengo i dati dell'utente e li stampo
-                echo "I tuoi dati:<br>";
-                $query = "SELECT u.id, 
-                                u.nome,
-                                u.cognome,
-                                u.username,
-                                u.email,
-                                u.telefono_fisso,
-                                u.telefono_mobile,
-                                u.note
-                            FROM utenti u
-                            WHERE u.id = '" . $_SESSION["user_id"] . "'";
-                $result = dbQuery($connection, $query);
-                if ($result) {
-                    createTable($result, "user");
-
-                    // ottengo i dati degli assistiti collegati a questo utente e li stampo
-                    echo "<br><br>I tuoi assistiti:<br>";
-                    $query = "SELECT a.id,
-                                    a.nome,
-                                    a.cognome, 
-                                    a.anamnesi,
-                                    a.note
-                                FROM assistiti a 
-                                INNER JOIN utenti u ON a.id_referente = u.id
+                    // ottengo i dati dell'utente e li stampo
+                    echo "I tuoi dati:<br>";
+                    $query = "SELECT u.id, 
+                                    u.nome,
+                                    u.cognome,
+                                    u.username,
+                                    u.email,
+                                    u.telefono_fisso,
+                                    u.telefono_mobile,
+                                    u.note
+                                FROM utenti u
                                 WHERE u.id = '" . $_SESSION["user_id"] . "'";
                     $result = dbQuery($connection, $query);
                     if ($result) {
-                        createTable($result, "assisted");
+                        createTable($result, "user");
+
+                        // ottengo i dati degli assistiti collegati a questo utente e li stampo
+                        echo "<br><br>I tuoi assistiti:<br>";
+                        $query = "SELECT a.id,
+                                        a.nome,
+                                        a.cognome, 
+                                        a.anamnesi,
+                                        a.note
+                                    FROM assistiti a 
+                                    INNER JOIN utenti u ON a.id_referente = u.id
+                                    WHERE u.id = '" . $_SESSION["user_id"] . "'";
+                        $result = dbQuery($connection, $query);
+                        if ($result) {
+                            createTable($result, "assisted");
+                        } else 
+                            echo ERROR_DB;
                     } else 
                         echo ERROR_DB;
-                } else 
-                    echo ERROR_DB;
+                } catch (Exception $e) {
+                    echo ERROR_GEN . ": " . $e;
+                }
             break;
         }
     } else
