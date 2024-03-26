@@ -93,17 +93,21 @@ $(document).ready(function () {
     });
 
     // scorimento immagini nella pagina index
+    var container = $('#container');
+    var images = $('.image');
+    var imageWidth = images.outerWidth(true); // Larghezza effettiva dell'immagine incluso il margine
+    var containerWidth = container.outerWidth(); // Larghezza del contenitore visibile
+  
     var scrollPos = 0;
-  var container = $('#container');
-
-  setInterval(function() {
-    scrollPos += 1; // Modifica la velocità di scorrimento modificando questo valore
-    container.scrollLeft(scrollPos);
-    if (scrollPos >= (container.get(0).scrollWidth - container.width())) {
-      // Se arriva alla fine, riporta all'inizio
-      scrollPos = 0;
-    }
-  }, 50);
+  
+    setInterval(function() {
+      scrollPos += 1; // Modifica la velocità di scorrimento modificando questo valore
+      if (scrollPos >= (containerWidth - imageWidth * images.length)) {
+        // Se arriva alla fine, riporta all'inizio
+        scrollPos = 0;
+      }
+      container.scrollLeft(scrollPos);
+    }, 20); // Modifica la velocità di scorrimento modificando questo valore    
 });
 
 // AJAX per il controllo live dell'email inserita
