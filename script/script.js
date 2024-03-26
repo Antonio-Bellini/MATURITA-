@@ -91,21 +91,6 @@ $(document).ready(function () {
             $('#viewVoluEventAssi').show();
         }
     });
-
-    var gallery = $('.gallery');
-    var photoWidth = $('.photo').outerWidth(true); // Includo il margine
-    var scrollInterval = setInterval(function() {
-        gallery.scrollLeft(gallery.scrollLeft() + photoWidth);
-    }, 2000); // Scorre ogni 2 secondi
-
-    // Pausa lo scorrimento quando il mouse passa sopra la galleria
-    gallery.hover(function() {
-        clearInterval(scrollInterval);
-    }, function() {
-        scrollInterval = setInterval(function() {
-            gallery.scrollLeft(gallery.scrollLeft() + photoWidth);
-        }, 2000);
-    });
 });
 
 // AJAX per il controllo live dell'email inserita
@@ -138,4 +123,3 @@ function checkNewPassword(old_psw, new_psw) {
                 $("#passwordError").text("");
         }
     })
-}
