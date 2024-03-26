@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="style/style.css">
     <script src="script/script.js"></script>
     <link rel="icon" href="image/logos/logo.png" type="x-icon">
-    <title>ZeroTre</title>
+    <title>Un aiuto per crescere insieme</title>
 </head>
 
 <!-- STAMPA del BODY in BASE al COOKIE SALVATO -->
@@ -42,10 +42,14 @@
         </section>
 
         <header>
-            <h1>ZeroTre</h1>
+            <h1>ZEROTRE</h1>
         </header>
 
-        <div class="image-slider"></div>
+        <div class="image-slider">
+            <img class="image" src="image/content/image1.jpg" alt="Immagine 1">
+            <img class="image" src="image/content/image2.jpg" alt="Immagine 2">
+            <img class="image" src="image/content/image3.jpg" alt="Immagine 3">
+        </div>
     </main>
 </body>
 </html>

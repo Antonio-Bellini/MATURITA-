@@ -93,16 +93,17 @@ $(document).ready(function () {
     });
 
     // scorimento immagini nella pagina index
-    const images = $('.image-slider img');
-    let index = 0;
+    var scrollPos = 0;
+  var container = $('#container');
 
-    function showImage() {
-        images.removeClass('active');
-        images.eq(index).addClass('active');
-        index = (index + 1) % images.length;
+  setInterval(function() {
+    scrollPos += 1; // Modifica la velocità di scorrimento modificando questo valore
+    container.scrollLeft(scrollPos);
+    if (scrollPos >= (container.get(0).scrollWidth - container.width())) {
+      // Se arriva alla fine, riporta all'inizio
+      scrollPos = 0;
     }
-
-    setInterval(showImage, 3000);
+  }, 50);
 });
 
 // AJAX per il controllo live dell'email inserita
@@ -136,3 +137,4 @@ function checkNewPassword(old_psw, new_psw) {
         }
     })
 }
+
