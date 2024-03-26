@@ -369,7 +369,8 @@ hr {
 
 /* STYLE PER LE MAPPE e I GRAFICI */
 h4 {
-  color: var(--black);
+  padding-bottom: 15px;
+  color: white;
 }
 
 .mapSelector-text {
@@ -418,26 +419,29 @@ h4 {
 }
 
 /* FOOTER DI TUTTE LE PAGINE */
-.footer {
+/* Stile per il footer */
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
   width: 100%;
+  background-color: #333;
+  color: #fff;
   text-align: center;
-  padding: 30px 0;
+  padding: 20px 0; /* Spazio interno al footer */
 }
-.footer h4 {
-  color: var(--black);
-  margin-bottom: 30px;
-  margin-top: 20px;
-  font-weight: 600;
+
+/* Stile per i link nel footer */
+footer a {
+  color: #fff;
+  text-decoration: none;
 }
-.footer p {
-  color: var(--black);
+
+/* Stile per i link nel footer al passaggio del mouse */
+footer a:hover {
+  text-decoration: underline;
 }
-.footer--change {
-  font-size: var(--smallText);
-}
-.footer iframe {
-  border: none;
-}
+
 
 /* ICONE DEI SOCIAL */
 .icons {
@@ -716,3 +720,12 @@ h4 {
   width: 300px; /* larghezza delle immagini */
   height: 200px; /* altezza delle immagini */
   margin-right: 10px; /* margine tra le immagini */}
+
+.index{
+  width: 100vw;
+  height: 100vh;
+}
+.index>img{
+  width: 100vw;
+  height: 100vh;
+}
