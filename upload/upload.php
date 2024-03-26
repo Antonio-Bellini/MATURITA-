@@ -21,6 +21,7 @@
     if (isset($_POST["notes"]))
         $notes = $_POST["notes"];
 
+    // caricamento della liberatoria
     if(isset($_FILES['release'])) {
         $uploadDirectory = 'release_module/'; 
     
@@ -72,6 +73,8 @@
             echo GEN_ERROR;
             header("Refresh: 3; URL=../private/loginPage.php");
         }
+
+    // caricamento di file nella bacheca
     } else if (isset($_FILES['bacheca'])) {
         $uploadDirectory = '../bacheca/files/'; 
     

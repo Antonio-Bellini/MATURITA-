@@ -62,23 +62,24 @@
                         (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"])) {
                         
                         if (isset($_SESSION["is_parent"]) && $_SESSION["is_parent"]) {
+                            $connection = connectToDatabase(DB_HOST, USER_USER, USER_PW, DB_NAME);
                             if ($userId != $_SESSION["user_id"])
                                 $userId = $_SESSION["user_id"];
                         }
-                        modifyForm("user", $userId);
+                        modifyForm($connection, "user", $userId);
                     }
                     break;
 
                 case "assisted":
                     if ((isset($_SESSION["is_parent"]) && $_SESSION["is_parent"]) ||
                         (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]))
-
-                        modifyForm("assisted", $userId);
+                        $connection = connectToDatabase(DB_HOST, USER_USER, USER_PW, DB_NAME);
+                        modifyForm($connection, "assisted", $userId);
                     break;
 
                 case "volunteer":
                     if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"])
-                        modifyForm("volunteer", $userId);
+                        modifyForm($connection, "volunteer", $userId);
                     break;
             }
         break;

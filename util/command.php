@@ -136,9 +136,7 @@
     }
 
     // funzione per mostrare il form di modifica
-    function modifyForm($type, $userId) {
-        $connection = connectToDatabase("localhost", "root", "", DB_NAME);
-
+    function modifyForm($connection, $type, $userId) {
         switch ($type) {
             case "user":
                 echo "<h1>Modifica anagrafica utente</h1>";
@@ -266,8 +264,7 @@
     }
 
     // funzione per mostrare il form per aggiungere un volontario a un evento
-    function addVolunteerToEvent() {
-        $connection = connectToDatabase("localhost", "root", "", DB_NAME);
+    function addVolunteerToEvent($connection) {
         $queryV = "SELECT id, nome, cognome FROM volontari";
         $queryE = "SELECT e.id, te.tipo, e.data 
                     FROM eventi e
@@ -300,8 +297,7 @@
     }
 
     // funzione per mostrare il form per aggiungere un assistito a un evento
-    function addAssistedToEvent() {
-        $connection = connectToDatabase("localhost", "root", "", DB_NAME);
+    function addAssistedToEvent($connection) {
         $queryA = "SELECT id, nome, cognome FROM assistiti";
         $queryE = "SELECT e.id, te.tipo, e.data 
                     FROM eventi e
@@ -334,8 +330,7 @@
     }
 
     // funzione per mostrare il form per creare un nuovo evento
-    function createNewEvent() {
-        $connection = connectToDatabase("localhost", "root", "", DB_NAME);
+    function createNewEvent($connection) {
         $query = "SELECT id, tipo FROM tipi_evento";
         $result = dbQuery($connection, $query);
 
@@ -369,8 +364,7 @@
     }
 
     // funzione per visualizzare l'associazione tra volontari-eventi-assistiti
-    function viewVoluEventAssi() {
-        $connection = connectToDatabase("localhost", "root", "", DB_NAME);
+    function viewVoluEventAssi($connection) {
         $query = "SELECT e.id, te.tipo, e.data 
                     FROM eventi e
                     INNER JOIN tipi_evento te ON te.id = e.tipo_evento";

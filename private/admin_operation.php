@@ -81,11 +81,11 @@
                         echo "<option value='5'>Visualizza associazione volontari-eventi-assistiti</option>";
                     echo "</select>";
 
-                    addVolunteerToEvent();
-                    addAssistedToEvent();
-                    createNewEvent();
-                    addNewEventType();
-                    viewVoluEventAssi();
+                    addVolunteerToEvent($connection);
+                    addAssistedToEvent($connection);
+                    createNewEvent($connection);
+                    addNewEventType($connection);
+                    viewVoluEventAssi($connection);
                     break;
 
                 case null:

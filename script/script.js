@@ -93,7 +93,20 @@ $(document).ready(function () {
     });
 
     // scorimento immagini nella pagina index
-    
+    let gallery = $('.gallery');
+    let photoWidth = $('.photo').outerWidth(true);
+    let scrollInterval = setInterval(function() {
+        gallery.scrollLeft(gallery.scrollLeft() + photoWidth);
+    }, 2000);
+
+    // Pausa lo scorrimento quando il mouse passa sopra la galleria
+    gallery.hover(function() {
+        clearInterval(scrollInterval);
+    }, function() {
+        scrollInterval = setInterval(function() {
+            gallery.scrollLeft(gallery.scrollLeft() + photoWidth);
+        }, 2000);
+    });
 });
 
 // AJAX per il controllo live dell'email inserita
