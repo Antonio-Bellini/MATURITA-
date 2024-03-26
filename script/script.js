@@ -139,4 +139,3 @@ function checkNewPassword(old_psw, new_psw) {
                 $("#passwordError").text("");
         }
     })
-}
