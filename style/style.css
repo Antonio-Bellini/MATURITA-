@@ -146,6 +146,7 @@ nav img {
   text-align: center;
   color: var(--white);
   border: 1px solid var(--buttonBorder);
+  border-color: red;
   padding: 12px 28px;
   border-radius: var(--radius);
   font-size: var(--smallText);
@@ -323,6 +324,7 @@ input[type=submit]:hover {
 .header {
   padding: 20px;
   border-bottom: .2px solid gray;
+  border-top: 25px solid red;
 }
 
 header {
@@ -765,3 +767,13 @@ h4 {
     --maps-color1: var(--maps-color1-dark);
   }
 }
+#container {
+  width: 100%;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+.image {
+  display: inline-block;
+  width: 300px; /* larghezza delle immagini */
+  height: 200px; /* altezza delle immagini */
+  margin-right: 10px; /* margine tra le immagini */}
