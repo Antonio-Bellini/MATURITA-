@@ -12,43 +12,42 @@ body {
   background-color: white;
 }
 
-td {
-  padding: 5px;
-}
-
+/* Typography */
 h1 {
   color: black;
   font-size: 50px;
   font-weight: 1200;
 }
-
 h2 {
-  color: white;
-  font-weight: 1000;
+  color: black;
   font-size: 30px;
+  font-weight: 1000;
 }
-
 h3 {
-  color: var(--black);
+  color: black;
+  font-size: 20px;
   font-weight: 800;
-  font-size: var(--secondaryTitle);
+}
+h4 {
+  color: black;
+  font-size: 10px;
+  font-weight: 500;
+  padding-bottom: 15px;
 }
 
-#text_important {
+/* Bottoni di navigazione per il menu */
+nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1%;
+  align-items: center;
   text-align: center;
-  color: var(--text-important);
-  font-size: var(--importantTitle);
+  background-color: transparent;
 }
-
-#paragraph_important {
-  color: var(--black2);
-}
-
-/* BOTTONI DI NAVIGAZIONE PER LA SCELTA DELLE PAGINE*/
 .nav_links {
   flex: 1;
   text-align: right;
-  background-color: white;
+  background-color: transparent;
 }
 .nav_links ul {
   padding: 0; 
@@ -63,39 +62,31 @@ h3 {
 .nav_links ul li a {
   color: black;
   text-decoration: none;
-  font-size: var(--secondaryParagraph);
-}
-
-nav {
-  display: flex;
-  justify-content: space-between;
-  padding: 0 1%;
-  align-items: center;
-  text-align: center;
-  background-color: white;
+  font-size: 18px;
+  border: 1px solid red;
+  border-radius: 15px;
 }
 nav img {
   width: 150px;
 }
 
-/* BOTTONI PRESENTI NELLE PAGINE */
+/* Bottoni presenti nelle pagine */
 .btn {
   display: inline-block;
   text-decoration: none;
   text-align: center;
-  color: var(--white);
-  border: 1px solid var(--buttonBorder);
-  border-color: red;
+  color: black;
+  border: 1px solid red;
   padding: 12px 28px;
-  border-radius: var(--radius);
-  font-size: var(--smallText);
+  border-radius: 15px;
+  font-size: 18px;
   background: transparent;
   cursor: pointer;
 }
 .btn:hover {
-  border: 1px solid var(--logo);
-  background: var(--buttonHover);
-  color: var(--black);
+  border: 1px solid red;
+  background: rgb(196, 195, 195);
+  color: black;
   transition: 0.3s;
 }
 
@@ -103,35 +94,31 @@ nav img {
 .btn--sub {
   display: inline-block;
   text-decoration: none;
-  color: var(--white);
-  border: 1px solid var(--white);
+  color: black;
+  border: 1px solid red;
   padding: 12px 28px;
-  border-radius: var(--radius);
-  font-size: var(--smallText);
+  border-radius: 15px;
+  font-size: 15px;
   background: transparent;
   position: relative;
   cursor: pointer;
 }
 .btn--sub:hover {
-  border: 1px solid var(--white);
-  background: var(--black);
-  color: var(--white);
+  border: 1px solid red;
+  background: black;
+  color: black;
   transition: 0.3s;
 }
 
-.btn--sel {
-  border: 1px solid var(--logo);
-}
-
-/*Stile del bottone di invio*/
-input[type=submit] {
+/* Stile del bottone di invio dei form */
+input[type=text], input[type=password] {
   display: block;
-  margin: 0 auto;
-  padding: 2%;
-  font-size: var(--secondaryText);
+  margin-left: 0;
+  padding: 5px;
+  font-size: 15px;
   background-color: var(--logo);
   color: var(--contact-text2);
-  border: none;
+  border: 1px solid red;
   transition: 0.2s linear;
 }
 input[type=submit]:hover {
@@ -139,7 +126,7 @@ input[type=submit]:hover {
   transition: 0.2s linear;
 }
 
-/*Form per l'invio dell'email*/
+/* Stile dei form */
 #form {
   margin: 0 auto;
 }
@@ -367,12 +354,6 @@ hr {
   margin-left: 2.5%;
 }
 
-/* STYLE PER LE MAPPE e I GRAFICI */
-h4 {
-  padding-bottom: 15px;
-  color: white;
-}
-
 .mapSelector-text {
   display: flex;
   justify-content: center;
@@ -454,262 +435,6 @@ footer a:hover {
   text-decoration: none;
 }
 
-/* STYLE PER LA VISUALIZZAZIOEN DA MOBILE */
-@media (max-width: 700px) {
-  /*Bottoni*/
-  nav {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-    align-items: center;
-  }
-  nav .fa-solid {
-    display: block;
-    color: var(--white);
-    margin: 5%;
-    font-size: var(--mainParagraph);
-  }
-  .nav_links {
-    position: fixed;
-    background-color: var(--menuBar);
-    height: 100vh;
-    width: 200px;
-    top: 0;
-    right: -200px;
-    text-align: left;
-    z-index: 2;
-    transition: 0.5s;
-  }
-  .nav_links ul li {
-    display: block;
-  }
-  .nav_links ul {
-    padding: 30px;
-  }
-  /*Bottoni*/
-  .btn {
-    color: var(--white);
-    text-align: center;
-    text-decoration: none;
-    border: 1px solid var(--buttonBorder);
-    padding: 8px 8px;
-    border-radius: var(--radius);
-    font-size: var(--secondaryParagraph);
-    background: transparent;
-    width: 100px;
-  }
-  /*titolo spazio contattaci*/
-  .contact {
-    color: var(--black);
-  }
-  .contact h1 {
-    font-size: var(--secondaryText);
-  }
-  /*Riga nella pagina*/
-  .row h1 {
-    color: var(--black);
-  }
-  .row_photo-img {
-    height: 250px;
-  }
-  /*Colonna pagina*/
-  /*Titolo style*/
-  .info_col h1 {
-    font-size: var(--secondaryTitle);
-  }
-  .info_col p {
-    font-size: var(--secondaryText);
-  }
-  .info_col iframe {
-    max-width: 350px;
-    max-height: 200px;
-  }
-  .info_col img {
-    float: right;
-    padding: 2px;
-    max-width: 350px;
-    max-height: 200px;
-  }
-  /*Pagina maps style*/
-  #graficoMap {
-    width: 350px;
-  }
-  .map {
-    width: 300px;
-    height: 500px;
-    margin-top: 50px;
-  }
-  #gallery {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    height: 900px;
-  }
-  #mapImages {
-    height: 100%;
-    width: 100%;
-  }
-  /*Galleria pagina media*/
-  .gallery {
-    height: 230px;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    overflow: auto;
-  }
-  .gallery img {
-    height: 230px;
-    width: 100%;
-    flex-shrink: 0;
-    object-fit: cover;
-    position: sticky;
-  }
-  /*Galleria pagina maps*/
-  .gallery--maps {
-    height: 230px;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    overflow: auto;
-  }
-  .gallery--maps img {
-    height: 230px;
-    width: 100%;
-    flex-shrink: 0;
-    object-fit: cover;
-    position: sticky;
-  }
-}
-/* TITOLO */
-.text {
-  width: 90%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-}
-.text h1 {
-  font-size: var(--title);
-  color: var(--logo);
-  text-decoration: none;
-}
-.text p {
-  margin: 10px 0 40px;
-  font-size: var(--secondaryParagraph);
-  color: var(--white);
-}
-.text--web_text {
-  color: var(--logo);
-  text-decoration: none;
-  cursor: pointer;
-}
-.text--web_text:hover {
-  color: var(--buttonHover);
-}
-
-/* BANNER PER ALTRI PROGETTI */
-.contact {
-  margin: auto;
-  width: 80%;
-  background-image: linear-gradient(var(--secondaryOpacity), var(--secondaryOpacity)), url(../../images/content/banner.png);
-  background-position: center;
-  background-size: cover;
-  border-radius: var(--radius);
-  border: 1px solid var(--buttonBorder);
-  text-align: center;
-  padding: 100px 0;
-}
-.contact h1 {
-  color: var(--white);
-  margin-bottom: 40px;
-  padding: 0;
-}
-.contact--avomobility {
-  margin: auto;
-  width: 80%;
-  background-image: linear-gradient(var(--secondaryOpacity), var(--secondaryOpacity)), url(../../images/content/avo_mobility.jpeg);
-  background-position: center;
-  background-size: cover;
-  border-radius: var(--radius);
-  border: 1px solid var(--buttonBorder);
-  text-align: center;
-  padding: 100px 0;
-}
-.contact--avomobility h1 {
-  color: var(--white);
-  margin-bottom: 40px;
-  padding: 0;
-}
-.contact--greendonors {
-  margin: auto;
-  width: 80%;
-  background-image: linear-gradient(var(--secondaryOpacity), var(--secondaryOpacity)), url(../../images/content/banner.png);
-  background-position: center;
-  background-size: cover;
-  border-radius: var(--radius);
-  border: 1px solid var(--buttonBorder);
-  text-align: center;
-  padding: 100px 0;
-}
-.contact--greendonors h1 {
-  color: var(--white);
-  margin-bottom: 40px;
-  padding: 0;
-}
-
-/* SCHEMA DI COLORI LIGHT MODE */
-@media (prefers-color-scheme: light) {
-  :root {
-    --background: var(--background-light);
-    --logo: var(--logo-light);
-    --black: var(--black-light);
-    --black2: var(--black2-light);
-    --white: var(--white-light);
-    --paragraph: var(--paragraph-light);
-    --text-important: var(--text-important-light);
-    --opacity: var(--opacity-light);
-    --secondaryOpacity: var(--secondaryOpacity-light);
-    --thirdOpacity: var(--thirdOpacity-light);
-    --menuBar: var(--menuBar-light);
-    --buttonText: var(--buttonText-light);
-    --buttonBorder: var(--buttonBorder-light);
-    --buttonHover: var(--buttonHover-light);
-    /*Contact color*/
-    --contact-field: var(--contact-field-light);
-    --contact-text: var(--contact-text-light);
-    --contact-text2: var(--contact-text2-light);
-    --contact-input: var(--contact-input-light);
-    /*Maps color*/
-    --maps-color1: var(--maps-color1-light);
-  }
-}
-/* SCHEMA DI COLORI DARK MODE */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: var(--background-dark);
-    --logo: var(--logo-dark);
-    --black: var(--black-dark);
-    --black2: var(--black2-dark);
-    --white: var(--white-dark);
-    --paragraph: var(--paragraph-dark);
-    --text-important: var(--text-important-dark);
-    --opacity: var(--opacity-dark);
-    --secondaryOpacity: var(--secondaryOpacity-dark);
-    --thirdOpacity: var(--thirdOpacity-dark);
-    --menuBar: var(--menuBar-dark);
-    --buttonText: var(--buttonText-dark);
-    --buttonBorder: var(--buttonBorder-dark);
-    --buttonHover: var(--buttonHover-dark)
-        /*Contact color*/
-        --contact-field: var(--contact-field-dark);
-    --contact-text: var(--contact-text-dark);
-    --contact-text2: var(--contact-text2-dark);
-    --contact-input: var(--contact-input-dark);
-    /*Maps color*/
-    --maps-color1: var(--maps-color1-dark);
-  }
-}
 #container {
   width: 100%;
   overflow-x: auto;

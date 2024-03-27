@@ -29,7 +29,7 @@
                             <ul>
                                 <li><a href='../newsletter.php'         class='btn'>Newsletter   </a></li>
                                 <li><a href='../bacheca.php'            class='btn'>Bacheca       </a></li>
-                                <li><a href='https://stripe.com/it'     class='btn'>Donazioni     </a></li>
+                                <li><a href='https://stripe.com/it'     class='btn' target='blank'>Donazioni</a></li>
                                 <li><a href='area_personale.php'        class='btn'>Area Personale</a></li>
                                 <li><a href='crud.php?operation=LOGOUT' class='btn'>Logout</a></li>
                             </ul>
@@ -128,6 +128,7 @@
                                 FROM utenti u
                                 WHERE u.id = '" . $_SESSION["user_id"] . "'";
                     $result = dbQuery($connection, $query);
+                    
                     if ($result) {
                         createTable($result, "user");
 

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link rel="stylesheet" href="../style/style.css">
     <script src="../script/script.js"></script>
     <link rel="stylesheet" href="../style/style.css">
     <title>Associazione ZeroTre</title>
@@ -32,7 +33,7 @@
                         <ul>
                             <li><a href='../newsletter.php'             class='btn'>Newsletter   </a></li>
                             <li><a href='../bacheca.php'                class='btn'>Bacheca       </a></li>
-                            <li><a href='https://stripe.com/it'         class='btn'>Donazioni     </a></li>
+                            <li><a href='https://stripe.com/it'     class='btn' target='blank'>Donazioni</a></li>
                             <li><a href='../private/area_personale.php'    class='btn'>Area Personale</a></li>
                         </ul>
                     </div>
@@ -40,7 +41,8 @@
             </section>
         </main>";
 ?>
-    <h4><br><br>PAGINA CARICAMENTO LIBERATORIE <br> Assicurati di caricare solo il file PDF firmato <br><br></h4>
+    <br><h1>Pagina per il caricamento delle liberatorie <br> </h1>
+    <h4>Assicurati di caricare solo il file PDF firmato <br><br></h4>
     <label for="choice">Per chi vuoi caricare la liberatoria?</label><br>
     <select name="choice" id="choice">
         <option value="1">Assistito</option>

@@ -24,7 +24,6 @@ $(document).ready(function () {
 
     // controllo per la modifica della password
     $('#new_psw').on("input", function() {
-        console.log("dciao");
         let old_psw = $('#old_psw').val();
         let new_psw = $(this).val();
         checkNewPassword(old_psw, new_psw);
@@ -33,7 +32,6 @@ $(document).ready(function () {
     // meccanismo per la scelta del tipo di utente su cui caricare la liberatoria
     $('#form_assisted').show();
     $('#form_volunteer').hide();
-
     $('#choice').change(function() {
         let selectedOption = $(this).val();
 
@@ -55,7 +53,6 @@ $(document).ready(function () {
     $('#createNewEvent').hide();
     $('#addNewEventType').hide();
     $('#viewVoluEventAssi').hide();
-
     $('#mng_event__selected').change(function() {
         let selectedOption = $(this).val();
 
@@ -138,4 +135,5 @@ function checkNewPassword(old_psw, new_psw) {
             else 
                 $("#passwordError").text("");
         }
-    })
+    });
+}

@@ -6,6 +6,7 @@
 
     importActualStyle();
     $connection = connectToDatabase(DB_HOST, USER_ADMIN, ADMIN_PW, DB_NAME);
+    echo "<link rel='stylesheet' href='../style/style.css'>";
     session_start();
 
     if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) {
@@ -23,8 +24,8 @@
 
                 // inserimento  dell'utente nel db
                 $password_enc = encryptPassword($password_clear);
-                $query = "INSERT INTO utenti(nome, cognome, username, password, email, telefono_fisso, telefono_mobile, note, numero_accessi, id_profilo)
-                            VALUES ('$name', '$surname', '$username', '$password_enc', '$email', '$phone_f', '$phone_m', '$notes', 0, 4);";
+                $query = "INSERT INTO utenti(nome, cognome, username, password, email, telefono_fisso, telefono_mobile, note, id_profilo)
+                            VALUES ('$name', '$surname', '$username', '$password_enc', '$email', '$phone_f', '$phone_m', '$notes', 4);";
                 $result = dbQuery($connection, $query);
 
                 if ($result) {
@@ -44,8 +45,8 @@
                                         <ul>
                                             <li><a href='../newsletter.php'             class='btn'>Newsletter   </a></li>
                                             <li><a href='../bacheca.php'                class='btn'>Bacheca       </a></li>
-                                            <li><a href='https://stripe.com/it'         class='btn'>Donazioni     </a></li>
-                                            <li><a href='private/area_personale.php'    class='btn'>Area Personale</a></li>
+                                            <li><a href='https://stripe.com/it'     class='btn' target='blank'>Donazioni</a></li>
+                                            <li><a href='../private/area_personale.php'    class='btn'>Area Personale</a></li>
                                         </ul>
                                     </div>
                                 </nav>            
@@ -104,8 +105,8 @@
                                                     <ul>
                                                         <li><a href='../newsletter.php'             class='btn'>Newsletter   </a></li>
                                                         <li><a href='../bacheca.php'                class='btn'>Bacheca       </a></li>
-                                                        <li><a href='https://stripe.com/it'         class='btn'>Donazioni     </a></li>
-                                                        <li><a href='private/area_personale.php'    class='btn'>Area Personale</a></li>
+                                                        <li><a href='https://stripe.com/it'     class='btn' target='blank'>Donazioni</a></li>
+                                                        <li><a href='../private/area_personale.php'    class='btn'>Area Personale</a></li>
                                                     </ul>
                                                 </div>
                                             </nav>            
@@ -166,8 +167,8 @@
                                                 <ul>
                                                     <li><a href='../newsletter.php'             class='btn'>Newsletter   </a></li>
                                                     <li><a href='../bacheca.php'                class='btn'>Bacheca       </a></li>
-                                                    <li><a href='https://stripe.com/it'         class='btn'>Donazioni     </a></li>
-                                                    <li><a href='private/area_personale.php'    class='btn'>Area Personale</a></li>
+                                                    <li><a href='https://stripe.com/it'     class='btn' target='blank'>Donazioni</a></li>
+                                                    <li><a href='../private/area_personale.php'    class='btn'>Area Personale</a></li>
                                                 </ul>
                                             </div>
                                         </nav>            

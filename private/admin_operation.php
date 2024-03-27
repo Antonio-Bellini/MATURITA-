@@ -30,7 +30,7 @@
                         createTable($result, "user");
 
                     echo "<br><br><br><label>Crea un nuovo account genitore/referente</label><br>";
-                    echo "<button><a href='../register/register_user.php'>Vai alla pagina</a></button>";
+                    echo "<button><a href='../register/register_user.php'>Crea account</a></button>";
                     break;
 
                 case "view_volu":
@@ -45,7 +45,7 @@
                         createTable($result, "volunteer");
 
                     echo "<br><br><br><label>Crea un nuovo account volontario</label><br>";
-                    echo "<button><a href='../register/register_volunteer.php'>Vai alla pagina</a></button>";
+                    echo "<button><a href='../register/register_volunteer.php'>Crea account</a></button>";
                     break;
 
                 case "view_assi":
@@ -64,7 +64,7 @@
                         createTable($result, "assisted");
 
                     echo "<br><br><br><label>Aggiungi un nuovo assistito</label><br>";
-                    echo "<button><a href='../register/register_assisted.php'>Vai alla pagina</a></button>";
+                    echo "<button><a href='../register/register_assisted.php'>Crea account</a></button>";
                     break;
 
 
@@ -74,11 +74,11 @@
                     echo "<label><b>PAGINA EVENTI</b></label>";
                     echo "<br>Quale operazione vuoi eseguire?<br><br>";
                     echo "<select id='mng_event__selected'>";
-                        echo "<option value='1'>Assegna volonatrio a evento</option>";
+                        echo "<option value='1'>Aggiungi volontario a evento</option>";
                         echo "<option value='2'>Aggiungi assistito a evento</option>";
                         echo "<option value='3'>Crea nuovo evento</option>";
-                        echo "<option value='4'>Aggiungi un nuovo tipo di evento</option>";
-                        echo "<option value='5'>Visualizza associazione volontari-eventi-assistiti</option>";
+                        echo "<option value='4'>Aggiungi nuovo tipo di evento</option>";
+                        echo "<option value='5'>Visualizza eventi</option>";
                     echo "</select>";
 
                     addVolunteerToEvent($connection);
@@ -112,7 +112,7 @@
                             <ul>
                                 <li><a href='../newsletter.php'         class='btn'>Newsletter   </a></li>
                                 <li><a href='../bacheca.php'            class='btn'>Bacheca       </a></li>
-                                <li><a href='https://stripe.com/it'     class='btn'>Donazioni     </a></li>
+                                <li><a href='https://stripe.com/it'     class='btn' target='blank'>Donazioni</a></li>
                                 <li><a href='area_personale.php'        class='btn'>Area Personale</a></li>
                                 <li><a href='crud.php?operation=LOGOUT' class='btn'>Logout</a></li>
                             </ul>
