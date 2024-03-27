@@ -34,6 +34,11 @@ h4 {
   font-weight: 500;
   padding-bottom: 15px;
 }
+h5 {
+  color: white;
+  font-size: 17px;
+  padding-bottom: 15px;
+}
 
 /* Bottoni di navigazione per il menu */
 nav {
@@ -111,131 +116,122 @@ nav img {
 }
 
 /* Stile del bottone di invio dei form */
-input[type=text], input[type=password] {
+input[type=text], input[type=password], input[type=email] {
   display: block;
   margin-left: 0;
   padding: 5px;
   font-size: 15px;
-  background-color: var(--logo);
-  color: var(--contact-text2);
+  background-color: transparent;
+  color: black;
   border: 1px solid red;
   transition: 0.2s linear;
 }
 input[type=submit]:hover {
-  color: var(--black);
+  color: black;
   transition: 0.2s linear;
 }
 
 /* Stile dei form */
 #form {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  max-width: 1000px;
   margin: 0 auto;
 }
-#form input[type=text], #form [type=email], #form textarea {
-  font-size: var(--secondaryParagraph);
-}
-#form .form__label {
-  margin: 5% 0 0 0;
-  padding: 2%;
-  text-align: start;
-}
-#form .form__label label {
-  font-size: var(--thirdText);
-  padding: 1%;
-  color: var(--black);
-}
-#form .form__label #email {
-  float: right;
-}
-#form .form__email-nameEmail {
+
+#name_surname__label,
+#name_surname__input,
+#credentials__label,
+#credentials__input,
+#phones__label,
+#phones__input {
   display: flex;
-  justify-content: space-evenly;
-  padding: 1%;
-}
-#form .form__email-nameEmail input {
-  height: 30px;
-  width: 300px;
-  margin: 0 2% 0 2%;
-  border: none;
-  border-radius: var(--radiusTwo);
-  background: var(--contact-input);
-}
-#form .form__email-nameEmail input:focus, #form .form__email-nameEmail input::placeholder {
-  outline: none;
-  padding: 2%;
-  color: var(--paragraph);
-}
-#form .form__email-object {
-  margin: 2% 0;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-#form .form__email-object input {
-  height: 30px;
-  width: 100%;
-  margin: 0 2% 0 2%;
-  border: none;
-  background: var(--contact-input);
-  border-radius: var(--radiusTwo);
-}
-#form .form__email-object input:focus, #form .form__email-object input::placeholder {
-  outline: none;
-  padding: 2%;
-  color: var(--paragraph);
-}
-#form .form__email-message {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  padding: 2%;
-}
-#form .form__email-message textarea {
-  width: 100%;
-  max-width: 600px;
-  min-width: 550px;
-  height: 300px;
-  max-height: 300px;
-  min-height: 250px;
-  border: none;
-  background: var(--contact-input);
-  border-radius: var(--radiusTwo);
-}
-#form .form__email-message textarea:focus, #form .form__email-message textarea::placeholder {
-  outline: none;
-  padding: 2%;
-  color: var(--paragraph);
 }
 
-/* Campo per mittente e messaggio da inviare */
-.field {
-  margin-bottom: 10%;
-}
-.field label {
-  display: block;
-  font-size: var(--mainParagraph);
-  color: var(--contact-text);
-}
-.field input {
-  display: block;
-  height: 50px;
-  width: 300px;
-  min-width: 250px;
-  font-size: var(--secondaryText);
-  color: var(--contact-text);
+#name_surname__label label,
+#name_surname__input input[type="text"],
+#credentials__label label,
+#credentials__input input[type="text"],
+#credentials__input input[type="password"],
+#phones__label label,
+#phones__input input[type="text"] {
+  width: calc(50% - 5px);
 }
 
-/* Campo del messaggio */
-#message {
-  height: 200px;
+#name_surname__label label,
+#credentials__label label,
+#phones__label label {
+  margin-right: 10px;
+}
+
+#credentials__input span {
+  margin-left: 10px;
+  color: red;
+}
+
+#form input[type="text"],
+#form input[type="email"],
+#form input[type="password"],
+#form textarea {
+  width: calc(100% - 22px);
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+#form input[type="submit"] {
+  background-color: #4caf50;
+  color: white;
+  padding: 14px 24px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease;
+}
+
+#form input[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+#form label {
+  font-weight: bold;
+  margin-bottom: 8px;
+  display: block;
+}
+
+#form input[type="text"],
+#form input[type="email"],
+#form input[type="password"],
+#form textarea {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-size: 16px;
 }
 
 /* GALLERIA PER LE FOTO */
 .gallery {
+  border: 1px solid red;
   display: flex;
   flex-direction: row;
   overflow: auto;
   margin: 0 auto;
   width: 900px;
+  height: 86vh;
+  padding: 10px;
+
 }
 .gallery .photo {
   max-width: 100%;
@@ -243,7 +239,6 @@ input[type=submit]:hover {
   height: 600px;
   flex-shrink: 0;
   object-fit: cover;
-  border-radius: var(--radius);
 }
 
 /* HEADER DELLA HOME */
@@ -400,9 +395,7 @@ hr {
 }
 
 /* FOOTER DI TUTTE LE PAGINE */
-/* Stile per il footer */
 footer {
-  position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
