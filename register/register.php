@@ -31,9 +31,8 @@
                 $result = dbQuery($connection, $query);
 
                 if ($result) {
-                    // menu di navigazione
-                    nav_menu();
-                    echo ACC_OK;
+                    $_SESSION["user_created"] = true;
+                    header("Location: ../private/area_personale.php");
                 } else 
                     echo ERROR_GEN;
             } else if (isset($_POST["form_volunteer"])) {
@@ -70,9 +69,8 @@
                             $result = dbQuery($connection, $query);
 
                             if ($result) {
-                                // menu di navigazione
-                                nav_menu();
-                                echo ACC_OK;
+                                $_SESSION["user_created"] = true;
+                                header("Location: ../private/area_personale.php");
                             } else  
                                 echo ERROR_GEN;
                         }
@@ -110,10 +108,8 @@
                         $result = dbQuery($connection, $query);
 
                         if ($result) {
-                            // menu di navigazione
-                            nav_menu();
-                            echo ACC_OK . "<br>";
-                            echo FILE_OK;
+                            $_SESSION["user_created"] = true;
+                            header("Location: ../private/area_personale.php");
                         } else
                             echo GEN_ERROR;
                     } else

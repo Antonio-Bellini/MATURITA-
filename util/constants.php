@@ -1,6 +1,6 @@
 <?php
     define("DB_HOST", "localhost");
-    define("DB_NAME", "associazione_zerotre");
+    define("DB_NAME", "my_testzerotre");
     define("DB_USER", "root");
     define("DB_ADMIN", "root");
     define("DB_PRESIDENT", "root");
@@ -14,6 +14,7 @@
     define("ERROR_DB", "Si é verificato un problema recuperando i dati dal database, riprova piú tardi");
     define("ERROR_PW", "Hai inserito una password errata, riprova");
     define("ERROR_FILE", "Si é verificato un errore durante il caricamento dei file");
+    define("ERROR_ALREADY_ADDED", "L'utente é gia stato inserito a questo evento");
 
     define("MOD_OK", "Modifiche eseguite con successo");
     define("MOD_NONE", "Nessuna modifica eseguita");

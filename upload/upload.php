@@ -51,11 +51,11 @@
                     $result = dbQuery($connection, $query);
 
                     if ($result) {
-                        nav_menu();
-                        echo FILE_OK;
+                        $_SESSION["file_uploaded"] = true;
+                        header("Location: ../private/area_personale.php");
                     } else {
-                        nav_menu();
-                        echo ERROR_FILE;
+                        $_SESSION["file_notUploaded"] = true;
+                        header("Location: ../private/area_personale.php");
                     }
                 } else if ($volunteerId != null) {
                     $query = "UPDATE volontari
@@ -64,11 +64,11 @@
                     $result = dbQuery($connection, $query);
 
                     if ($result) {
-                        nav_menu();
-                        echo FILE_OK;
+                        $_SESSION["file_uploaded"] = true;
+                        header("Location: ../private/area_personale.php");
                     } else {
-                        nav_menu();
-                        echo ERROR_FILE;
+                        $_SESSION["file_notUploaded"] = true;
+                        header("Location: ../private/area_personale.php");
                     }
                 }
             }
@@ -96,8 +96,11 @@
             $result = dbQuery($connection, $query);
 
             if ($result) {
-                nav_menu();
-                echo FILE_OK;
+                $_SESSION["file_uploaded"] = true;
+                header("Location: ../private/area_personale.php");
+            } else {
+                $_SESSION["file_notUploaded"] = true;
+                header("Location: ../private/area_personale.php");
             }
         }
     } else {

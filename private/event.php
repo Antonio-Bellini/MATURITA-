@@ -23,39 +23,53 @@
         if (($_SESSION["profile_func"] === "gestione DB") && ($_SESSION["user_auth"] === "CRUD")) {
             switch ($function) {
                 case "addVolunteerToEvent":
-                    $volunteer = $_POST["volunteer"];
-                    $event = $_POST["event"];
-                    $notes = null;
+                    try {
+                        $volunteer = $_POST["volunteer"];
+                        $event = $_POST["event"];
+                        $notes = null;
 
-                    if (isset($_POST["notes"]))
-                        $notes = $_POST["notes"];
+                        if (isset($_POST["notes"]))
+                            $notes = $_POST["notes"];
 
-                    $query = "INSERT INTO volontari_evento(id_evento, id_volontario, note)
-                                    VALUES('$event', '$volunteer', '$notes');";
-                    $result = dbQuery($connection, $query);
+                        $query = "INSERT INTO volontari_evento(id_evento, id_volontario, note)
+                                        VALUES('$event', '$volunteer', '$notes');";
+                        $result = dbQuery($connection, $query);
 
-                    if ($result)
-                        echo EVENT_OK;
-                    else 
-                        echo ERROR_GEN;
+                        if ($result) {
+                            $_SESSION["added_to_event"] = true;
+                            header("Location: area_personale.php");
+                        } else {
+                            $_SESSION["notAdded_to_event"] = true;
+                            header("Location: area_personale.php");
+                        }
+                    } catch(Exception $e) {
+                        echo ERROR_ALREADY_ADDED;
+                    }
                     break;
 
                 case "addAssistedToEvent":
-                    $assisted = $_POST["assisted"];
-                    $event = $_POST["event"];
-                    $notes = null;
+                    try {
+                        $assisted = $_POST["assisted"];
+                        $event = $_POST["event"];
+                        $notes = null;
 
-                    if (isset($_POST["notes"]))
-                        $notes = $_POST["notes"];
+                        if (isset($_POST["notes"]))
+                            $notes = $_POST["notes"];
 
-                    $query = "INSERT INTO assistiti_evento(id_evento, id_assistito, note)
-                                    VALUES('$event', '$assisted', '$notes');";
-                    $result = dbQuery($connection, $query);
+                        $query = "INSERT INTO assistiti_evento(id_evento, id_assistito, note)
+                                        VALUES('$event', '$assisted', '$notes');";
+                        $result = dbQuery($connection, $query);
 
-                    if ($result)
-                        echo EVENT_OK;
-                    else 
-                        echo ERROR_GEN;
+                        if ($result) {
+                            $_SESSION["added_to_event"] = true;
+                            header("Location: area_personale.php");
+                        } else {
+                            $_SESSION["notAdded_to_event"] = true;
+                            header("Location: area_personale.php");
+                        }
+                    } catch(Exception $e) {
+                        echo ERROR_ALREADY_ADDED;
+                    }
                     break;
                 
                 case "createNewEvent":
@@ -70,10 +84,13 @@
                                     VALUES('$event_type', '$event_date', '$event_notes');";
                     $result = dbQuery($connection, $query);
 
-                    if ($result)
-                        echo EVENT_OK;
-                    else 
-                        echo ERROR_GEN;
+                    if ($result) {
+                        $_SESSION["event_created"] = true;
+                        header("Location: area_personale.php");
+                    } else {
+                        $_SESSION["event_notCreated"] = true;
+                        header("Location: area_personale.php");
+                    }
                     break;
 
                 case "addNewEventType": 
@@ -83,10 +100,13 @@
                                     VALUES('$new_event');";
                     $result = dbQuery($connection, $query);
 
-                    if ($result)
-                        echo EVENT_OK;
-                    else 
-                        echo ERROR_GEN;
+                    if ($result) {
+                        $_SESSION["event_created"] = true;
+                        header("Location: area_personale.php");
+                    } else {
+                        $_SESSION["event_notCreated"] = true;
+                        header("Location: area_personale.php");
+                    }
                     break;
 
                 case "viewVoluEventAssi":

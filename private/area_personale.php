@@ -18,6 +18,8 @@
         // menu di navigazione
         nav_menu();
 
+        check_operation();
+
         $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
         $result = getUserAuth($connection, $_SESSION["username"]);
 
@@ -148,5 +150,37 @@
                     </nav>            
                 </section>
             </main>";
+    }
+
+    // funzione per la stampa dell'esito dell'operazione eseguita
+    function check_operation() {
+        if (isset($_SESSION["user_created"]) && $_SESSION["user_created"]) {
+            echo ACC_OK;
+            $_SESSION["user_created"] = false;
+        }
+        if (isset($_SESSION["file_uploaded"]) && $_SESSION["file_uploaded"]) {
+            echo FILE_OK;
+            $_SESSION["file_uploaded"] = false;
+        }
+        if (isset($_SESSION["file_notUploaded"]) && $_SESSION["file_notUploaded"]) {
+            echo ERROR_FILE;
+            $_SESSION["file_notUploaded"] = false;
+        }
+        if (isset($_SESSION["added_to_event"]) && $_SESSION["added_to_event"]) {
+            echo EVENT_OK;
+            $_SESSION["added_to_event"] = false;
+        }
+        if (isset($_SESSION["notAdded_to_event"]) && $_SESSION["notAdded_to_event"]) {
+            echo ERROR_GEN;
+            $_SESSION["notAdded_to_event"] = false;
+        }
+        if (isset($_SESSION["event_created"]) && $_SESSION["event_created"]) {
+            echo EVENT_OK;
+            $_SESSION["event_created"] = false;
+        }
+        if (isset($_SESSION["event_notCreated"]) && $_SESSION["event_notCreated"]) {
+            echo ERROR_GEN;
+            $_SESSION["event_notCreated"] = false;
+        }
     }
 ?>
