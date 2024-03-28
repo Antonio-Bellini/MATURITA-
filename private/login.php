@@ -4,19 +4,16 @@
     include("../util/command.php");
     include("../util/cookie.php");
 
-    importActualStyle();
-    $connection = connectToDatabase(DB_HOST, "root", "", DB_NAME);
+    echo "<script src='https://code.jquery.com/jquery-3.6.4.min.js'></script>";
+    echo "<script src='../script/script.js'></script>";
     echo "<link rel='stylesheet' href='../style/style.css'>";
+    importActualStyle();
     session_start();
+    $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
 
     // inizalizzo la sessione per salvare il login dell'utente
     if (!isset($_SESSION["is_logged"]))
         $_SESSION["is_logged"] = false;
-
-    if (isset($_POST["username"]) && isset($_POST["password"])) {
-        $username = $_POST["username"];
-        $password = $_POST["password"];
-    }
 
     // eseguo la query sul db per controllare se username e password sono corretti
     if (!$_SESSION['is_logged']) {
@@ -37,27 +34,29 @@
                             $_SESSION["username"] = $username;
                             $_SESSION["user_id"] = $row["id"];
                             
-                            showMenu_logged();
+                            nav_menu();
                             welcome($connection, $username);
                         } else {
+                            nav_menu();
                             echo ERROR_PW;
-                            header("Refresh: 3; URL=loginPage.php");
                         }
                     }
-                } else
+                } else {
+                    nav_menu();
                     echo ERROR_DB;
+                }
             } else
-                header("Location: loginPage.php");
+                header("Location: page_login.php");
         } catch(Exception $e) {
-            echo ERROR_GEN;
+            echo ERROR_GEN . ": " . $e;
         }
     } else {
-        showMenu_logged();
+        nav_menu();
         welcome($connection, $_SESSION["username"]);
     }
 
     // funzione per mostrare il menu
-    function showMenu_logged() {
+    function nav_menu() {
         echo "<main>
                 <section class='header'>
                     <nav>
@@ -71,10 +70,10 @@
                         </a>
                         <div class='nav_links' id='navLinks'>
                             <ul>
-                                <li><a href='../newsletter.php'     class='btn'>Newsletter   </a></li>
-                                <li><a href='../bacheca.php'        class='btn'>Bacheca       </a></li>
-                                <li><a href='https://stripe.com/it'     class='btn' target='blank'>Donazioni</a></li>
-                                <li><a href='area_personale.php'    class='btn'>Area Personale</a></li>
+                                <li><a href='../newsletter/newsletter.php'  class='btn'>Newsletter   </a></li>
+                                <li><a href='../bacheca/bacheca.php'        class='btn'>Bacheca       </a></li>
+                                <li><a href='https://stripe.com/it'         class='btn' target='blank'>Donazioni</a></li>
+                                <li><a href='area_personale.php'            class='btn'>Area Personale</a></li>
                             </ul>
                         </div>
                     </nav>            

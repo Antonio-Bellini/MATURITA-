@@ -4,33 +4,14 @@
     include("../util/command.php");
     include("../util/cookie.php");
 
-    importActualStyle();
+    echo "<script src='https://code.jquery.com/jquery-3.6.4.min.js'></script>";
+    echo "<script src='../script/script.js'></script>";
     echo "<link rel='stylesheet' href='../style/style.css'>";
+    importActualStyle();
     session_start();
 
     // menu di navigazione
-    echo "<main>
-            <section class='header'>
-                <nav>
-                    <a href='../index.php'>
-                        <img 
-                            src='../image/logos/logo.png'
-                            class='logo'
-                            id='logoImg'
-                            alt='logo associazione'
-                        />
-                    </a>
-                    <div class='nav_links' id='navLinks'>
-                        <ul>
-                            <li><a href='../newsletter.php'     class='btn'>Newsletter   </a></li>
-                            <li><a href='../bacheca.php'        class='btn'>Bacheca       </a></li>
-                            <li><a href='https://stripe.com/it'     class='btn' target='blank'>Donazioni</a></li>
-                            <li><a href='area_personale.php'    class='btn'>Area Personale</a></li>
-                        </ul>
-                    </div>
-                </nav>            
-            </section>
-        </main>";
+    nav_menu();
 
     $type = $_POST["type"];
     $userId = $_POST["user_id"];
@@ -42,7 +23,7 @@
 
     switch ($type) {
         case "user":
-            $connection = connectToDatabase(DB_HOST, USER_USER, USER_PW, DB_NAME);
+            $connection = connectToDatabase(DB_HOST, DB_USER, USER_PW, DB_NAME);
             $update_query = "UPDATE utenti SET ";
 
             if (!empty($_POST["new_name"]))
@@ -80,7 +61,7 @@
             break;
 
         case "assisted":
-            $connection = connectToDatabase(DB_HOST, USER_USER, USER_PW, DB_NAME);
+            $connection = connectToDatabase(DB_HOST, DB_USER, USER_PW, DB_NAME);
             $update_query = "UPDATE assistiti SET ";
 
             if (!empty($_POST["new_name"]))
@@ -103,7 +84,7 @@
             break;
 
         case "volunteer":
-            $connection = connectToDatabase(DB_HOST, USER_ADMIN, ADMIN_PW, DB_NAME);
+            $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
             $update_query = "UPDATE volontari SET ";
 
             if (!empty($_POST["new_name"]))
@@ -133,5 +114,32 @@
             } else 
                 echo MOD_NONE;
             break;
+    }
+
+
+    // menu di navigazione
+    function nav_menu() {
+        echo "<main>
+                <section class='header'>
+                    <nav>
+                        <a href='../index.php'>
+                            <img 
+                                src='../image/logos/logo.png'
+                                class='logo'
+                                id='logoImg'
+                                alt='logo associazione'
+                            />
+                        </a>
+                        <div class='nav_links' id='navLinks'>
+                            <ul>
+                                <li><a href='../newsletter/newsletter.php'  class='btn'>Newsletter   </a></li>
+                                <li><a href='../bacheca/bacheca.php'        class='btn'>Bacheca       </a></li>
+                                <li><a href='https://stripe.com/it'         class='btn' target='blank'>Donazioni</a></li>
+                                <li><a href='area_personale.php'            class='btn'>Area Personale</a></li>
+                            </ul>
+                        </div>
+                    </nav>            
+                </section>
+            </main>";
     }
 ?>

@@ -4,10 +4,12 @@
     include("../util/command.php");
     include("../util/cookie.php");
 
-    importActualStyle();
-    $connection = connectToDatabase(DB_HOST, USER_ADMIN, ADMIN_PW, DB_NAME);
+    echo "<script src='https://code.jquery.com/jquery-3.6.4.min.js'></script>";
+    echo "<script src='../script/script.js'></script>";
     echo "<link rel='stylesheet' href='../style/style.css'>";
+    importActualStyle();
     session_start();
+    $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
 
     $assistedId = null;
     $volunteerId = null;
@@ -23,7 +25,7 @@
         $notes = $_POST["notes"];
 
     // caricamento della liberatoria
-    if(isset($_FILES['release'])) {
+    if (isset($_FILES['release'])) {
         $uploadDirectory = 'release_module/'; 
     
         $fileName = $_FILES['release']['name'];
@@ -32,8 +34,8 @@
         // aggiungo il nome del file al percorso della cartella di destinazione
         $newFilePath = $uploadDirectory . $fileName;
     
-        if(move_uploaded_file($fileTmpName, $newFilePath)) {
-            $uploadedFileName = "/" . $fileName;
+        if (move_uploaded_file($fileTmpName, $newFilePath)) {
+            $uploadedFileName = "release_module/" . $fileName;
 
             $query = "INSERT INTO liberatorie(liberatoria, note)
                             VALUES('$uploadedFileName', '$notes');";
@@ -49,10 +51,10 @@
                     $result = dbQuery($connection, $query);
 
                     if ($result) {
-                        showMenu_logged();
+                        nav_menu();
                         echo FILE_OK;
                     } else {
-                        showMenu_logged();
+                        nav_menu();
                         echo ERROR_FILE;
                     }
                 } else if ($volunteerId != null) {
@@ -62,16 +64,16 @@
                     $result = dbQuery($connection, $query);
 
                     if ($result) {
-                        showMenu_logged();
+                        nav_menu();
                         echo FILE_OK;
                     } else {
-                        showMenu_logged();
+                        nav_menu();
                         echo ERROR_FILE;
                     }
                 }
             }
         } else {
-            showMenu_logged();
+            nav_menu();
             echo ERROR_GEN;
         }
 
@@ -87,24 +89,25 @@
         $newFilePath = $uploadDirectory . $fileName;
     
         if(move_uploaded_file($fileTmpName, $newFilePath)) {
-            $uploadedFileName = "/" . $fileName;
+            $uploadedFileName = "files/" . $fileName;
 
             $query = "INSERT INTO bacheca(bacheca, data)
                             VALUES('$uploadedFileName', '$date');";
             $result = dbQuery($connection, $query);
 
             if ($result) {
-                showMenu_logged();
+                nav_menu();
                 echo FILE_OK;
             }
         }
     } else {
-        showMenu_logged();
+        nav_menu();
         echo NO_FILE;
     }
 
-    function showMenu_logged() {
-        // menu di navigazione
+
+    // menu di navigazione
+    function nav_menu() {
         echo "<main>
                 <section class='header'>
                     <nav>
@@ -118,9 +121,9 @@
                         </a>
                         <div class='nav_links' id='navLinks'>
                             <ul>
-                                <li><a href='../newsletter.php'             class='btn'>Newsletter   </a></li>
-                                <li><a href='../bacheca.php'                class='btn'>Bacheca       </a></li>
-                                <li><a href='https://stripe.com/it'     class='btn' target='blank'>Donazioni</a></li>
+                                <li><a href='../newsletter/newsletter.php'  class='btn'>Newsletter   </a></li>
+                                <li><a href='../bacheca/bacheca.php'        class='btn'>Bacheca       </a></li>
+                                <li><a href='https://stripe.com/it'         class='btn' target='blank'>Donazioni</a></li>
                                 <li><a href='../private/area_personale.php' class='btn'>Area Personale</a></li>
                             </ul>
                         </div>

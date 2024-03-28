@@ -8,8 +8,8 @@
     echo "<script src='../script/script.js'></script>";
     echo "<link rel='stylesheet' href='../style/style.css'>";
     importActualStyle();
-    $connection = connectToDatabase(DB_HOST, USER_ADMIN, ADMIN_PW, DB_NAME);
     session_start();
+    $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
 
     $operation = null;
 
@@ -20,7 +20,7 @@
         if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) {
             switch ($operation){
                 case "view_user":
-                    showMenu_logged();
+                    nav_menu();
                     
                     echo "<label><b>GENITORI/REFERENTI REGISTRATI</b></label>";
                     $query = "SELECT id, nome, cognome, username, email, telefono_fisso, telefono_mobile, note
@@ -34,7 +34,7 @@
                     break;
 
                 case "view_volu":
-                    showMenu_logged();
+                    nav_menu();
                     
                     echo "<label><b>VOLONTARI REGISTRATI</b></label>";
                     $query = "SELECT v.id, v.nome, v.cognome, v.email, v.telefono_fisso, v.telefono_mobile, l.liberatoria
@@ -49,7 +49,7 @@
                     break;
 
                 case "view_assi":
-                    showMenu_logged();
+                    nav_menu();
                     
                     echo "<label><b>ASSISTITI REGISTRATI</b></label>";
                     $query = "SELECT a.id, a.nome, a.cognome, a.anamnesi, a.note, 
@@ -69,7 +69,7 @@
 
 
                 case "mng_event":
-                    showMenu_logged();
+                    nav_menu();
 
                     echo "<label><b>PAGINA EVENTI</b></label>";
                     echo "<br>Quale operazione vuoi eseguire?<br><br>";
@@ -93,10 +93,11 @@
             }
         } else
             header("Location: ../index.php");
-    }
+    } else
+        header("Location: ../page_login.php");
 
     // funzione per mostrare il menu di navigazione
-    function showMenu_logged() {
+    function nav_menu() {
         echo "<main>
                 <section class='header'>
                     <nav>
@@ -110,15 +111,15 @@
                         </a>
                         <div class='nav_links' id='navLinks'>
                             <ul>
-                                <li><a href='../newsletter.php'         class='btn'>Newsletter   </a></li>
-                                <li><a href='../bacheca.php'            class='btn'>Bacheca       </a></li>
-                                <li><a href='https://stripe.com/it'     class='btn' target='blank'>Donazioni</a></li>
-                                <li><a href='area_personale.php'        class='btn'>Area Personale</a></li>
-                                <li><a href='crud.php?operation=LOGOUT' class='btn'>Logout</a></li>
+                                <li><a href='../newsletter/newsletter.php'  class='btn'>Newsletter   </a></li>
+                                <li><a href='../bacheca/bacheca.php'        class='btn'>Bacheca       </a></li>
+                                <li><a href='https://stripe.com/it'         class='btn' target='blank'>Donazioni</a></li>
+                                <li><a href='area_personale.php'            class='btn'>Area Personale</a></li>
+                                <li><a href='crud.php?operation=LOGOUT'     class='btn'>Logout</a></li>
                             </ul>
                         </div>
                     </nav>            
                 </section>
-            </main><br><br>";
+            </main>";
     }
 ?>

@@ -4,10 +4,12 @@
     include("../util/command.php");
     include("../util/cookie.php");
 
-    importActualStyle();
-    $connection = connectToDatabase(DB_HOST, USER_ADMIN, ADMIN_PW, DB_NAME);
+    echo "<script src='https://code.jquery.com/jquery-3.6.4.min.js'></script>";
+    echo "<script src='../script/script.js'></script>";
     echo "<link rel='stylesheet' href='../style/style.css'>";
+    importActualStyle();
     session_start();
+    $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
 
     if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) {
         if (($_SESSION["profile_func"] === "gestione DB") && ($_SESSION["user_auth"] === "CRUD")) {
@@ -30,28 +32,7 @@
 
                 if ($result) {
                     // menu di navigazione
-                    echo "<main>
-                            <section class='header'>
-                                <nav>
-                                    <a href='../index.php'>
-                                        <img 
-                                            src='../image/logos/logo.png'
-                                            class='logo'
-                                            id='logoImg'
-                                            alt='logo associazione'
-                                        />
-                                    </a>
-                                    <div class='nav_links' id='navLinks'>
-                                        <ul>
-                                            <li><a href='../newsletter.php'             class='btn'>Newsletter   </a></li>
-                                            <li><a href='../bacheca.php'                class='btn'>Bacheca       </a></li>
-                                            <li><a href='https://stripe.com/it'     class='btn' target='blank'>Donazioni</a></li>
-                                            <li><a href='../private/area_personale.php'    class='btn'>Area Personale</a></li>
-                                        </ul>
-                                    </div>
-                                </nav>            
-                            </section>
-                        </main>";
+                    nav_menu();
                     echo ACC_OK;
                 } else 
                     echo ERROR_GEN;
@@ -62,7 +43,7 @@
                 $email = $_POST["email"];
                 $phone_f = $_POST["phone_f"];
                 $phone_m = $_POST["phone_m"];
-                $notes = "";
+                $notes = null;
                 
                 if (isset($_POST["notes"]))
                     $notes = $_POST["notes"];
@@ -77,7 +58,7 @@
                     $newFilePath = $uploadDirectory . $fileName;
                 
                     if(move_uploaded_file($fileTmpName, $newFilePath)) {
-                        $uploadedFileName = "/" . $fileName;
+                        $uploadedFileName = "release_module/" . $fileName;
                         $query = "INSERT INTO liberatorie(liberatoria, note) VALUES('$uploadedFileName', '$notes')";
                         $result = dbQuery($connection, $query);
 
@@ -90,30 +71,10 @@
 
                             if ($result) {
                                 // menu di navigazione
-                                echo "<main>
-                                        <section class='header'>
-                                            <nav>
-                                                <a href='../index.php'>
-                                                    <img 
-                                                        src='../image/logos/logo.png'
-                                                        class='logo'
-                                                        id='logoImg'
-                                                        alt='logo associazione'
-                                                    />
-                                                </a>
-                                                <div class='nav_links' id='navLinks'>
-                                                    <ul>
-                                                        <li><a href='../newsletter.php'             class='btn'>Newsletter   </a></li>
-                                                        <li><a href='../bacheca.php'                class='btn'>Bacheca       </a></li>
-                                                        <li><a href='https://stripe.com/it'     class='btn' target='blank'>Donazioni</a></li>
-                                                        <li><a href='../private/area_personale.php'    class='btn'>Area Personale</a></li>
-                                                    </ul>
-                                                </div>
-                                            </nav>            
-                                        </section>
-                                    </main>";
+                                nav_menu();
                                 echo ACC_OK;
-                            }
+                            } else  
+                                echo ERROR_GEN;
                         }
                     } else
                         echo ERROR_FILE;
@@ -121,8 +82,6 @@
                     echo NO_FILE;
             } else if (isset($_POST["form_assisted"])) {
                 // ottengo i dati dal form
-                $uploadedFileName = null;
-                $fileUploaded = false;
                 $name = $_POST["name"];
                 $surname = $_POST["surname"];
                 $notes = $_POST["notes"];
@@ -138,7 +97,7 @@
                     $newFilePath = $uploadDirectory . $fileName;
                 
                     if(move_uploaded_file($fileTmpName, $newFilePath)) {
-                        $uploadedFileName = "/" . $fileName;
+                        $uploadedFileName = "medical_module/" . $fileName;
 
                         if (isset($_POST["parent"]))
                             $parent = $_POST["parent"];
@@ -152,29 +111,8 @@
 
                         if ($result) {
                             // menu di navigazione
-                            echo "<main>
-                                    <section class='header'>
-                                        <nav>
-                                            <a href='../index.php'>
-                                                <img 
-                                                    src='../image/logos/logo.png'
-                                                    class='logo'
-                                                    id='logoImg'
-                                                    alt='logo associazione'
-                                                />
-                                            </a>
-                                            <div class='nav_links' id='navLinks'>
-                                                <ul>
-                                                    <li><a href='../newsletter.php'             class='btn'>Newsletter   </a></li>
-                                                    <li><a href='../bacheca.php'                class='btn'>Bacheca       </a></li>
-                                                    <li><a href='https://stripe.com/it'     class='btn' target='blank'>Donazioni</a></li>
-                                                    <li><a href='../private/area_personale.php'    class='btn'>Area Personale</a></li>
-                                                </ul>
-                                            </div>
-                                        </nav>            
-                                    </section>
-                                </main>";
-                            echo ACC_OK;
+                            nav_menu();
+                            echo ACC_OK . "<br>";
                             echo FILE_OK;
                         } else
                             echo GEN_ERROR;
@@ -185,5 +123,32 @@
             } else 
                 echo NO_FORM;
         }
+    }
+
+
+    // menu di navigazione
+    function nav_menu() {
+        echo "<main>
+                <section class='header'>
+                    <nav>
+                        <a href='../index.php'>
+                            <img 
+                                src='../image/logos/logo.png'
+                                class='logo'
+                                id='logoImg'
+                                alt='logo associazione'
+                            />
+                        </a>
+                        <div class='nav_links' id='navLinks'>
+                            <ul>
+                                <li><a href='../newsletter/newsletter.php'  class='btn'>Newsletter   </a></li>
+                                <li><a href='../bacheca/bacheca.php'        class='btn'>Bacheca       </a></li>
+                                <li><a href='https://stripe.com/it'         class='btn' target='blank'>Donazioni</a></li>
+                                <li><a href='../private/area_personale.php' class='btn'>Area Personale</a></li>
+                            </ul>
+                        </div>
+                    </nav>            
+                </section>
+            </main>";
     }
 ?>

@@ -7,10 +7,9 @@
     echo "<script src='https://code.jquery.com/jquery-3.6.4.min.js'></script>";
     echo "<script src='../script/script.js'></script>";
     echo "<link rel='stylesheet' href='../style/style.css'>";
-    
     importActualStyle();
-    $connection = connectToDatabase(DB_HOST, USER_ADMIN, ADMIN_PW, DB_NAME);
     session_start();
+    $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
 
     $function = null;
 
@@ -18,29 +17,7 @@
         $function = $_GET["function"];
 
     // menu di navigazione
-    echo "<main>
-            <section class='header'>
-                <nav>
-                    <a href='../index.php'>
-                        <img 
-                            src='../image/logos/logo.png'
-                            class='logo'
-                            id='logoImg'
-                            alt='logo associazione'
-                        />
-                    </a>
-                    <div class='nav_links' id='navLinks'>
-                        <ul>
-                            <li><a href='../newsletter.php'         class='btn'>Newsletter   </a></li>
-                            <li><a href='../bacheca.php'            class='btn'>Bacheca       </a></li>
-                            <li><a href='https://stripe.com/it'     class='btn' target='blank'>Donazioni</a></li>
-                            <li><a href='area_personale.php'        class='btn'>Area Personale</a></li>
-                            <li><a href='crud.php?operation=LOGOUT' class='btn'>Logout</a></li>
-                        </ul>
-                    </div>
-                </nav>            
-            </section>
-        </main><br><br>";
+    nav_menu();
 
     if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) {
         if (($_SESSION["profile_func"] === "gestione DB") && ($_SESSION["user_auth"] === "CRUD")) {
@@ -135,5 +112,33 @@
                     break;
             }
         }
+    }
+
+
+    // menu di navigazione
+    function nav_menu() {
+        echo "<main>
+                <section class='header'>
+                    <nav>
+                        <a href='../index.php'>
+                            <img 
+                                src='../image/logos/logo.png'
+                                class='logo'
+                                id='logoImg'
+                                alt='logo associazione'
+                            />
+                        </a>
+                        <div class='nav_links' id='navLinks'>
+                            <ul>
+                                <li><a href='../newsletter/newsletter.php'  class='btn'>Newsletter   </a></li>
+                                <li><a href='../bacheca/bacheca.php'        class='btn'>Bacheca       </a></li>
+                                <li><a href='https://stripe.com/it'         class='btn' target='blank'>Donazioni</a></li>
+                                <li><a href='area_personale.php'            class='btn'>Area Personale</a></li>
+                                <li><a href='crud.php?operation=LOGOUT'     class='btn'>Logout</a></li>
+                            </ul>
+                        </div>
+                    </nav>            
+                </section>
+            </main>";
     }
 ?>

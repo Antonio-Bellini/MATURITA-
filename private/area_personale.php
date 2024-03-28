@@ -4,8 +4,10 @@
     include("../util/command.php");
     include("../util/cookie.php");
 
-    importActualStyle();
+    echo "<script src='https://code.jquery.com/jquery-3.6.4.min.js'></script>";
+    echo "<script src='../script/script.js'></script>";
     echo "<link rel='stylesheet' href='../style/style.css'>";
+    importActualStyle();
     session_start();
 
     $profile_type = null;
@@ -14,39 +16,17 @@
 
     if (isset($_SESSION["is_logged"]) && $_SESSION["is_logged"]) {
         // menu di navigazione
-        echo "<main>
-                <section class='header'>
-                    <nav>
-                        <a href='../index.php'>
-                            <img 
-                                src='../image/logos/logo.png'
-                                class='logo'
-                                id='logoImg'
-                                alt='logo associazione'
-                            />
-                        </a>
-                        <div class='nav_links' id='navLinks'>
-                            <ul>
-                                <li><a href='../newsletter.php'         class='btn'>Newsletter   </a></li>
-                                <li><a href='../bacheca.php'            class='btn'>Bacheca       </a></li>
-                                <li><a href='https://stripe.com/it'     class='btn' target='blank'>Donazioni</a></li>
-                                <li><a href='area_personale.php'        class='btn'>Area Personale</a></li>
-                                <li><a href='crud.php?operation=LOGOUT' class='btn'>Logout</a></li>
-                            </ul>
-                        </div>
-                    </nav>            
-                </section>
-            </main>";
+        nav_menu();
 
-        $connection = connectToDatabase(DB_HOST, "root", "", DB_NAME);
+        $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
         $result = getUserAuth($connection, $_SESSION["username"]);
 
         // salvo i permessi che ha l'utente che ha effettuato il login
         if ($result) {
             while($row = ($result->fetch_assoc())) {
-                $profile_type = $row["tipo_profilo"];
-                $profile_func = $row["tipo_funzione"];
-                $auth = $row["operazione_permessa"];
+                $_SESSION["profile_type"] = $row["tipo_profilo"];
+                $_SESSION["profile_func"] = $row["tipo_funzione"];
+                $_SESSION["user_auth"] = $row["operazione_permessa"];
             }
         } else
             echo ERROR_DB;
@@ -55,14 +35,10 @@
         switch($profile_type) {
             case "presidente":
                 try {
-                    $connection = connectToDatabase(DB_HOST, USER_PRESIDENT, PRESIDENT_PW, DB_NAME);
+                    $connection = connectToDatabase(DB_HOST, DB_PRESIDENT, PRESIDENT_PW, DB_NAME);
                     welcome($connection, $_SESSION["username"]);
-
                     $_SESSION["is_president"] = true;
-                    $_SESSION["profile_type"] = $profile_type;
-                    $_SESSION["profile_func"] = $profile_func;
-                    $_SESSION["user_auth"] = $auth;
-
+                
                     echo "<label>Effettua una delle seguenti operazioni</label><br><br>";
                 } catch (Exception $e) {
                     echo ERROR_GEN . ": " . $e;
@@ -71,13 +47,9 @@
 
             case "admin":
                 try {
-                    $connection = connectToDatabase(DB_HOST, USER_ADMIN, ADMIN_PW, DB_NAME);
+                    $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
                     welcome($connection, $_SESSION["username"]);
-
                     $_SESSION["is_admin"] = true;
-                    $_SESSION["profile_type"] = $profile_type;
-                    $_SESSION["profile_func"] = $profile_func;
-                    $_SESSION["user_auth"] = $auth;
 
                     echo "<button><a href='admin_operation.php?operation=view_user'>Visualizza utenti</a></button><br><br>";
                     echo "<button><a href='admin_operation.php?operation=view_volu'>Visualizza volontari</a></button><br><br>";
@@ -91,15 +63,11 @@
 
             case "terapista":
                 try {
-                    $connection = connectToDatabase(DB_HOST, USER_TERAPIST, TERAPIST_PW, DB_NAME);
+                    $connection = connectToDatabase(DB_HOST, DB_TERAPIST, TERAPIST_PW, DB_NAME);
                     welcome($connection, $_SESSION["username"]);
-
                     $_SESSION["is_terapist"] = true;
-                    $_SESSION["profile_type"] = $profile_type;
-                    $_SESSION["profile_func"] = $profile_func;
-                    $_SESSION["user_auth"] = $auth;
 
-                    echo "se leggi sei un terapista";
+                    echo "<label>Effettua una delle seguenti operazioni</label><br><br>";
                 } catch (Exception $e) {
                     echo ERROR_GEN . ": " . $e;
                 }
@@ -107,13 +75,9 @@
 
             case "genitore":
                 try {
-                    $connection = connectToDatabase(DB_HOST, USER_USER, USER_PW, DB_NAME);
+                    $connection = connectToDatabase(DB_HOST, DB_USER, USER_PW, DB_NAME);
                     welcome($connection, $_SESSION["username"]);
-                    
                     $_SESSION["is_parent"] = true;
-                    $_SESSION["profile_type"] = $profile_type;
-                    $_SESSION["profile_func"] = $profile_func;
-                    $_SESSION["user_auth"] = $auth;
 
                     // ottengo i dati dell'utente e li stampo
                     echo "I tuoi dati:<br>";
@@ -155,5 +119,33 @@
             break;
         }
     } else
-        header("Location: loginPage.php");
+        header("Location: page_login.php");
+
+    
+    // menu di navigazione
+    function nav_menu() {
+        echo "<main>
+                <section class='header'>
+                    <nav>
+                        <a href='../index.php'>
+                            <img 
+                                src='../image/logos/logo.png'
+                                class='logo'
+                                id='logoImg'
+                                alt='logo associazione'
+                            />
+                        </a>
+                        <div class='nav_links' id='navLinks'>
+                            <ul>
+                                <li><a href='../newsletter/newsletter.php'  class='btn'>Newsletter   </a></li>
+                                <li><a href='../bacheca/bacheca.php'        class='btn'>Bacheca       </a></li>
+                                <li><a href='https://stripe.com/it'         class='btn' target='blank'>Donazioni</a></li>
+                                <li><a href='area_personale.php'            class='btn'>Area Personale</a></li>
+                                <li><a href='crud.php?operation=LOGOUT'     class='btn'>Logout</a></li>
+                            </ul>
+                        </div>
+                    </nav>            
+                </section>
+            </main>";
+    }
 ?>

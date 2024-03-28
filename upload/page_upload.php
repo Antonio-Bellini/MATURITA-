@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <link rel="stylesheet" href="../style/style.css">
     <script src="../script/script.js"></script>
     <link rel="stylesheet" href="../style/style.css">
     <title>Associazione ZeroTre</title>
@@ -31,17 +30,17 @@
                     </a>
                     <div class='nav_links' id='navLinks'>
                         <ul>
-                            <li><a href='../newsletter.php'             class='btn'>Newsletter   </a></li>
-                            <li><a href='../bacheca.php'                class='btn'>Bacheca       </a></li>
-                            <li><a href='https://stripe.com/it'     class='btn' target='blank'>Donazioni</a></li>
-                            <li><a href='../private/area_personale.php'    class='btn'>Area Personale</a></li>
+                            <li><a href='../newsletter/newsletter.php'  class='btn'>Newsletter   </a></li>
+                            <li><a href='../bacheca/bacheca.php'        class='btn'>Bacheca       </a></li>
+                            <li><a href='https://stripe.com/it'         class='btn' target='blank'>Donazioni</a></li>
+                            <li><a href='../private/area_personale.php' class='btn'>Area Personale</a></li>
                         </ul>
                     </div>
                 </nav>            
             </section>
         </main>";
 ?>
-    <br><h1>Pagina per il caricamento delle liberatorie <br> </h1>
+    <br><h1>Pagina per il caricamento delle liberatorie<br></h1>
     <h4>Assicurati di caricare solo il file PDF firmato <br><br></h4>
     <label for="choice">Per chi vuoi caricare la liberatoria?</label><br>
     <select name="choice" id="choice">
@@ -59,7 +58,7 @@
             <label for="assisted">Per quale assistito vuoi caricare la liberatoria?</label><br>
             <select name="assisted" id="assisted">
             <?php
-                $connection = connectToDatabase(DB_HOST, USER_ADMIN, ADMIN_PW, DB_NAME);
+                $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
                 $query = "SELECT id, nome, cognome FROM assistiti";
                 $result = dbQuery($connection, $query);
 
@@ -87,7 +86,7 @@
             <label for="assisted">Per quale volontario vuoi caricare la liberatoria?</label><br>
             <select name="volunteer" id="volunteer">
             <?php
-                $connection = connectToDatabase(DB_HOST, USER_ADMIN, ADMIN_PW, DB_NAME);
+                $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
                 $query = "SELECT id, nome, cognome FROM volontari";
                 $result = dbQuery($connection, $query);
 

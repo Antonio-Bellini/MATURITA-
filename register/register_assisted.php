@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <link rel="stylesheet" href="../style/style.css">
     <script src="../script/script.js"></script>
+    <link rel="stylesheet" href="../style/style.css">
     <title>Associazione ZeroTre</title>
 </head>
 <!-- STAMPA del BODY in BASE al COOKIE SALVATO -->
@@ -16,41 +16,20 @@
     <?php
         include "../util/command.php";
         include "../util/connection.php";
-        $connection = connectToDatabase(DB_HOST, USER_ADMIN, ADMIN_PW, DB_NAME);
+        $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
+        session_start();
 
         // menu di navigazione
-        echo "<main>
-                <section class='header'>
-                    <nav>
-                        <a href='../index.php'>
-                            <img 
-                                src='../image/logos/logo.png'
-                                class='logo'
-                                id='logoImg'
-                                alt='logo associazione'
-                            />
-                        </a>
-                        <div class='nav_links' id='navLinks'>
-                            <ul>
-                                <li><a href='../newsletter.php'             class='btn'>Newsletter   </a></li>
-                                <li><a href='../bacheca.php'                class='btn'>Bacheca       </a></li>
-                                <li><a href='https://stripe.com/it'     class='btn' target='blank'>Donazioni</a></li>
-                                <li><a href='../private/area_personale.php' class='btn'>Area Personale</a></li>
-                            </ul>
-                        </div>
-                    </nav>            
-                </section>
-            </main>";
+        nav_menu();
 
-        session_start();
         if (!isset($_SESSION["is_admin"]))
             $_SESSION["is_admin"] = false;
         
         if (isset($_SESSION["is_logged"]) && $_SESSION["is_logged"]) {
             if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) {
                 if (($_SESSION["profile_func"] === "gestione DB") && ($_SESSION["user_auth"] === "CRUD")) {
-                    echo "<br><h1>Pagina di registrazione di un assistito</h1>
-                            <br><br>Chi é il referente?";
+                    echo "<br><h1>Pagina di registrazione di un assistito</h1><br><br>
+                                <label>Chi é il referente?</label>";
                     $query = "SELECT id, nome, cognome FROM utenti";
                     $result = dbQuery($connection, $query);
 
@@ -83,9 +62,37 @@
                         echo ERROR_DB;
                 }
             } else 
-            header("Location: ../private/loginPage.php");
+                header("Location: ../index.php");
         } else 
-            header("Location: ../private/loginPage.php");
+            header("Location: ../private/page_login.php");
+
+
+        // menu di navigazione
+        function nav_menu() {
+            echo "<main>
+                    <section class='header'>
+                        <nav>
+                            <a href='../index.php'>
+                                <img 
+                                    src='../image/logos/logo.png'
+                                    class='logo'
+                                    id='logoImg'
+                                    alt='logo associazione'
+                                />
+                            </a>
+                            <div class='nav_links' id='navLinks'>
+                                <ul>
+                                    <li><a href='../newsletter/newsletter.php'  class='btn'>Newsletter   </a></li>
+                                    <li><a href='../bacheca/bacheca.php'        class='btn'>Bacheca       </a></li>
+                                    <li><a href='https://stripe.com/it'         class='btn' target='blank'>Donazioni</a></li>
+                                    <li><a href='../private/area_personale.php' class='btn'>Area Personale</a></li>
+                                </ul>
+                            </div>
+                        </nav>            
+                    </section>
+                </main>";
+        }
+
     ?>
 </body>
 </html>

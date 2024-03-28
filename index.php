@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src='https://code.jquery.com/jquery-3.6.4.min.js'></script>
-    <link rel="stylesheet" href="style/style.css">
     <script src="script/script.js"></script>
+    <link rel="stylesheet" href="style/style.css">
     <link rel="icon" href="image/logos/logo.png" type="x-icon">
     <title>Un aiuto per crescere insieme</title>
 </head>
@@ -32,10 +32,10 @@
                 </a>
                 <div class="nav_links" id="navLinks">
                     <ul>
-                        <li><a href="newsletter.php"             class="btn">Newsletter   </a></li>
-                        <li><a href="bacheca.php"                class="btn">Bacheca       </a></li>
-                        <li><a href="https://stripe.com/it"      class="btn" target="blank">Donazioni</a></li>
-                        <li><a href="private/area_personale.php" class="btn">Area Personale</a></li>
+                        <li><a href="newsletter/newsletter.php"     class="btn">Newsletter   </a></li>
+                        <li><a href="bacheca/bacheca.php"           class="btn">Bacheca       </a></li>
+                        <li><a href="https://stripe.com/it"         class="btn" target="blank">Donazioni</a></li>
+                        <li><a href="private/area_personale.php"    class="btn">Area Personale</a></li>
                     </ul>
                 </div>
             </nav>            
