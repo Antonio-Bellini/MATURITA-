@@ -15,9 +15,6 @@
     $userId = null;
     $profile = null;
 
-    // menu di navigazione
-    nav_menu();
-
     if (isset($_GET["operation"]))
         $operation = $_GET["operation"];
 
@@ -30,6 +27,9 @@
     // possibili bottoni cliccati
     switch ($operation) {
         case "modify":
+            // menu di navigazione
+            nav_menu();
+            
             if (!isset($userId))
                 $userId = $_SESSION["user_id"];
             
@@ -62,6 +62,9 @@
         break;
 
         case "delete":
+            // menu di navigazione
+            nav_menu();
+            
             if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) {
                 switch ($profile) {
                     case "user":

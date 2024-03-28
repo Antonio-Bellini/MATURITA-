@@ -37,7 +37,7 @@
 
                     echo "<br><br><section id='table'><h3>GENITORI/REFERENTI REGISTRATI</h3>";
                     $query = "SELECT id, nome, cognome, username, email, telefono_fisso, telefono_mobile, note
-                                FROM UTENTI WHERE id_profilo = 4";
+                                FROM utenti WHERE id_profilo = 4";
                     $result = dbQuery($connection, $query);
                     if ($result)
                         createTable($result, "user");
