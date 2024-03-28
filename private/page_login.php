@@ -32,16 +32,16 @@
             welcome($connection, $_SESSION["username"]);
         } else {
             nav_menu();
-            echo "<section>
-                    <h1>Accedi al tuo account</h1>
+            echo "<section id='login_form'>
+                    <h1 id='login_form__title'>Accedi al tuo account</h1>
                     <form action='login.php' id='form_login' method='POST'>
-                        <label for='username'>Username</label>
-                        <input type='text' name='username' id='username' required><br>
+                        <label for='username' id='login_form__label'>Username</label>
+                        <input type='text' name='username' id='login_form__input' required>
 
-                        <label for='password'>Password</label>
-                        <input type='password' name='password' id='password' required><br>
+                        <label for='password' id='login_form__label'>Password</label>
+                        <input type='password' name='password' id='login_form__input' required>
 
-                        <input class='btn' type='submit' value='ACCEDI'><br><br><br>
+                        <input class='login_form__submit' type='submit' value='ACCEDI'>
                     </form>
                 </section>";
         }

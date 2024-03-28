@@ -99,26 +99,6 @@ nav img {
   color: black;
 }
 
-/* Bottoni secondari */
-.btn--sub {
-  display: inline-block;
-  text-decoration: none;
-  color: black;
-  border: 1px solid red;
-  padding: 12px 28px;
-  border-radius: 15px;
-  font-size: 15px;
-  background: transparent;
-  position: relative;
-  cursor: pointer;
-}
-.btn--sub:hover {
-  border: 1px solid red;
-  background: black;
-  color: black;
-  transition: 0.3s;
-}
-
 /* Stile del bottone di invio dei form */
 input[type=text], input[type=password], input[type=email] {
   display: block;
@@ -286,8 +266,47 @@ tr:nth-child(even) {
   background-color: #ff483b;
 }
 
+/* stile per il form del login */
+#login_form {
+  max-width: 400px;
+  margin: 100px auto;
+  padding: 40px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+#login_form__title {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+}
+#login_form__label {
+  display: block;
+  margin-bottom: 5px;
+  color: #555;
+}
+#login_form__input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+.login_form__submit {
+  width: 100%;
+  padding: 12px;
+  background-color: #4CAF50;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.login_form__submit:hover {
+  background-color: #45a049;
+}
 
-/* GALLERIA PER LE FOTO */
+/* nella pagina home */
 .gallery {
   border: 1px solid red;
   display: flex;
