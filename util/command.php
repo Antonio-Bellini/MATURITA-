@@ -151,6 +151,7 @@
                         $email = $row["email"];
                         $tf = $row["telefono_fisso"];
                         $tm = $row["telefono_mobile"];
+                        $_SESSION["pw_user_sel"] = $userId;
                     }
 
                     echo "<br><section id='form'>
@@ -189,10 +190,10 @@
                                         <label for='new_psw'>Nuova password</label>
                                     </div>
                                     <div id='name_surname__input'>
-                                        <input type='password' name='old_psw' id='old_psw'><br>
+                                        <input type='password' name='old_psw' id='old_psw'>
                                         &nbsp;&nbsp;
                                         <input type='password' name='new_psw' id='new_psw' maxlength='255'>
-                                        <span id='passwordError'></span><br>
+                                        <span id='passwordError'></span>
                                     </div>
 
                                     <input type='submit' value='AGGIORNA DATI'>
@@ -303,7 +304,7 @@
 
         echo "<form action='../private/event.php?function=addVolunteerToEvent' id='addVolunteerToEvent' method='POST'>
                 <br><br><label for='volunteer'>Quale volontario vuoi assegnare all'evento?</label>
-                <select name='volunteer'>";
+                <select name='volunteer' id='volunteer'>";
                     if ($resultV) {
                         while ($row = ($resultV->fetch_assoc()))
                             echo "<option value=" . $row["id"] . ">" . $row["nome"] . " " . $row["cognome"] . "</option>";
@@ -321,7 +322,7 @@
                 <label for='event_notes'>Aggiungi qualche nota utile</label>
                 <textarea name='event_notes' id='notes' cols='30' rows='10' placeholder='Altre info utili'></textarea>
 
-                <input type='submit' value='AGGIUNGI'>
+                <input type='submit' value='AGGIUNGI' id='sub__addVoluToEvent'>
             </form>";
     }
 

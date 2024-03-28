@@ -17,7 +17,7 @@
         else {
             $query = "SELECT password
                         FROM utenti
-                        WHERE id = '" . $_SESSION['user_id'] . "'";
+                        WHERE id = '" . $_SESSION['pw_user_sel'] . "'";
             $result = dbQuery($connection, $query);
             
             if (($result->num_rows) > 0) {

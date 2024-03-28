@@ -59,7 +59,7 @@
                         modifyForm($connection, "volunteer", $userId);
                     break;
             }
-        break;
+            break;
 
         case "delete":
             // menu di navigazione
