@@ -21,7 +21,16 @@
             switch ($operation){
                 case "view_user":
                     nav_menu();
-                    
+
+                    if (isset($_SESSION["user_modified"]) && $_SESSION["user_modified"]) {
+                        echo MOD_OK;
+                        $_SESSION["user_modified"] = false;
+                    }
+                    if (isset($_SESSION["user_notModified"]) && $_SESSION["user_notModified"]) {
+                        echo MOD_NONE;
+                        $_SESSION["user_notModified"] = false;
+                    }
+
                     echo "<br><br><h3>GENITORI/REFERENTI REGISTRATI</h3>";
                     $query = "SELECT id, nome, cognome, username, email, telefono_fisso, telefono_mobile, note
                                 FROM UTENTI WHERE id_profilo = 4";
@@ -35,6 +44,15 @@
 
                 case "view_volu":
                     nav_menu();
+
+                    if (isset($_SESSION["user_modified"]) && $_SESSION["user_modified"]) {
+                        echo MOD_OK;
+                        $_SESSION["user_modified"] = false;
+                    }
+                    if (isset($_SESSION["user_notModified"]) && $_SESSION["user_notModified"]) {
+                        echo MOD_NONE;
+                        $_SESSION["user_notModified"] = false;
+                    }
                     
                     echo "<br><br><h3>VOLONTARI REGISTRATI</h3>";
                     $query = "SELECT v.id, v.nome, v.cognome, v.email, v.telefono_fisso, v.telefono_mobile, l.liberatoria
@@ -50,6 +68,15 @@
 
                 case "view_assi":
                     nav_menu();
+                    
+                    if (isset($_SESSION["user_modified"]) && $_SESSION["user_modified"]) {
+                        echo MOD_OK;
+                        $_SESSION["user_modified"] = false;
+                    }
+                    if (isset($_SESSION["user_notModified"]) && $_SESSION["user_notModified"]) {
+                        echo MOD_NONE;
+                        $_SESSION["user_notModified"] = false;
+                    }
                     
                     echo "<br><br><h3>ASSISTITI REGISTRATI</h3>";
                     $query = "SELECT a.id, a.nome, a.cognome, a.anamnesi, a.note, 

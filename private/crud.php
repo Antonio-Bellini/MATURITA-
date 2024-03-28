@@ -60,6 +60,9 @@
                     break;
             }
         break;
+
+        case "delete":
+            break;
         
         case "LOGOUT":
             if (isset($_SESSION["is_logged"]) && $_SESSION["is_logged"]) {

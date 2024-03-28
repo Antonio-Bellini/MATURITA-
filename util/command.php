@@ -38,14 +38,12 @@
 
     // funzionio per la stampa di alcuni dati
     function printField($value) {
-        if (substr($value, 0, 1) === "/") {
-            if (substr($value, 1, (strpos($value, "_")) - 1) === "anamnesi")
-                return "</button><a href='../upload/medical_module" . $value . "'>Apri il file</a></button>";
-            else 
-                return "</button><a href='../upload/release_module". $value . "'>Apri il file</a></button>";
-        } else 
+        if (substr($value, 0, 14) === "release_module" || substr($value, 0, 14) === "medical_module")
+            return "<button><a href='../upload/" . $value . "' target='blank'>Apri il file</a></button>";
+        else
             return $value;
     }
+    
 
     // funzione per la stampa dei bottoni di modifica
     function printButton($userType, $userId) {
@@ -53,18 +51,21 @@
             case "user" :
                 echo "<td>
                         <button><a href='crud.php?operation=modify&user={$userId}&profile=user'>Modifica</a></button>
+                        <button><a href='crud.php?operation=delete&user={$userId}&profile=user'>Elimina</a></button>
                     </td>";
                 break;
 
             case "assisted":
                 echo "<td>
                         <button><a href='crud.php?operation=modify&user={$userId}&profile=assisted'>Modifica</a></button>
+                        <button><a href='crud.php?operation=delete&user={$userId}&profile=assisted'>Elimina</a></button>
                     </td>";
                 break;
 
             case "volunteer":
                 echo "<td>
                         <button><a href='crud.php?operation=modify&user={$userId}&profile=volunteer'>Modifica</a></button>
+                        <button><a href='crud.php?operation=delete&user={$userId}&profile=volunteer'>Elimina</a></button>
                     </td>";
                 break;
 
@@ -139,9 +140,6 @@
     function modifyForm($connection, $type, $userId) {
         switch ($type) {
             case "user":
-                echo "<h1>Modifica anagrafica utente</h1>";
-                echo "<label>Cosa vuoi modificare?<br><br></label>";
-
                 $query = "SELECT nome, cognome, password, email, telefono_fisso, telefono_mobile
                         FROM utenti 
                         WHERE id = '$userId'";
@@ -149,80 +147,100 @@
 
                 if ($result){
                     while ($row = ($result->fetch_assoc())) {
-                        echo "<b>NOME: </b>" . $row["nome"] . "<br>";
-                        echo "<b>COGNOME: </b>" . $row["cognome"] . "<br>";
-                        echo "<b>EMAIL: </b>" . $row["email"] . "<br>";
-                        echo "<b>TELEFONO FISSO: </b>" . $row["telefono_fisso"] . "<br>";
-                        echo "<b>TELEFONO MOBILE: </b>" . $row["telefono_mobile"] . "<br><br><br>";
+                        $name = $row["nome"];
+                        $surname = $row["cognome"];
+                        $email = $row["email"];
+                        $tf = $row["telefono_fisso"];
+                        $tm = $row["telefono_mobile"];
                     }
 
-                    echo "<label><b>NUOVI DATI</b></label>";
-                    echo "<form action='update.php' method='POST' id='form_update__user'>
-                            <input type='hidden' name='type' value='user'>
-                            <input type='hidden' name='user_id' value='$userId'>
+                    echo "<br><section id='form'>
+                            <h2>Modifica anagrafica utente</h2>
+                            <label>Cosa vuoi modificare?<br><br></label>
+                            <h3>Nuovi dati</h3><br>
+                                <form action='update.php' method='POST' id='form_update__user'>
+                                    <input type='hidden' name='type' value='user'>
+                                    <input type='hidden' name='user_id' value='$userId'>
 
-                            <label><br>Nome</label><br>
-                            <input type='text' name='new_name' maxlength='30'>
+                                    <div id='name_surname__label'>
+                                        <label for='new_name'>Nome</label>
+                                        <label for='new_surname'>Cognome</label>
+                                    </div>
+                                    <div id='name_surname__input'>
+                                        <input type='text' name='new_name' maxlength='30' placeholder='" . $name . "'>
+                                        &nbsp;&nbsp;
+                                        <input type='text' name='new_surname' maxlength='30' placeholder='" . $surname . "'>
+                                    </div>
 
-                            <label><br>Cognome</label><br>
-                            <input type='text' name='new_surname' maxlength='30'>
+                                    <label><br>Email</label>
+                                    <input type='email' name='new_email' maxlength='30' placeholder='" . $email ."'>
 
-                            <label><br>Email</label><br>
-                            <input type='email' name='new_email' maxlength='30'>
+                                    <div id='phones__label'>
+                                        <label for='new_tf'>Telefono fisso</label>
+                                        <label for='new_tm'>Telefono mobile</label>
+                                    </div>
+                                    <div id='phones__input'>
+                                        <input type='text' name='new_tf' maxlength='9' placeholder='" . $tf . "'>
+                                        &nbsp;&nbsp;
+                                        <input type='text' name='new_tm' maxlength='9' placeholder='" . $tm . "'>
+                                    </div>
 
-                            <label><br>Telefono fisso</label><br>
-                            <input type='text' name='new_tf' maxlength='9'>
+                                    <div id='name_surname__label'>
+                                        <label for='old_psw'>Password attuale</label>
+                                        <label for='new_psw'>Nuova password</label>
+                                    </div>
+                                    <div id='name_surname__input'>
+                                        <input type='password' name='old_psw' id='old_psw'><br>
+                                        &nbsp;&nbsp;
+                                        <input type='password' name='new_psw' id='new_psw' maxlength='255'>
+                                        <span id='passwordError'></span><br>
+                                    </div>
 
-                            <label><br>Telefono mobile</label><br>
-                            <input type='text' name='new_tm' maxlength='9'>
-
-                            <label><br>Password attuale</label><br>
-                            <input type='password' name='old_psw' id='old_psw'><br>
-
-                            <label>Nuova password</label><br>
-                            <input type='password' name='new_psw' id='new_psw' maxlength='255'>
-                            <span id='passwordError'></span><br><br><br>
-
-                            <input type='submit' value='ESEGUI'>
-                        </form>";
+                                    <input type='submit' value='AGGIORNA DATI'>
+                                </form>
+                        </section>";
                 }
                 break;
 
             case "assisted":
-                echo "<h1>Modifica anagrafica Assistito</h1>";
-                echo "<label>Cosa vuoi modificare?<br><br></label>";
-
                 $query = "SELECT a.nome, a.cognome
                         FROM assistiti a
                         INNER JOIN utenti u ON a.id_referente = u.id
-                        WHERE u.id = '$userId'";
+                        WHERE a.id = '$userId'";
                 $result = dbQuery($connection, $query);
 
                 if ($result) {
                     while ($row = ($result->fetch_assoc())) {
-                        echo "<b>NOME: </b>" . $row["nome"] . "<br>";
-                        echo "<b>COGNOME: </b>" . $row["cognome"] . "<br><br><br>";
+                        $name = $row["nome"];
+                        $surname = $row["cognome"];
                     }
 
-                    echo "<label><b>NUOVI DATI</b></label>";
-                    echo "<form action='update.php' method='POST' id='form_update__assisted'>
-                            <input type='hidden' name='type' value='assisted'>
-                            <input type='hidden' name='user_id' value='$userId'>
+                    echo "<br><section id='form'>
+                            <h2>Modifica anagrafica assistito</h2>
+                            <label>Cosa vuoi modificare?<br><br></label>
+                            <h3>Nuovi dati</h3><br>
+                                <form action='update.php' method='POST' id='form_update__assisted'>
+                                    <input type='hidden' name='type' value='assisted'>
+                                    <input type='hidden' name='user_id' value='$userId'>
 
-                            <label><br>Nome</label><br>
-                            <input type='text' name='new_name' maxlength='30'>
+                                    <div id='name_surname__label'>
+                                        <label for='new_name'>Nome</label>
+                                        <label for='new_surname'>Cognome</label>
+                                    </div>
 
-                            <label><br>Cognome</label><br>
-                            <input type='text' name='new_surname' maxlength='30'><br><br><br>
-                            
-                            <input type='submit' value='ESEGUI'>";
+                                    <div id='name_surname__input'>
+                                        <input type='text' name='new_name' maxlength='30' placeholder='" . $name . "'>
+                                        &nbsp;&nbsp;
+                                        <input type='text' name='new_surname' maxlength='30' placeholder='" . $surname . "'>
+                                    </div>
+
+                                    <input type='submit' value='AGGIORNA DATI'>
+                                </form>
+                        </sectiom>";
                 }
                 break;
 
             case "volunteer":
-                echo "<h1>Modifica anagrafica Volontario</h1>";
-                echo "<label>Cosa vuoi modificare?<br><br></label>";
-
                 $query = "SELECT nome, cognome, email, telefono_fisso, telefono_mobile
                         FROM volontari
                         WHERE id = '$userId'";
@@ -230,34 +248,46 @@
 
                 if ($result) {
                     while ($row = ($result->fetch_assoc())) {
-                        echo "<b>NOME: </b>" . $row["nome"] . "<br>";
-                        echo "<b>COGNOME: </b>" . $row["cognome"] . "<br>";
-                        echo "<b>EMAIL: </b>" . $row["email"] . "<br>";
-                        echo "<b>TELEFONO FISSO: </b>" . $row["telefono_fisso"] . "<br>";
-                        echo "<b>TELEFONO MOBILE: </b>" . $row["telefono_mobile"] . "<br><br><br>";
+                        $name = $row["nome"];
+                        $surname = $row["cognome"];
+                        $email = $row["email"];
+                        $tf = $row["telefono_fisso"];
+                        $tm = $row["telefono_mobile"];
                     }
 
-                    echo "<label><b>NUOVI DATI</b></label>";
-                    echo "<form action='update.php' method='POST' id='form_update__volunteer'>
-                            <input type='hidden' name='type' value='volunteer'>
-                            <input type='hidden' name='user_id' value='$userId'>
+                    echo "<br><section id='form'>
+                                <h2>Modifica anagrafica volontario</h2>
+                                <label>Cosa vuoi modificare?<br><br></label>
+                                <h3>Nuovi dati</h3><br>
+                                    <form action='update.php' method='POST' id='form_update__volunteer'>
+                                        <input type='hidden' name='type' value='volunteer'>
+                                        <input type='hidden' name='user_id' value='$userId'>
 
-                            <label><br>Nome</label><br>
-                            <input type='text' name='new_name' maxlength='30'>
+                                        <div id='name_surname__label'>
+                                            <label for='new_name'>Nome</label>
+                                            <label for='new_surname'>Cognome</label>
+                                        </div>
+                                        <div id='name_surname__input'>
+                                            <input type='text' name='new_name' maxlength='30' placeholder='" . $name . "'>
+                                            &nbsp;&nbsp;
+                                            <input type='text' name='new_surname' maxlength='30' placeholder='" . $surname . "'>
+                                        </div>
+                                        
+                                        <label for='new_email'>Email</label>
+                                        <input type='email' name='new_email' maxlength='30' placeholder='" . $email . "'>
 
-                            <label><br>Cognome</label><br>
-                            <input type='text' name='new_surname' maxlength='30'>
-                            
-                            <label><br>Email</label><br>
-                            <input type='email' name='new_email' maxlength='30'>
+                                        <div id='phones__label'>
+                                            <label for='new_tf'>Telefono fisso</label>
+                                            <label for='new_tm'>Telefono mobile</label>
+                                        </div>
+                                        <div id='phones__input'>
+                                            <input type='text' name='new_tf' maxlength='9' placeholder='" . $tf . "'>
+                                            &nbsp;&nbsp;
+                                            <input type='text' name='new_tm' maxlength='9' placeholder='" . $tm . "'>
+                                        </div>
 
-                            <label><br>Telefono fisso</label><br>
-                            <input type='text' name='new_tf' maxlength='9'>
-
-                            <label><br>Telefono mobile</label><br>
-                            <input type='text' name='new_tm' maxlength='9'><br><br><br>
-                            
-                            <input type='submit' value='ESEGUI'>";
+                                        <input type='submit' value='AGGIORNA DATI'>
+                                    </form>";
                 }
                 break;
         }

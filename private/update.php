@@ -52,12 +52,16 @@
                 $update_query .= " WHERE id = $userId";
                 $result = dbQuery($connection, $update_query);
 
-                if ($result)
-                    echo MOD_OK;
+                if ($result) {
+                    $_SESSION["user_modified"] = true;
+                    header("Location: admin_operation.php?operation=view_user");
+                }
                 else
                     echo ERROR_GEN;
-            } else 
-                echo MOD_NONE;
+            } else {
+                $_SESSION["user_notModified"] = true;
+                header("Location: admin_operation.php?operation=view_user");
+            }
             break;
 
         case "assisted":
@@ -75,12 +79,16 @@
                 $update_query .= " WHERE id = $userId";
                 $result = dbQuery($connection, $update_query);
 
-                if ($result)
-                    echo MOD_OK;
+                if ($result) {
+                    $_SESSION["user_modified"] = true;
+                    header("Location: admin_operation.php?operation=view_assi");
+                }
                 else
-                    echo GEN_ERROR;
-            } else 
-                echo MOD_NONE;
+                    echo ERROR_GEN;
+            } else {
+                $_SESSION["user_notModified"] = true;
+                header("Location: admin_operation.php?operation=view_assi");
+            }
             break;
 
         case "volunteer":
@@ -107,12 +115,16 @@
                 $update_query .= " WHERE id = $userId";
                 $result = dbQuery($connection, $update_query);
 
-                if ($result)
-                    echo MOD_OK;
+                if ($result) {
+                    $_SESSION["user_modified"] = true;
+                    header("Location: admin_operation.php?operation=view_volu");
+                }
                 else
-                    echo GEN_ERROR;
-            } else 
-                echo MOD_NONE;
+                    echo ERROR_GEN;
+            } else {
+                $_SESSION["user_notModified"] = true;
+                header("Location: admin_operation.php?operation=view_volu");
+            }
             break;
     }
 

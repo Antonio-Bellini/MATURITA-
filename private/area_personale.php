@@ -51,11 +51,12 @@
                     welcome($connection, $_SESSION["username"]);
                     $_SESSION["is_admin"] = true;
 
-                    echo "<br><button><a href='admin_operation.php?operation=view_user'>Visualizza utenti</a></button><br><br>";
-                    echo "<button><a href='admin_operation.php?operation=view_volu'>Visualizza volontari</a></button><br><br>";
-                    echo "<button><a href='admin_operation.php?operation=view_assi'>Visualizza assistiti</a></button><br><br>";
-                    echo "<button><a href='../upload/page_upload.php'>Carica liberatorie</a></button><br><br>";
-                    echo "<button><a href='admin_operation.php?operation=mng_event'>Pagina eventi</a></button><br><br>";
+                    echo "<br><br><h3>Cosa vuoi fare?</h3>";
+                    echo "<br>  <button class='btn'><a href='admin_operation.php?operation=view_user'>GESTIONE UTENTI</a></button><br><br>
+                                <button class='btn'><a href='admin_operation.php?operation=view_volu'>GESTIONE VOLONTARI</a></button><br><br>
+                                <button class='btn'><a href='admin_operation.php?operation=view_assi'>GESTIONE ASSISTITI</a></button><br><br>
+                                <button class='btn'><a href='../upload/page_upload.php'>CARICA LIBERATORIE</a></button><br><br>
+                                <button class='btn'><a href='admin_operation.php?operation=mng_event'>GESTIONE EVENTI</a></button><br><br>";
                 } catch (Exception $e) {
                     echo ERROR_GEN . ": " . $e;
                 }
