@@ -104,6 +104,20 @@ $(document).ready(function () {
             gallery.scrollLeft(gallery.scrollLeft() + photoWidth);
         }, 2000);
     });
+
+    // doppia conferma prima di eliminare un utente dal db
+    $(".btn_delete").click(function(e) {
+        e.preventDefault();
+        
+        // ottengo l'url dal tag a
+        let url = $(this).find("a").attr("href");
+        
+        // conferma di eliminazione
+        let confirmed = confirm("Sei sicuro di voler procedere con l'eliminazione?");
+        
+        if (confirmed)
+            window.location.href = url;
+    });
 });
 
 // AJAX per il controllo live dell'email inserita

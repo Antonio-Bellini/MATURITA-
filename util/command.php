@@ -51,21 +51,21 @@
             case "user" :
                 echo "<td>
                         <button><a href='crud.php?operation=modify&user={$userId}&profile=user'>Modifica</a></button>
-                        <button><a href='crud.php?operation=delete&user={$userId}&profile=user'>Elimina</a></button>
+                        <button class='btn_delete'><a href='crud.php?operation=delete&user={$userId}&profile=user'>Elimina</a></button>
                     </td>";
                 break;
 
             case "assisted":
                 echo "<td>
                         <button><a href='crud.php?operation=modify&user={$userId}&profile=assisted'>Modifica</a></button>
-                        <button><a href='crud.php?operation=delete&user={$userId}&profile=assisted'>Elimina</a></button>
+                        <button class='btn_delete'><a href='crud.php?operation=delete&user={$userId}&profile=assisted'>Elimina</a></button>
                     </td>";
                 break;
 
             case "volunteer":
                 echo "<td>
                         <button><a href='crud.php?operation=modify&user={$userId}&profile=volunteer'>Modifica</a></button>
-                        <button><a href='crud.php?operation=delete&user={$userId}&profile=volunteer'>Elimina</a></button>
+                        <button class='btn_delete'><a href='crud.php?operation=delete&user={$userId}&profile=volunteer'>Elimina</a></button>
                     </td>";
                 break;
 

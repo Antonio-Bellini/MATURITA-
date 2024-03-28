@@ -15,6 +15,9 @@
     $userId = null;
     $profile = null;
 
+    // menu di navigazione
+    nav_menu();
+
     if (isset($_GET["operation"]))
         $operation = $_GET["operation"];
 
@@ -27,9 +30,6 @@
     // possibili bottoni cliccati
     switch ($operation) {
         case "modify":
-            // menu di navigazione
-            nav_menu();
-    
             if (!isset($userId))
                 $userId = $_SESSION["user_id"];
             
@@ -62,6 +62,39 @@
         break;
 
         case "delete":
+            if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) {
+                switch ($profile) {
+                    case "user":
+                        $query = "DELETE FROM utenti WHERE id = '$userId'";
+                        $result = dbQuery($connection, $query);
+
+                        if ($result) {
+                            $_SESSION["user_deleted"] = true;
+                            header("Location: admin_operation.php?operation=view_user");
+                        }
+                        break;
+
+                    case "assisted":
+                        $query = "DELETE FROM assistiti WHERE id = '$userId'";
+                        $result = dbQuery($connection, $query);
+
+                        if ($result) {
+                            $_SESSION["user_deleted"] = true;
+                            header("Location: admin_operation.php?operation=view_assi");
+                        }
+                        break;
+
+                    case "volunteer":
+                        $query = "DELETE FROM volontari WHERE id = '$userId'";
+                        $result = dbQuery($connection, $query);
+
+                        if ($result) {
+                            $_SESSION["user_deleted"] = true;
+                            header("Location: admin_operation.php?operation=view_volu");
+                        }
+                        break;
+                }
+            }
             break;
         
         case "LOGOUT":

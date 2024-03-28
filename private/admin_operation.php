@@ -22,6 +22,10 @@
                 case "view_user":
                     nav_menu();
 
+                    if (isset($_SESSION["user_deleted"]) && $_SESSION["user_deleted"]) {
+                        echo DEL_OK;
+                        $_SESSION["user_deleted"] = false;
+                    }
                     if (isset($_SESSION["user_modified"]) && $_SESSION["user_modified"]) {
                         echo MOD_OK;
                         $_SESSION["user_modified"] = false;
@@ -49,6 +53,10 @@
                         echo MOD_OK;
                         $_SESSION["user_modified"] = false;
                     }
+                    if (isset($_SESSION["user_deleted"]) && $_SESSION["user_deleted"]) {
+                        echo DEL_OK;
+                        $_SESSION["user_deleted"] = false;
+                    }
                     if (isset($_SESSION["user_notModified"]) && $_SESSION["user_notModified"]) {
                         echo MOD_NONE;
                         $_SESSION["user_notModified"] = false;
@@ -72,6 +80,10 @@
                     if (isset($_SESSION["user_modified"]) && $_SESSION["user_modified"]) {
                         echo MOD_OK;
                         $_SESSION["user_modified"] = false;
+                    }
+                    if (isset($_SESSION["user_deleted"]) && $_SESSION["user_deleted"]) {
+                        echo DEL_OK;
+                        $_SESSION["user_deleted"] = false;
                     }
                     if (isset($_SESSION["user_notModified"]) && $_SESSION["user_notModified"]) {
                         echo MOD_NONE;

@@ -18,6 +18,8 @@
     define("MOD_OK", "Modifiche eseguite con successo");
     define("MOD_NONE", "Nessuna modifica eseguita");
 
+    define("DEL_OK", "Account eliminato con successo");
+
     define("ACC_OK", "Account creato con successo");
     define("FILE_OK", "File caricato correttamente");
 
