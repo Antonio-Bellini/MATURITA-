@@ -127,6 +127,7 @@
                                 GROUP BY e.id, te.tipo, e.data, e.note;";
                     $result = dbQuery($connection, $query);
                     if ($result) {
+                        echo "<br><br><section id='table'><h3>Lista di tutti gli eventi</h3>";
                         createTable($result, "admin");
                     }
                     break;

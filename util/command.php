@@ -44,34 +44,33 @@
             return $value;
     }
     
-
     // funzione per la stampa dei bottoni di modifica
     function printButton($userType, $userId) {
         switch ($userType) {
             case "user" :
                 echo "<td>
-                        <button><a href='crud.php?operation=modify&user={$userId}&profile=user'>Modifica</a></button>
+                        <button class='table--btn'><a href='crud.php?operation=modify&user={$userId}&profile=user'>Modifica</a></button>
                         <button class='btn_delete'><a href='crud.php?operation=delete&user={$userId}&profile=user'>Elimina</a></button>
                     </td>";
                 break;
 
             case "assisted":
                 echo "<td>
-                        <button><a href='crud.php?operation=modify&user={$userId}&profile=assisted'>Modifica</a></button>
+                        <button class='table--btn'><a href='crud.php?operation=modify&user={$userId}&profile=assisted'>Modifica</a></button>
                         <button class='btn_delete'><a href='crud.php?operation=delete&user={$userId}&profile=assisted'>Elimina</a></button>
                     </td>";
                 break;
 
             case "volunteer":
                 echo "<td>
-                        <button><a href='crud.php?operation=modify&user={$userId}&profile=volunteer'>Modifica</a></button>
+                        <button class='table--btn'><a href='crud.php?operation=modify&user={$userId}&profile=volunteer'>Modifica</a></button>
                         <button class='btn_delete'><a href='crud.php?operation=delete&user={$userId}&profile=volunteer'>Elimina</a></button>
                     </td>";
                 break;
 
             case null:
                 echo "<td>
-                        <button><a href='crud.php?operation=modify&user={$userId}'>Modifica</a></button>
+                        <button class='table--btn'><a href='crud.php?operation=modify&user={$userId}'>Modifica</a></button>
                     </td>";
                 break;
         }

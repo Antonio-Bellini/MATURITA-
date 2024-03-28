@@ -35,15 +35,16 @@
                         $_SESSION["user_notModified"] = false;
                     }
 
-                    echo "<br><br><h3>GENITORI/REFERENTI REGISTRATI</h3>";
+                    echo "<br><br><section id='table'><h3>GENITORI/REFERENTI REGISTRATI</h3>";
                     $query = "SELECT id, nome, cognome, username, email, telefono_fisso, telefono_mobile, note
                                 FROM UTENTI WHERE id_profilo = 4";
                     $result = dbQuery($connection, $query);
                     if ($result)
                         createTable($result, "user");
 
-                    echo "<br><br><br><h3>Crea un nuovo account genitore/referente</h3>";
-                    echo "<button class='btn'><a href='../register/register_user.php'>Crea account</a></button>";
+                    echo "<br><br><br><h3>Crea un nuovo account genitore/referente</h3;>
+                            <button class='btn'><a href='../register/register_user.php'>Crea account</a></button>
+                        </section>";
                     break;
 
                 case "view_volu":
@@ -62,7 +63,7 @@
                         $_SESSION["user_notModified"] = false;
                     }
                     
-                    echo "<br><br><h3>VOLONTARI REGISTRATI</h3>";
+                    echo "<br><br><section id='table'><h3>VOLONTARI REGISTRATI</h3>";
                     $query = "SELECT v.id, v.nome, v.cognome, v.email, v.telefono_fisso, v.telefono_mobile, l.liberatoria
                                 FROM volontari v
                                 INNER JOIN liberatorie l ON v.id_liberatoria = l.id";
@@ -70,8 +71,9 @@
                     if ($result)
                         createTable($result, "volunteer");
 
-                    echo "<br><br><br><h3>Crea un nuovo account volontario</h3>";
-                    echo "<button class='btn'><a href='../register/register_volunteer.php'>Crea account</a></button>";
+                    echo "<br><br><br><h3>Crea un nuovo account volontario</h3;>
+                            <button class='btn'><a href='../register/register_volunteer.php'>Crea account</a></button>
+                        </section>";
                     break;
 
                 case "view_assi":
@@ -90,7 +92,7 @@
                         $_SESSION["user_notModified"] = false;
                     }
                     
-                    echo "<br><br><h3>ASSISTITI REGISTRATI</h3>";
+                    echo "<br><br><section id='table'><h3>ASSISTITI REGISTRATI</h3>";
                     $query = "SELECT a.id, a.nome, a.cognome, a.anamnesi, a.note, 
                                     u.nome AS nome_genitore, 
                                     u.cognome AS cognome_genitore,
@@ -102,8 +104,9 @@
                     if ($result)
                         createTable($result, "assisted");
 
-                    echo "<br><br><br><h3>Crea un nuovo account assistito</h3>";
-                    echo "<button class='btn'><a href='../register/register_assisted.php'>Crea account</a></button>";
+                    echo "<br><br><br><h3>Crea un nuovo account assistito</h3;>
+                        <button class='btn'><a href='../register/register_assisted.php'>Crea account</a></button>
+                    </section>";
                     break;
 
 
