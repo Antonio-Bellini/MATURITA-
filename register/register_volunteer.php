@@ -24,31 +24,39 @@
         if (isset($_SESSION["is_logged"]) && $_SESSION["is_logged"]) {
             if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) {
                 if (($_SESSION["profile_func"] === "gestione DB") && ($_SESSION["user_auth"] === "CRUD")) {
-                    echo "<br><h1>Pagina di registrazione di un volontario</h1><br><br>
-                            <section>
+                    echo "<br><section id='form'>
+                            <h2>Pagina di registrazione di un volontario</h2><br>
                                 <form name='form_volunteer' action='register.php' id='form_register__volunteer' method='POST' enctype='multipart/form-data'>
                                     <input type='hidden' name='form_volunteer'>
 
-                                    <label for='name'>Inserisci il nome</label>
-                                    <input type='text' name='name' id='name' maxlength='30' required> <br>
+                                    <div id='name_surname__label'>
+                                        <label for='name'>Inserisci il nome *</label>
+                                        <label for='surname'>Inserisci il cognome *</label>
+                                    </div>
+                                    <div id='name_surname__input'>
+                                        <input type='text' name='name' id='name' maxlength='30' required>
+                                        &nbsp;&nbsp;
+                                        <input type='text' name='surname' id='surname' maxlength='30' required>
+                                    </div>
 
-                                    <label for='surname'>Inserisci il cognome</label>
-                                    <input type='text' name='surname' id='surname' maxlength='30' required> <br>
+                                    <label for='email'>Inserisci l'email *</label>
+                                    <input type='email' name='email' id='email' maxlength='30' required>
 
-                                    <label for='email'>Inserisci l'email</label>
-                                    <input type='email' name='email' id='email' maxlength='30' required> <br>
+                                    <div id='phones__label'>
+                                        <label for='phone_f'>Inserisci il numero del telefono fisso</label>
+                                        <label for='phone_m'>Inserisci il numero di telefono *</label>
+                                    </div>
+                                    <div id='phones__input'>
+                                        <input type='text' name='phone_f' id='phone_f' maxlength='9'>
+                                        &nbsp;&nbsp;
+                                        <input type='text' name='phone_m' id='phone_m' maxlength='9' required>
+                                    </div>
 
-                                    <label for='phone_f'>Inserisci il numero del telefono fisso</label>
-                                    <input type='text' name='phone_f' id='phone_f' maxlength='9'> <br>
+                                    <label for='release'>Carica la liberatoria *</label>
+                                    <input type='file' name='release' id='release' accept='.pdf' enctype='multipart/form-data' required>
 
-                                    <label for='phone_m'>Inserisci il numero di telefono</label>
-                                    <input type='text' name='phone_m' id='phone_m' maxlength='9' required> <br>
-
-                                    <label for='release'>Carica la liberatoria</label>
-                                    <input type='file' name='release' id='release' accept='.pdf' enctype='multipart/form-data' required> <br>
-
-                                    <label for='notes'>Note utili</label> <br>
-                                    <textarea name='notes' id='notes' cols='30' rows='10' placeholder='Altre info utili'></textarea> <br><br>
+                                    <label for='notes'>Note utili</label>
+                                    <textarea name='notes' id='notes' cols='30' rows='10' placeholder='Altre info utili'></textarea>
 
                                     <input type='submit' value='Crea Account Volontario'>
                                 </form>

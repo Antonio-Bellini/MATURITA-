@@ -28,35 +28,39 @@
         if (isset($_SESSION["is_logged"]) && $_SESSION["is_logged"]) {
             if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) {
                 if (($_SESSION["profile_func"] === "gestione DB") && ($_SESSION["user_auth"] === "CRUD")) {
-                    echo "<br><h1>Pagina di registrazione di un assistito</h1><br><br>
-                                <label>Chi é il referente?</label>";
                     $query = "SELECT id, nome, cognome FROM utenti";
                     $result = dbQuery($connection, $query);
 
                     if ($result) {
-                        echo "<section>
-                                <form name='form_assisted' action='register.php' id='form_register__assisted' method='POST' enctype='multipart/form-data'>
-                                    <input type='hidden' name='form_assisted'>
+                        echo "<br><section id='form'>
+                                <h2>Pagina di registrazione di un assistito</h2><br>
+                                    <form name='form_assisted' action='register.php' id='form_register__assisted' method='POST' enctype='multipart/form-data'>
+                                        <input type='hidden' name='form_assisted'>
 
-                                    <select name='parent'>";
-                                        while ($row = ($result->fetch_assoc()))
-                                            echo "<option value='" . $row["id"] . "'>" . $row["nome"] . " " . $row["cognome"] . "</option>";
-                                    echo "</select><br>
+                                        <label for='parent'>Chi é il referente?&nbsp;</label;>
+                                        <select name='parent'>";
+                                            while ($row = ($result->fetch_assoc()))
+                                                echo "<option value='" . $row["id"] . "'>" . $row["nome"] . " " . $row["cognome"] . "</option>";
+                                        echo "</select>
 
-                                    <label for='name'>Inserisci il nome</label>
-                                    <input type='text' name='name' id='name' maxlength='30' required> <br>
+                                        <div id='name_surname__label'>
+                                            <label for='name'>Inserisci il nome dell'assistito *</label>
+                                            <label for='surname'>Inserisci il cognome dell'assistito *</label>
+                                        </div>
+                                        <div id='name_surname__input'>
+                                            <input type='text' name='name' id='name' maxlength='30' required>
+                                            &nbsp;&nbsp;
+                                            <input type='text' name='surname' id='surname' maxlength='30' required>
+                                        </div>
 
-                                    <label for='surname'>Inserisci il cognome</label>
-                                    <input type='text' name='surname' id='surname' maxlength='30' required> <br>
+                                        <label for='med'>Inserisci il file dell'anamnesi *</label>
+                                        <input type='file' name='med' id='med' accept='.pdf' enctype='multipart/form-data' required> <br>
 
-                                    <label for='med'>Inserisci il file dell'anamnesi</label>
-                                    <input type='file' name='med' id='med' accept='.pdf' enctype='multipart/form-data' required> <br>
+                                        <label for='notes'>Inserisci qualche nota aggiuntiva sull'assistito</label>
+                                        <textarea name='notes' id='notes' cols='30' rows='10' placeholder='Altre info utili'></textarea>
 
-                                    <label for='notes'>Inserisci qualche nota aggiuntiva</label> <br>
-                                    <textarea name='notes' id='notes' cols='30' rows='10' placeholder='Altre info utili'></textarea><br><br>
-
-                                    <input type='submit' value='REGISTRA'><br><br>
-                                </form>
+                                        <input type='submit' value='CREA ACCOUNT ASSISTITO'>
+                                    </form>
                             </section>";
                     } else 
                         echo ERROR_DB;

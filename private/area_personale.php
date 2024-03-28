@@ -32,7 +32,7 @@
             echo ERROR_DB;
 
         // permetto determinate funzioni in base al tipo di profilo
-        switch($profile_type) {
+        switch($_SESSION["profile_type"]) {
             case "presidente":
                 try {
                     $connection = connectToDatabase(DB_HOST, DB_PRESIDENT, PRESIDENT_PW, DB_NAME);
@@ -51,10 +51,10 @@
                     welcome($connection, $_SESSION["username"]);
                     $_SESSION["is_admin"] = true;
 
-                    echo "<button><a href='admin_operation.php?operation=view_user'>Visualizza utenti</a></button><br><br>";
+                    echo "<br><button><a href='admin_operation.php?operation=view_user'>Visualizza utenti</a></button><br><br>";
                     echo "<button><a href='admin_operation.php?operation=view_volu'>Visualizza volontari</a></button><br><br>";
                     echo "<button><a href='admin_operation.php?operation=view_assi'>Visualizza assistiti</a></button><br><br>";
-                    echo "<button><a href='../upload/uploadPage.php'>Carica liberatorie</a></button><br><br>";
+                    echo "<button><a href='../upload/page_upload.php'>Carica liberatorie</a></button><br><br>";
                     echo "<button><a href='admin_operation.php?operation=mng_event'>Pagina eventi</a></button><br><br>";
                 } catch (Exception $e) {
                     echo ERROR_GEN . ": " . $e;
@@ -80,7 +80,7 @@
                     $_SESSION["is_parent"] = true;
 
                     // ottengo i dati dell'utente e li stampo
-                    echo "I tuoi dati:<br>";
+                    echo "<br><br>I tuoi dati:<br>";
                     $query = "SELECT u.id, 
                                     u.nome,
                                     u.cognome,

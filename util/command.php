@@ -273,7 +273,7 @@
         $resultE = dbQuery($connection, $queryE);
 
         echo "<form action='../private/event.php?function=addVolunteerToEvent' id='addVolunteerToEvent' method='POST'>
-                <br><br><label>Quale volontario vuoi assegnare all'evento?</label><br>
+                <br><br><label for='volunteer'>Quale volontario vuoi assegnare all'evento?</label>
                 <select name='volunteer'>";
                     if ($resultV) {
                         while ($row = ($resultV->fetch_assoc()))
@@ -281,7 +281,7 @@
                     }
         echo    "</select>
 
-                <br><br><label>A quale evento vuoi assegnare il volontario?</label><br>
+                <label for='event'>A quale evento vuoi assegnare il volontario?</label>
                 <select name='event'>";
                     if ($resultE) {
                         while ($row = ($resultE->fetch_assoc()))
@@ -289,11 +289,11 @@
                     }
         echo    "</select>
 
-                <br><br><label for='event_notes'>Aggiungi qualche nota utile</label><br>
-                <textarea name='event_notes' id='notes' cols='30' rows='10' placeholder='Altre info utili'></textarea> <br><br><br><br>
+                <label for='event_notes'>Aggiungi qualche nota utile</label>
+                <textarea name='event_notes' id='notes' cols='30' rows='10' placeholder='Altre info utili'></textarea>
 
-                <br><br><input type='submit' value='Esegui'>
-                </form>";
+                <input type='submit' value='AGGIUNGI'>
+            </form>";
     }
 
     // funzione per mostrare il form per aggiungere un assistito a un evento
@@ -306,7 +306,7 @@
         $resultE = dbQuery($connection, $queryE);
 
         echo "<form action='../private/event.php?function=addAssistedToEvent' id='addAssistedToEvent' method='POST'>
-                <br><br><label>Quale assistito vuoi assegnare all'evento?</label><br>
+                <br><br><label for='assisted'>Quale assistito vuoi aggiungere all'evento?</label>
                 <select name='assisted'>";
                     if ($resultA) {
                         while ($row = ($resultA->fetch_assoc()))
@@ -314,7 +314,7 @@
                     }
         echo    "</select>
 
-                <br><br><label>A quale evento vuoi assegnare l'assistito?</label><br>
+                <label for='event'>A quale evento vuoi agiungere l'assistito?</label>
                 <select name='event'>";
                     if ($resultE) {
                         while ($row = ($resultE->fetch_assoc()))
@@ -322,11 +322,11 @@
                     }
         echo    "</select>
 
-                <br><br><label for='event_notes'>Aggiungi qualche nota utile</label><br>
-                <textarea name='event_notes' id='notes' cols='30' rows='10' placeholder='Altre info utili'></textarea> <br><br><br><br>
+                <label for='event_notes'>Aggiungi qualche nota utile</label>
+                <textarea name='event_notes' id='notes' cols='30' rows='10' placeholder='Altre info utili'></textarea>
 
-                <br><br><input type='submit' value='Esegui'>
-                </form>";
+                <input type='submit' value='AGGIUNGI'>
+            </form>";
     }
 
     // funzione per mostrare il form per creare un nuovo evento
@@ -335,7 +335,7 @@
         $result = dbQuery($connection, $query);
 
         echo "<form action='../private/event.php?function=createNewEvent' id='createNewEvent' method='POST'>
-                    <br><br><label for='event_type'>Che tipo di evento sará?</label><br>
+                    <br><br><label for='event_type'>Che tipo di evento sará?</label>
                     <select name='event_type'>";
                         if ($result) {
                             while ($row = ($result->fetch_assoc()))
@@ -343,23 +343,23 @@
                         }
         echo        "</select>
 
-                    <br><br><label for='event_date'>Quando si terrá?</label><br>
+                    <label for='event_date'>Quando si terrá?</label>
                     <input type='date' name='event_date' required>
 
-                    <br><br><label for='event_notes'>Aggiungi qualche nota utile sull'evento</label><br>
-                    <textarea name='event_notes' id='notes' cols='30' rows='10' placeholder='Altre info utili'></textarea> <br><br><br><br>
+                    <label for='event_notes'>Aggiungi qualche nota utile sull'evento</label>
+                    <textarea name='event_notes' id='notes' cols='30' rows='10' placeholder='Altre info utili'></textarea>
 
-                    <input type='submit' value='Aggiungi'>
+                    <input type='submit' value='CREA EVENTO'>
             </form>";
     } 
 
     // funzione per mostrare il form per creare un nuovo tipo di evento
     function addNewEventType() {
         echo "<form action='../private/event.php?function=addNewEventType' id='addNewEventType' method='POST'>
-                <br><br><label>Quale sará il nome del nuovo evento?</label><br>
-                <textarea name='new_event' id='notes' cols='30' rows='10' placeholder='Evento' required></textarea> <br><br><br><br>
+                <br><br><label>Quale sará il nome del nuovo evento?</label>
+                <textarea name='new_event' id='notes' cols='30' rows='10' placeholder='Nome nuovo evento' required></textarea>
 
-                <input type='submit' value='Aggiungi'>
+                <input type='submit' value='CREA NUOVO TIPO DI EVENTO'>
             </form>";
     }
 
@@ -370,7 +370,7 @@
                     INNER JOIN tipi_evento te ON te.id = e.tipo_evento";
         $result = dbQuery($connection, $query);
         echo "<form action='../private/event.php?function=viewVoluEventAssi' id='viewVoluEventAssi' method='POST'>
-                <br><br><label>Quale tipo di evento vuoi vedere?</label><br>
+                <br><br><label>Quale tipo di evento vuoi vedere?</label>
                 <select name='event'>";
                     if ($result) {
                         while ($row = ($result->fetch_assoc()))
@@ -378,7 +378,7 @@
                     }
         echo    "</select>
 
-                <input type='submit' value='Cerca'>
+                <input type='submit' value='CERCA'>
             </form>";
     }
 ?>

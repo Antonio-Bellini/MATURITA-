@@ -40,6 +40,10 @@ h5 {
   padding-bottom: 15px;
 }
 
+td, th {
+  padding: 3px;
+}
+
 /* Bottoni di navigazione per il menu */
 nav {
   display: flex;
@@ -93,6 +97,10 @@ nav img {
   background: rgb(196, 195, 195);
   color: black;
   transition: 0.3s;
+}
+.btn a {
+  text-decoration: none;
+  color: black;
 }
 
 /* Bottoni secondari */
@@ -156,7 +164,10 @@ input[type=submit]:hover {
 #credentials__input input[type="text"],
 #credentials__input input[type="password"],
 #phones__label label,
-#phones__input input[type="text"] {
+#phones__input input[type="text"],
+select,
+input[type="file"],
+input[type="date"] {
   width: calc(50% - 5px);
 }
 
@@ -174,7 +185,10 @@ input[type=submit]:hover {
 #form input[type="text"],
 #form input[type="email"],
 #form input[type="password"],
-#form textarea {
+#form input[type="file"],
+select,
+#form textarea,
+input[type="date"] {
   width: calc(100% - 22px);
   padding: 12px;
   margin-bottom: 20px;
@@ -210,7 +224,10 @@ input[type=submit]:hover {
 #form input[type="text"],
 #form input[type="email"],
 #form input[type="password"],
-#form textarea {
+#form input[type="file"],
+select,
+#form textarea,
+input[type="date"] {
   display: block;
   width: 100%;
   padding: 12px;

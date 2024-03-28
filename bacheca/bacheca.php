@@ -9,7 +9,7 @@
     echo "<link rel='stylesheet' href='../style/style.css'>";
     importActualStyle();
     session_start();
-    $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
+    $connection = null;
 
     if (isset($_SESSION["is_logged"]) && $_SESSION["is_logged"]) {
         // menu di navigazione
@@ -19,8 +19,8 @@
             if (($_SESSION["profile_func"] === "gestione DB") && ($_SESSION["user_auth"] === "CRUD")) {
                 $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
 
-                echo "<br><br><button><a href='bacheca/manage_bacheca.php?operation=add'>Aggiungi contenuto</a></button>";
-                echo "&nbsp;<button><a href='bacheca/manage_bacheca.php?operation=del'>Elimina contenuto</a></button>";
+                echo "<br><br><button><a href='manage_bacheca.php?operation=add'>Aggiungi contenuto</a></button>";
+                echo "&nbsp;<button><a href='manage_bacheca.php?operation=del'>Elimina contenuto</a></button>";
             }
         } else if (isset($_SESSION["is_parent"]) && $_SESSION["is_parent"]) {
             $connection = connectToDatabase(DB_HOST, DB_USER, USER_PW, DB_NAME);
