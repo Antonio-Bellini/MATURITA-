@@ -14,7 +14,18 @@
         // menu di navigazione
         nav_menu();
 
-        echo "<br><br>QUESTA PAGINA CONTERRÁ LA NEWSLETTER DELL'ASSOCIAZIONE";
+        if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) {
+            if (($_SESSION["profile_func"] === "gestione DB") && ($_SESSION["user_auth"] === "CRUD")) {
+                $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
+
+                echo "<br><br>
+                        <button class='btn'><a href='manage_newsletter.php?operation=add'>Aggiungi contenuto</a></button>
+                        &nbsp;
+                        <button class='btn'><a href='manage_newsletter.php?operation=del'>Elimina contenuto</a></button>";
+            }
+        } else if (isset($_SESSION["is_parent"]) && $_SESSION["is_parent"]) {
+            $connection = connectToDatabase(DB_HOST, DB_USER, USER_PW, DB_NAME);
+        }
     } else 
         header("Location: ../private/page_login.php");
 

@@ -36,7 +36,7 @@
                     }
 
                     echo "<br><br><section id='table'><h3>GENITORI/REFERENTI REGISTRATI</h3>";
-                    $query = "SELECT id, nome, cognome, username, email, telefono_fisso, telefono_mobile, note
+                    $query = "SELECT id, NOME, COGNOME, USERNAME, EMAIL, telefono_fisso AS 'TELEFONO FISSO', telefono_mobile AS 'TELEFONO MOBILE', NOTE
                                 FROM utenti WHERE id_profilo = 4";
                     $result = dbQuery($connection, $query);
                     if ($result)
@@ -64,7 +64,7 @@
                     }
                     
                     echo "<br><br><section id='table'><h3>VOLONTARI REGISTRATI</h3>";
-                    $query = "SELECT v.id, v.nome, v.cognome, v.email, v.telefono_fisso, v.telefono_mobile, l.liberatoria
+                    $query = "SELECT v.id, v.NOME, v.COGNOME, v.EMAIL, v.telefono_fisso AS 'TELEFONO FISSO', v.telefono_mobile AS 'TELEFONO MOBILE', l.LIBERATORIA
                                 FROM volontari v
                                 INNER JOIN liberatorie l ON v.id_liberatoria = l.id";
                     $result = dbQuery($connection, $query);
@@ -93,10 +93,10 @@
                     }
                     
                     echo "<br><br><section id='table'><h3>ASSISTITI REGISTRATI</h3>";
-                    $query = "SELECT a.id, a.nome, a.cognome, a.anamnesi, a.note, 
-                                    u.nome AS nome_genitore, 
-                                    u.cognome AS cognome_genitore,
-                                    l.liberatoria
+                    $query = "SELECT a.id, a.NOME, a.COGNOME, a.NOTE, a.ANAMNESI, 
+                                    u.nome AS 'NOME GENITORE', 
+                                    u.cognome AS 'COGNOME GENITORE',
+                                    l.LIBERATORIA
                                 FROM assistiti a
                                 INNER JOIN utenti u ON a.id_referente = u.id
                                 INNER JOIN liberatorie l ON a.id_liberatoria = l.id";

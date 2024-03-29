@@ -34,8 +34,7 @@
                             $_SESSION["username"] = $username;
                             $_SESSION["user_id"] = $row["id"];
                             
-                            nav_menu();
-                            welcome($connection, $username);
+                            header("Location: area_personale.php");
                         } else {
                             nav_menu();
                             echo ERROR_PW;

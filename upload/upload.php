@@ -76,14 +76,15 @@
             nav_menu();
             echo ERROR_GEN;
         }
+    }
 
     // caricamento di file nella bacheca
-    } else if (isset($_FILES['bacheca'])) {
+    if (isset($_FILES['bacheca'])) {
         $uploadDirectory = '../bacheca/files/'; 
     
         $fileName = $_FILES['bacheca']['name'];
         $fileTmpName = $_FILES['bacheca']['tmp_name'];
-        $date = date("Y-m-d");
+        $date = $_POST["date"];
 
         // aggiungo il nome del file al percorso della cartella di destinazione
         $newFilePath = $uploadDirectory . $fileName;

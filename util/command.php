@@ -15,19 +15,22 @@
                 // colonne ottenute dalla query
                 $column = mysqli_fetch_fields($result);
                 
-                // stampa intestazione della tabella in base alle colonne ottenute dalla query
-                echo "<tr>";
-                foreach ($column as $colonna)
-                    echo "<th>" . $colonna->name . "</th>";
-                    echo "<th>Bottoni</th>";
-                echo "</tr>";
+                    // stampa intestazione della tabella in base alle colonne ottenute dalla query
+                    echo "<tr>";
+                    foreach ($column as $colonna)
+                        if ($colonna->name !== "id") {
+                            echo "<th>" . $colonna->name . "</th>";
+                        }
+                            echo "<th>      BOTTONI         </th>";
+                    echo "</tr>";
                 
                 while ($row = mysqli_fetch_assoc($result)) {
                     echo "<tr>";
-                    foreach ($row as $value) 
-                        echo "<td>" . printField($value) . "</td>";
-
-                        printButton($userType, $row["id"]);
+                    foreach ($row as $key => $value) {
+                        if ($key !== "id")
+                            echo "<td>" . printField($value) . "</td>";
+                    }
+                    printButton($userType, $row["id"]);
                     echo "</tr>";
                 }
                 echo "</table>";
@@ -35,7 +38,7 @@
                 echo RESULT_NONE;
         }
     }
-
+    
     // funzionio per la stampa di alcuni dati
     function printField($value) {
         if (substr($value, 0, 14) === "release_module" || substr($value, 0, 14) === "medical_module")

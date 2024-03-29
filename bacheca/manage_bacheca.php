@@ -28,16 +28,55 @@
             
             switch ($operation) {
                 case "add":
-                    echo "<br><br>
-                        <form action='../upload/upload.php' method='POST' enctype='multipart/form-data'>
-                            <label>Seleziona il file che vuoi aggiungere in bacheca</label><br><br>
-                            <input type='file' name='bacheca' accept='.pdf' enctype='multipart/form-data' required><br><br>
+                    echo "<br>
+                    <section id='form'>
+                        <h2>Aggiunta di un contenuto in bacheca</h2>
+                            <form action='../upload/upload.php' method='POST' enctype='multipart/form-data'>
+                                <br><br>
 
-                            <input type='submit' value='Aggiungi'>
-                        </form>";
+                                <div id='name_surname__label'>
+                                    <label for='bacheca'>Seleziona il file che vuoi aggiungere in bacheca</label>
+                                    <label for='date'>Seleziona la data del file</label>
+                                </div>
+                                <div id='name_surname__input'>
+                                    <input type='file' name='bacheca' accept='.pdf' enctype='multipart/form-data' required>
+                                    &nbsp;&nbsp;
+                                    <input type='date' name='date' required>
+                                </div>
+
+                                <input type='submit' value='AGGIUNGI'>
+                            </form>
+                    </section>";
                     break;
 
                 case "del":
+                    $query = "SELECT id, bacheca, data FROM bacheca";
+                    $result = dbQuery($connection, $query);
+                    echo "<br>
+                    <section id='form'>
+                        <h2>Eliminazione di un contenuto dalla bacheca</h2>
+                            <form action='" . htmlspecialchars($_SERVER["PHP_SELF"]) . "' method='POST' enctype='multipart/form-data'>
+                                <br><br>";
+                                if ($result) {
+                                    while ($row = ($result->fetch_assoc())) 
+                                        echo "<input type='hidden' name='file_name' value='" . $row["bacheca"] . "'>";
+                                    mysqli_data_seek($result, 0);
+                                }
+
+                    echo "      <div id='name_surname__label'>
+                                    <label for='bacheca'>Seleziona il file che vuoi eliminare dalla bacheca</label>
+                                </div>
+                                <select name='bacheca'>";
+                                if ($result) {
+                                    while ($row = ($result->fetch_assoc())) {
+                                        echo "<option value='" . $row["id"] . "'>" . $row["bacheca"] . " del " . $row["data"] . "</option>";
+                                    }
+                                }
+                            
+                    echo "      </select>
+                                <input type='submit' name='submit' value='RIMUOVI'>
+                            </form>
+                    </section>";
                     break;
             }
             break;
@@ -77,5 +116,25 @@
                     </nav>            
                 </section>
             </main>";
+    }
+
+    // eliminazione del file bacheca selezionato
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
+        $file_name = $_POST["file_name"];
+        $bacheca = $_POST["bacheca"];
+        $query = "DELETE FROM bacheca WHERE id = '$bacheca'";
+        $result = dbQuery($connection, $query);
+        echo $file_name;
+
+        if ($result) {
+            if (file_exists($file_name)) {
+                if (unlink($file_name)) {
+                    $_SESSION["file_deleted"] = true;
+                    header("Location: ../private/area_personale.php");
+                } else 
+                    echo "no";
+            } else 
+                echo "no ciao";
+        }
     }
 ?>

@@ -28,7 +28,7 @@
         if (isset($_SESSION["is_logged"]) && $_SESSION["is_logged"]) {
             if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) {
                 if (($_SESSION["profile_func"] === "gestione DB") && ($_SESSION["user_auth"] === "CRUD")) {
-                    $query = "SELECT id, nome, cognome FROM utenti";
+                    $query = "SELECT id, nome, cognome FROM utenti WHERE id_profilo = 4";
                     $result = dbQuery($connection, $query);
 
                     if ($result) {

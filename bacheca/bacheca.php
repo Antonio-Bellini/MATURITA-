@@ -19,8 +19,10 @@
             if (($_SESSION["profile_func"] === "gestione DB") && ($_SESSION["user_auth"] === "CRUD")) {
                 $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
 
-                echo "<br><br><button><a href='manage_bacheca.php?operation=add'>Aggiungi contenuto</a></button>";
-                echo "&nbsp;<button><a href='manage_bacheca.php?operation=del'>Elimina contenuto</a></button>";
+                echo "<br><br>
+                        <button class='btn'><a href='manage_bacheca.php?operation=add'>Aggiungi contenuto</a></button>
+                        &nbsp;
+                        <button class='btn'><a href='manage_bacheca.php?operation=del'>Elimina contenuto</a></button>";
             }
         } else if (isset($_SESSION["is_parent"]) && $_SESSION["is_parent"]) {
             $connection = connectToDatabase(DB_HOST, DB_USER, USER_PW, DB_NAME);
@@ -28,13 +30,15 @@
 
         $query = "SELECT bacheca, data FROM bacheca";
         $result = dbQuery($connection, $query);
-        echo "<br><br><label>Ecco cosa é presente in bacheca</label><br><br>";
+        echo "<br><br><h1>Bacheca dell'associazione</h1><br><br>";
 
         if ($result) {
             while ($row = ($result->fetch_assoc())) {
-                echo "<div id='bacheca'>
-                        <embed src='" . $row["bacheca"] . "' type='application/pdf' width='80%' height='100%'>
-                    </div>";
+                echo "  <div class='bacheca-item'>
+                            <div class='pdf-preview'>
+                                <embed src='" . $row["bacheca"] . "' type='application/pdf' width='80%' height='100%'>
+                            </div>
+                        </div>";
             }
         }
     } else 

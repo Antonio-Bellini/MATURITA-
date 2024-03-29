@@ -23,6 +23,7 @@
 
     define("ACC_OK", "Account creato con successo");
     define("FILE_OK", "File caricato correttamente");
+    define("FILE_DEL", "File eliminato correttamente");
 
     define("EVENT_OK", "Evento aggiunto con successo");
 

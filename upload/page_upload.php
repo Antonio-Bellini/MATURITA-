@@ -40,6 +40,7 @@
             </section>
         </main>";
 ?>
+    <br>
     <section id="form">
         <h2>Pagina per il caricamento delle liberatorie</h2>
         <h3>Assicurati di caricare solo il file PDF firmato</h3><br><br>
