@@ -57,6 +57,8 @@
                     echo "<br>  <button class='btn'><a href='admin_operation.php?operation=view_user'>GESTIONE UTENTI</a></button><br><br>
                                 <button class='btn'><a href='admin_operation.php?operation=view_volu'>GESTIONE VOLONTARI</a></button><br><br>
                                 <button class='btn'><a href='admin_operation.php?operation=view_assi'>GESTIONE ASSISTITI</a></button><br><br>
+                                <button class='btn'><a href='admin_operation.php?operation=view_terapist'>GESTIONE TERAPISTI</a></button><br><br>
+                                <button class='btn'><a href='admin_operation.php?operation=view_president'>GESTIONE PRESIDENTI</a></button><br><br>
                                 <button class='btn'><a href='../upload/page_upload.php'>CARICA LIBERATORIE</a></button><br><br>
                                 <button class='btn'><a href='admin_operation.php?operation=mng_event'>GESTIONE EVENTI</a></button><br><br>";
                 } catch (Exception $e) {
@@ -70,7 +72,7 @@
                     welcome($connection, $_SESSION["username"]);
                     $_SESSION["is_terapist"] = true;
 
-                    echo "<label>Effettua una delle seguenti operazioni</label><br><br>";
+                    echo "<br><br><h3>Cosa vuoi fare?</h3>";
                 } catch (Exception $e) {
                     echo ERROR_GEN . ": " . $e;
                 }

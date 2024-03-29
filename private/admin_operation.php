@@ -22,18 +22,8 @@
                 case "view_user":
                     nav_menu();
 
-                    if (isset($_SESSION["user_deleted"]) && $_SESSION["user_deleted"]) {
-                        echo DEL_OK;
-                        $_SESSION["user_deleted"] = false;
-                    }
-                    if (isset($_SESSION["user_modified"]) && $_SESSION["user_modified"]) {
-                        echo MOD_OK;
-                        $_SESSION["user_modified"] = false;
-                    }
-                    if (isset($_SESSION["user_notModified"]) && $_SESSION["user_notModified"]) {
-                        echo MOD_NONE;
-                        $_SESSION["user_notModified"] = false;
-                    }
+                    // funzione per la stampa dell'esito dell'operatione eseguita
+                    check_operation();
 
                     echo "<br><br><section id='table'><h3>GENITORI/REFERENTI REGISTRATI</h3>";
                     $query = "SELECT id, NOME, COGNOME, USERNAME, EMAIL, telefono_fisso AS 'TELEFONO FISSO', telefono_mobile AS 'TELEFONO MOBILE', NOTE
@@ -50,18 +40,8 @@
                 case "view_volu":
                     nav_menu();
 
-                    if (isset($_SESSION["user_modified"]) && $_SESSION["user_modified"]) {
-                        echo MOD_OK;
-                        $_SESSION["user_modified"] = false;
-                    }
-                    if (isset($_SESSION["user_deleted"]) && $_SESSION["user_deleted"]) {
-                        echo DEL_OK;
-                        $_SESSION["user_deleted"] = false;
-                    }
-                    if (isset($_SESSION["user_notModified"]) && $_SESSION["user_notModified"]) {
-                        echo MOD_NONE;
-                        $_SESSION["user_notModified"] = false;
-                    }
+                    // funzione per la stampa dell'esito dell'operatione eseguita
+                    check_operation();
                     
                     echo "<br><br><section id='table'><h3>VOLONTARI REGISTRATI</h3>";
                     $query = "SELECT v.id, v.NOME, v.COGNOME, v.EMAIL, v.telefono_fisso AS 'TELEFONO FISSO', v.telefono_mobile AS 'TELEFONO MOBILE', l.LIBERATORIA
@@ -78,19 +58,9 @@
 
                 case "view_assi":
                     nav_menu();
-                    
-                    if (isset($_SESSION["user_modified"]) && $_SESSION["user_modified"]) {
-                        echo MOD_OK;
-                        $_SESSION["user_modified"] = false;
-                    }
-                    if (isset($_SESSION["user_deleted"]) && $_SESSION["user_deleted"]) {
-                        echo DEL_OK;
-                        $_SESSION["user_deleted"] = false;
-                    }
-                    if (isset($_SESSION["user_notModified"]) && $_SESSION["user_notModified"]) {
-                        echo MOD_NONE;
-                        $_SESSION["user_notModified"] = false;
-                    }
+
+                    // funzione per la stampa dell'esito dell'operatione eseguita
+                    check_operation();
                     
                     echo "<br><br><section id='table'><h3>ASSISTITI REGISTRATI</h3>";
                     $query = "SELECT a.id, a.NOME, a.COGNOME, a.NOTE, a.ANAMNESI, 
@@ -109,7 +79,24 @@
                     </section>";
                     break;
 
+                case "view_terapist":
+                    nav_menu();
 
+                    // funzione per la stampa dell'esito dell'operatione eseguita
+                    check_operation();
+
+                    echo "<br><br><section id='table'><h3>TERAPISTI REGISTRATI</h3>";
+                    $query = "SELECT id, NOME, COGNOME, USERNAME, EMAIL, telefono_fisso AS 'TELEFONO FISSO', telefono_mobile AS 'TELEFONO MOBILE', NOTE
+                                FROM utenti WHERE id_profilo = 3";
+                    $result = dbQuery($connection, $query);
+                    if ($result)
+                        createTable($result, "user");
+
+                    echo "<br><br><br><h3>Crea un nuovo account terapista</h3;>
+                            <button class='btn'><a href='../register/register_terapist.php'>Crea account</a></button>
+                        </section>";
+                    break;
+                
                 case "mng_event":
                     nav_menu();
 
@@ -165,5 +152,21 @@
                     </nav>            
                 </section>
             </main>";
+    }
+
+    // funzione per la stampa dell'esito dell'operatione eseguita
+    function check_operation() {
+        if (isset($_SESSION["user_modified"]) && $_SESSION["user_modified"]) {
+            echo MOD_OK;
+            $_SESSION["user_modified"] = false;
+        }
+        if (isset($_SESSION["user_deleted"]) && $_SESSION["user_deleted"]) {
+            echo DEL_OK;
+            $_SESSION["user_deleted"] = false;
+        }
+        if (isset($_SESSION["user_notModified"]) && $_SESSION["user_notModified"]) {
+            echo MOD_NONE;
+            $_SESSION["user_notModified"] = false;
+        }
     }
 ?>

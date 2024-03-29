@@ -24,10 +24,15 @@
                 $phone_m = $_POST["phone_m"];
                 $notes = $_POST["notes"];
 
+                if (isset($_POST["form_terapist"])) 
+                    $profile = $_POST["form_terapist"];
+                else 
+                    $profile = 4;
+
                 // inserimento  dell'utente nel db
                 $password_enc = encryptPassword($password_clear);
                 $query = "INSERT INTO utenti(nome, cognome, username, password, email, telefono_fisso, telefono_mobile, note, id_profilo)
-                            VALUES ('$name', '$surname', '$username', '$password_enc', '$email', '$phone_f', '$phone_m', '$notes', 4);";
+                            VALUES ('$name', '$surname', '$username', '$password_enc', '$email', '$phone_f', '$phone_m', '$notes', $profile);";
                 $result = dbQuery($connection, $query);
 
                 if ($result) {
@@ -116,8 +121,10 @@
                         echo ERROR_FILE;
                 } else
                     echo NO_FILE;
-            } else 
+            } else {
+                nav_menu();
                 echo NO_FORM;
+            }
         }
     }
 
