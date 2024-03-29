@@ -9,23 +9,23 @@
     echo "<link rel='stylesheet' href='../style/style.css'>";
     importActualStyle();
     session_start();
+    $connection = null;
 
     if (isset($_SESSION["is_logged"]) && $_SESSION["is_logged"]) {
         // menu di navigazione
         nav_menu();
 
-        if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) {
-            if (($_SESSION["profile_func"] === "gestione DB") && ($_SESSION["user_auth"] === "CRUD")) {
-                // funzione per la stampa dell'esito dell'operazione
-                check_operation();
-                
-                $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
+        if ((isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) ||
+            (isset($_SESSION["is_terapist"]) && $_SESSION["is_terapist"])) {
+            // funzione per la stampa dell'esito dell'operazione
+            check_operation();
+            
+            $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
 
-                echo "<br><br>
-                        <button class='btn'><a href='../private/crud_bacheca_newsletter.php?operation=add&type=bacheca'>Aggiungi contenuto</a></button>
-                        &nbsp;
-                        <button class='btn'><a href='../private/crud_bacheca_newsletter.php?operation=del&type=bacheca'>Elimina contenuto</a></button>";
-            }
+            echo "<br><br>
+                    <button class='btn'><a href='../private/crud_bacheca_newsletter.php?operation=add&type=bacheca'>Aggiungi contenuto</a></button>
+                    &nbsp;
+                    <button class='btn'><a href='../private/crud_bacheca_newsletter.php?operation=del&type=bacheca'>Elimina contenuto</a></button>";
         } else if (isset($_SESSION["is_parent"]) && $_SESSION["is_parent"]) {
             $connection = connectToDatabase(DB_HOST, DB_USER, USER_PW, DB_NAME);
         }

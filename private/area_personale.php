@@ -73,6 +73,7 @@
                     $_SESSION["is_terapist"] = true;
 
                     echo "<br><br><h3>Cosa vuoi fare?</h3>";
+                    echo "<br>  <button class='btn'><a href='admin_operation.php?operation=view_user'>GESTIONE UTENTI</a></button><br><br>";
                 } catch (Exception $e) {
                     echo ERROR_GEN . ": " . $e;
                 }

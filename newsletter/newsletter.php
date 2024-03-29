@@ -9,6 +9,7 @@
     echo "<link rel='stylesheet' href='../style/style.css'>";
     importActualStyle();
     session_start();
+    $connection = null;
 
     if (isset($_SESSION["is_logged"]) && $_SESSION["is_logged"]) {
         // menu di navigazione
@@ -28,6 +29,8 @@
             }
         } else if (isset($_SESSION["is_parent"]) && $_SESSION["is_parent"]) {
             $connection = connectToDatabase(DB_HOST, DB_USER, USER_PW, DB_NAME);
+        }  else if (isset($_SESSION["is_terapist"]) && $_SESSION["is_terapist"]) {
+            $connection = connectToDatabase(DB_HOST, DB_TERAPIST, TERAPIST_PW, DB_NAME);
         }
 
         $query = "SELECT newsletter, data FROM newsletter";

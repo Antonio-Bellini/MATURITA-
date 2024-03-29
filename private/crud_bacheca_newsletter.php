@@ -32,64 +32,27 @@
 
             switch ($operation) {
                 case "add":
-                    echo "<br>
-                    <section id='form'>
-                        <h2>Aggiunta di un contenuto in " . $type . "</h2>
-                            <form action='../upload/upload.php' method='POST' enctype='multipart/form-data'>
-                                <input type='hidden' name='table' value=$type>
-                                <br><br>
-
-                                <div id='name_surname__label'>
-                                    <label for='" . $type . "'>Seleziona il file che vuoi aggiungere in ". $type . "</label>
-                                    <label for='date'>Seleziona la data del file</label>
-                                </div>
-                                <div id='name_surname__input'>
-                                    <input type='file' name='" . $type . "' accept='.pdf' enctype='multipart/form-data' required>
-                                    &nbsp;&nbsp;
-                                    <input type='date' name='date' required>
-                                </div>
-
-                                <input type='submit' value='AGGIUNGI'>
-                            </form>
-                    </section>";
+                    addToBacheca($type);
                     break;
 
                 case "del":
-                    $query = "SELECT id, $type, data FROM $type";
-                    $result = dbQuery($connection, $query);
-                    echo "<br>
-                    <section id='form'>
-                        <h2>Eliminazione di un contenuto dalla " . $type . "</h2>
-                            <form action='" . htmlspecialchars($_SERVER["PHP_SELF"]) . "' method='POST' enctype='multipart/form-data'>
-                                <br><br>";
-                                if ($result) {
-                                    while ($row = ($result->fetch_assoc())) 
-                                        echo "<input type='hidden' name='file_name' value='" . $row["$type"] . "'>
-                                                <input type='hidden' name='table_sel' value=$type>";
-
-                                    mysqli_data_seek($result, 0);
-                                }
-
-                    echo "      <div id='name_surname__label'>
-                                    <label for='" . $type . "'>Seleziona il file che vuoi eliminare dalla " . $type . "</label>
-                                </div>
-                                <select name='" . $type . "'>";
-                                if ($result) {
-                                    while ($row = ($result->fetch_assoc())) {
-                                        echo "<option value='" . $row["id"] . "'>" . $row["$type"] . " del " . $row["data"] . "</option>";
-                                    }
-                                }
-                            
-                    echo "      </select>
-                                <input type='submit' name='submit' value='RIMUOVI'>
-                            </form>
-                    </section>";
+                    removeFromBacheca($type, $connection);
                     break;
             }
             break;
             
         case "terapista":
             $connection = connectToDatabase(DB_HOST, DB_TERAPIST, TERAPIST_PW, DB_NAME);
+
+            switch ($operation) {
+                case "add":
+                    addToBacheca($type);
+                    break;
+
+                case "del":
+                    removeFromBacheca($type, $connection);
+                    break;
+            }
             break;
 
         case "genitore":
@@ -141,5 +104,62 @@
                 }
             }
         }
+    }
+
+    // funzione per aggiungere file in bacheca
+    function addToBacheca($type) {
+        echo "<br>
+        <section id='form'>
+            <h2>Aggiunta di un contenuto in " . $type . "</h2>
+                <form action='../upload/upload.php' method='POST' enctype='multipart/form-data'>
+                    <input type='hidden' name='table' value=$type>
+                    <br><br>
+
+                    <div id='name_surname__label'>
+                        <label for='" . $type . "'>Seleziona il file che vuoi aggiungere in ". $type . "</label>
+                        <label for='date'>Seleziona la data del file</label>
+                    </div>
+                    <div id='name_surname__input'>
+                        <input type='file' name='" . $type . "' accept='.pdf' enctype='multipart/form-data' required>
+                        &nbsp;&nbsp;
+                        <input type='date' name='date' required>
+                    </div>
+
+                    <input type='submit' value='AGGIUNGI'>
+                </form>
+        </section>";
+    }
+
+    // funzione per eliminare file dalla bacheca
+    function removeFromBacheca($type, $connection) {
+        $query = "SELECT id, $type, data FROM $type";
+        $result = dbQuery($connection, $query);
+        echo "<br>
+        <section id='form'>
+            <h2>Eliminazione di un contenuto dalla " . $type . "</h2>
+                <form action='" . htmlspecialchars($_SERVER["PHP_SELF"]) . "' method='POST' enctype='multipart/form-data'>
+                    <br><br>";
+                    if ($result) {
+                        while ($row = ($result->fetch_assoc())) 
+                            echo "<input type='hidden' name='file_name' value='" . $row["$type"] . "'>
+                                    <input type='hidden' name='table_sel' value=$type>";
+
+                        mysqli_data_seek($result, 0);
+                    }
+
+        echo "      <div id='name_surname__label'>
+                        <label for='" . $type . "'>Seleziona il file che vuoi eliminare dalla " . $type . "</label>
+                    </div>
+                    <select name='" . $type . "'>";
+                    if ($result) {
+                        while ($row = ($result->fetch_assoc())) {
+                            echo "<option value='" . $row["id"] . "'>" . $row["$type"] . " del " . $row["data"] . "</option>";
+                        }
+                    }
+                
+        echo "      </select>
+                    <input type='submit' name='submit' value='RIMUOVI'>
+                </form>
+        </section>";
     }
 ?>
