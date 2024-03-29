@@ -106,6 +106,27 @@
                     } else
                         header("Location: ../index.php");
                     break;
+
+                case "view_president":
+                    if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) {
+                        nav_menu();
+
+                        // funzione per la stampa dell'esito dell'operatione eseguita
+                        check_operation();
+
+                        echo "<br><br><section id='table'><h3>PRESIDENTI REGISTRATI</h3>";
+                        $query = "SELECT id, NOME, COGNOME, USERNAME, EMAIL, telefono_fisso AS 'TELEFONO FISSO', telefono_mobile AS 'TELEFONO MOBILE', NOTE
+                                    FROM utenti WHERE id_profilo = 1";
+                        $result = dbQuery($connection, $query);
+                        if ($result)
+                            createTable($result, "user");
+
+                        echo "<br><br><br><h3>Crea un nuovo account presidente</h3;>
+                                <button class='btn'><a href='../register/register_president.php'>Crea account</a></button>
+                            </section>";
+                    } else
+                        header("Location: ../index.php");
+                    break;
                 
                 case "mng_event":
                     if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) {

@@ -26,6 +26,8 @@
 
                 if (isset($_POST["form_terapist"])) 
                     $profile = $_POST["form_terapist"];
+                else if (isset($_POST["form_president"]))
+                    $profile = $_POST["form_president"];
                 else 
                     $profile = 4;
 
