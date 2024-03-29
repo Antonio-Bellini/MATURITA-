@@ -82,7 +82,7 @@
         }
     }
 
-    // caricamento di file nella bacheca
+    // caricamento di file nella bacheca o nella newsletter
     if (isset($_FILES[$table])) {
         $uploadDirectory = "../" . $table . "/files/"; 
     
@@ -106,6 +106,32 @@
             } else {
                 $_SESSION["file_notUploaded"] = true;
                 header("Location: ../" . $table . "/" . $table . ".php");
+            }
+        }
+    }
+
+    // caricamento di file anamnesi
+    if (isset($_FILES["medical"])) {
+        $uploadDirectory = "medical_module/"; 
+    
+        $fileName = $_FILES["medical"]['name'];
+        $fileTmpName = $_FILES["medical"]['tmp_name'];
+
+        // aggiungo il nome del file al percorso della cartella di destinazione
+        $newFilePath = $uploadDirectory . $fileName;
+    
+        if(move_uploaded_file($fileTmpName, $newFilePath)) {
+            $uploadedFileName = "medical_module/" . $fileName;
+
+            $query = "UPDATE assistiti SET anamnesi = '$uploadedFileName' WHERE id = $assistedId";
+            $result = dbQuery($connection, $query);
+
+            if ($result) {
+                $_SESSION["file_uploaded"] = true;
+                header("Location: ../private/area_personale.php");
+            } else {
+                $_SESSION["file_notUploaded"] = true;
+                header("Location: ../private/area_personale.php");
             }
         }
     } else {

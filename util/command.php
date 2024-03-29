@@ -42,7 +42,7 @@
     // funzionio per la stampa di alcuni dati
     function printField($value) {
         if (substr($value, 0, 14) === "release_module" || substr($value, 0, 14) === "medical_module")
-            return "<button><a href='../upload/" . $value . "' target='blank'>Apri il file</a></button>";
+            return "<button class='table--btn'><a href='../upload/" . $value . "' target='blank'>Apri il file</a></button>";
         else
             return $value;
     }
@@ -59,8 +59,9 @@
 
             case "assisted":
                 echo "<td>
-                        <button class='table--btn'><a href='crud.php?operation=modify&user={$userId}&profile=assisted'>Modifica</a></button>
-                        <button class='btn_delete'><a href='crud.php?operation=delete&user={$userId}&profile=assisted'>Elimina</a></button>
+                        <button class='table--btn'><a href='crud.php?operation=modify&user={$userId}&profile=assisted'>Modifica</a></button>";
+                        if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"])
+                            echo "<button class='btn_delete'><a href='crud.php?operation=delete&user={$userId}&profile=assisted'>Elimina</a></button>
                     </td>";
                 break;
 
@@ -206,40 +207,68 @@
                 break;
 
             case "assisted":
-                $query = "SELECT a.nome, a.cognome
-                        FROM assistiti a
-                        INNER JOIN utenti u ON a.id_referente = u.id
-                        WHERE a.id = '$userId'";
-                $result = dbQuery($connection, $query);
+                if (isset($_SESSION["is_terapist"]) && $_SESSION["is_terapist"]) {
+                    $query = "SELECT anamnesi 
+                                FROM assistiti a
+                                INNER JOIN utenti u ON a.id_referente = u.id
+                                WHERE a.id = '$userId'";
+                    $result = dbQuery($connection, $query);
 
-                if ($result) {
-                    while ($row = ($result->fetch_assoc())) {
-                        $name = $row["nome"];
-                        $surname = $row["cognome"];
-                    }
-
-                    echo "<br><section id='form'>
-                            <h2>Modifica anagrafica assistito</h2>
-                            <label>Cosa vuoi modificare?<br><br></label>
-                            <h3>Nuovi dati</h3><br>
-                                <form action='update.php' method='POST' id='form_update__assisted'>
-                                    <input type='hidden' name='type' value='assisted'>
-                                    <input type='hidden' name='user_id' value='$userId'>
-
+                    if ($result) {
+                        while ($row = ($result->fetch_assoc()))
+                            $anamnesi = $row["anamnesi"];
+                        echo "<br><section id='form'>
+                                    <h2>Modifica anamnesi assistito</h2>
+                                    <label>Modifica l'anamnesi dell'assistito<br><br></label>
+                                    
                                     <div id='name_surname__label'>
-                                        <label for='new_name'>Nome</label>
-                                        <label for='new_surname'>Cognome</label>
+                                        <label for='anamnesi'>Anamnesi assistito</label>
                                     </div>
-
                                     <div id='name_surname__input'>
-                                        <input type='text' name='new_name' maxlength='30' placeholder='" . $name . "'>
+                                        <button class='table--btn'><a href='../upload/" . $anamnesi . "' target='_blank'>Apri il file</a></button>
                                         &nbsp;&nbsp;
-                                        <input type='text' name='new_surname' maxlength='30' placeholder='" . $surname . "'>
-                                    </div>
+                                        <button class='btn_delete'><a href='crud.php?operation=delete&user={$userId}&profile=anamnesi'>Elimina il file</a></button>
+                                        &nbsp;&nbsp;
+                                        <button class='table--btn'><a href='../upload/page_upload_medical.php?user={$userId}'>Aggiungi nuovo file</a></button>
+                                    </div><br>
+                                </section>";
+                    }
+                } else {
+                    $query = "SELECT a.nome, a.cognome
+                            FROM assistiti a
+                            INNER JOIN utenti u ON a.id_referente = u.id
+                            WHERE a.id = '$userId'";
+                    $result = dbQuery($connection, $query);
 
-                                    <input type='submit' value='AGGIORNA DATI'>
-                                </form>
-                        </sectiom>";
+                    if ($result) {
+                        while ($row = ($result->fetch_assoc())) {
+                            $name = $row["nome"];
+                            $surname = $row["cognome"];
+                        }
+
+                        echo "<br><section id='form'>
+                                <h2>Modifica anagrafica assistito</h2>
+                                <label>Cosa vuoi modificare?<br><br></label>
+                                <h3>Nuovi dati</h3><br>
+                                    <form action='update.php' method='POST' id='form_update__assisted'>
+                                        <input type='hidden' name='type' value='assisted'>
+                                        <input type='hidden' name='user_id' value='$userId'>
+
+                                        <div id='name_surname__label'>
+                                            <label for='new_name'>Nome</label>
+                                            <label for='new_surname'>Cognome</label>
+                                        </div>
+
+                                        <div id='name_surname__input'>
+                                            <input type='text' name='new_name' maxlength='30' placeholder='" . $name . "'>
+                                            &nbsp;&nbsp;
+                                            <input type='text' name='new_surname' maxlength='30' placeholder='" . $surname . "'>
+                                        </div>
+
+                                        <input type='submit' value='AGGIORNA DATI'>
+                                    </form>
+                            </section>";
+                    }
                 }
                 break;
 
