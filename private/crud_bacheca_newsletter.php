@@ -137,7 +137,7 @@
             if (file_exists($file_name)) {
                 if (unlink($file_name)) {
                     $_SESSION["file_deleted"] = true;
-                    header("Location: ../private/area_personale.php");
+                    header("Location: ../" . $table . "/" . $table . ".php");
                 }
             }
         }

@@ -102,10 +102,10 @@
 
             if ($result) {
                 $_SESSION["file_uploaded"] = true;
-                header("Location: ../bacheca/bacheca.php");
+                header("Location: ../" . $table . "/" . $table . ".php");
             } else {
                 $_SESSION["file_notUploaded"] = true;
-                header("Location: ../bacheca/bacheca.php");
+                header("Location: ../" . $table . "/" . $table . ".php");
             }
         }
     } else {

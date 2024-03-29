@@ -22,9 +22,9 @@
                 $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
 
                 echo "<br><br>
-                        <button class='btn'><a href='../private/mng_news_bac.php?operation=add&type=bacheca'>Aggiungi contenuto</a></button>
+                        <button class='btn'><a href='../private/crud_bacheca_newsletter.php?operation=add&type=bacheca'>Aggiungi contenuto</a></button>
                         &nbsp;
-                        <button class='btn'><a href='../private/mng_news_bac.php?operation=del&type=bacheca'>Elimina contenuto</a></button>";
+                        <button class='btn'><a href='../private/crud_bacheca_newsletter.php?operation=del&type=bacheca'>Elimina contenuto</a></button>";
             }
         } else if (isset($_SESSION["is_parent"]) && $_SESSION["is_parent"]) {
             $connection = connectToDatabase(DB_HOST, DB_USER, USER_PW, DB_NAME);
