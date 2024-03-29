@@ -16,7 +16,8 @@
         nav_menu();
 
         if ((isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) ||
-            (isset($_SESSION["is_terapist"]) && $_SESSION["is_terapist"])) {
+            (isset($_SESSION["is_terapist"]) && $_SESSION["is_terapist"]) ||
+            (isset($_SESSION["is_president"]) && $_SESSION["is_president"])) {
             // funzione per la stampa dell'esito dell'operazione
             check_operation();
             

@@ -25,6 +25,16 @@
     switch ($_SESSION["profile_type"]) {
         case "presidente":
             $connection = connectToDatabase(DB_HOST, DB_PRESIDENT, PRESIDENT_PW, DB_NAME);
+            
+            switch ($operation) {
+                case "add":
+                    addToBacheca($type);
+                    break;
+
+                case "del":
+                    removeFromBacheca($type, $connection);
+                    break;
+            }
             break;
 
         case "admin":

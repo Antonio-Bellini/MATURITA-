@@ -31,6 +31,8 @@
             $connection = connectToDatabase(DB_HOST, DB_USER, USER_PW, DB_NAME);
         }  else if (isset($_SESSION["is_terapist"]) && $_SESSION["is_terapist"]) {
             $connection = connectToDatabase(DB_HOST, DB_TERAPIST, TERAPIST_PW, DB_NAME);
+        } else if (isset($_SESSION["is_president"]) && $_SESSION["is_president"]) {
+            $connection = connectToDatabase(DB_HOST, DB_PRESIDENT, PRESIDENT_PW, DB_NAME);
         }
 
         $query = "SELECT newsletter, data FROM newsletter";

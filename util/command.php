@@ -58,11 +58,15 @@
                 break;
 
             case "assisted":
-                echo "<td>
-                        <button class='table--btn'><a href='crud.php?operation=modify&user={$userId}&profile=assisted'>Modifica</a></button>";
-                        if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"])
-                            echo "<button class='btn_delete'><a href='crud.php?operation=delete&user={$userId}&profile=assisted'>Elimina</a></button>
-                    </td>";
+                if (isset($_SESSION["is_president"]) && $_SESSION["is_president"])
+                    return null;
+                else {
+                    echo "<td>
+                            <button class='table--btn'><a href='crud.php?operation=modify&user={$userId}&profile=assisted'>Modifica</a></button>";
+                            if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"])
+                                echo "<button class='btn_delete'><a href='crud.php?operation=delete&user={$userId}&profile=assisted'>Elimina</a></button>
+                        </td>";
+                }
                 break;
 
             case "volunteer":

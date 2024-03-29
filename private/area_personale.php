@@ -41,7 +41,8 @@
                     welcome($connection, $_SESSION["username"]);
                     $_SESSION["is_president"] = true;
                 
-                    echo "<label>Effettua una delle seguenti operazioni</label><br><br>";
+                    echo "<br><br><h3>Cosa vuoi fare?</h3>";
+                    echo "<br><button class='btn'><a href='admin_operation.php?operation=view_assi'>GESTIONE ASSISTITI</a></button><br><br>";
                 } catch (Exception $e) {
                     echo ERROR_GEN . ": " . $e;
                 }

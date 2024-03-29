@@ -18,7 +18,8 @@
 
     if (isset($_SESSION["is_logged"]) && $_SESSION["is_logged"]) {
         if ((isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) ||
-        (isset($_SESSION["is_terapist"]) && $_SESSION["is_terapist"])) {
+        (isset($_SESSION["is_terapist"]) && $_SESSION["is_terapist"]) ||
+        (isset($_SESSION["is_president"]) && $_SESSION["is_president"])) {
             switch ($operation){
                 case "view_user":
                     if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) {
