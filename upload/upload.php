@@ -14,6 +14,7 @@
     $assistedId = null;
     $volunteerId = null;
     $notes = null;
+    $table = null;
 
     if (isset($_POST["assisted"]))
         $assistedId = $_POST["assisted"];
@@ -23,6 +24,9 @@
 
     if (isset($_POST["notes"]))
         $notes = $_POST["notes"];
+
+    if (isset($_POST["table"]))
+        $table = $_POST["table"];
 
     // caricamento della liberatoria
     if (isset($_FILES['release'])) {
@@ -79,11 +83,11 @@
     }
 
     // caricamento di file nella bacheca
-    if (isset($_FILES['bacheca'])) {
-        $uploadDirectory = '../bacheca/files/'; 
+    if (isset($_FILES[$table])) {
+        $uploadDirectory = "../" . $table . "/files/"; 
     
-        $fileName = $_FILES['bacheca']['name'];
-        $fileTmpName = $_FILES['bacheca']['tmp_name'];
+        $fileName = $_FILES[$table]['name'];
+        $fileTmpName = $_FILES[$table]['tmp_name'];
         $date = $_POST["date"];
 
         // aggiungo il nome del file al percorso della cartella di destinazione
@@ -92,16 +96,16 @@
         if(move_uploaded_file($fileTmpName, $newFilePath)) {
             $uploadedFileName = "files/" . $fileName;
 
-            $query = "INSERT INTO bacheca(bacheca, data)
+            $query = "INSERT INTO $table($table, data)
                             VALUES('$uploadedFileName', '$date');";
             $result = dbQuery($connection, $query);
 
             if ($result) {
                 $_SESSION["file_uploaded"] = true;
-                header("Location: ../private/area_personale.php");
+                header("Location: ../bacheca/bacheca.php");
             } else {
                 $_SESSION["file_notUploaded"] = true;
-                header("Location: ../private/area_personale.php");
+                header("Location: ../bacheca/bacheca.php");
             }
         }
     } else {

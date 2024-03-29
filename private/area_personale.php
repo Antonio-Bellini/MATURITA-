@@ -183,9 +183,5 @@
             echo ERROR_GEN;
             $_SESSION["event_notCreated"] = false;
         }
-        if (isset($_SESSION["file_deleted"]) && $_SESSION["file_deleted"]) {
-            echo FILE_DEL;
-            $_SESSION["file_deleted"] = false;
-        }
     }
 ?>

@@ -9,7 +9,6 @@
     echo "<link rel='stylesheet' href='../style/style.css'>";
     importActualStyle();
     session_start();
-    $connection = null;
 
     if (isset($_SESSION["is_logged"]) && $_SESSION["is_logged"]) {
         // menu di navigazione
@@ -17,12 +16,15 @@
 
         if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) {
             if (($_SESSION["profile_func"] === "gestione DB") && ($_SESSION["user_auth"] === "CRUD")) {
+                // funzione per la stampa dell'esito dell'operazione
+                check_operation();
+                
                 $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
 
                 echo "<br><br>
-                        <button class='btn'><a href='manage_bacheca.php?operation=add'>Aggiungi contenuto</a></button>
+                        <button class='btn'><a href='../private/mng_news_bac.php?operation=add&type=bacheca'>Aggiungi contenuto</a></button>
                         &nbsp;
-                        <button class='btn'><a href='manage_bacheca.php?operation=del'>Elimina contenuto</a></button>";
+                        <button class='btn'><a href='../private/mng_news_bac.php?operation=del&type=bacheca'>Elimina contenuto</a></button>";
             }
         } else if (isset($_SESSION["is_parent"]) && $_SESSION["is_parent"]) {
             $connection = connectToDatabase(DB_HOST, DB_USER, USER_PW, DB_NAME);
@@ -69,5 +71,17 @@
                     </nav>            
                 </section>
             </main>";
+    }
+
+    // funzione per la stampa dell'esito dell'operazione
+    function check_operation() {
+        if (isset($_SESSION["file_deleted"]) && $_SESSION["file_deleted"]) {
+            echo FILE_DEL;
+            $_SESSION["file_deleted"] = false;
+        }
+        if (isset($_SESSION["file_uploaded"]) && $_SESSION["file_uploaded"]) {
+            echo FILE_OK;
+            $_SESSION["file_uploaded"] = false;
+        }
     }
 ?>

@@ -19,12 +19,26 @@
                 $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
 
                 echo "<br><br>
-                        <button class='btn'><a href='manage_newsletter.php?operation=add'>Aggiungi contenuto</a></button>
+                        <button class='btn'><a href='../private/mng_news_bac.php?operation=add&type=newsletter'>Aggiungi contenuto</a></button>
                         &nbsp;
-                        <button class='btn'><a href='manage_newsletter.php?operation=del'>Elimina contenuto</a></button>";
+                        <button class='btn'><a href='../private/mng_news_bac.php?operation=del&type=newsletter'>Elimina contenuto</a></button>";
             }
         } else if (isset($_SESSION["is_parent"]) && $_SESSION["is_parent"]) {
             $connection = connectToDatabase(DB_HOST, DB_USER, USER_PW, DB_NAME);
+        }
+
+        $query = "SELECT newsletter, data FROM newsletter";
+        $result = dbQuery($connection, $query);
+        echo "<br><br><h1>Newsletter dell'associazione</h1><br><br>";
+
+        if ($result) {
+            while ($row = ($result->fetch_assoc())) {
+                echo "  <div class='bacheca-item'>
+                            <div class='pdf-preview'>
+                                <embed src='" . $row["newsletter"] . "' type='application/pdf' width='80%' height='100%'>
+                            </div>
+                        </div>";
+            }
         }
     } else 
         header("Location: ../private/page_login.php");
