@@ -148,7 +148,7 @@
                                     createNewEvent($connection);
                                     addNewEventType($connection);
                                     viewVoluEventAssi($connection);
-                        echo "  </select>";
+                        echo "  </section>";
                     } else
                         header("Location: ../index.php");
                     break;
@@ -156,6 +156,8 @@
                 case null:
                     header("Location: ../index.php");
             }
+
+            show_footer();
         } else
             header("Location: ../index.php");
     } else

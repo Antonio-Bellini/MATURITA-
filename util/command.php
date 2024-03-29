@@ -1,6 +1,31 @@
 <?php
     require_once("constants.php");
 
+    // funzione per mostrare il footer
+    function show_footer() {
+        echo "  <footer>
+                    <div class='footer-content'>
+                        <h5>Dove siamo</h5>
+                        <div class='map-container'>
+                            <iframe src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d838.2236730786605!2d7.650056144002364!3d45.036350637386306!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x478812d12cec3a6f%3A0xc06c1b91d782d7d5!2sCorso%20Unione%20Sovietica%2C%20220d%2C%2010134%20Torino%20TO!5e0!3m2!1sit!2sit!4v1711472330414!5m2!1sit!2sit'
+                                width='450' height='200' 
+                                style='border-radius: 10px; border:none;' 
+                                allowfullscreen='' 
+                                loading='lazy' 
+                                referrerpolicy='no-referrer-when-downgrade'>
+                            </iframe>
+                        </div>
+                        <div class='contact-info'>
+                            <p>Associazione ZeroTre ODV</p>
+                            <p>Sede Legale ed Operativa in Corso Unione Sovietica 220/D, 10126, Torino (TO)</p>
+                            <p>Codice Fiscale: 97595870011</p>
+                            <p>Contatti: Tel. 339.2405087 - 348 2409182 - Tel. 333.5829421</p>
+                            <p>Email: info@zerotreodv.it</p>
+                        </div>
+                    </div>
+                </footer>";
+    }
+
     // funzione per eseguire una query sul db
     function dbQuery($connection, $query) {
         return $connection -> query($query);
@@ -62,7 +87,7 @@
                     return null;
                 else {
                     echo "<td>
-                            <button class='table--btn'><a href='crud.php?operation=modify&user={$userId}&profile=assisted'>Modifica</a></button>";
+                            <button class='table--btn'><a href='crud.php?operation=modify&user={$userId}&profile=assisted'>Modifica</a></button>&nbsp;";
                             if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"])
                                 echo "<button class='btn_delete'><a href='crud.php?operation=delete&user={$userId}&profile=assisted'>Elimina</a></button>
                         </td>";
@@ -323,7 +348,8 @@
                                         </div>
 
                                         <input type='submit' value='AGGIORNA DATI'>
-                                    </form>";
+                                    </form>
+                                </section>";
                 }
                 break;
         }

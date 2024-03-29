@@ -112,5 +112,6 @@
         </section>
     </section>
     
+    <?php show_footer(); ?>
 </body>
 </html>

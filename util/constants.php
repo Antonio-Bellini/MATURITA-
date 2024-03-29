@@ -1,4 +1,5 @@
 <?php
+    // impostazione rapida del db
     define("DB_HOST", "localhost");
     define("DB_NAME", "my_testzerotre");
     define("DB_USER", "root");
@@ -10,27 +11,26 @@
     define("TERAPIST_PW", "");
     define("USER_PW", "");
 
-    define("ERROR_GEN", "Si é verificato un errore imprevisto, riprova piú tardi");
-    define("ERROR_DB", "Si é verificato un problema recuperando i dati dal database, riprova piú tardi");
-    define("ERROR_PW", "Hai inserito una password errata, riprova");
-    define("ERROR_FILE", "Si é verificato un errore durante il caricamento dei file");
-    define("ERROR_ALREADY_ADDED", "L'utente é gia stato inserito a questo evento");
+    // stampa degli errori
+    define("ERROR_GEN", "<div class='error' id='message'>Si é verificato un errore imprevisto, riprova piú tardi</div>");
+    define("ERROR_DB", "<div class='error' id='message'>Si é verificato un problema recuperando i dati dal database, riprova piú tardi</div>");
+    define("ERROR_PW", "<div class='error' id='message'>Hai inserito una password errata, riprova</div>");
+    define("ERROR_FILE", "<div class='error' id='message'>Si é verificato un errore durante il caricamento dei file</div>");
+    define("ERROR_ALREADY_ADDED", "<div class='error' id='message'>L'utente é gia stato inserito a questo evento</div>");
 
-    define("MOD_OK", "Modifiche eseguite con successo");
-    define("MOD_NONE", "Nessuna modifica eseguita");
+    // stampa degli esiti
+    define("MOD_OK", "<div class='success' id='message'>Modifiche eseguite correttamente</div>");
+    define("DEL_OK", "<div class='success' id='message'>Account eliminato correttamente</div>");
+    define("ACC_OK", "<div class='success' id='message'>Account creato correttamente</div>");
+    define("FILE_OK", "<div class='success' id='message'>File caricato correttamente</div>");
+    define("EVENT_OK", "<div class='success' id='message'>Evento aggiunto correttamente</div>");
+    define("MOD_NONE", "<div class='succes' id='message'>Nessuna modifica eseguita</div>");
+    define("FILE_DEL", "<div class='success' id='message'>File eliminato correttamente</div>");
 
-    define("DEL_OK", "Account eliminato con successo");
-
-    define("ACC_OK", "Account creato con successo");
-    define("FILE_OK", "File caricato correttamente");
-    define("FILE_DEL", "File eliminato correttamente");
-
-    define("EVENT_OK", "Evento aggiunto con successo");
-
-    define("NO_FILE", "Nessun file selezionato");
-    define("NO_FORM", "Non é stato compilato nessun form");
+    define("NO_FILE", "<div class='warning' id='message'>Nessun file selezionato</div>");
+    define("NO_FORM", "<div class='warning' id='message'>Nessun form compilato</div>");
 
     define("RESULT_NONE", "Nessun risultato trovato");
 
-    define("DISCONNECTION", "Disconnessione eseguita con successo, a presto!");
+    define("DISCONNECTION", "<div class='success'>Disconnessione eseguita con successo, a presto!</div>");
 ?>

@@ -48,6 +48,8 @@
                         </div>";
             }
         }
+
+        show_footer();
     } else 
         header("Location: ../private/page_login.php");
 

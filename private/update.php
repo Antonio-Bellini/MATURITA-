@@ -54,13 +54,13 @@
 
                 if ($result) {
                     $_SESSION["user_modified"] = true;
-                    header("Location: admin_operation.php?operation=view_user");
+                    header("Location: area_personale.php");
                 }
                 else
                     echo ERROR_GEN;
             } else {
                 $_SESSION["user_notModified"] = true;
-                header("Location: admin_operation.php?operation=view_user");
+                header("Location: area_personale.php");
             }
             break;
 
@@ -81,13 +81,13 @@
 
                 if ($result) {
                     $_SESSION["user_modified"] = true;
-                    header("Location: admin_operation.php?operation=view_assi");
+                    header("Location: area_personale.php");
                 }
                 else
                     echo ERROR_GEN;
             } else {
                 $_SESSION["user_notModified"] = true;
-                header("Location: admin_operation.php?operation=view_assi");
+                header("Location: area_personale.php");
             }
             break;
 

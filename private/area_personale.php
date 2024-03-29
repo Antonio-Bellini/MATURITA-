@@ -55,13 +55,16 @@
                     $_SESSION["is_admin"] = true;
 
                     echo "<br><br><h3>Cosa vuoi fare?</h3>";
-                    echo "<br>  <button class='btn'><a href='admin_operation.php?operation=view_user'>GESTIONE UTENTI</a></button><br><br>
-                                <button class='btn'><a href='admin_operation.php?operation=view_volu'>GESTIONE VOLONTARI</a></button><br><br>
-                                <button class='btn'><a href='admin_operation.php?operation=view_assi'>GESTIONE ASSISTITI</a></button><br><br>
-                                <button class='btn'><a href='admin_operation.php?operation=view_terapist'>GESTIONE TERAPISTI</a></button><br><br>
-                                <button class='btn'><a href='admin_operation.php?operation=view_president'>GESTIONE PRESIDENTI</a></button><br><br>
-                                <button class='btn'><a href='../upload/page_upload.php'>CARICA LIBERATORIE</a></button><br><br>
-                                <button class='btn'><a href='admin_operation.php?operation=mng_event'>GESTIONE EVENTI</a></button><br><br>";
+                    echo "<br>  
+                            <section id='admin_btn'>
+                                <button class='btn'><a href='admin_operation.php?operation=view_user'>GESTIONE UTENTI</a></button>
+                                <button class='btn'><a href='admin_operation.php?operation=view_volu'>GESTIONE VOLONTARI</a></button>
+                                <button class='btn'><a href='admin_operation.php?operation=view_assi'>GESTIONE ASSISTITI</a></button>
+                                <button class='btn'><a href='admin_operation.php?operation=view_terapist'>GESTIONE TERAPISTI</a></button>
+                                <button class='btn'><a href='admin_operation.php?operation=view_president'>GESTIONE PRESIDENTI</a></button>
+                                <button class='btn'><a href='../upload/page_upload.php'>CARICA LIBERATORIE</a></button>
+                                <button class='btn'><a href='admin_operation.php?operation=mng_event'>GESTIONE EVENTI</a></button>
+                            </section>";
                 } catch (Exception $e) {
                     echo ERROR_GEN . ": " . $e;
                 }
@@ -126,6 +129,7 @@
                 }
             break;
         }
+        show_footer();
     } else
         header("Location: page_login.php");
 
@@ -159,6 +163,10 @@
 
     // funzione per la stampa dell'esito dell'operazione eseguita
     function check_operation() {
+        if (isset($_SESSION["user_modified"]) && $_SESSION["user_modified"]) {
+            echo MOD_OK;
+            $_SESSION["user_modified"] = false;
+        }
         if (isset($_SESSION["user_created"]) && $_SESSION["user_created"]) {
             echo ACC_OK;
             $_SESSION["user_created"] = false;

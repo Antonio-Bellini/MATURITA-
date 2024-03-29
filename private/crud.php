@@ -135,6 +135,8 @@
             break;
     }
 
+    show_footer();
+
 
     // menu di navigazione
     function nav_menu() {

@@ -65,6 +65,8 @@
                     } else 
                         echo ERROR_DB;
                 }
+
+                show_footer();
             } else 
                 header("Location: ../index.php");
         } else 

@@ -11,6 +11,7 @@
 <!-- STAMPA del BODY in BASE al COOKIE SALVATO -->
 <?php
     include "../util/cookie.php";
+    include "../util/command.php";
     importActualStyle();
     session_start();
 ?>
@@ -62,6 +63,8 @@
                                 </form>
                             </section>";
                 }
+
+                show_footer();
             } else
                 header("Location: ../index.php");
         } else 
