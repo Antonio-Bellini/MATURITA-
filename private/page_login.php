@@ -25,9 +25,10 @@
         if (!isset($_SESSION["is_logged"]))
             $_SESSION["is_logged"] = false;
 
+        check_operation();
+
         // controllo cosa mostrare in base a se é gia loggato oppure ancora no
         if ($_SESSION["is_logged"]) {
-            // menu di navigazione
             nav_menu();
             welcome($connection, $_SESSION["username"]);
         } else {

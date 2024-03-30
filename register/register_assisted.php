@@ -19,7 +19,6 @@
         $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
         session_start();
 
-        // menu di navigazione
         nav_menu();
 
         if (!isset($_SESSION["is_admin"]))
@@ -27,44 +26,43 @@
         
         if (isset($_SESSION["is_logged"]) && $_SESSION["is_logged"]) {
             if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) {
-                if (($_SESSION["profile_func"] === "gestione DB") && ($_SESSION["user_auth"] === "CRUD")) {
-                    $query = "SELECT id, nome, cognome FROM utenti WHERE id_profilo = 4";
-                    $result = dbQuery($connection, $query);
+                $query = "SELECT id, nome, cognome FROM utenti WHERE id_profilo = 4";
+                $result = dbQuery($connection, $query);
 
-                    if ($result) {
-                        echo "<br><section id='form'>
+                if ($result) {
+                    echo "<br>
+                            <section id='form'>
                                 <h2>Pagina di registrazione di un assistito</h2><br>
-                                    <form name='form_assisted' action='register.php' id='form_register__assisted' method='POST' enctype='multipart/form-data'>
-                                        <input type='hidden' name='form_assisted'>
+                                <form name='form_assisted' action='register.php' id='form_register__assisted' method='POST' enctype='multipart/form-data'>
+                                    <input type='hidden' name='form_assisted'>
 
-                                        <label for='parent'>Chi é il referente?&nbsp;</label;>
-                                        <select name='parent'>";
-                                            while ($row = ($result->fetch_assoc()))
-                                                echo "<option value='" . $row["id"] . "'>" . $row["nome"] . " " . $row["cognome"] . "</option>";
-                                        echo "</select>
+                                    <label for='parent'>Chi é il referente?&nbsp;</label;>
+                                    <select name='parent'>";
+                                        while ($row = ($result->fetch_assoc()))
+                                            echo "<option value='" . $row["id"] . "'>" . $row["nome"] . " " . $row["cognome"] . "</option>";
+                                    echo "</select>
 
-                                        <div id='name_surname__label'>
-                                            <label for='name'>Inserisci il nome dell'assistito *</label>
-                                            <label for='surname'>Inserisci il cognome dell'assistito *</label>
-                                        </div>
-                                        <div id='name_surname__input'>
-                                            <input type='text' name='name' id='name' maxlength='30' required>
-                                            &nbsp;&nbsp;
-                                            <input type='text' name='surname' id='surname' maxlength='30' required>
-                                        </div>
+                                    <div id='name_surname__label'>
+                                        <label for='name'>Inserisci il nome dell'assistito *</label>
+                                        <label for='surname'>Inserisci il cognome dell'assistito *</label>
+                                    </div>
+                                    <div id='name_surname__input'>
+                                        <input type='text' name='name' id='name' maxlength='30' required>
+                                        &nbsp;&nbsp;
+                                        <input type='text' name='surname' id='surname' maxlength='30' required>
+                                    </div>
 
-                                        <label for='med'>Inserisci il file dell'anamnesi *</label>
-                                        <input type='file' name='med' id='med' accept='.pdf' enctype='multipart/form-data' required> <br>
+                                    <label for='med'>Inserisci il file dell'anamnesi *</label>
+                                    <input type='file' name='med' id='med' accept='.pdf' enctype='multipart/form-data' required> <br>
 
-                                        <label for='notes'>Inserisci qualche nota aggiuntiva sull'assistito</label>
-                                        <textarea name='notes' id='notes' cols='30' rows='10' placeholder='Altre info utili'></textarea>
+                                    <label for='notes'>Inserisci qualche nota aggiuntiva sull'assistito</label>
+                                    <textarea name='notes' id='notes' cols='30' rows='10' placeholder='Altre info utili'></textarea>
 
-                                        <input type='submit' value='CREA ACCOUNT ASSISTITO'>
-                                    </form>
+                                    <input type='submit' value='CREA ACCOUNT ASSISTITO'>
+                                </form>
                             </section>";
-                    } else 
-                        echo ERROR_DB;
-                }
+                } else 
+                    echo ERROR_DB;
 
                 show_footer();
             } else 
@@ -98,7 +96,6 @@
                     </section>
                 </main>";
         }
-
     ?>
 </body>
 </html>

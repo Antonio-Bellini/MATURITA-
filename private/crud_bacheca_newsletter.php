@@ -10,63 +10,72 @@
     importActualStyle();
     session_start();
 
-    $type = null;
-    $operation = null;
-
-    // menu di navigazione
-    nav_menu();
-
-    if (isset($_GET["type"]))
-        $type = $_GET["type"];
+    $table = null;
 
     if (isset($_GET["operation"]))
         $operation = $_GET["operation"];
+    if (isset($_GET["table"]))
+        $table = $_GET["table"];
+
+    nav_menu();
 
     switch ($_SESSION["profile_type"]) {
         case "presidente":
-            $connection = connectToDatabase(DB_HOST, DB_PRESIDENT, PRESIDENT_PW, DB_NAME);
-            
-            switch ($operation) {
-                case "add":
-                    addToBacheca($type);
-                    break;
+            try {
+                $connection = connectToDatabase(DB_HOST, DB_PRESIDENT, PRESIDENT_PW, DB_NAME);
+                
+                switch ($operation) {
+                    case "add":
+                        addToBacheca($table);
+                        break;
 
-                case "del":
-                    removeFromBacheca($type, $connection);
-                    break;
+                    case "del":
+                        removeFromBacheca($table, $connection);
+                        break;
+                }
+            } catch(Exception $e) {
+                echo ERROR_GEN;
             }
             break;
 
         case "admin":
-            $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
+            try {
+                $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
 
-            switch ($operation) {
-                case "add":
-                    addToBacheca($type);
-                    break;
+                switch ($operation) {
+                    case "add":
+                        addToBacheca($table);
+                        break;
 
-                case "del":
-                    removeFromBacheca($type, $connection);
-                    break;
+                    case "del":
+                        removeFromBacheca($table, $connection);
+                        break;
+                }
+            } catch(Exception $e) {
+                echo ERROR_GEN;
             }
             break;
             
         case "terapista":
-            $connection = connectToDatabase(DB_HOST, DB_TERAPIST, TERAPIST_PW, DB_NAME);
+            try {
+                $connection = connectToDatabase(DB_HOST, DB_TERAPIST, TERAPIST_PW, DB_NAME);
 
-            switch ($operation) {
-                case "add":
-                    addToBacheca($type);
-                    break;
+                switch ($operation) {
+                    case "add":
+                        addToBacheca($table);
+                        break;
 
-                case "del":
-                    removeFromBacheca($type, $connection);
-                    break;
+                    case "del":
+                        removeFromBacheca($table, $connection);
+                        break;
+                }
+            } catch(Exception $e) {
+                echo ERROR_GEN;
             }
             break;
 
         case "genitore":
-            $connection = connectToDatabase(DB_HOST, DB_USER, USER_PW, DB_NAME);
+            header("Location: ../index.php");
             break;
     }
 
@@ -100,7 +109,7 @@
             </main>";
     }
 
-    // eliminazione del file bacheca selezionato
+    // eliminazione del file bacheca o newsletter selezionato
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
         $table = $_POST["table_sel"];
         $file = $_POST[$table];
@@ -119,20 +128,20 @@
     }
 
     // funzione per aggiungere file in bacheca
-    function addToBacheca($type) {
+    function addToBacheca($table) {
         echo "<br>
         <section id='form'>
-            <h2>Aggiunta di un contenuto in " . $type . "</h2>
+            <h2>Aggiunta di un contenuto in " . $table . "</h2>
                 <form action='../upload/upload.php' method='POST' enctype='multipart/form-data'>
-                    <input type='hidden' name='table' value=$type>
+                    <input type='hidden' name='table' value=$table>
                     <br><br>
 
                     <div id='name_surname__label'>
-                        <label for='" . $type . "'>Seleziona il file che vuoi aggiungere in ". $type . "</label>
+                        <label for='" . $table . "'>Seleziona il file che vuoi aggiungere in ". $table . "</label>
                         <label for='date'>Seleziona la data del file</label>
                     </div>
                     <div id='name_surname__input'>
-                        <input type='file' name='" . $type . "' accept='.pdf' enctype='multipart/form-data' required>
+                        <input type='file' name='" . $table . "' accept='.pdf' enctype='multipart/form-data' required>
                         &nbsp;&nbsp;
                         <input type='date' name='date' required>
                     </div>
@@ -143,29 +152,29 @@
     }
 
     // funzione per eliminare file dalla bacheca
-    function removeFromBacheca($type, $connection) {
-        $query = "SELECT id, $type, data FROM $type";
+    function removeFromBacheca($table, $connection) {
+        $query = "SELECT id, $table, data FROM $table";
         $result = dbQuery($connection, $query);
         echo "<br>
         <section id='form'>
-            <h2>Eliminazione di un contenuto dalla " . $type . "</h2>
+            <h2>Eliminazione di un contenuto dalla " . $table . "</h2>
                 <form action='" . htmlspecialchars($_SERVER["PHP_SELF"]) . "' method='POST' enctype='multipart/form-data'>
                     <br><br>";
                     if ($result) {
                         while ($row = ($result->fetch_assoc())) 
-                            echo "<input type='hidden' name='file_name' value='" . $row["$type"] . "'>
-                                    <input type='hidden' name='table_sel' value=$type>";
+                            echo "<input type='hidden' name='file_name' value='" . $row["$table"] . "'>
+                                    <input type='hidden' name='table_sel' value=$table>";
 
                         mysqli_data_seek($result, 0);
                     }
 
         echo "      <div id='name_surname__label'>
-                        <label for='" . $type . "'>Seleziona il file che vuoi eliminare dalla " . $type . "</label>
+                        <label for='" . $table . "'>Seleziona il file che vuoi eliminare dalla " . $table . "</label>
                     </div>
-                    <select name='" . $type . "'>";
+                    <select name='" . $table . "'>";
                     if ($result) {
                         while ($row = ($result->fetch_assoc())) {
-                            echo "<option value='" . $row["id"] . "'>" . $row["$type"] . " del " . $row["data"] . "</option>";
+                            echo "<option value='" . $row["id"] . "'>" . $row["$table"] . " del " . $row["data"] . "</option>";
                         }
                     }
                 

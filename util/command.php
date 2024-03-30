@@ -122,23 +122,16 @@
         }
     }
 
-    // funzione per criptare la password
+    // funzione per criptare la password con sha512+salt
     function encryptPassword($password) {
-        $salt = generateSalt(32);
+        $chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()-_[]{}<>~`+=,.;/?|';
+        $salt = null;
+        for ($i = 0; $i < 32; $i++)
+            $salt .= $chars[rand(0, strlen($chars) - 1)];
+
         $password .= $salt;
 
         return hash("sha512", $password) . ":" . $salt;
-    }
-
-    // funzione per generare il salt della password
-    function generateSalt($length) {
-        $chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()-_[]{}<>~`+=,.;/?|';
-        $salt = '';
-
-        for ($i = 0; $i < $length; $i++)
-            $salt .= $chars[rand(0, strlen($chars) - 1)];
-        
-        return $salt;
     }
 
     // funzione per verificare se due password corrispondano
@@ -168,193 +161,6 @@
         return $result;
     }
 
-    // funzione per mostrare il form di modifica
-    function modifyForm($connection, $type, $userId) {
-        switch ($type) {
-            case "user":
-                $query = "SELECT nome, cognome, password, email, telefono_fisso, telefono_mobile
-                        FROM utenti 
-                        WHERE id = '$userId'";
-                $result = dbQuery($connection, $query);
-
-                if ($result){
-                    while ($row = ($result->fetch_assoc())) {
-                        $name = $row["nome"];
-                        $surname = $row["cognome"];
-                        $email = $row["email"];
-                        $tf = $row["telefono_fisso"];
-                        $tm = $row["telefono_mobile"];
-                        $_SESSION["pw_user_sel"] = $userId;
-                    }
-
-                    echo "<br><section id='form'>
-                            <h2>Modifica anagrafica utente</h2>
-                            <label>Cosa vuoi modificare?<br><br></label>
-                            <h3>Nuovi dati</h3><br>
-                                <form action='update.php' method='POST' id='form_update__user'>
-                                    <input type='hidden' name='type' value='user'>
-                                    <input type='hidden' name='user_id' value='$userId'>
-
-                                    <div id='name_surname__label'>
-                                        <label for='new_name'>Nome</label>
-                                        <label for='new_surname'>Cognome</label>
-                                    </div>
-                                    <div id='name_surname__input'>
-                                        <input type='text' name='new_name' maxlength='30' placeholder='" . $name . "'>
-                                        &nbsp;&nbsp;
-                                        <input type='text' name='new_surname' maxlength='30' placeholder='" . $surname . "'>
-                                    </div>
-
-                                    <label><br>Email</label>
-                                    <input type='email' name='new_email' maxlength='30' placeholder='" . $email ."'>
-
-                                    <div id='phones__label'>
-                                        <label for='new_tf'>Telefono fisso</label>
-                                        <label for='new_tm'>Telefono mobile</label>
-                                    </div>
-                                    <div id='phones__input'>
-                                        <input type='text' name='new_tf' maxlength='9' placeholder='" . $tf . "'>
-                                        &nbsp;&nbsp;
-                                        <input type='text' name='new_tm' maxlength='9' placeholder='" . $tm . "'>
-                                    </div>
-
-                                    <div id='name_surname__label'>
-                                        <label for='old_psw'>Password attuale</label>
-                                        <label for='new_psw'>Nuova password</label>
-                                    </div>
-                                    <div id='name_surname__input'>
-                                        <input type='password' name='old_psw' id='old_psw'>
-                                        &nbsp;&nbsp;
-                                        <input type='password' name='new_psw' id='new_psw' maxlength='255'>
-                                        <span id='passwordError'></span>
-                                    </div>
-
-                                    <input type='submit' value='AGGIORNA DATI'>
-                                </form>
-                        </section>";
-                }
-                break;
-
-            case "assisted":
-                if (isset($_SESSION["is_terapist"]) && $_SESSION["is_terapist"]) {
-                    $query = "SELECT anamnesi 
-                                FROM assistiti a
-                                INNER JOIN utenti u ON a.id_referente = u.id
-                                WHERE a.id = '$userId'";
-                    $result = dbQuery($connection, $query);
-
-                    if ($result) {
-                        while ($row = ($result->fetch_assoc()))
-                            $anamnesi = $row["anamnesi"];
-                        echo "<br><section id='form'>
-                                    <h2>Modifica anamnesi assistito</h2>
-                                    <label>Modifica l'anamnesi dell'assistito<br><br></label>
-                                    
-                                    <div id='name_surname__label'>
-                                        <label for='anamnesi'>Anamnesi assistito</label>
-                                    </div>
-                                    <div id='name_surname__input'>
-                                        <button class='table--btn'><a href='../upload/" . $anamnesi . "' target='_blank'>Apri il file</a></button>
-                                        &nbsp;&nbsp;
-                                        <button class='btn_delete'><a href='crud.php?operation=delete&user={$userId}&profile=anamnesi'>Elimina il file</a></button>
-                                        &nbsp;&nbsp;
-                                        <button class='table--btn'><a href='../upload/page_upload_medical.php?user={$userId}'>Aggiungi nuovo file</a></button>
-                                    </div><br>
-                                </section>";
-                    }
-                } else {
-                    $query = "SELECT a.nome, a.cognome
-                            FROM assistiti a
-                            INNER JOIN utenti u ON a.id_referente = u.id
-                            WHERE a.id = '$userId'";
-                    $result = dbQuery($connection, $query);
-
-                    if ($result) {
-                        while ($row = ($result->fetch_assoc())) {
-                            $name = $row["nome"];
-                            $surname = $row["cognome"];
-                        }
-
-                        echo "<br><section id='form'>
-                                <h2>Modifica anagrafica assistito</h2>
-                                <label>Cosa vuoi modificare?<br><br></label>
-                                <h3>Nuovi dati</h3><br>
-                                    <form action='update.php' method='POST' id='form_update__assisted'>
-                                        <input type='hidden' name='type' value='assisted'>
-                                        <input type='hidden' name='user_id' value='$userId'>
-
-                                        <div id='name_surname__label'>
-                                            <label for='new_name'>Nome</label>
-                                            <label for='new_surname'>Cognome</label>
-                                        </div>
-
-                                        <div id='name_surname__input'>
-                                            <input type='text' name='new_name' maxlength='30' placeholder='" . $name . "'>
-                                            &nbsp;&nbsp;
-                                            <input type='text' name='new_surname' maxlength='30' placeholder='" . $surname . "'>
-                                        </div>
-
-                                        <input type='submit' value='AGGIORNA DATI'>
-                                    </form>
-                            </section>";
-                    }
-                }
-                break;
-
-            case "volunteer":
-                $query = "SELECT nome, cognome, email, telefono_fisso, telefono_mobile
-                        FROM volontari
-                        WHERE id = '$userId'";
-                $result = dbQuery($connection, $query);
-
-                if ($result) {
-                    while ($row = ($result->fetch_assoc())) {
-                        $name = $row["nome"];
-                        $surname = $row["cognome"];
-                        $email = $row["email"];
-                        $tf = $row["telefono_fisso"];
-                        $tm = $row["telefono_mobile"];
-                    }
-
-                    echo "<br><section id='form'>
-                                <h2>Modifica anagrafica volontario</h2>
-                                <label>Cosa vuoi modificare?<br><br></label>
-                                <h3>Nuovi dati</h3><br>
-                                    <form action='update.php' method='POST' id='form_update__volunteer'>
-                                        <input type='hidden' name='type' value='volunteer'>
-                                        <input type='hidden' name='user_id' value='$userId'>
-
-                                        <div id='name_surname__label'>
-                                            <label for='new_name'>Nome</label>
-                                            <label for='new_surname'>Cognome</label>
-                                        </div>
-                                        <div id='name_surname__input'>
-                                            <input type='text' name='new_name' maxlength='30' placeholder='" . $name . "'>
-                                            &nbsp;&nbsp;
-                                            <input type='text' name='new_surname' maxlength='30' placeholder='" . $surname . "'>
-                                        </div>
-                                        
-                                        <label for='new_email'>Email</label>
-                                        <input type='email' name='new_email' maxlength='30' placeholder='" . $email . "'>
-
-                                        <div id='phones__label'>
-                                            <label for='new_tf'>Telefono fisso</label>
-                                            <label for='new_tm'>Telefono mobile</label>
-                                        </div>
-                                        <div id='phones__input'>
-                                            <input type='text' name='new_tf' maxlength='9' placeholder='" . $tf . "'>
-                                            &nbsp;&nbsp;
-                                            <input type='text' name='new_tm' maxlength='9' placeholder='" . $tm . "'>
-                                        </div>
-
-                                        <input type='submit' value='AGGIORNA DATI'>
-                                    </form>
-                                </section>";
-                }
-                break;
-        }
-    }
-
     // funzione per mostrare il form per aggiungere un volontario a un evento
     function addVolunteerToEvent($connection) {
         $queryV = "SELECT id, nome, cognome FROM volontari";
@@ -364,28 +170,28 @@
         $resultV = dbQuery($connection, $queryV);
         $resultE = dbQuery($connection, $queryE);
 
-        echo "<form action='../private/event.php?function=addVolunteerToEvent' id='addVolunteerToEvent' method='POST'>
-                <br><br><label for='volunteer'>Quale volontario vuoi assegnare all'evento?</label>
-                <select name='volunteer' id='volunteer'>";
-                    if ($resultV) {
+        if ($resultV && $resultE) {
+            echo "<form action='../private/event.php?function=addVolunteerToEvent' id='addVolunteerToEvent' method='POST'>
+                    <br><br>
+                    <label for='volunteer'>Quale volontario vuoi assegnare all'evento?</label>
+                    <select name='volunteer' id='volunteer'>";
                         while ($row = ($resultV->fetch_assoc()))
                             echo "<option value=" . $row["id"] . ">" . $row["nome"] . " " . $row["cognome"] . "</option>";
-                    }
-        echo    "</select>
+            echo    "</select>
 
-                <label for='event'>A quale evento vuoi assegnare il volontario?</label>
-                <select name='event'>";
-                    if ($resultE) {
+                    <label for='event'>A quale evento vuoi assegnare il volontario?</label>
+                    <select name='event'>";
                         while ($row = ($resultE->fetch_assoc()))
                             echo "<option value=" . $row["id"] . ">" . $row["tipo"] . " il " . $row["data"] . "</option>";
-                    }
-        echo    "</select>
+            echo    "</select>
 
-                <label for='event_notes'>Aggiungi qualche nota utile</label>
-                <textarea name='event_notes' id='notes' cols='30' rows='10' placeholder='Altre info utili'></textarea>
+                    <label for='event_notes'>Aggiungi qualche nota utile</label>
+                    <textarea name='event_notes' id='notes' cols='30' rows='10' placeholder='Altre info utili'></textarea>
 
-                <input type='submit' value='AGGIUNGI' id='sub__addVoluToEvent'>
-            </form>";
+                    <input type='submit' value='AGGIUNGI' id='sub__addVoluToEvent'>
+                </form>";
+        } else 
+            echo ERROR_DB;
     }
 
     // funzione per mostrare il form per aggiungere un assistito a un evento
@@ -397,28 +203,28 @@
         $resultA = dbQuery($connection, $queryA);
         $resultE = dbQuery($connection, $queryE);
 
-        echo "<form action='../private/event.php?function=addAssistedToEvent' id='addAssistedToEvent' method='POST'>
-                <br><br><label for='assisted'>Quale assistito vuoi aggiungere all'evento?</label>
-                <select name='assisted'>";
-                    if ($resultA) {
+        if ($resultA && $resultE) {
+            echo "<form action='../private/event.php?function=addAssistedToEvent' id='addAssistedToEvent' method='POST'>
+                    <br><br>
+                    <label for='assisted'>Quale assistito vuoi aggiungere all'evento?</label>
+                    <select name='assisted'>";
                         while ($row = ($resultA->fetch_assoc()))
                             echo "<option value=" . $row["id"] . ">" . $row["nome"] . " " . $row["cognome"] . "</option>";
-                    }
-        echo    "</select>
+            echo    "</select>
 
-                <label for='event'>A quale evento vuoi agiungere l'assistito?</label>
-                <select name='event'>";
-                    if ($resultE) {
+                    <label for='event'>A quale evento vuoi agiungere l'assistito?</label>
+                    <select name='event'>";
                         while ($row = ($resultE->fetch_assoc()))
                             echo "<option value=" . $row["id"] . ">" . $row["tipo"] . " il " . $row["data"] . "</option>";
-                    }
-        echo    "</select>
+            echo    "</select>
 
-                <label for='event_notes'>Aggiungi qualche nota utile</label>
-                <textarea name='event_notes' id='notes' cols='30' rows='10' placeholder='Altre info utili'></textarea>
+                    <label for='event_notes'>Aggiungi qualche nota utile</label>
+                    <textarea name='event_notes' id='notes' cols='30' rows='10' placeholder='Altre info utili'></textarea>
 
-                <input type='submit' value='AGGIUNGI'>
-            </form>";
+                    <input type='submit' value='AGGIUNGI'>
+                </form>";
+        } else 
+            echo ERROR_DB;
     }
 
     // funzione per mostrare il form per creare un nuovo evento
@@ -426,29 +232,32 @@
         $query = "SELECT id, tipo FROM tipi_evento";
         $result = dbQuery($connection, $query);
 
-        echo "<form action='../private/event.php?function=createNewEvent' id='createNewEvent' method='POST'>
-                    <br><br><label for='event_type'>Che tipo di evento sará?</label>
-                    <select name='event_type'>";
-                        if ($result) {
+        if ($result) {
+            echo "<form action='../private/event.php?function=createNewEvent' id='createNewEvent' method='POST'>
+                        <br><br>
+                        <label for='event_type'>Che tipo di evento sará?</label>
+                        <select name='event_type'>";
                             while ($row = ($result->fetch_assoc()))
                                 echo "<option value=" . $row["id"] . ">" . $row["tipo"] . "</option>";
-                        }
-        echo        "</select>
+            echo        "</select>
 
-                    <label for='event_date'>Quando si terrá?</label>
-                    <input type='date' name='event_date' required>
+                        <label for='event_date'>Quando si terrá?</label>
+                        <input type='date' name='event_date' required>
 
-                    <label for='event_notes'>Aggiungi qualche nota utile sull'evento</label>
-                    <textarea name='event_notes' id='notes' cols='30' rows='10' placeholder='Altre info utili'></textarea>
+                        <label for='event_notes'>Aggiungi qualche nota utile sull'evento</label>
+                        <textarea name='event_notes' id='notes' cols='30' rows='10' placeholder='Altre info utili'></textarea>
 
-                    <input type='submit' value='CREA EVENTO'>
-            </form>";
+                        <input type='submit' value='CREA EVENTO'>
+                </form>";
+        } else 
+            echo ERROR_DB;
     } 
 
     // funzione per mostrare il form per creare un nuovo tipo di evento
     function addNewEventType() {
         echo "<form action='../private/event.php?function=addNewEventType' id='addNewEventType' method='POST'>
-                <br><br><label>Quale sará il nome del nuovo evento?</label>
+                <br><br>
+                <label>Quale sará il nome del nuovo evento?</label>
                 <textarea name='new_event' id='notes' cols='30' rows='10' placeholder='Nome nuovo evento' required></textarea>
 
                 <input type='submit' value='CREA NUOVO TIPO DI EVENTO'>
@@ -461,16 +270,75 @@
                     FROM eventi e
                     INNER JOIN tipi_evento te ON te.id = e.tipo_evento";
         $result = dbQuery($connection, $query);
-        echo "<form action='../private/event.php?function=viewVoluEventAssi' id='viewVoluEventAssi' method='POST'>
-                <br><br><label>Quale tipo di evento vuoi vedere?</label>
-                <select name='event'>";
-                    if ($result) {
+
+        if ($result) {
+            echo "<form action='../private/event.php?function=viewVoluEventAssi' id='viewVoluEventAssi' method='POST'>
+                    <br><br>
+                    <label>Quale tipo di evento vuoi vedere?</label>
+                    <select name='event'>";
                         while ($row = ($result->fetch_assoc()))
                             echo "<option value=" . $row["id"] . ">" . $row["tipo"] . " il " . $row["data"] . "</option>";
-                    }
-        echo    "</select>
+            echo    "</select>
 
-                <input type='submit' value='CERCA'>
-            </form>";
+                    <input type='submit' value='CERCA'>
+                </form>";
+        } else 
+            echo ERROR_DB;
+    }
+
+    // funzione per la stampa dell'esito delle operazioni
+    function check_operation() {
+        if (isset($_SESSION["user_unknown"]) && $_SESSION["user_unknown"]) {
+            echo ERROR_UNK_USER;
+            $_SESSION["user_unknown"] = false;
+        }
+        if (isset($_SESSION["user_created"]) && $_SESSION["user_created"]) {
+            echo ACC_OK;
+            $_SESSION["user_created"] = false;
+        }
+        if (isset($_SESSION["user_modified"]) && $_SESSION["user_modified"]) {
+            echo MOD_OK;
+            $_SESSION["user_modified"] = false;
+        }
+        if (isset($_SESSION["user_not_modified"]) && $_SESSION["user_not_modified"]) {
+            echo MOD_NONE;
+            $_SESSION["user_not_modified"] = false;
+        }
+        if (isset($_SESSION["user_deleted"]) && $_SESSION["user_deleted"]) {
+            echo DEL_OK;
+            $_SESSION["user_deleted"] = false;
+        }
+        if (isset($_SESSION["file_uploaded"]) && $_SESSION["file_uploaded"]) {
+            echo FILE_OK;
+            $_SESSION["file_uploaded"] = false;
+        }
+        if (isset($_SESSION["file_not_uploaded"]) && $_SESSION["file_not_uploaded"]) {
+            echo ERROR_FILE;
+            $_SESSION["file_not_uploaded"] = false;
+        }
+        if (isset($_SESSION["file_deleted"]) && $_SESSION["file_deleted"]) {
+            echo FILE_DEL;
+            $_SESSION["file_deleted"] = false;
+        }
+        if (isset($_SESSION["event_created"]) && $_SESSION["event_created"]) {
+            echo EVENT_OK;
+            $_SESSION["event_created"] = false;
+        }
+        if (isset($_SESSION["event_not_created"]) && $_SESSION["event_not_created"]) {
+            echo ERROR_GEN;
+            $_SESSION["event_not_created"] = false;
+        }
+        if (isset($_SESSION["added_to_event"]) && $_SESSION["added_to_event"]) {
+            echo EVENT_ADD;
+            $_SESSION["added_to_event"] = false;
+        }
+        if (isset($_SESSION["not_added_to_event"]) && $_SESSION["not_added_to_event"]) {
+            echo ERROR_GEN;
+            $_SESSION["not_added_to_event"] = false;
+        }
+        if (isset($_SESSION["incorrect_pw"]) && $_SESSION["incorrect_pw"]) {
+            echo ERROR_PW;
+            $_SESSION["incorrect_pw"] = false;
+        }
     }
 ?>

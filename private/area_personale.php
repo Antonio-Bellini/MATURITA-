@@ -15,9 +15,9 @@
     $auth = null;
 
     if (isset($_SESSION["is_logged"]) && $_SESSION["is_logged"]) {
-        // menu di navigazione
         nav_menu();
 
+        // stampa dell'esito dell'operazione
         check_operation();
 
         $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
@@ -44,7 +44,7 @@
                     echo "<br><br><h3>Cosa vuoi fare?</h3>";
                     echo "<br><button class='btn'><a href='admin_operation.php?operation=view_assi'>GESTIONE ASSISTITI</a></button><br><br>";
                 } catch (Exception $e) {
-                    echo ERROR_GEN . ": " . $e;
+                    echo ERROR_GEN;
                 }
             break;
 
@@ -66,7 +66,7 @@
                                 <button class='btn'><a href='admin_operation.php?operation=mng_event'>GESTIONE EVENTI</a></button>
                             </section>";
                 } catch (Exception $e) {
-                    echo ERROR_GEN . ": " . $e;
+                    echo ERROR_GEN;
                 }
             break;
 
@@ -79,7 +79,7 @@
                     echo "<br><br><h3>Cosa vuoi fare?</h3>";
                     echo "<br><button class='btn'><a href='admin_operation.php?operation=view_assi'>GESTIONE ASSISTITI</a></button><br><br>";
                 } catch (Exception $e) {
-                    echo ERROR_GEN . ": " . $e;
+                    echo ERROR_GEN;
                 }
             break;
 
@@ -117,6 +117,7 @@
                                     INNER JOIN utenti u ON a.id_referente = u.id
                                     WHERE u.id = '" . $_SESSION["user_id"] . "'";
                         $result = dbQuery($connection, $query);
+                        
                         if ($result) {
                             createTable($result, "assisted");
                             echo "</section>";
@@ -125,7 +126,7 @@
                     } else 
                         echo ERROR_DB;
                 } catch (Exception $e) {
-                    echo ERROR_GEN . ": " . $e;
+                    echo ERROR_GEN;
                 }
             break;
         }
@@ -159,45 +160,5 @@
                     </nav>            
                 </section>
             </main>";
-    }
-
-    // funzione per la stampa dell'esito dell'operazione eseguita
-    function check_operation() {
-        if (isset($_SESSION["user_modified"]) && $_SESSION["user_modified"]) {
-            echo MOD_OK;
-            $_SESSION["user_modified"] = false;
-        }
-        if (isset($_SESSION["user_created"]) && $_SESSION["user_created"]) {
-            echo ACC_OK;
-            $_SESSION["user_created"] = false;
-        }
-        if (isset($_SESSION["file_uploaded"]) && $_SESSION["file_uploaded"]) {
-            echo FILE_OK;
-            $_SESSION["file_uploaded"] = false;
-        }
-        if (isset($_SESSION["file_notUploaded"]) && $_SESSION["file_notUploaded"]) {
-            echo ERROR_FILE;
-            $_SESSION["file_notUploaded"] = false;
-        }
-        if (isset($_SESSION["added_to_event"]) && $_SESSION["added_to_event"]) {
-            echo EVENT_OK;
-            $_SESSION["added_to_event"] = false;
-        }
-        if (isset($_SESSION["notAdded_to_event"]) && $_SESSION["notAdded_to_event"]) {
-            echo ERROR_GEN;
-            $_SESSION["notAdded_to_event"] = false;
-        }
-        if (isset($_SESSION["event_created"]) && $_SESSION["event_created"]) {
-            echo EVENT_OK;
-            $_SESSION["event_created"] = false;
-        }
-        if (isset($_SESSION["event_notCreated"]) && $_SESSION["event_notCreated"]) {
-            echo ERROR_GEN;
-            $_SESSION["event_notCreated"] = false;
-        }
-        if (isset($_SESSION["file_deleted"]) && $_SESSION["file_deleted"]) {
-            echo FILE_DEL;
-            $_SESSION["file_deleted"] = false;
-        }
     }
 ?>

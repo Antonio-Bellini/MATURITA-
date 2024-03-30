@@ -10,7 +10,6 @@
     importActualStyle();
     session_start();
 
-    // menu di navigazione
     nav_menu();
 
     $type = $_POST["type"];
@@ -55,11 +54,10 @@
                 if ($result) {
                     $_SESSION["user_modified"] = true;
                     header("Location: area_personale.php");
-                }
-                else
-                    echo ERROR_GEN;
+                } else
+                    echo ERROR_DB;
             } else {
-                $_SESSION["user_notModified"] = true;
+                $_SESSION["user_not_modified"] = true;
                 header("Location: area_personale.php");
             }
             break;
@@ -82,11 +80,10 @@
                 if ($result) {
                     $_SESSION["user_modified"] = true;
                     header("Location: area_personale.php");
-                }
-                else
-                    echo ERROR_GEN;
+                } else
+                    echo ERROR_DB;
             } else {
-                $_SESSION["user_notModified"] = true;
+                $_SESSION["user_not_modified"] = true;
                 header("Location: area_personale.php");
             }
             break;
@@ -118,11 +115,10 @@
                 if ($result) {
                     $_SESSION["user_modified"] = true;
                     header("Location: admin_operation.php?operation=view_volu");
-                }
-                else
-                    echo ERROR_GEN;
+                } else
+                    echo ERROR_DB;
             } else {
-                $_SESSION["user_notModified"] = true;
+                $_SESSION["user_not_modified"] = true;
                 header("Location: admin_operation.php?operation=view_volu");
             }
             break;

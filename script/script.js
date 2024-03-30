@@ -118,9 +118,13 @@ $(document).ready(function () {
         if (confirmed)
             window.location.href = url;
     });
+
+    // timer per far scomparire l'esito dell'operazione
+    $(".success, .error, .warning").fadeIn();
+    $(".success, .error, .warning").delay(2500).fadeOut();
 });
 
-// AJAX per il controllo live dell'email inserita
+// ajax per il controllo live dell'username inserito
 function checkInputUsername(username) {
     $.ajax({
         type: "POST",
@@ -135,7 +139,7 @@ function checkInputUsername(username) {
     });
 }
 
-// FUNZIONE per CONTROLLARE se é POSSIBILE MODIFICARE la PASSWORD
+// ajax per il controllo live della password inserita
 function checkNewPassword(old_psw, new_psw) {
     $.ajax({
         type: "POST",

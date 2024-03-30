@@ -27,27 +27,33 @@
                             WHERE username = '$username';";
                 $result = dbQuery($connection, $query);
 
-                if ($result) {
-                    while ($row = $result->fetch_assoc()) {
-                        if (checkPassword($password, $row["password"])) {
-                            $_SESSION["is_logged"] = true;
-                            $_SESSION["username"] = $username;
-                            $_SESSION["user_id"] = $row["id"];
-                            
-                            header("Location: area_personale.php");
-                        } else {
-                            nav_menu();
-                            echo ERROR_PW;
-                        }
-                    }
+                // controllo se esiste l'utente
+                if ($result->num_rows === 0) {
+                    $_SESSION["user_unknown"] = true;
+                    header("Location: page_login.php");
                 } else {
-                    nav_menu();
-                    echo ERROR_DB;
+                    if ($result) {
+                        while ($row = $result->fetch_assoc()) {
+                            if (checkPassword($password, $row["password"])) {
+                                $_SESSION["is_logged"] = true;
+                                $_SESSION["username"] = $username;
+                                $_SESSION["user_id"] = $row["id"];
+                                
+                                header("Location: area_personale.php");
+                            } else {
+                                $_SESSION["incorrect_pw"] = true;
+                                header("Location: page_login.php");
+                            }
+                        }
+                    } else {
+                        nav_menu();
+                        echo ERROR_DB;
+                    }
                 }
             } else
                 header("Location: page_login.php");
         } catch(Exception $e) {
-            echo ERROR_GEN . ": " . $e;
+            echo ERROR_GEN;
         }
     } else {
         nav_menu();

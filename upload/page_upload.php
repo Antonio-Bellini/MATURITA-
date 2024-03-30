@@ -68,7 +68,7 @@
                         while ($row = ($result->fetch_assoc()))
                             echo "<option value=" . $row["id"] . ">" . $row["nome"] . " " . $row["cognome"] . "</option>";
                     } else 
-                        echo "<option>Nessun risultato trovato</option>";
+                        echo ERROR_DB;
                 ?>
                 </select>
 
@@ -98,7 +98,7 @@
                         while ($row = ($result->fetch_assoc()))
                             echo "<option value=" . $row["id"] . ">" . $row["nome"] . " " . $row["cognome"] . "</option>";
                     } else 
-                        echo "<option>Nessun risultato trovato</option>";
+                        echo ERROR_DB;
                 ?>
                 </select>
                 <label for="release">Seleziona il file che vuoi caricare</label>

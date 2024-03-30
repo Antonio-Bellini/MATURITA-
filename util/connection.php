@@ -1,5 +1,5 @@
 <?php 
-    // FUNZIONE per CONNETTERSI al DATABASE
+    // funzione per connettersi al database
     function connectToDatabase($hN, $uN, $pw, $dN) {
         $hostName = $hN;
         $username = $uN;

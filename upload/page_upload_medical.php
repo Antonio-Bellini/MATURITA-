@@ -42,9 +42,9 @@
 ?>
     <br>
     <section id="form">
-        <h2>Pagina per il caricamento delle anamnesi</h2><br><br>
-
-        <br><br>
+        <h2>Pagina per il caricamento delle anamnesi</h2>
+        
+        <br><br><br><br>
 
         <!-- form per caricamento del file anamnesi per gli assistiti -->
         <section id="form_assisted__medical">
@@ -63,7 +63,7 @@
                         while ($row = ($result->fetch_assoc()))
                             echo "<option value=" . $row["id"] . ">" . $row["nome"] . " " . $row["cognome"] . "</option>";
                     } else 
-                        echo "<option>Nessun risultato trovato</option>";
+                        echo ERROR_DB
                 ?>
                 </select>
 

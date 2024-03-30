@@ -58,7 +58,7 @@
                         $_SESSION["file_uploaded"] = true;
                         header("Location: ../private/area_personale.php");
                     } else {
-                        $_SESSION["file_notUploaded"] = true;
+                        $_SESSION["file_not_uploaded"] = true;
                         header("Location: ../private/area_personale.php");
                     }
                 } else if ($volunteerId != null) {
@@ -71,7 +71,7 @@
                         $_SESSION["file_uploaded"] = true;
                         header("Location: ../private/area_personale.php");
                     } else {
-                        $_SESSION["file_notUploaded"] = true;
+                        $_SESSION["file_not_uploaded"] = true;
                         header("Location: ../private/area_personale.php");
                     }
                 }
@@ -104,7 +104,7 @@
                 $_SESSION["file_uploaded"] = true;
                 header("Location: ../" . $table . "/" . $table . ".php");
             } else {
-                $_SESSION["file_notUploaded"] = true;
+                $_SESSION["file_not_uploaded"] = true;
                 header("Location: ../" . $table . "/" . $table . ".php");
             }
         }
@@ -130,7 +130,7 @@
                 $_SESSION["file_uploaded"] = true;
                 header("Location: ../private/area_personale.php");
             } else {
-                $_SESSION["file_notUploaded"] = true;
+                $_SESSION["file_not_uploaded"] = true;
                 header("Location: ../private/area_personale.php");
             }
         }

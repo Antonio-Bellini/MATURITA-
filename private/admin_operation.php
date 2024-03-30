@@ -18,8 +18,8 @@
 
     if (isset($_SESSION["is_logged"]) && $_SESSION["is_logged"]) {
         if ((isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) ||
-        (isset($_SESSION["is_terapist"]) && $_SESSION["is_terapist"]) ||
-        (isset($_SESSION["is_president"]) && $_SESSION["is_president"])) {
+            (isset($_SESSION["is_terapist"]) && $_SESSION["is_terapist"]) ||
+            (isset($_SESSION["is_president"]) && $_SESSION["is_president"])) {
             switch ($operation){
                 case "view_user":
                     if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) {
@@ -29,11 +29,22 @@
                         check_operation();
 
                         echo "<br><br><section id='table'><h3>GENITORI/REFERENTI REGISTRATI</h3>";
-                        $query = "SELECT id, NOME, COGNOME, USERNAME, EMAIL, telefono_fisso AS 'TELEFONO FISSO', telefono_mobile AS 'TELEFONO MOBILE', NOTE
-                                    FROM utenti WHERE id_profilo = 4";
+                        $query = "SELECT id, 
+                                        NOME, 
+                                        COGNOME, 
+                                        USERNAME, 
+                                        EMAIL, 
+                                        telefono_fisso AS 'TELEFONO FISSO', 
+                                        telefono_mobile AS 'TELEFONO MOBILE', 
+                                        NOTE
+                                    FROM utenti 
+                                    WHERE id_profilo = 4";
                         $result = dbQuery($connection, $query);
+
                         if ($result)
                             createTable($result, "user");
+                        else 
+                            echo ERROR_DB;
 
                         echo "<br><br><br><h3>Crea un nuovo account genitore/referente</h3;>
                                 <button class='btn'><a href='../register/register_user.php'>Crea account</a></button>
@@ -50,12 +61,21 @@
                         check_operation();
                         
                         echo "<br><br><section id='table'><h3>VOLONTARI REGISTRATI</h3>";
-                        $query = "SELECT v.id, v.NOME, v.COGNOME, v.EMAIL, v.telefono_fisso AS 'TELEFONO FISSO', v.telefono_mobile AS 'TELEFONO MOBILE', l.LIBERATORIA
+                        $query = "SELECT v.id, 
+                                        v.NOME, 
+                                        v.COGNOME, 
+                                        v.EMAIL, 
+                                        v.telefono_fisso AS 'TELEFONO FISSO', 
+                                        v.telefono_mobile AS 'TELEFONO MOBILE', 
+                                        l.LIBERATORIA
                                     FROM volontari v
                                     INNER JOIN liberatorie l ON v.id_liberatoria = l.id";
                         $result = dbQuery($connection, $query);
+
                         if ($result)
                             createTable($result, "volunteer");
+                        else 
+                            echo ERROR_DB;
 
                         echo "<br><br><br><h3>Crea un nuovo account volontario</h3;>
                                 <button class='btn'><a href='../register/register_volunteer.php'>Crea account</a></button>
@@ -71,7 +91,11 @@
                     check_operation();
                     
                     echo "<br><br><section id='table'><h3>ASSISTITI REGISTRATI</h3>";
-                    $query = "SELECT a.id, a.NOME, a.COGNOME, a.NOTE, a.ANAMNESI, 
+                    $query = "SELECT a.id, 
+                                    a.NOME, 
+                                    a.COGNOME, 
+                                    a.NOTE, 
+                                    a.ANAMNESI, 
                                     u.nome AS 'NOME GENITORE', 
                                     u.cognome AS 'COGNOME GENITORE',
                                     l.LIBERATORIA
@@ -79,8 +103,11 @@
                                 INNER JOIN utenti u ON a.id_referente = u.id
                                 INNER JOIN liberatorie l ON a.id_liberatoria = l.id";
                     $result = dbQuery($connection, $query);
+
                     if ($result)
                         createTable($result, "assisted");
+                    else
+                        echo ERROR_DB;
 
                     echo "<br><br><br><h3>Crea un nuovo account assistito</h3;>
                         <button class='btn'><a href='../register/register_assisted.php'>Crea account</a></button>
@@ -95,11 +122,22 @@
                         check_operation();
 
                         echo "<br><br><section id='table'><h3>TERAPISTI REGISTRATI</h3>";
-                        $query = "SELECT id, NOME, COGNOME, USERNAME, EMAIL, telefono_fisso AS 'TELEFONO FISSO', telefono_mobile AS 'TELEFONO MOBILE', NOTE
-                                    FROM utenti WHERE id_profilo = 3";
+                        $query = "SELECT id, 
+                                        NOME, 
+                                        COGNOME, 
+                                        USERNAME, 
+                                        EMAIL, 
+                                        telefono_fisso AS 'TELEFONO FISSO', 
+                                        telefono_mobile AS 'TELEFONO MOBILE', 
+                                        NOTE
+                                    FROM utenti 
+                                    WHERE id_profilo = 3";
                         $result = dbQuery($connection, $query);
+
                         if ($result)
                             createTable($result, "user");
+                        else 
+                            echo ERROR_DB;
 
                         echo "<br><br><br><h3>Crea un nuovo account terapista</h3;>
                                 <button class='btn'><a href='../register/register_terapist.php'>Crea account</a></button>
@@ -116,11 +154,21 @@
                         check_operation();
 
                         echo "<br><br><section id='table'><h3>PRESIDENTI REGISTRATI</h3>";
-                        $query = "SELECT id, NOME, COGNOME, USERNAME, EMAIL, telefono_fisso AS 'TELEFONO FISSO', telefono_mobile AS 'TELEFONO MOBILE', NOTE
-                                    FROM utenti WHERE id_profilo = 1";
+                        $query = "SELECT id, 
+                                        NOME, 
+                                        COGNOME, 
+                                        USERNAME, 
+                                        EMAIL, telefono_fisso AS 'TELEFONO FISSO', 
+                                        telefono_mobile AS 'TELEFONO MOBILE', 
+                                        NOTE
+                                    FROM utenti 
+                                    WHERE id_profilo = 1";
                         $result = dbQuery($connection, $query);
+
                         if ($result)
                             createTable($result, "user");
+                        else 
+                            echo ERROR_DB;
 
                         echo "<br><br><br><h3>Crea un nuovo account presidente</h3;>
                                 <button class='btn'><a href='../register/register_president.php'>Crea account</a></button>
@@ -133,7 +181,8 @@
                     if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) {
                         nav_menu();
 
-                        echo "<br><section id='form'>
+                        echo "<br>
+                                <section id='form'>
                                     <h2>Pagina eventi</h2>
                                     <label>Quale operazione vuoi eseguire?</label>
                                     <select id='mng_event__selected'>
@@ -189,21 +238,5 @@
                     </nav>            
                 </section>
             </main>";
-    }
-
-    // funzione per la stampa dell'esito dell'operatione eseguita
-    function check_operation() {
-        if (isset($_SESSION["user_modified"]) && $_SESSION["user_modified"]) {
-            echo MOD_OK;
-            $_SESSION["user_modified"] = false;
-        }
-        if (isset($_SESSION["user_deleted"]) && $_SESSION["user_deleted"]) {
-            echo DEL_OK;
-            $_SESSION["user_deleted"] = false;
-        }
-        if (isset($_SESSION["user_notModified"]) && $_SESSION["user_notModified"]) {
-            echo MOD_NONE;
-            $_SESSION["user_notModified"] = false;
-        }
     }
 ?>
