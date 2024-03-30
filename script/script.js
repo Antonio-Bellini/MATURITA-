@@ -24,7 +24,6 @@ $(document).ready(function () {
 
     // controllo per la modifica della password
     $('#new_psw').on("input", function() {
-        console.log("dciao");
         let old_psw = $('#old_psw').val();
         let new_psw = $(this).val();
         checkNewPassword(old_psw, new_psw);
@@ -33,7 +32,6 @@ $(document).ready(function () {
     // meccanismo per la scelta del tipo di utente su cui caricare la liberatoria
     $('#form_assisted').show();
     $('#form_volunteer').hide();
-
     $('#choice').change(function() {
         let selectedOption = $(this).val();
 
@@ -55,7 +53,6 @@ $(document).ready(function () {
     $('#createNewEvent').hide();
     $('#addNewEventType').hide();
     $('#viewVoluEventAssi').hide();
-
     $('#mng_event__selected').change(function() {
         let selectedOption = $(this).val();
 
@@ -107,9 +104,27 @@ $(document).ready(function () {
             gallery.scrollLeft(gallery.scrollLeft() + photoWidth);
         }, 2000);
     });
+
+    // doppia conferma prima di eliminare un utente dal db
+    $(".btn_delete").click(function(e) {
+        e.preventDefault();
+        
+        // ottengo l'url dal tag a
+        let url = $(this).find("a").attr("href");
+        
+        // conferma di eliminazione
+        let confirmed = confirm("Sei sicuro di voler procedere con l'eliminazione?");
+        
+        if (confirmed)
+            window.location.href = url;
+    });
+
+    // timer per far scomparire l'esito dell'operazione
+    $(".success, .error, .warning").fadeIn();
+    $(".success, .error, .warning").delay(2500).fadeOut();
 });
 
-// AJAX per il controllo live dell'email inserita
+// ajax per il controllo live dell'username inserito
 function checkInputUsername(username) {
     $.ajax({
         type: "POST",
@@ -124,7 +139,7 @@ function checkInputUsername(username) {
     });
 }
 
-// FUNZIONE per CONTROLLARE se é POSSIBILE MODIFICARE la PASSWORD
+// ajax per il controllo live della password inserita
 function checkNewPassword(old_psw, new_psw) {
     $.ajax({
         type: "POST",
@@ -138,4 +153,5 @@ function checkNewPassword(old_psw, new_psw) {
             else 
                 $("#passwordError").text("");
         }
-    })
+    });
+}

@@ -18,32 +18,40 @@
     nav_menu();
 ?>
 <?php
-    if (!isset($_SESSION["is_admin"]))
-        $_SESSION["is_admin"] = false;
-
     if (isset($_SESSION["is_logged"]) && $_SESSION["is_logged"]) {
         if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) {
             echo "<br>
                     <section id='form'>
-                        <h2>Pagina di registrazione di un volontario</h2><br>
-                        <form name='form_volunteer' action='register.php' id='form_register__volunteer' method='POST' enctype='multipart/form-data'>
-                            <input type='hidden' name='form_volunteer'>
-
+                        <h2>Pagina di registrazione di un terapista</h2><br>
+                        <form name='form_user' action='register.php' id='form_register__user' method='POST'>
+                            <input type='hidden' name='form_user'>
+                            <input type='hidden' name='form_terapist' value=3>
+                            
                             <div id='name_surname__label'>
-                                <label for='name'>Inserisci il nome *</label>
-                                <label for='surname'>Inserisci il cognome *</label>
+                                <label for='nome'>Inserisci il nome *</label>
+                                <label for='cognome'>Inserisci il cognome *</label>
                             </div>
                             <div id='name_surname__input'>
                                 <input type='text' name='name' id='name' maxlength='30' required>
                                 &nbsp;&nbsp;
                                 <input type='text' name='surname' id='surname' maxlength='30' required>
                             </div>
-
+                
+                            <div id='credentials__label'>
+                                <label for='username'>Inserisci lo username *</label>
+                                <label for='password'>Crea una password *</label>
+                            </div>
+                            <div id='credentials__input'>
+                                <input type='text' name='username' id='username' maxlength='20' required>
+                                <span id='usernameError'></span>                        
+                                <input type='password' name='password' id='password' maxlength='255' required>
+                            </div>
+                            
                             <label for='email'>Inserisci l'email *</label>
                             <input type='email' name='email' id='email' maxlength='30' required>
-
+                
                             <div id='phones__label'>
-                                <label for='phone_f'>Inserisci il numero del telefono fisso</label>
+                                <label for='phone_f'>Inserisci il numero di telefono fisso</label>
                                 <label for='phone_m'>Inserisci il numero di telefono *</label>
                             </div>
                             <div id='phones__input'>
@@ -51,19 +59,16 @@
                                 &nbsp;&nbsp;
                                 <input type='text' name='phone_m' id='phone_m' maxlength='9' required>
                             </div>
-
-                            <label for='release'>Carica la liberatoria *</label>
-                            <input type='file' name='release' id='release' accept='.pdf' enctype='multipart/form-data' required>
-
-                            <label for='notes'>Note utili</label>
-                            <textarea name='notes' id='notes' cols='30' rows='10' placeholder='Altre info utili'></textarea>
-
-                            <input type='submit' value='Crea Account Volontario'>
+                            
+                            <label for='notes'>Inserisci qualche nota aggiuntiva</label>
+                            <textarea name='notes' id='notes' cols='30' rows='10' placeholder='Altre info utili'></textarea> 
+                
+                            <input type='submit' class='btn' value='CREA ACCOUNT TERAPISTA'>
                         </form>
                     </section>";
 
             show_footer();
-        } else
+        } else 
             header("Location: ../index.php");
     } else 
         header("Location: ../private/page_login.php");
@@ -94,6 +99,6 @@
                 </section>
             </main>";
     }
-?>
+?>    
 </body>
 </html>
