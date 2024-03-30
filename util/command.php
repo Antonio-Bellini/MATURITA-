@@ -171,16 +171,16 @@
         $resultE = dbQuery($connection, $queryE);
 
         if ($resultV && $resultE) {
-            echo "<form action='../private/event.php?function=addVolunteerToEvent' id='addVolunteerToEvent' method='POST'>
+            echo "<form action='../private/event.php?function=addVolunteerToEvent' id='addVolunteerToEvent' method='POST' class='addVolunteerToEvent'>
                     <br><br>
                     <label for='volunteer'>Quale volontario vuoi assegnare all'evento?</label>
-                    <select name='volunteer' id='volunteer'>";
+                    <select name='volunteer' id='user'>";
                         while ($row = ($resultV->fetch_assoc()))
                             echo "<option value=" . $row["id"] . ">" . $row["nome"] . " " . $row["cognome"] . "</option>";
             echo    "</select>
 
                     <label for='event'>A quale evento vuoi assegnare il volontario?</label>
-                    <select name='event'>";
+                    <select name='event' id='event'>";
                         while ($row = ($resultE->fetch_assoc()))
                             echo "<option value=" . $row["id"] . ">" . $row["tipo"] . " il " . $row["data"] . "</option>";
             echo    "</select>
@@ -207,13 +207,13 @@
             echo "<form action='../private/event.php?function=addAssistedToEvent' id='addAssistedToEvent' method='POST'>
                     <br><br>
                     <label for='assisted'>Quale assistito vuoi aggiungere all'evento?</label>
-                    <select name='assisted'>";
+                    <select name='assisted' id='user'>";
                         while ($row = ($resultA->fetch_assoc()))
                             echo "<option value=" . $row["id"] . ">" . $row["nome"] . " " . $row["cognome"] . "</option>";
             echo    "</select>
 
                     <label for='event'>A quale evento vuoi agiungere l'assistito?</label>
-                    <select name='event'>";
+                    <select name='event' id='event'>";
                         while ($row = ($resultE->fetch_assoc()))
                             echo "<option value=" . $row["id"] . ">" . $row["tipo"] . " il " . $row["data"] . "</option>";
             echo    "</select>
@@ -236,13 +236,13 @@
             echo "<form action='../private/event.php?function=createNewEvent' id='createNewEvent' method='POST'>
                         <br><br>
                         <label for='event_type'>Che tipo di evento sará?</label>
-                        <select name='event_type'>";
+                        <select name='event_type' id='event_type'>";
                             while ($row = ($result->fetch_assoc()))
                                 echo "<option value=" . $row["id"] . ">" . $row["tipo"] . "</option>";
             echo        "</select>
 
                         <label for='event_date'>Quando si terrá?</label>
-                        <input type='date' name='event_date' required>
+                        <input type='date' name='event_date' id='event_date' required>
 
                         <label for='event_notes'>Aggiungi qualche nota utile sull'evento</label>
                         <textarea name='event_notes' id='notes' cols='30' rows='10' placeholder='Altre info utili'></textarea>
@@ -275,7 +275,7 @@
             echo "<form action='../private/event.php?function=viewVoluEventAssi' id='viewVoluEventAssi' method='POST'>
                     <br><br>
                     <label>Quale tipo di evento vuoi vedere?</label>
-                    <select name='event'>";
+                    <select name='event' id='event'>";
                         while ($row = ($result->fetch_assoc()))
                             echo "<option value=" . $row["id"] . ">" . $row["tipo"] . " il " . $row["data"] . "</option>";
             echo    "</select>
