@@ -19,8 +19,10 @@
     nav_menu();
 
     if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) {
+        check_operation();
+
         switch ($function) {
-            case "addVolunteerToEvent":
+            case "crud_volunteer_event":
                 try {
                     $volunteer = $_POST["volunteer"];
                     $event = $_POST["event"];
@@ -45,7 +47,7 @@
                 }
                 break;
 
-            case "addAssistedToEvent":
+            case "crud_assisted_event":
                 try {
                     $assisted = $_POST["assisted"];
                     $event = $_POST["event"];
@@ -70,7 +72,7 @@
                 }
                 break;
             
-            case "createNewEvent":
+            case "crud_event":
                 $event_type = $_POST["event_type"];
                 $event_date = $_POST["event_date"];
                 $event_notes = null;
@@ -84,14 +86,25 @@
 
                 if ($result) {
                     $_SESSION["event_created"] = true;
-                    header("Location: area_personale.php");
+                    $query = "SELECT e.id,
+                                    tipo AS 'NOME EVENTO',
+                                    data AS 'DATA EVENTO',
+                                    note AS 'NOTE EVENTO'
+                                FROM eventi e
+                                INNER JOIN tipi_evento te ON e.tipo_evento = te.id";
+                    $result = dbQuery($connection, $query);
+
+                    if ($result) 
+                        createTable($result, "admin");
+                    else 
+                        echo ERROR_DB;
                 } else {
                     $_SESSION["event_not_created"] = true;
                     header("Location: area_personale.php");
                 }
                 break;
 
-            case "addNewEventType": 
+            case "crud_eventType": 
                 $new_event = $_POST["new_event"];
 
                 $query = "INSERT INTO tipi_evento(tipo)
@@ -107,7 +120,7 @@
                 }
                 break;
 
-            case "viewVoluEventAssi":
+            case "view_all_event":
                 $event = $_POST["event"];
                 if ($event === "all") {
                     $query = "SELECT e.id,

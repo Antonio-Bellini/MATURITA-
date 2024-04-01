@@ -113,7 +113,10 @@
                 break;
 
             case "admin":
-                return "<button class='btn_delete'>
+                return "<button class='table--btn'>
+                            <a href='crud.php?operation=modify&user={$userId}&profile=admin'>Modifica</a>
+                        </button>
+                        <button class='btn_delete'>
                             <a href='crud.php?operation=delete&user={$userId}&profile=admin'>Elimina</a>
                         </button>";
                 break;
@@ -186,7 +189,7 @@
     }
 
     // funzione per mostrare il form per aggiungere un volontario a un evento
-    function addVolunteerToEvent($connection) {
+    function crud_volunteer_event($connection) {
         $queryV = "SELECT id, nome, cognome FROM volontari";
         $queryE = "SELECT e.id, te.tipo, e.data 
                     FROM eventi e
@@ -195,7 +198,7 @@
         $resultE = dbQuery($connection, $queryE);
 
         if ($resultV && $resultE) {
-            echo "<form action='../private/event.php?function=addVolunteerToEvent' id='addVolunteerToEvent' method='POST' class='addVolunteerToEvent'>
+            echo "<form action='../private/event.php?function=crud_volunteer_event' id='addVolunteerToEvent' method='POST' class='addVolunteerToEvent'>
                     <br><br>
                     <label for='volunteer'>Quale volontario vuoi assegnare all'evento?</label>
                     <select name='volunteer' id='user'>";
@@ -219,7 +222,7 @@
     }
 
     // funzione per mostrare il form per aggiungere un assistito a un evento
-    function addAssistedToEvent($connection) {
+    function crud_assisted_event($connection) {
         $queryA = "SELECT id, nome, cognome FROM assistiti";
         $queryE = "SELECT e.id, te.tipo, e.data 
                     FROM eventi e
@@ -228,7 +231,7 @@
         $resultE = dbQuery($connection, $queryE);
 
         if ($resultA && $resultE) {
-            echo "<form action='../private/event.php?function=addAssistedToEvent' id='addAssistedToEvent' method='POST'>
+            echo "<form action='../private/event.php?function=crud_assisted_event' id='addAssistedToEvent' method='POST'>
                     <br><br>
                     <label for='assisted'>Quale assistito vuoi aggiungere all'evento?</label>
                     <select name='assisted' id='user'>";
@@ -252,12 +255,12 @@
     }
 
     // funzione per mostrare il form per creare un nuovo evento
-    function createNewEvent($connection) {
+    function crud_event($connection) {
         $query = "SELECT id, tipo FROM tipi_evento";
         $result = dbQuery($connection, $query);
 
         if ($result) {
-            echo "<form action='../private/event.php?function=createNewEvent' id='createNewEvent' method='POST'>
+            echo "<form action='../private/event.php?function=crud_event' id='createNewEvent' method='POST'>
                         <br><br>
                         <label for='event_type'>Che tipo di evento sará?</label>
                         <select name='event_type' id='event_type'>";
@@ -278,8 +281,8 @@
     } 
 
     // funzione per mostrare il form per creare un nuovo tipo di evento
-    function addNewEventType() {
-        echo "<form action='../private/event.php?function=addNewEventType' id='addNewEventType' method='POST'>
+    function crud_eventType() {
+        echo "<form action='../private/event.php?function=crud_eventType' id='addNewEventType' method='POST'>
                 <br><br>
                 <label>Quale sará il nome del nuovo evento?</label>
                 <textarea name='new_event' id='notes' cols='30' rows='10' placeholder='Nome nuovo evento' required></textarea>
@@ -289,14 +292,14 @@
     }
 
     // funzione per visualizzare l'associazione tra volontari-eventi-assistiti
-    function viewVoluEventAssi($connection) {
+    function view_all_event($connection) {
         $query = "SELECT e.id, te.tipo, e.data 
                     FROM eventi e
                     INNER JOIN tipi_evento te ON te.id = e.tipo_evento";
         $result = dbQuery($connection, $query);
 
         if ($result) {
-            echo "<form action='../private/event.php?function=viewVoluEventAssi' id='viewVoluEventAssi' method='POST'>
+            echo "<form action='../private/event.php?function=view_all_event' id='viewVoluEventAssi' method='POST'>
                     <br><br>
                     <label>Quale tipo di evento vuoi vedere?</label>
                     <select name='event' id='event'>";
@@ -325,9 +328,17 @@
             echo MOD_OK;
             $_SESSION["user_modified"] = false;
         }
+        if (isset($_SESSION["event_modified"]) && $_SESSION["event_modified"]) {
+            echo MOD_OK;
+            $_SESSION["event_modified"] = false;
+        }
         if (isset($_SESSION["user_not_modified"]) && $_SESSION["user_not_modified"]) {
             echo MOD_NONE;
             $_SESSION["user_not_modified"] = false;
+        }
+        if (isset($_SESSION["event_not_modified"]) && $_SESSION["event_not_modified"]) {
+            echo MOD_NONE;
+            $_SESSION["event_not_modified"] = false;
         }
         if (isset($_SESSION["user_deleted"]) && $_SESSION["user_deleted"]) {
             echo DEL_OK;

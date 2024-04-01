@@ -61,6 +61,37 @@
                 case "rls":
                     header("Location: ../upload/page_upload.php?release={$userId}");
                     break;
+
+                case "admin":
+                    $query1 = "SELECT id, tipo FROM tipi_evento";
+                    $result1 = dbQuery($connection, $query1);
+                    $query2 = "SELECT te.tipo FROM tipi_evento te INNER JOIN eventi e ON e.tipo_evento = te.id WHERE e.id=$userId";
+                    $result2 = dbQuery($connection, $query2);
+
+                    if ($result1 && $result2) {
+                        echo "<br><br>
+                                <section id='form'>
+                                    <h3>Cosa vuoi modificare?</h3><br><br>
+                                    <form action='update.php' method='POST'>
+                                        <input type='hidden' name='type' value='update_event'>
+                                        <input type='hidden' name='user_id' value=$userId>
+
+                                        <div id='name_surname__label'>
+                                            <label for='event_type'>Tipo evento</label>
+                                            <label for='event_type'>Data evento</label>
+                                        </div>
+                                        <div id='name_surname__input'>
+                                            <select name='new_eventType'>";
+                                            while ($row = ($result1->fetch_assoc()))
+                                                echo "<option value='" . $row["id"] . "'>" . $row["tipo"] . "</option>";
+                        echo               "</select>&nbsp;&nbsp;
+                                            <input type='date' name='new_date'>
+                                        </div>
+                                        <input type='submit' value='AGGIORNA DATI'>
+                                    </form>
+                                </section>";
+                    }
+                    break;
             }
             break;
 

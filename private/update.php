@@ -122,6 +122,32 @@
                 header("Location: admin_operation.php?operation=view_volu");
             }
             break;
+
+        case "update_event":
+            $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
+            $update_query = "UPDATE eventi SET ";
+
+            if (!empty($_POST["new_eventType"]))
+                $new_data[] = "tipo_evento = '{$_POST["new_eventType"]}'";
+
+            if (!empty($_POST["new_date"]))
+                $new_data[] = "data = '{$_POST["new_date"]}'";
+
+            if (!empty($new_data)) {
+                $update_query .= implode(", ", $new_data);
+                $update_query .= " WHERE id = $userId";
+                $result = dbQuery($connection, $update_query);
+
+                if ($result) {
+                    $_SESSION["event_modified"] = true;
+                    header("Location: area_personale.php");
+                } else
+                    echo ERROR_DB;
+            } else {
+                $_SESSION["event_not_modified"] = true;
+                header("Location: area_personale.php");
+            }
+            break;
     }
 
 

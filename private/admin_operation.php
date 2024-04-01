@@ -143,17 +143,17 @@
                                     <h2>Pagina eventi</h2>
                                     <label>Quale operazione vuoi eseguire?</label>
                                     <select id='mng_event__selected'>
-                                        <option value='1'>Aggiungi volontario a evento</option>
-                                        <option value='2'>Aggiungi assistito a evento</option>
+                                        <option value='1'>CRUD volontari_evento</option>
+                                        <option value='2'>CRUD assistiti_evento</option>
                                         <option value='3'>Crea nuovo evento</option>
-                                        <option value='4'>Aggiungi nuovo tipo di evento</option>
+                                        <option value='4'>CRUD tipi_evento</option>
                                         <option value='5'>Visualizza eventi</option>
                                     </select>";
-                                    addVolunteerToEvent($connection);
-                                    addAssistedToEvent($connection);
-                                    createNewEvent($connection);
-                                    addNewEventType($connection);
-                                    viewVoluEventAssi($connection);
+                                    crud_volunteer_event($connection);
+                                    crud_assisted_event($connection);
+                                    crud_event($connection);
+                                    crud_eventType($connection);
+                                    view_all_event($connection);
                         echo "  </section>";
                     } else
                         header("Location: ../index.php");
