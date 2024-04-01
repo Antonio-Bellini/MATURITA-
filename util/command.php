@@ -76,10 +76,11 @@
     function printButton($userType, $userId, $result) {
         switch ($userType) {
             case "user" :
-                echo "<td>
-                        <button class='table--btn'><a href='crud.php?operation=modify&user={$userId}&profile=user'>Modifica</a></button>
-                        <button class='btn_delete'><a href='crud.php?operation=delete&user={$userId}&profile=user'>Elimina</a></button>
-                    </td>";
+                echo "<td>";
+                echo "      <button class='table--btn'><a href='crud.php?operation=modify&user={$userId}&profile=user'>Modifica</a></button>";
+                if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"])
+                    echo "  <button class='btn_delete'><a href='crud.php?operation=delete&user={$userId}&profile=user'>Elimina</a></button>";
+                echo "</td>";
                 break;
 
             case "assisted":
