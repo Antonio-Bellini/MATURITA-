@@ -122,6 +122,14 @@ $(document).ready(function () {
     // timer per far scomparire l'esito dell'operazione
     $(".success, .error, .warning").fadeIn();
     $(".success, .error, .warning").delay(2500).fadeOut();
+
+    //
+    user = $('#user_selected').val();
+    getUserSelected(user);
+    $('#user_selected').change(function(){
+        let selected = $(this).val();
+        getUserSelected(selected);
+    });
 });
 
 // ajax per il controllo live dell'username inserito
@@ -152,6 +160,50 @@ function checkNewPassword(old_psw, new_psw) {
                 $("#passwordError").text("La vecchia password non corrisponde");
             else 
                 $("#passwordError").text("");
+        }
+    });
+}
+
+// ajax per ottenere i dati del tipo di utente selezionato
+function getUserSelected(user) {
+    $.ajax({
+        type: "POST",
+        url: "../util/ajax/get_user.php",
+        data: { user_selected: user },
+        success: function (response) {
+            switch (parseInt(user)) {
+                case 1:
+                    $('#table').html(response);
+                    $('#user_title').text("PRESIDENTI REGISTRATI");
+                    $('#create_title').show().text("Crea un nuovo account presidente");
+                    $('#button_parent').show();
+                    $('#button_title').show().attr('href', '../register/register_president.php');
+                    break;
+
+                case 2:
+                    $('#table').html(response);
+                    $('#user_title').text("ADMIN REGISTRATI");
+                    $('#create_title').hide();
+                    $('#button_parent').hide();
+                    $('#button_title').hide();
+                    break;
+
+                case 3:
+                    $('#table').html(response);
+                    $('#user_title').text("TERAPISTI REGISTRATI");
+                    $('#create_title').show().text("Crea un nuovo account terapista");
+                    $('#button_parent').show();
+                    $('#button_title').show().attr('href', '../register/register_terapist.php');
+                    break;
+
+                case 4:
+                    $('#table').html(response);
+                    $('#user_title').text("GENITORI/REFERENTI REGISTRATI");
+                    $('#create_title').show().text("Crea un nuovo account genitore/referente");
+                    $('#button_parent').show();
+                    $('#button_title').show().attr('href', '../register/register_user.php');
+                    break;
+            }
         }
     });
 }

@@ -60,8 +60,6 @@
                                 <button class='btn'><a href='admin_operation.php?operation=view_user'>GESTIONE UTENTI</a></button>
                                 <button class='btn'><a href='admin_operation.php?operation=view_volu'>GESTIONE VOLONTARI</a></button>
                                 <button class='btn'><a href='admin_operation.php?operation=view_assi'>GESTIONE ASSISTITI</a></button>
-                                <button class='btn'><a href='admin_operation.php?operation=view_terapist'>GESTIONE TERAPISTI</a></button>
-                                <button class='btn'><a href='admin_operation.php?operation=view_president'>GESTIONE PRESIDENTI</a></button>
                                 <button class='btn'><a href='../upload/page_upload.php'>CARICA LIBERATORIE</a></button>
                                 <button class='btn'><a href='admin_operation.php?operation=mng_event'>GESTIONE EVENTI</a></button>
                             </section>";

@@ -28,27 +28,25 @@
                         // funzione per la stampa dell'esito dell'operatione eseguita
                         check_operation();
 
-                        echo "<br><br><section id='table'><h3>GENITORI/REFERENTI REGISTRATI</h3>";
-                        $query = "SELECT id, 
-                                        NOME, 
-                                        COGNOME, 
-                                        USERNAME, 
-                                        EMAIL, 
-                                        telefono_fisso AS 'TELEFONO FISSO', 
-                                        telefono_mobile AS 'TELEFONO MOBILE', 
-                                        NOTE
-                                    FROM utenti 
-                                    WHERE id_profilo = 4";
-                        $result = dbQuery($connection, $query);
+                        echo " <br><br>
+                                <section id='form'>
+                                    <h3>Quale tipo di utente vuoi visualizzare?</h3><br>
+                                    <select id='user_selected'>
+                                        <option value='1'>PRESIDENTI REGISTRATI</option>
+                                        <option value='2'>ADMIN REGISTRATI</option>
+                                        <option value='3'>TERAPISTI REGISTRATI</option>
+                                        <option value='4'>GENITORI/REFERENTI REGISTRATI</option>
+                                    </select>
+                                </section>";
 
-                        if ($result)
-                            createTable($result, "user");
-                        else 
-                            echo ERROR_DB;
+                        echo "<br><br><br><br>
+                                <h3 id='user_title'></h3>
+                                <section id='table'></section>";
 
-                        echo "<br><br><br><h3>Crea un nuovo account genitore/referente</h3;>
-                                <button class='btn'><a href='../register/register_user.php'>Crea account</a></button>
-                            </section>";
+                        echo "  <section id='table'>    
+                                    <h3 id='create_title'></h3>
+                                    <button class='btn' id='button_parent'><a href='' id='button_title'>Crea account</a></button>
+                                </section>";
                     } else
                         header("Location: ../index.php");
                     break;
@@ -112,69 +110,6 @@
                     echo "<br><br><br><h3>Crea un nuovo account assistito</h3;>
                         <button class='btn'><a href='../register/register_assisted.php'>Crea account</a></button>
                     </section>";
-                    break;
-
-                case "view_terapist":
-                    if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) {
-                        nav_menu();
-
-                        // funzione per la stampa dell'esito dell'operatione eseguita
-                        check_operation();
-
-                        echo "<br><br><section id='table'><h3>TERAPISTI REGISTRATI</h3>";
-                        $query = "SELECT id, 
-                                        NOME, 
-                                        COGNOME, 
-                                        USERNAME, 
-                                        EMAIL, 
-                                        telefono_fisso AS 'TELEFONO FISSO', 
-                                        telefono_mobile AS 'TELEFONO MOBILE', 
-                                        NOTE
-                                    FROM utenti 
-                                    WHERE id_profilo = 3";
-                        $result = dbQuery($connection, $query);
-
-                        if ($result)
-                            createTable($result, "user");
-                        else 
-                            echo ERROR_DB;
-
-                        echo "<br><br><br><h3>Crea un nuovo account terapista</h3;>
-                                <button class='btn'><a href='../register/register_terapist.php'>Crea account</a></button>
-                            </section>";
-                    } else
-                        header("Location: ../index.php");
-                    break;
-
-                case "view_president":
-                    if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) {
-                        nav_menu();
-
-                        // funzione per la stampa dell'esito dell'operatione eseguita
-                        check_operation();
-
-                        echo "<br><br><section id='table'><h3>PRESIDENTI REGISTRATI</h3>";
-                        $query = "SELECT id, 
-                                        NOME, 
-                                        COGNOME, 
-                                        USERNAME, 
-                                        EMAIL, telefono_fisso AS 'TELEFONO FISSO', 
-                                        telefono_mobile AS 'TELEFONO MOBILE', 
-                                        NOTE
-                                    FROM utenti 
-                                    WHERE id_profilo = 1";
-                        $result = dbQuery($connection, $query);
-
-                        if ($result)
-                            createTable($result, "user");
-                        else 
-                            echo ERROR_DB;
-
-                        echo "<br><br><br><h3>Crea un nuovo account presidente</h3;>
-                                <button class='btn'><a href='../register/register_president.php'>Crea account</a></button>
-                            </section>";
-                    } else
-                        header("Location: ../index.php");
                     break;
                 
                 case "mng_event":
