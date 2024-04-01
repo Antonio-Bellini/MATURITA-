@@ -5,6 +5,7 @@
     include("../util/cookie.php");
 
     echo "<script src='https://code.jquery.com/jquery-3.6.4.min.js'></script>";
+    echo "<script src='http://52.47.171.54:8080/bootstrap.js'></script>";
     echo "<script src='../script/script.js'></script>";
     echo "<link rel='stylesheet' href='../style/style.css'>";
     importActualStyle();
@@ -19,8 +20,10 @@
     nav_menu();
 
     if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) {
+        check_operation();
+
         switch ($function) {
-            case "addVolunteerToEvent":
+            case "crud_volunteer_event":
                 try {
                     $volunteer = $_POST["volunteer"];
                     $event = $_POST["event"];
@@ -45,7 +48,7 @@
                 }
                 break;
 
-            case "addAssistedToEvent":
+            case "crud_assisted_event":
                 try {
                     $assisted = $_POST["assisted"];
                     $event = $_POST["event"];
@@ -70,7 +73,7 @@
                 }
                 break;
             
-            case "createNewEvent":
+            case "crud_event":
                 $event_type = $_POST["event_type"];
                 $event_date = $_POST["event_date"];
                 $event_notes = null;
@@ -84,14 +87,25 @@
 
                 if ($result) {
                     $_SESSION["event_created"] = true;
-                    header("Location: area_personale.php");
+                    $query = "SELECT e.id,
+                                    tipo AS 'NOME EVENTO',
+                                    data AS 'DATA EVENTO',
+                                    note AS 'NOTE EVENTO'
+                                FROM eventi e
+                                INNER JOIN tipi_evento te ON e.tipo_evento = te.id";
+                    $result = dbQuery($connection, $query);
+
+                    if ($result) 
+                        createTable($result, "admin");
+                    else 
+                        echo ERROR_DB;
                 } else {
                     $_SESSION["event_not_created"] = true;
                     header("Location: area_personale.php");
                 }
                 break;
 
-            case "addNewEventType": 
+            case "crud_eventType": 
                 $new_event = $_POST["new_event"];
 
                 $query = "INSERT INTO tipi_evento(tipo)
@@ -107,22 +121,39 @@
                 }
                 break;
 
-            case "viewVoluEventAssi":
+            case "view_all_event":
                 $event = $_POST["event"];
-                $query = "SELECT e.id,
-                                te.tipo AS evento,
-                                e.data AS data_evento,
-                                e.note AS note_evento,
-                            GROUP_CONCAT(DISTINCT CONCAT(a.nome, ' ', a.cognome) SEPARATOR '<br>') AS assistiti,
-                            GROUP_CONCAT(DISTINCT CONCAT(v.nome, ' ', v.cognome) SEPARATOR '<br>') AS volontari
-                            FROM eventi e
-                            INNER JOIN assistiti_evento ae ON e.id = ae.id_evento
-                            INNER JOIN volontari_evento ve ON e.id = ve.id_evento
-                            INNER JOIN tipi_evento te ON e.tipo_evento = te.id
-                            INNER JOIN assistiti a ON a.id = ae.id_assistito
-                            INNER JOIN volontari v ON v.id = ve.id_volontario
-                            WHERE e.id = '$event'
-                            GROUP BY e.id, te.tipo, e.data, e.note;";
+                if ($event === "all") {
+                    $query = "SELECT e.id,
+                                    te.tipo AS 'NOME EVENTO',
+                                    e.data AS 'DATA EVENTO',
+                                    e.note AS 'NOTE EVENTO',
+                                    GROUP_CONCAT(DISTINCT CONCAT(a.nome, ' ', a.cognome) SEPARATOR '<br>') AS 'ASSISTITI REGISTRATI',
+                                    GROUP_CONCAT(DISTINCT CONCAT(v.nome, ' ', v.cognome) SEPARATOR '<br>') AS 'VOLONTARI REGISTRATI'
+                                FROM eventi e
+                                LEFT JOIN assistiti_evento ae ON e.id = ae.id_evento
+                                LEFT JOIN volontari_evento ve ON e.id = ve.id_evento
+                                LEFT JOIN tipi_evento te ON e.tipo_evento = te.id
+                                LEFT JOIN assistiti a ON a.id = ae.id_assistito
+                                LEFT JOIN volontari v ON v.id = ve.id_volontario
+                                GROUP BY e.id, te.tipo, e.data, e.note;";
+                } else {
+                    $query = "SELECT e.id,
+                                    te.tipo AS 'NOME EVENTO',
+                                    e.data AS 'DATA VENTO',
+                                    e.note AS 'NOTE EVENTO',
+                                    GROUP_CONCAT(DISTINCT CONCAT(a.nome, ' ', a.cognome) SEPARATOR '<br>') AS assistiti,
+                                    GROUP_CONCAT(DISTINCT CONCAT(v.nome, ' ', v.cognome) SEPARATOR '<br>') AS volontari
+                                FROM eventi e
+                                LEFT JOIN assistiti_evento ae ON e.id = ae.id_evento
+                                LEFT JOIN volontari_evento ve ON e.id = ve.id_evento
+                                LEFT JOIN tipi_evento te ON e.tipo_evento = te.id
+                                LEFT JOIN assistiti a ON a.id = ae.id_assistito
+                                LEFT JOIN volontari v ON v.id = ve.id_volontario
+                                WHERE e.id = '$event'
+                                GROUP BY e.id, te.tipo, e.data, e.note;";
+                }
+
                 $result = dbQuery($connection, $query);
 
                 if ($result) {

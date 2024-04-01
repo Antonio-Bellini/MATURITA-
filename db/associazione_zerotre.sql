@@ -468,7 +468,7 @@ ALTER TABLE `volontari`
 --
 ALTER TABLE `assistiti`
   ADD CONSTRAINT `assistiti_ibfk_1` FOREIGN KEY (`id_referente`) REFERENCES `utenti` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `assistiti_ibfk_2` FOREIGN KEY (`id_liberatoria`) REFERENCES `liberatorie` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `assistiti_ibfk_2` FOREIGN KEY (`id_liberatoria`) REFERENCES `liberatorie` (`id`) ON UPDATE CASCADE ON DELETE SET NULL;
 
 --
 -- Limiti per la tabella `assistiti_evento`
@@ -500,8 +500,8 @@ ALTER TABLE `utenti`
 -- Limiti per la tabella `volontari`
 --
 ALTER TABLE `volontari`
-  ADD CONSTRAINT `volontari_ibfk_1` FOREIGN KEY (`id_liberatoria`) REFERENCES `liberatorie` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `volontari_ibfk_2` FOREIGN KEY (`id_liberatoria`) REFERENCES `liberatorie` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `volontari_ibfk_1` FOREIGN KEY (`id_liberatoria`) REFERENCES `liberatorie` (`id`) ON UPDATE CASCADE ON DELETE SET NULL,
+  ADD CONSTRAINT `volontari_ibfk_2` FOREIGN KEY (`id_liberatoria`) REFERENCES `liberatorie` (`id`) ON UPDATE CASCADE ON DELETE SET NULL;
 
 --
 -- Limiti per la tabella `volontari_evento`

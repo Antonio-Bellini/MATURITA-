@@ -122,6 +122,22 @@ $(document).ready(function () {
     // timer per far scomparire l'esito dell'operazione
     $(".success, .error, .warning").fadeIn();
     $(".success, .error, .warning").delay(2500).fadeOut();
+
+    // visualizzazione di diversi tipi di utenti
+    user = $('#user_selected').val();
+    getUserSelected(user);
+    $('#user_selected').change(function(){
+        let selected = $(this).val();
+        getUserSelected(selected);
+    });
+
+    //
+    choice = $('#rls_choice').val();
+    doRlsEvent(choice);
+    $('#rls_choice').change(function () {
+        let choice = $(this).val();
+        doRlsEvent(choice);
+    });
 });
 
 // ajax per il controllo live dell'username inserito
@@ -154,4 +170,71 @@ function checkNewPassword(old_psw, new_psw) {
                 $("#passwordError").text("");
         }
     });
+}
+
+// ajax per ottenere i dati del tipo di utente selezionato
+function getUserSelected(user) {
+    $.ajax({
+        type: "POST",
+        url: "../util/ajax/get_user.php",
+        data: { user_selected: user },
+        success: function (response) {
+            switch (parseInt(user)) {
+                case 1:
+                    $('#table').html(response);
+                    $('#user_title').text("PRESIDENTI REGISTRATI");
+                    $('#create_title').show().text("Crea un nuovo account presidente");
+                    $('#button_parent').show();
+                    $('#button_title').show().attr('href', '../register/register_president.php');
+                    break;
+
+                case 2:
+                    $('#table').html(response);
+                    $('#user_title').text("ADMIN REGISTRATI");
+                    $('#create_title').hide();
+                    $('#button_parent').hide();
+                    $('#button_title').hide();
+                    break;
+
+                case 3:
+                    $('#table').html(response);
+                    $('#user_title').text("TERAPISTI REGISTRATI");
+                    $('#create_title').show().text("Crea un nuovo account terapista");
+                    $('#button_parent').show();
+                    $('#button_title').show().attr('href', '../register/register_terapist.php');
+                    break;
+
+                case 4:
+                    $('#table').html(response);
+                    $('#user_title').text("GENITORI/REFERENTI REGISTRATI");
+                    $('#create_title').show().text("Crea un nuovo account genitore/referente");
+                    $('#button_parent').show();
+                    $('#button_title').show().attr('href', '../register/register_user.php');
+                    break;
+            }
+        }
+    });
+}
+
+// gestione della pagina "gestione liberatorie"
+function doRlsEvent(choice) {
+    switch (parseInt(choice)) {
+        case 1:
+            $('#up_rls').show();
+            $('#up_rls').click(function() {
+                window.location.href = "../upload/page_upload.php";
+            });
+            break;
+
+        case 2:
+            $('#up_rls').hide();
+            $.ajax({
+                type: "POST",
+                url: "../util/ajax/get_release.php",
+                success: function (response) {
+                    $('#table').html(response);
+                }
+            });
+            break;
+    }
 }
