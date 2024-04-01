@@ -59,7 +59,7 @@
                     break;
 
                 case "rls":
-                    header("Location: ../upload/page_upload.php");
+                    header("Location: ../upload/page_upload.php?release={$userId}");
                     break;
             }
             break;

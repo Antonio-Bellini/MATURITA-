@@ -55,7 +55,7 @@
                         if ($key !== "id")
                             echo "<td>" . printField($value) . "</td>";
                     }
-                    printButton($userType, $row["id"], $result);
+                    echo "<td>" . printButton($userType, $row["id"]) . "</td>";
                     echo "</tr>";
                 }
                 echo "</table>";
@@ -73,46 +73,56 @@
     }
     
     // funzione per la stampa dei bottoni di modifica
-    function printButton($userType, $userId, $result) {
+    function printButton($userType, $userId) {
         switch ($userType) {
-            case "user" :
-                echo "<td>";
-                echo "      <button class='table--btn'><a href='crud.php?operation=modify&user={$userId}&profile=user'>Modifica</a></button>";
+            case "user":
+                $result = "";
+                $result .= "<button class='table--btn'>
+                                <a href='crud.php?operation=modify&user={$userId}&profile=user'>Modifica</a>
+                            </button>&nbsp;&nbsp;";
                 if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"])
-                    echo "  <button class='btn_delete'><a href='crud.php?operation=delete&user={$userId}&profile=user'>Elimina</a></button>";
-                echo "</td>";
+                    $result .= "<button class='btn_delete'>
+                                    <a href='crud.php?operation=delete&user={$userId}&profile=user'>Elimina</a>
+                                </button>";
+                return $result;
                 break;
 
             case "assisted":
+                $result = "";
                 if (isset($_SESSION["is_president"]) && $_SESSION["is_president"])
                     return null;
                 else {
-                    echo "<td>
-                            <button class='table--btn'><a href='crud.php?operation=modify&user={$userId}&profile=assisted'>Modifica</a></button>&nbsp;";
-                            if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"])
-                                echo "<button class='btn_delete'><a href='crud.php?operation=delete&user={$userId}&profile=assisted'>Elimina</a></button>
-                        </td>";
+                    $result .= "<button class='table--btn'>
+                                    <a href='crud.php?operation=modify&user={$userId}&profile=assisted'>Modifica</a>
+                                </button>&nbsp;&nbsp;";
+                    if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"])
+                        $result .= "<button class='btn_delete'>
+                                    <a href='crud.php?operation=delete&user={$userId}&profile=assisted'>Elimina</a>
+                                </button>";
+                    return $result;
                 }
                 break;
 
             case "volunteer":
-                echo "<td>
-                        <button class='table--btn'><a href='crud.php?operation=modify&user={$userId}&profile=volunteer'>Modifica</a></button>
-                        <button class='btn_delete'><a href='crud.php?operation=delete&user={$userId}&profile=volunteer'>Elimina</a></button>
-                    </td>";
+                return "<button class='table--btn'>
+                            <a href='crud.php?operation=modify&user={$userId}&profile=volunteer'>Modifica</a>
+                        </button>&nbsp;&nbsp;
+                        <button class='btn_delete'>
+                            <a href='crud.php?operation=delete&user={$userId}&profile=volunteer'>Elimina</a>
+                        </button>";
                 break;
 
             case "rls":
-                echo "<td>
-                        <button class='table--btn'><a href='crud.php?operation=modify&user={$userId}&profile=rls'>Aggiorna</a></button>
-                        <button class='btn_delete'><a href='crud.php?operation=delete&user={$userId}&profile=rls'>Elimina</a></button>
-                    </td>";
+                return "<button class='table--btn'>
+                            <a href='crud.php?operation=modify&user={$userId}&profile=rls'>Aggiorna</a>
+                        </button>&nbsp;&nbsp;
+                        <button class='btn_delete'>
+                            <a href='crud.php?operation=delete&user={$userId}&profile=rls'>Elimina</a>
+                        </button>";
                 break;
 
             case null:
-                echo "<td>
-                        <button class='table--btn'><a href='crud.php?operation=modify&user={$userId}'>Modifica</a></button>
-                    </td>";
+                return null;
                 break;
         }
     }
