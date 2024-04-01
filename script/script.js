@@ -123,12 +123,20 @@ $(document).ready(function () {
     $(".success, .error, .warning").fadeIn();
     $(".success, .error, .warning").delay(2500).fadeOut();
 
-    //
+    // visualizzazione di diversi tipi di utenti
     user = $('#user_selected').val();
     getUserSelected(user);
     $('#user_selected').change(function(){
         let selected = $(this).val();
         getUserSelected(selected);
+    });
+
+    //
+    choice = $('#rls_choice').val();
+    doRlsEvent(choice);
+    $('#rls_choice').change(function () {
+        let choice = $(this).val();
+        doRlsEvent(choice);
     });
 });
 
@@ -206,4 +214,27 @@ function getUserSelected(user) {
             }
         }
     });
+}
+
+// gestione della pagina "gestione liberatorie"
+function doRlsEvent(choice) {
+    switch (parseInt(choice)) {
+        case 1:
+            $('#up_rls').show();
+            $('#up_rls').click(function() {
+                window.location.href = "../upload/page_upload.php";
+            });
+            break;
+
+        case 2:
+            $('#up_rls').hide();
+            $.ajax({
+                type: "POST",
+                url: "../util/ajax/get_release.php",
+                success: function (response) {
+                    $('#table').html(response);
+                }
+            });
+            break;
+    }
 }

@@ -67,7 +67,7 @@
                                         v.telefono_mobile AS 'TELEFONO MOBILE', 
                                         l.LIBERATORIA
                                     FROM volontari v
-                                    INNER JOIN liberatorie l ON v.id_liberatoria = l.id";
+                                    LEFT JOIN liberatorie l ON v.id_liberatoria = l.id";
                         $result = dbQuery($connection, $query);
 
                         if ($result)
@@ -98,8 +98,8 @@
                                     u.cognome AS 'COGNOME GENITORE',
                                     l.LIBERATORIA
                                 FROM assistiti a
-                                INNER JOIN utenti u ON a.id_referente = u.id
-                                INNER JOIN liberatorie l ON a.id_liberatoria = l.id";
+                                LEFT JOIN utenti u ON a.id_referente = u.id
+                                LEFT JOIN liberatorie l ON a.id_liberatoria = l.id";
                     $result = dbQuery($connection, $query);
 
                     if ($result)
@@ -110,6 +110,28 @@
                     echo "<br><br><br><h3>Crea un nuovo account assistito</h3;>
                         <button class='btn'><a href='../register/register_assisted.php'>Crea account</a></button>
                     </section>";
+                    break;
+
+                case "mng_rls":
+                    if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) {
+                        nav_menu();
+
+                        // funzione per la stampa dell'esito dell'operatione eseguita
+                        check_operation();
+
+                        echo " <br><br>
+                                <section id='form'>
+                                    <h3>Cosa vuoi fare?</h3><br>
+                                    <select id='rls_choice'>
+                                        <option value='1'>CARICA LIBERATORIE</option>
+                                        <option value='2'>GESTISCI LIBERATORIE</option>
+                                    </select>
+                                    <input type='submit' value='Carica liberatoria' id='up_rls'>
+                                </section>";
+
+                        echo "<section id='table'></section>";
+                    } else
+                        header("Location: ../index.php");
                     break;
                 
                 case "mng_event":

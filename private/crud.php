@@ -57,6 +57,10 @@
                     if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"])
                         modifyForm($connection, "volunteer", $userId);
                     break;
+
+                case "rls":
+                    header("Location: ../upload/page_upload.php");
+                    break;
             }
             break;
 
@@ -107,6 +111,17 @@
 
                     case "anamnesi":
                         $query = "UPDATE assistiti SET anamnesi = null WHERE id = '$userId'";
+                        $result = dbQuery($connection, $query);
+
+                        if ($result) {
+                            $_SESSION["file_deleted"] = true;
+                            header("Location: area_personale.php");
+                        } else 
+                            echo ERROR_DB;
+                        break;
+
+                    case "rls":
+                        $query = "DELETE FROM liberatorie WHERE id = $userId";
                         $result = dbQuery($connection, $query);
 
                         if ($result) {

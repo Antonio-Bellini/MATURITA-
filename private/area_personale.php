@@ -60,7 +60,7 @@
                                 <button class='btn'><a href='admin_operation.php?operation=view_user'>GESTIONE UTENTI</a></button>
                                 <button class='btn'><a href='admin_operation.php?operation=view_volu'>GESTIONE VOLONTARI</a></button>
                                 <button class='btn'><a href='admin_operation.php?operation=view_assi'>GESTIONE ASSISTITI</a></button>
-                                <button class='btn'><a href='../upload/page_upload.php'>CARICA LIBERATORIE</a></button>
+                                <button class='btn'><a href='admin_operation.php?operation=mng_rls'>GESTIONE LIBERATORIE</a></button>
                                 <button class='btn'><a href='admin_operation.php?operation=mng_event'>GESTIONE EVENTI</a></button>
                             </section>";
                 } catch (Exception $e) {

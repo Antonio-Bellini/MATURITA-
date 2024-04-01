@@ -55,7 +55,7 @@
                         if ($key !== "id")
                             echo "<td>" . printField($value) . "</td>";
                     }
-                    printButton($userType, $row["id"]);
+                    printButton($userType, $row["id"], $result);
                     echo "</tr>";
                 }
                 echo "</table>";
@@ -73,7 +73,7 @@
     }
     
     // funzione per la stampa dei bottoni di modifica
-    function printButton($userType, $userId) {
+    function printButton($userType, $userId, $result) {
         switch ($userType) {
             case "user" :
                 echo "<td>
@@ -98,6 +98,13 @@
                 echo "<td>
                         <button class='table--btn'><a href='crud.php?operation=modify&user={$userId}&profile=volunteer'>Modifica</a></button>
                         <button class='btn_delete'><a href='crud.php?operation=delete&user={$userId}&profile=volunteer'>Elimina</a></button>
+                    </td>";
+                break;
+
+            case "rls":
+                echo "<td>
+                        <button class='table--btn'><a href='crud.php?operation=modify&user={$userId}&profile=rls'>Aggiorna</a></button>
+                        <button class='btn_delete'><a href='crud.php?operation=delete&user={$userId}&profile=rls'>Elimina</a></button>
                     </td>";
                 break;
 
