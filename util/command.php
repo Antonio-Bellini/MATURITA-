@@ -112,6 +112,12 @@
                         </button>";
                 break;
 
+            case "admin":
+                return "<button class='btn_delete'>
+                            <a href='crud.php?operation=delete&user={$userId}&profile=admin'>Elimina</a>
+                        </button>";
+                break;
+
             case "rls":
                 return "<button class='table--btn'>
                             <a href='crud.php?operation=modify&user={$userId}&profile=rls'>Aggiorna</a>
@@ -294,6 +300,7 @@
                     <br><br>
                     <label>Quale tipo di evento vuoi vedere?</label>
                     <select name='event' id='event'>";
+                            echo "<option value='all'>Visualizza tutti</option>";
                         while ($row = ($result->fetch_assoc()))
                             echo "<option value=" . $row["id"] . ">" . $row["tipo"] . " il " . $row["data"] . "</option>";
             echo    "</select>
@@ -337,6 +344,10 @@
         if (isset($_SESSION["file_deleted"]) && $_SESSION["file_deleted"]) {
             echo FILE_DEL;
             $_SESSION["file_deleted"] = false;
+        }
+        if (isset($_SESSION["event_deleted"]) && $_SESSION["event_deleted"]) {
+            echo EVENT_DEL;
+            $_SESSION["event_deleted"] = false;
         }
         if (isset($_SESSION["event_created"]) && $_SESSION["event_created"]) {
             echo EVENT_OK;

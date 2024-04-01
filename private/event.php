@@ -109,20 +109,37 @@
 
             case "viewVoluEventAssi":
                 $event = $_POST["event"];
-                $query = "SELECT e.id,
-                                te.tipo AS evento,
-                                e.data AS data_evento,
-                                e.note AS note_evento,
-                            GROUP_CONCAT(DISTINCT CONCAT(a.nome, ' ', a.cognome) SEPARATOR '<br>') AS assistiti,
-                            GROUP_CONCAT(DISTINCT CONCAT(v.nome, ' ', v.cognome) SEPARATOR '<br>') AS volontari
-                            FROM eventi e
-                            INNER JOIN assistiti_evento ae ON e.id = ae.id_evento
-                            INNER JOIN volontari_evento ve ON e.id = ve.id_evento
-                            INNER JOIN tipi_evento te ON e.tipo_evento = te.id
-                            INNER JOIN assistiti a ON a.id = ae.id_assistito
-                            INNER JOIN volontari v ON v.id = ve.id_volontario
-                            WHERE e.id = '$event'
-                            GROUP BY e.id, te.tipo, e.data, e.note;";
+                if ($event === "all") {
+                    $query = "SELECT e.id,
+                                    te.tipo AS 'NOME EVENTO',
+                                    e.data AS 'DATA EVENTO',
+                                    e.note AS 'NOTE EVENTO',
+                                    GROUP_CONCAT(DISTINCT CONCAT(a.nome, ' ', a.cognome) SEPARATOR '<br>') AS 'ASSISTITI REGISTRATI',
+                                    GROUP_CONCAT(DISTINCT CONCAT(v.nome, ' ', v.cognome) SEPARATOR '<br>') AS 'VOLONTARI REGISTRATI'
+                                FROM eventi e
+                                LEFT JOIN assistiti_evento ae ON e.id = ae.id_evento
+                                LEFT JOIN volontari_evento ve ON e.id = ve.id_evento
+                                LEFT JOIN tipi_evento te ON e.tipo_evento = te.id
+                                LEFT JOIN assistiti a ON a.id = ae.id_assistito
+                                LEFT JOIN volontari v ON v.id = ve.id_volontario
+                                GROUP BY e.id, te.tipo, e.data, e.note;";
+                } else {
+                    $query = "SELECT e.id,
+                                    te.tipo AS 'NOME EVENTO',
+                                    e.data AS 'DATA VENTO',
+                                    e.note AS 'NOTE EVENTO',
+                                    GROUP_CONCAT(DISTINCT CONCAT(a.nome, ' ', a.cognome) SEPARATOR '<br>') AS assistiti,
+                                    GROUP_CONCAT(DISTINCT CONCAT(v.nome, ' ', v.cognome) SEPARATOR '<br>') AS volontari
+                                FROM eventi e
+                                LEFT JOIN assistiti_evento ae ON e.id = ae.id_evento
+                                LEFT JOIN volontari_evento ve ON e.id = ve.id_evento
+                                LEFT JOIN tipi_evento te ON e.tipo_evento = te.id
+                                LEFT JOIN assistiti a ON a.id = ae.id_assistito
+                                LEFT JOIN volontari v ON v.id = ve.id_volontario
+                                WHERE e.id = '$event'
+                                GROUP BY e.id, te.tipo, e.data, e.note;";
+                }
+
                 $result = dbQuery($connection, $query);
 
                 if ($result) {

@@ -120,6 +120,17 @@
                             echo ERROR_DB;
                         break;
 
+                    case "admin":
+                        $query = "DELETE FROM eventi WHERE id = $userId";
+                        $result = dbQuery($connection, $query);
+
+                        if ($result) {
+                            $_SESSION["event_deleted"] = true;
+                            header("Location: area_personale.php");
+                        } else 
+                            echo ERROR_DB;
+                        break;
+
                     case "rls":
                         $query = "DELETE FROM liberatorie WHERE id = $userId";
                         $result = dbQuery($connection, $query);
