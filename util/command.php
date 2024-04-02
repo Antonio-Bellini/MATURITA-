@@ -77,12 +77,12 @@
         switch ($userType) {
             case "user":
                 $result = "";
-                $result .= "<button class='table--btn'>
-                                <a href='crud.php?operation=modify&user={$userId}&profile=user'>Modifica</a>
+                $result .= "<button class='table--btn' data-operation='modify' data-user='$userId' data-profile='user'>
+                                Modifica
                             </button>&nbsp;&nbsp;";
                 if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"])
-                    $result .= "<button class='btn_delete'>
-                                    <a href='crud.php?operation=delete&user={$userId}&profile=user'>Elimina</a>
+                    $result .= "<button class='btn_delete' data-operation='delete' data-user='$userId' data-profile='user'>
+                                    Elimina
                                 </button>";
                 return $result;
                 break;
@@ -92,41 +92,45 @@
                 if (isset($_SESSION["is_president"]) && $_SESSION["is_president"])
                     return null;
                 else {
-                    $result .= "<button class='table--btn'>
-                                    <a href='crud.php?operation=modify&user={$userId}&profile=assisted'>Modifica</a>
-                                </button>&nbsp;&nbsp;";
+                    $result .= "<button class='table--btn' data-operation='modify' data-user='$userId' data-profile='assisted'>
+                                    Modifica
+                                </button>
+                                &nbsp;&nbsp;";
                     if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"])
-                        $result .= "<button class='btn_delete'>
-                                    <a href='crud.php?operation=delete&user={$userId}&profile=assisted'>Elimina</a>
-                                </button>";
+                        $result .= "<button class='btn_delete' data-operation='delete' data-user='$userId' data-profile='assisted'>
+                                        Elimina
+                                    </button>";
                     return $result;
                 }
                 break;
 
             case "volunteer":
-                return "<button class='table--btn'>
-                            <a href='crud.php?operation=modify&user={$userId}&profile=volunteer'>Modifica</a>
-                        </button>&nbsp;&nbsp;
-                        <button class='btn_delete'>
-                            <a href='crud.php?operation=delete&user={$userId}&profile=volunteer'>Elimina</a>
+                return "<button class='table--btn' data-operation='modify' data-user='$userId' data-profile='volunteer'>
+                            Modifica
+                        </button>
+                        &nbsp;&nbsp;
+                        <button class='btn_delete' data-operation='delete' data-user='$userId' data-profile='volunteer'>
+                            Elimina
                         </button>";
                 break;
 
             case "admin":
-                return "<button class='table--btn'>
-                            <a href='crud.php?operation=modify&user={$userId}&profile=admin'>Modifica</a>
+                return "<button class='table--btn' data-operation='modify' data-user='$userId' data-profile='admin'>
+                            Modifica
                         </button>
-                        <button class='btn_delete'>
-                            <a href='crud.php?operation=delete&user={$userId}&profile=admin'>Elimina</a>
+                        &nbsp;&nbsp;
+                        <button class='btn_delete' data-operation='delete' data-user='$userId' data-profile='admin'>
+                            Elimina
                         </button>";
                 break;
 
-            case "rls":
-                return "<button class='table--btn'>
-                            <a href='crud.php?operation=modify&user={$userId}&profile=rls'>Aggiorna</a>
-                        </button>&nbsp;&nbsp;
-                        <button class='btn_delete'>
-                            <a href='crud.php?operation=delete&user={$userId}&profile=rls'>Elimina</a>
+            case "release":
+                return "<button class='table--btn' data-operation='modify' data-user='$userId' data-profile='release'>
+                            Aggiorna
+                        </button>
+                        &nbsp;&nbsp;
+                        <button class='btn_delete' data-operation='delete' data-user='$userId' data-profile='release'>
+                            Elimina
                         </button>";
                 break;
 
@@ -198,7 +202,7 @@
         $resultE = dbQuery($connection, $queryE);
 
         if ($resultV && $resultE) {
-            echo "<form action='../private/event.php?function=crud_volunteer_event' id='addVolunteerToEvent' method='POST' class='addVolunteerToEvent'>
+            echo "<form action='../private/event.php' id='addVolunteerToEvent' method='POST' class='addVolunteerToEvent'>
                     <br><br>
                     <label for='volunteer'>Quale volontario vuoi assegnare all'evento?</label>
                     <select name='volunteer' id='user'>";
@@ -231,7 +235,7 @@
         $resultE = dbQuery($connection, $queryE);
 
         if ($resultA && $resultE) {
-            echo "<form action='../private/event.php?function=crud_assisted_event' id='addAssistedToEvent' method='POST'>
+            echo "<form action='../private/event.php' id='addAssistedToEvent' method='POST'>
                     <br><br>
                     <label for='assisted'>Quale assistito vuoi aggiungere all'evento?</label>
                     <select name='assisted' id='user'>";
@@ -248,7 +252,7 @@
                     <label for='event_notes'>Aggiungi qualche nota utile</label>
                     <textarea name='event_notes' id='notes' cols='30' rows='10' placeholder='Altre info utili'></textarea>
 
-                    <input type='submit' value='AGGIUNGI'>
+                    <input type='submit' value='AGGIUNGI' id='crud_assisted_event'>
                 </form>";
         } else 
             echo ERROR_DB;
@@ -260,7 +264,7 @@
         $result = dbQuery($connection, $query);
 
         if ($result) {
-            echo "<form action='../private/event.php?function=crud_event' id='createNewEvent' method='POST'>
+            echo "<form action='../private/event.php' id='createNewEvent' method='POST'>
                         <br><br>
                         <label for='event_type'>Che tipo di evento sará?</label>
                         <select name='event_type' id='event_type'>";
@@ -274,7 +278,7 @@
                         <label for='event_notes'>Aggiungi qualche nota utile sull'evento</label>
                         <textarea name='event_notes' id='notes' cols='30' rows='10' placeholder='Altre info utili'></textarea>
 
-                        <input type='submit' value='CREA EVENTO'>
+                        <input type='submit' value='CREA EVENTO' id='crud_event'>
                 </form>";
         } else 
             echo ERROR_DB;
@@ -282,12 +286,12 @@
 
     // funzione per mostrare il form per creare un nuovo tipo di evento
     function crud_eventType() {
-        echo "<form action='../private/event.php?function=crud_eventType' id='addNewEventType' method='POST'>
+        echo "<form action='../private/event.php' id='addNewEventType' method='POST'>
                 <br><br>
                 <label>Quale sará il nome del nuovo evento?</label>
                 <textarea name='new_event' id='notes' cols='30' rows='10' placeholder='Nome nuovo evento' required></textarea>
 
-                <input type='submit' value='CREA NUOVO TIPO DI EVENTO'>
+                <input type='submit' value='CREA NUOVO TIPO DI EVENTO' id='crud_eventType'>
             </form>";
     }
 
@@ -299,7 +303,7 @@
         $result = dbQuery($connection, $query);
 
         if ($result) {
-            echo "<form action='../private/event.php?function=view_all_event' id='viewVoluEventAssi' method='POST'>
+            echo "<form action='../private/event.php' id='viewVoluEventAssi' method='POST'>
                     <br><br>
                     <label>Quale tipo di evento vuoi vedere?</label>
                     <select name='event' id='event'>";
@@ -308,7 +312,7 @@
                             echo "<option value=" . $row["id"] . ">" . $row["tipo"] . " il " . $row["data"] . "</option>";
             echo    "</select>
 
-                    <input type='submit' value='CERCA'>
+                    <input type='submit' value='CERCA' id='view_all_event'>
                 </form>";
         } else 
             echo ERROR_DB;

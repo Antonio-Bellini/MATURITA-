@@ -24,12 +24,12 @@
             check_operation();
             
             echo "<br><br>
-                    <button class='btn'>
-                        <a href='../private/crud_bacheca_newsletter.php?operation=add&table=bacheca'>Aggiungi contenuto</a>
+                    <button id='addBachecaBtn' class='btn' data-operation='add' data-table='bacheca'>
+                        Aggiungi contenuto
                     </button>
                     &nbsp;
-                    <button class='btn'>
-                        <a href='../private/crud_bacheca_newsletter.php?operation=del&table=bacheca'>Elimina contenuto</a>
+                    <button id='delBachecaBtn' class='btn' data-operation='del' data-table='bacheca'>
+                        Elimina contenuto
                     </button>";
         } else if (isset($_SESSION["is_parent"]) && $_SESSION["is_parent"]) {
             $connection = connectToDatabase(DB_HOST, DB_USER, USER_PW, DB_NAME);
@@ -37,8 +37,8 @@
 
         $query = "SELECT bacheca, data FROM bacheca";
         $result = dbQuery($connection, $query);
-        echo "<br><br><h1>Bacheca dell'associazione</h1><br><br>";
 
+        echo "<br><br><h1>Bacheca dell'associazione</h1><br><br>";
         if ($result) {
             while ($row = ($result->fetch_assoc())) {
                 echo "  <div class='bacheca-item'>

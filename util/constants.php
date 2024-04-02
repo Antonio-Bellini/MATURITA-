@@ -21,7 +21,7 @@
 
     // stampa degli esiti
     define("MOD_OK", "<div class='success' id='message'>Modifiche eseguite correttamente</div>");
-    define("MOD_NONE", "<div class='succes' id='message'>Nessuna modifica eseguita</div>");
+    define("MOD_NONE", "<div class='success' id='message'>Nessuna modifica eseguita</div>");
     define("DEL_OK", "<div class='success' id='message'>Account eliminato correttamente</div>");
     define("ACC_OK", "<div class='success' id='message'>Account creato correttamente</div>");
     define("EVENT_OK", "<div class='success' id='message'>Evento aggiunto correttamente</div>");
@@ -33,7 +33,7 @@
     define("NO_FILE", "<div class='warning' id='message'>Nessun file selezionato</div>");
     define("NO_FORM", "<div class='warning' id='message'>Nessun form compilato</div>");
 
-    define("RESULT_NONE", "Nessun risultato trovato<br>");
+    define("RESULT_NONE", "<br>Nessun risultato trovato<br>");
 
     define("DISCONNECTION", "<div class='success'>Disconnessione eseguita con successo, a presto!</div>");
 ?>

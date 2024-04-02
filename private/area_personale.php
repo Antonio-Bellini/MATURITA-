@@ -11,10 +11,6 @@
     importActualStyle();
     session_start();
 
-    $profile_type = null;
-    $profile_func = null;
-    $auth = null;
-
     if (isset($_SESSION["is_logged"]) && $_SESSION["is_logged"]) {
         nav_menu();
 
@@ -42,8 +38,8 @@
                     welcome($connection, $_SESSION["username"]);
                     $_SESSION["is_president"] = true;
                 
-                    echo "<br><br><h3>Cosa vuoi fare?</h3>";
-                    echo "<br><button class='btn'><a href='admin_operation.php?operation=view_assi'>GESTIONE ASSISTITI</a></button><br><br>";
+                    echo "<br><br><h3>Cosa vuoi fare?</h3><br>";
+                    echo "<button class='btn' data-operation='view_assisted'>GESTIONE ASSISTITI</button><br><br>";
                 } catch (Exception $e) {
                     echo ERROR_GEN;
                 }
@@ -55,14 +51,13 @@
                     welcome($connection, $_SESSION["username"]);
                     $_SESSION["is_admin"] = true;
 
-                    echo "<br><br><h3>Cosa vuoi fare?</h3>";
-                    echo "<br>  
-                            <section id='admin_btn'>
-                                <button class='btn'><a href='admin_operation.php?operation=view_user'>GESTIONE UTENTI</a></button>
-                                <button class='btn'><a href='admin_operation.php?operation=view_volu'>GESTIONE VOLONTARI</a></button>
-                                <button class='btn'><a href='admin_operation.php?operation=view_assi'>GESTIONE ASSISTITI</a></button>
-                                <button class='btn'><a href='admin_operation.php?operation=mng_rls'>GESTIONE LIBERATORIE</a></button>
-                                <button class='btn'><a href='admin_operation.php?operation=mng_event'>GESTIONE EVENTI</a></button>
+                    echo "<br><br><h3>Cosa vuoi fare?</h3><br>";
+                    echo "  <section id='admin_btn'>
+                                <button id='pers_area_btn1' class='btn' data-operation='view_user'>GESTIONE UTENTI</button>
+                                <button id='pers_area_btn2' class='btn' data-operation='view_volunteer'>GESTIONE VOLONTARI</button>
+                                <button id='pers_area_btn3' class='btn' data-operation='view_assisted'>GESTIONE ASSISTITI</button>
+                                <button id='pers_area_btn4' class='btn' data-operation='manage_release'>GESTIONE LIBERATORIE</button>
+                                <button id='pers_area_btn5' class='btn' data-operation='manage_event'>GESTIONE EVENTI</button>
                             </section>";
                 } catch (Exception $e) {
                     echo ERROR_GEN;
@@ -75,8 +70,8 @@
                     welcome($connection, $_SESSION["username"]);
                     $_SESSION["is_terapist"] = true;
 
-                    echo "<br><br><h3>Cosa vuoi fare?</h3>";
-                    echo "<br><button class='btn'><a href='admin_operation.php?operation=view_assi'>GESTIONE ASSISTITI</a></button><br><br>";
+                    echo "<br><br><h3>Cosa vuoi fare?</h3><br>";
+                    echo "<button class='btn' data-operation='view_assisted'>GESTIONE ASSISTITI</button>";
                 } catch (Exception $e) {
                     echo ERROR_GEN;
                 }

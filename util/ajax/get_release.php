@@ -32,8 +32,8 @@
                 
         if ($result1 && $result2) {
             $response = array(
-                'result1' => createTable($result1, "rls"),
-                'result2' => createTable($result2, "rls")
+                'result1' => createTable($result1, "release"),
+                'result2' => createTable($result2, "release")
             );
             return $response;
         } else 

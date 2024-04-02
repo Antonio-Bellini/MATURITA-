@@ -14,8 +14,8 @@
 
     $operation = null;
 
-    if (isset($_GET["operation"]))
-        $operation = $_GET["operation"];
+    if (isset($_SESSION["operation"]))
+        $operation = $_SESSION["operation"];
 
     if (isset($_SESSION["is_logged"]) && $_SESSION["is_logged"]) {
         if ((isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) ||
@@ -54,7 +54,7 @@
                         header("Location: ../index.php");
                     break;
 
-                case "view_volu":
+                case "view_volunteer":
                     if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) {
                         nav_menu();
 
@@ -88,7 +88,7 @@
                         header("Location: ../index.php");
                     break;
 
-                case "view_assi":
+                case "view_assisted":
                     nav_menu();
 
                     // funzione per la stampa dell'esito dell'operatione eseguita
@@ -121,7 +121,7 @@
                             </section>";
                     break;
 
-                case "mng_rls":
+                case "manage_release":
                     if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) {
                         nav_menu();
 
@@ -143,20 +143,20 @@
                         header("Location: ../index.php");
                     break;
                 
-                case "mng_event":
+                case "manage_event":
                     if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) {
                         nav_menu();
 
                         echo "<br>
                                 <section id='form'>
                                     <h2>Pagina eventi</h2>
-                                    <label>Quale operazione vuoi eseguire?</label>
+                                    <h3>Quale operazione vuoi eseguire?</h3>
                                     <select id='mng_event__selected'>
-                                        <option value='1'>CRUD volontari_evento</option>
-                                        <option value='2'>CRUD assistiti_evento</option>
-                                        <option value='3'>Crea nuovo evento</option>
-                                        <option value='4'>CRUD tipi_evento</option>
-                                        <option value='5'>Visualizza eventi</option>
+                                        <option value='1'>Gestisci i volontari e gli eventi</option>
+                                        <option value='2'>Gestisci gli assistiti e gli eventi</option>
+                                        <option value='3'>Gestisci gli eventi</option>
+                                        <option value='4'>Gestisci i tipi di evento</option>
+                                        <option value='5'>Visualizza tutti gli eventi</option>
                                     </select>";
                                     crud_volunteer_event($connection);
                                     crud_assisted_event($connection);
