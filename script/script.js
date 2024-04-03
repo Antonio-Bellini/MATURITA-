@@ -152,6 +152,35 @@ $(document).ready(function () {
                 $('#viewVoluEventAssi').show();
             }
         });
+
+        // gestione visualizzazione CRUD volontari_evento
+        $('#crud_volu__choice1').show();
+        $('#crud_volu__choice2').hide();
+        $('#crud_volu__choice').change(function() {
+            let selectedOption = $(this).val();
+
+            if (selectedOption === '1') {
+                $('#crud_volu__choice1').show();
+                $('#crud_volu__choice2').hide();
+                $('#crud_volu__choice3').hide();
+                $('#crud_volu__choice4').hide();
+            } else if (selectedOption === '2') {
+                $('#crud_volu__choice1').hide();
+                $('#crud_volu__choice2').show();
+                $('#crud_volu__choice3').hide();
+                $('#crud_volu__choice4').hide();
+            } else if (selectedOption === '3') {
+                $('#crud_volu__choice1').hide();
+                $('#crud_volu__choice2').hide();
+                $('#crud_volu__choice3').show();
+                $('#crud_volu__choice4').hide();
+            } else if (selectedOption === '4') {
+                $('#crud_volu__choice1').hide();
+                $('#crud_volu__choice2').hide();
+                $('#crud_volu__choice3').hide();
+                $('#crud_volu__choice4').show();
+            }
+        });
     }
 
     // bottoni dell'area personale dell'admin

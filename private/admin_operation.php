@@ -154,7 +154,7 @@
                                     <select id='mng_event__selected'>
                                         <option value='1'>Gestisci i volontari e gli eventi</option>
                                         <option value='2'>Gestisci gli assistiti e gli eventi</option>
-                                        <option value='3'>Gestisci gli eventi</option>
+                                        <option value='3'>Crea nuovo evento</option>
                                         <option value='4'>Gestisci i tipi di evento</option>
                                         <option value='5'>Visualizza tutti gli eventi</option>
                                     </select>";
