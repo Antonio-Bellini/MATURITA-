@@ -78,7 +78,7 @@ $(document).ready(function () {
         const gallery = document.querySelector('.gallery');
         const images = document.querySelectorAll('.photo');
         let currentIndex = 0;
-    
+
         // tempo dopo cui viene eseguita la funzione (5 secondi)
         setInterval(slideImages, 5000);
     
@@ -86,7 +86,7 @@ $(document).ready(function () {
         function slideImages() {
             currentIndex = (currentIndex + 1) % images.length;
             gallery.style.transform = `translateX(-${currentIndex * 100}vw)`;
-        }  
+        }
     }
 
     // visualizzazione di diversi tipi di utenti 
