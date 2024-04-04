@@ -115,10 +115,12 @@
                     else
                         echo ERROR_DB;
 
-                    echo "<br><br><br>
-                                <h3>Crea un nuovo account assistito</h3>
-                                <button class='btn'><a href='../register/register_assisted.php'>Crea account</a></button>
-                            </section>";
+                    if (isset($_SESSION["is_president"]) && !$_SESSION["is_president"]) {
+                        echo "<br><br><br>
+                                    <h3>Crea un nuovo account assistito</h3>
+                                    <button class='btn'><a href='../register/register_assisted.php'>Crea account</a></button>
+                                </section>";
+                    }
                     break;
 
                 case "manage_release":

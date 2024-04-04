@@ -39,7 +39,9 @@
                     $_SESSION["is_president"] = true;
                 
                     echo "<br><br><h3>Cosa vuoi fare?</h3><br>";
-                    echo "<button class='btn' data-operation='view_assisted'>GESTIONE ASSISTITI</button><br><br>";
+                    echo "  <section id='admin_btn'>
+                                <button class='btn' data-operation='view_assisted'>GESTIONE ASSISTITI</button>
+                            </section><br><br>";
                 } catch (Exception $e) {
                     echo ERROR_GEN;
                 }
@@ -53,12 +55,12 @@
 
                     echo "<br><br><h3>Cosa vuoi fare?</h3><br>";
                     echo "  <section id='admin_btn'>
-                                <button id='pers_area_btn1' class='btn' data-operation='view_user'>GESTIONE UTENTI</button>
-                                <button id='pers_area_btn2' class='btn' data-operation='view_volunteer'>GESTIONE VOLONTARI</button>
-                                <button id='pers_area_btn3' class='btn' data-operation='view_assisted'>GESTIONE ASSISTITI</button>
-                                <button id='pers_area_btn4' class='btn' data-operation='manage_release'>GESTIONE LIBERATORIE</button>
-                                <button id='pers_area_btn5' class='btn' data-operation='manage_event'>GESTIONE EVENTI</button>
-                            </section>";
+                                <button class='btn' data-operation='view_user'>GESTIONE UTENTI</button>
+                                <button class='btn' data-operation='view_volunteer'>GESTIONE VOLONTARI</button>
+                                <button class='btn' data-operation='view_assisted'>GESTIONE ASSISTITI</button>
+                                <button class='btn' data-operation='manage_release'>GESTIONE LIBERATORIE</button>
+                                <button class='btn' data-operation='manage_event'>GESTIONE EVENTI</button>
+                            </section><br><br>";
                 } catch (Exception $e) {
                     echo ERROR_GEN;
                 }
@@ -71,7 +73,9 @@
                     $_SESSION["is_terapist"] = true;
 
                     echo "<br><br><h3>Cosa vuoi fare?</h3><br>";
-                    echo "<button class='btn' data-operation='view_assisted'>GESTIONE ASSISTITI</button>";
+                    echo "  <section id='admin_btn'>
+                                <button class='btn' data-operation='view_assisted'>GESTIONE ASSISTITI</button>
+                            </section><br><br>";
                 } catch (Exception $e) {
                     echo ERROR_GEN;
                 }

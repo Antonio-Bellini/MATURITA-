@@ -101,12 +101,12 @@ nav img {
   cursor: pointer;
   transition: background-color 0.3s, color 0.3s;
 }
-.btn:hover {
-  background-color: #f0f0f0;
-}
 .btn a {
   text-decoration: none;
-  color: #333;
+  color: black;
+}
+.btn:hover {
+  background-color: #f0f0f0;
 }
 
 #admin_btn {
@@ -343,20 +343,41 @@ tr:nth-child(even) {
 
 /* galleria nella pagina home */
 .body__main {
-  border: 1px solid red;
   width: 100%;
   height: 87vh;
+  overflow: hidden;
 }
 .gallery {
   display: flex;
-  width: 100%;
-  height: 100%;
-  overflow-x: scroll;
+  transition: transform 1s linear;
 }
-.photo {
-  border: 1px solid red;
-  width: 100%;
+.gallery .photo {
+  flex-shrink: 0;
+  width: 100vw;
   height: auto;
+}
+.title {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  color: #f16d6d;
+  font-size: 48px;
+  font-weight: bold;
+  text-align: center; 
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+.paragraph {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  color: white;
+  font-size: 18px; 
+  text-align: center; 
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 /* Stile per messaggio di esito */
@@ -432,6 +453,11 @@ iframe {
 }
 
 /*----------------------------------DA QUA IN GIU STILE DA RIVEDERE-------------------------------------*/
+
+
+
+
+
 
 
 
@@ -516,12 +542,6 @@ iframe {
   text-align: center;
 }
 
-/* RIGA DI SEPARAZIONE */
-hr {
-  width: 95%;
-  margin-left: 2.5%;
-}
-
 .mapSelector-text {
   display: flex;
   justify-content: center;
@@ -545,26 +565,9 @@ hr {
   padding: 10px;
 }
 
-.map {
-  height: 45rem;
-  border-radius: var(--radius);
-}
-
-#graficoMap {
-  width: 50rem;
-  border-radius: 8px;
-  float: right;
-}
-
 #gallery {
   display: flex;
   justify-content: space-evenly;
-}
-
-#mapImages {
-  height: 900px;
-  width: 500px;
-  border-radius: var(--radius);
 }
 
 /* ICONE DEI SOCIAL */

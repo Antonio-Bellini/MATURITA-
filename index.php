@@ -44,6 +44,11 @@
     </main>
 
     <section class="body__main">
+        <h1 class="title">Associazione Zero Tre</h1>
+        <p class="paragraph">
+            Siamo genitori che credono nel mutuo soccorso perche lo scambio di emozioni ed
+            esperienze evita la chiusura nel dolore e migliora la qualitá di vita familiare
+        </p>
         <div class="gallery">
             <img class="photo" src="image/content/image1.jpg" alt="immagine 1 della premiazione">
             <img class="photo" src="image/content/image2.jpg" alt="immagine 2 della premiazione">

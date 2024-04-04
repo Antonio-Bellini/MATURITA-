@@ -48,6 +48,7 @@ $(document).ready(function () {
             let new_psw = $(this).val();
             checkNewPassword(old_psw, new_psw);
         });
+
         // vieto l'invio del form se la password non soddisfa i requisiti 
         $('#form_update__user').submit(function (event) {
             if ($("#passwordError").text().includes("Le due password non possono essere uguali") || 
@@ -60,33 +61,32 @@ $(document).ready(function () {
 
     // alterno i due form in base all'opzione selezionata
     if (window.location.href.indexOf("page_upload.php") > -1) {
+        // mostro uno dei due form di default
+        $('#form_assisted').show();
+        $('#form_volunteer').hide();
+
+        // mostro il nuovo form in base alla nuova opzione selezionata
         $('#upload_choice').change(function() {
             let selectedOption = $(this).val();
             $('#form_assisted').toggle(selectedOption === '1');
             $('#form_volunteer').toggle(selectedOption === '2');
         });
-    
-        // mostro uno dei due form di default
-        $('#form_assisted').show();
-        $('#form_volunteer').hide();
     }    
 
     // scorimento immagini nella pagina index
     if (window.location.href.indexOf("index.php") > -1) {
-        let gallery = $('.gallery');
-        let photoWidth = $('.photo').outerWidth(true);
-        let scrollInterval = setInterval(function() {
-            gallery.scrollLeft(gallery.scrollLeft() + photoWidth);
-        }, 2000);
-
-        // Pausa lo scorrimento quando il mouse passa sopra la galleria
-        gallery.hover(function() {
-            clearInterval(scrollInterval);
-        }, function() {
-            scrollInterval = setInterval(function() {
-                gallery.scrollLeft(gallery.scrollLeft() + photoWidth);
-            }, 2000);
-        });
+        const gallery = document.querySelector('.gallery');
+        const images = document.querySelectorAll('.photo');
+        let currentIndex = 0;
+    
+        // tempo dopo cui viene eseguita la funzione (5 secondi)
+        setInterval(slideImages, 5000);
+    
+        // funzione per il movimento
+        function slideImages() {
+            currentIndex = (currentIndex + 1) % images.length;
+            gallery.style.transform = `translateX(-${currentIndex * 100}vw)`;
+        }  
     }
 
     // visualizzazione di diversi tipi di utenti 
@@ -117,40 +117,22 @@ $(document).ready(function () {
         $('#viewVoluEventAssi').hide();
         $('#mng_event__selected').change(function() {
             let selectedOption = $(this).val();
-
             executeEventOperation(selectedOption);
 
-            if (selectedOption === '1') {
-                $('#addVolunteerToEvent').show();
-                $('#addAssistedToEvent').hide();
-                $('#createNewEvent').hide();
-                $('#addNewEventType').hide();
-                $('#viewVoluEventAssi').hide();
-            } else if (selectedOption === '2') {
-                $('#addVolunteerToEvent').hide();
-                $('#addAssistedToEvent').show();
-                $('#createNewEvent').hide();
-                $('#addNewEventType').hide();
-                $('#viewVoluEventAssi').hide();
-            } else if (selectedOption === '3') {
-                $('#addVolunteerToEvent').hide();
-                $('#addAssistedToEvent').hide();
-                $('#createNewEvent').show();
-                $('#addNewEventType').hide();
-                $('#viewVoluEventAssi').hide();
-            } else if (selectedOption === '4') {
-                $('#addVolunteerToEvent').hide();
-                $('#addAssistedToEvent').hide();
-                $('#createNewEvent').hide();
-                $('#addNewEventType').show();
-                $('#viewVoluEventAssi').hide();
-            } else if (selectedOption === '5') {
-                $('#addVolunteerToEvent').hide();
-                $('#addAssistedToEvent').hide();
-                $('#createNewEvent').hide();
-                $('#addNewEventType').hide();
-                $('#viewVoluEventAssi').show();
-            }
+            // nascondo o mostro il menu in base all'opzione selezionata
+            const mng_event__option = {
+                '1': { addVolunteerToEvent: true, addAssistedToEvent: false, createNewEvent: false, addNewEventType: false, viewVoluEventAssi: false },
+                '2': { addVolunteerToEvent: false, addAssistedToEvent: true, createNewEvent: false, addNewEventType: false, viewVoluEventAssi: false },
+                '3': { addVolunteerToEvent: false, addAssistedToEvent: false, createNewEvent: true, addNewEventType: false, viewVoluEventAssi: false },
+                '4': { addVolunteerToEvent: false, addAssistedToEvent: false, createNewEvent: false, addNewEventType: true, viewVoluEventAssi: false },
+                '5': { addVolunteerToEvent: false, addAssistedToEvent: false, createNewEvent: false, addNewEventType: false, viewVoluEventAssi: true }
+            };
+            const mng_event__option_MAP = mng_event__option[selectedOption];
+            $('#addVolunteerToEvent').toggle(mng_event__option_MAP.addVolunteerToEvent);
+            $('#addAssistedToEvent').toggle(mng_event__option_MAP.addAssistedToEvent);
+            $('#createNewEvent').toggle(mng_event__option_MAP.createNewEvent);
+            $('#addNewEventType').toggle(mng_event__option_MAP.addNewEventType);
+            $('#viewVoluEventAssi').toggle(mng_event__option_MAP.viewVoluEventAssi);
         });
 
         // gestione visualizzazione CRUD volontari_evento
@@ -159,37 +141,24 @@ $(document).ready(function () {
         $('#crud_volu__choice').change(function() {
             let selectedOption = $(this).val();
 
-            if (selectedOption === '1') {
-                $('#crud_volu__choice1').show();
-                $('#crud_volu__choice2').hide();
-                $('#crud_volu__choice3').hide();
-                $('#crud_volu__choice4').hide();
-            } else if (selectedOption === '2') {
-                $('#crud_volu__choice1').hide();
-                $('#crud_volu__choice2').show();
-                $('#crud_volu__choice3').hide();
-                $('#crud_volu__choice4').hide();
-            } else if (selectedOption === '3') {
-                $('#crud_volu__choice1').hide();
-                $('#crud_volu__choice2').hide();
-                $('#crud_volu__choice3').show();
-                $('#crud_volu__choice4').hide();
-            } else if (selectedOption === '4') {
-                $('#crud_volu__choice1').hide();
-                $('#crud_volu__choice2').hide();
-                $('#crud_volu__choice3').hide();
-                $('#crud_volu__choice4').show();
+            // nascondo o mostro il menu in base all'opzione selezionata
+            const crud_volu__option = {
+                '1': { crud_volu__choice1: true, crud_volu__choice2: false, crud_volu__choice3: false, crud_volu__choice4: false },
+                '2': { crud_volu__choice1: false, crud_volu__choice2: true, crud_volu__choice3: false, crud_volu__choice4: false },
+                '3': { crud_volu__choice1: false, crud_volu__choice2: false, crud_volu__choice3: true, crud_volu__choice4: false },
+                '4': { crud_volu__choice1: false, crud_volu__choice2: false, crud_volu__choice3: false, crud_volu__choice4: true }
             }
+            const crud_volu__option_MAP = crud_volu__option[selectedOption];
+            $('#crud_volu__choice1').toggle(crud_volu__option_MAP.crud_volu__choice1);
+            $('#crud_volu__choice2').toggle(crud_volu__option_MAP.crud_volu__choice2);
+            $('#crud_volu__choice3').toggle(crud_volu__option_MAP.crud_volu__choice3);
+            $('#crud_volu__choice4').toggle(crud_volu__option_MAP.crud_volu__choice4);            
         });
     }
 
     // bottoni dell'area personale dell'admin
     if (window.location.href.indexOf("area_personale.php") > -1) {
-        $('#pers_area_btn1').click(handlePersonalAreaBtnClick);
-        $('#pers_area_btn2').click(handlePersonalAreaBtnClick);
-        $('#pers_area_btn3').click(handlePersonalAreaBtnClick);
-        $('#pers_area_btn4').click(handlePersonalAreaBtnClick);
-        $('#pers_area_btn5').click(handlePersonalAreaBtnClick);
+        $('#admin_btn').on('click', '.btn', handlePersonalAreaBtnClick);
         function handlePersonalAreaBtnClick() {
             let operation = $(this).data('operation');
             personalAreaAction(operation);

@@ -16,19 +16,15 @@
     $userId = null;
     $profile = null;
     
-    if (isset($_SESSION["operation"]))
-        $operation = $_SESSION["operation"];
+    $operation = isset($_SESSION["operation"]) ? $_SESSION["operation"] : null;
 
     if (isset($_GET["operation"])) {
         if ($_GET["operation"] === "LOGOUT")
             $operation = $_GET["operation"];
     }
 
-    if (isset($_SESSION["user_id"]))
-        $userId = $_SESSION["user"];
-
-    if (isset($_SESSION["profile"]))
-        $profile = $_SESSION["profile"];
+    $userId = isset($_SESSION["user_id"]) ? $_SESSION["user_id"] : null;
+    $profile = isset($_SESSION["profile"]) ? $_SESSION["profile"] : null;
 
     // possibili bottoni cliccati
     switch ($operation) {
@@ -54,7 +50,8 @@
 
                 case "assisted":
                     if ((isset($_SESSION["is_parent"]) && $_SESSION["is_parent"]) ||
-                        (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]))
+                        (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) ||
+                        (isset($_SESSION["is_terapist"]) && $_SESSION["is_terapist"]))
                         $connection = connectToDatabase(DB_HOST, DB_USER, USER_PW, DB_NAME);
                         modifyForm($connection, "assisted", $userId);
                     break;
@@ -300,6 +297,7 @@
 
             case "assisted":
                 if (isset($_SESSION["is_terapist"]) && $_SESSION["is_terapist"]) {
+                    $anamnesi = null;
                     $query = "SELECT anamnesi 
                                 FROM assistiti a
                                 INNER JOIN utenti u ON a.id_referente = u.id
@@ -317,11 +315,11 @@
                                         <label for='anamnesi'>Anamnesi assistito</label>
                                     </div>
                                     <div id='name_surname__input'>
-                                        <button class='table--btn'><a href='../upload/" . $anamnesi . "' target='_blank'>Apri il file</a></button>
+                                        <button class='table--btn'><a href='../upload/medical_module" . $anamnesi . "' target='_blank'>Apri il file</a></button>
                                         &nbsp;&nbsp;
-                                        <button class='btn_delete'><a href='crud.php?operation=delete&user={$userId}&profile=anamnesi'>Elimina il file</a></button>
+                                        <button class='btn_delete' data-operation='delete' data-user='$userId' data-profile='anamnesi'>Elimina il file</button>
                                         &nbsp;&nbsp;
-                                        <button class='table--btn'><a href='../upload/page_upload_medical.php?user={$userId}'>Aggiungi nuovo file</a></button>
+                                        <button class='table--btn' data-user='$userId'><a href='../upload/page_upload_medical.php'>Aggiungi nuovo file</a></button>
                                     </div><br>
                                 </section>";
                     }  else 
