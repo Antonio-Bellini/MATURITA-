@@ -77,16 +77,36 @@ $(document).ready(function () {
     if (window.location.href.indexOf("index.php") > -1) {
         const gallery = document.querySelector('.gallery');
         const images = document.querySelectorAll('.photo');
+        const totalImages = images.length;
         let currentIndex = 0;
-    
+        let isTransitioning = false;
+
         // tempo dopo cui viene eseguita la funzione (5 secondi)
         setInterval(slideImages, 5000);
-    
+
         // funzione per il movimento
         function slideImages() {
-            currentIndex = (currentIndex + 1) % images.length;
-            gallery.style.transform = `translateX(-${currentIndex * 100}vw)`;
-        }  
+            if (!isTransitioning) {
+                isTransitioning = true;
+                currentIndex++;
+                gallery.style.transition = 'transform 0.5s ease-in-out'; // aggiungi una transizione per un effetto più fluido
+                gallery.style.transform = `translateX(-${currentIndex * 100}vw)`;
+
+                // Quando currentIndex raggiunge totalImages, reimposta currentIndex a 0 senza transizione per l'effetto di loop
+                if (currentIndex === totalImages) {
+                    setTimeout(() => {
+                        gallery.style.transition = 'none';
+                        currentIndex = 0;
+                        gallery.style.transform = `translateX(0)`;
+                    }, 500);
+                }
+
+                // Dopo aver completato l'animazione, reimposta isTransitioning a false
+                setTimeout(() => {
+                    isTransitioning = false;
+                }, 500);
+            }
+        }
     }
 
     // visualizzazione di diversi tipi di utenti 

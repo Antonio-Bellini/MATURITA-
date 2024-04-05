@@ -23,7 +23,7 @@
             $operation = $_GET["operation"];
     }
 
-    $userId = isset($_SESSION["user_id"]) ? $_SESSION["user_id"] : null;
+    $userId = isset($_SESSION["user"]) ? $_SESSION["user"] : null;
     $profile = isset($_SESSION["profile"]) ? $_SESSION["profile"] : null;
 
     // possibili bottoni cliccati
@@ -111,7 +111,7 @@
 
                             if ($result) {
                                 $_SESSION["user_deleted"] = true;
-                                header("Location: area_personale.php?operation=view_user");
+                                header("Location: area_personale.php");
                             }  else 
                                 echo ERROR_DB;
                         }
@@ -184,7 +184,6 @@
                 $_SESSION["is_logged"] = false;
 
                 if (session_destroy()) {
-                    $_SESSION["not_logged"] = true;
                     header("Location: page_login.php"); 
                 } else 
                     echo ERROR_GEN;
