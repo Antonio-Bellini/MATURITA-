@@ -78,6 +78,7 @@ $(document).ready(function () {
         const gallery = document.querySelector('.gallery');
         const images = document.querySelectorAll('.photo');
         let currentIndex = 0;
+
         let isTransitioning = false;
 
         // tempo dopo cui viene eseguita la funzione (5 secondi)
