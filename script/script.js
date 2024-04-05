@@ -77,7 +77,6 @@ $(document).ready(function () {
     if (window.location.href.indexOf("index.php") > -1) {
         const gallery = document.querySelector('.gallery');
         const images = document.querySelectorAll('.photo');
-        const totalImages = images.length;
         let currentIndex = 0;
         let isTransitioning = false;
 
@@ -89,19 +88,17 @@ $(document).ready(function () {
             if (!isTransitioning) {
                 isTransitioning = true;
                 currentIndex++;
-                gallery.style.transition = 'transform 0.5s ease-in-out'; // aggiungi una transizione per un effetto più fluido
+                gallery.style.transition = 'transform 0.5s ease-in-out'; 
                 gallery.style.transform = `translateX(-${currentIndex * 100}vw)`;
 
-                // Quando currentIndex raggiunge totalImages, reimposta currentIndex a 0 senza transizione per l'effetto di loop
-                if (currentIndex === totalImages) {
+                // quando arriva all'ultima foto avanza invece di scorrere indietro
+                if (currentIndex === images.length) {
                     setTimeout(() => {
                         gallery.style.transition = 'none';
                         currentIndex = 0;
                         gallery.style.transform = `translateX(0)`;
                     }, 500);
                 }
-
-                // Dopo aver completato l'animazione, reimposta isTransitioning a false
                 setTimeout(() => {
                     isTransitioning = false;
                 }, 500);
@@ -158,6 +155,8 @@ $(document).ready(function () {
         // gestione visualizzazione CRUD volontari_evento
         $('#crud_volu__choice1').show();
         $('#crud_volu__choice2').hide();
+        $('#crud_volu__choice3').hide();
+        $('#crud_volu__choice4').hide();
         $('#crud_volu__choice').change(function() {
             let selectedOption = $(this).val();
 

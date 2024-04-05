@@ -42,6 +42,7 @@
 
                         // la stampa avviene tramite ajax
                         echo "<br><br><br><br>
+                            <section class='main'>
                                 <h3 id='user_title'></h3>
                                 <section id='table'></section>";
 
@@ -49,7 +50,8 @@
                         echo "  <section id='table'>    
                                     <h3 id='create_title'></h3>
                                     <button class='btn' id='button_parent'><a href='' id='button_title'>Crea account</a></button>
-                                </section>";
+                                </section>
+                            </section>";
                     } else
                         header("Location: ../index.php");
                     break;
@@ -95,8 +97,9 @@
                     check_operation();
                     
                     echo "<br><br>
-                            <section id='table'>
-                                <h3>ASSISTITI REGISTRATI</h3>";
+                    <section class='main'>
+                        <section id='table'>
+                            <h3>ASSISTITI REGISTRATI</h3>";
                     $query = "SELECT a.id, 
                                     a.NOME, 
                                     a.COGNOME, 
@@ -110,17 +113,21 @@
                                 LEFT JOIN liberatorie l ON a.id_liberatoria = l.id";
                     $result = dbQuery($connection, $query);
 
-                    if ($result)
+                    if ($result) 
                         createTable($result, "assisted");
                     else
                         echo ERROR_DB;
 
-                    if (isset($_SESSION["is_president"]) && !$_SESSION["is_president"]) {
+                    if (isset($_SESSION["is_president"]) && $_SESSION["is_president"]) {
+                        return null; 
+                    }else {
                         echo "<br><br><br>
-                                    <h3>Crea un nuovo account assistito</h3>
-                                    <button class='btn'><a href='../register/register_assisted.php'>Crea account</a></button>
-                                </section>";
+                                <h3>Crea un nuovo account assistito</h3>
+                                <button class='btn'><a href='../register/register_assisted.php'>Crea account</a></button>
+                            </section>
+                        </section>";
                     }
+                    echo "</section>";
                     break;
 
                 case "manage_release":

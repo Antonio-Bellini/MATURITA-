@@ -25,10 +25,7 @@
                 try {
                     $volunteer = $_POST["volunteer"];
                     $event = $_POST["event"];
-                    $notes = null;
-
-                    if (isset($_POST["notes"]))
-                        $notes = $_POST["notes"];
+                    $notes = isset($_POST["notes"]) ? $_POST["notes"] : null;
 
                     $query = "INSERT INTO volontari_evento(id_evento, id_volontario, note)
                                     VALUES('$event', '$volunteer', '$notes');";

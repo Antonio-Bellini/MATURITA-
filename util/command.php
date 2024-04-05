@@ -218,68 +218,69 @@
         $resultV2 = dbQuery($connection, $queryV2);
 
         if ($resultV1 && $resultE1) {
-            echo "<form action='../private/event.php' id='addVolunteerToEvent' method='POST' class='addVolunteerToEvent'>
-                    <br><br>
-                    <label for='choice'>Cosa vuoi fare?</label>
-                    <select name='crud_volu__choice' id='crud_volu__choice'>
-                        <option value='1'>Aggiungi volontario a evento</option>
-                        <option value='2'>Rimuovi volontario da evento</option>
-                        <option value='3'>Aggiorna un volontario a un evento</option>
-                        <option value='4'>Visualizza tutti volontari collegati agli eventi</option>
-                    </select>
+            echo "  <section>
+                        <br><br>
+                        <label for='choice'>Cosa vuoi fare?</label>
+                        <select name='crud_volu__choice' id='crud_volu__choice'>
+                            <option value='1'>Aggiungi volontario a evento</option>
+                            <option value='2'>Rimuovi volontario da evento</option>
+                            <option value='3'>Aggiorna un volontario a un evento</option>
+                            <option value='4'>Visualizza tutti volontari collegati agli eventi</option>
+                        </select>
 
-                    <!-- Aggiunta di un volontario a un evento -->
-                    <section id='crud_volu__choice1'>
-                        <label for='volunteer'>Quale volontario vuoi assegnare all'evento?</label>
-                        <select name='volunteer' id='user'>";
-                            while ($row = ($resultV1->fetch_assoc()))
-                                echo "<option value=" . $row["id"] . ">" . $row["nome"] . " " . $row["cognome"] . "</option>";
-                echo   "</select>
+                        <!-- Aggiunta di un volontario a un evento -->
+                        <section id='crud_volu__choice1'>
+                            <form action='../private/event.php' id='addVolunteerToEvent' method='POST' class='addVolunteerToEvent'>
+                                <label for='volunteer'>Quale volontario vuoi assegnare all'evento?</label>
+                                <select name='volunteer' id='user'>";
+                                    while ($row = ($resultV1->fetch_assoc()))
+                                        echo "<option value=" . $row["id"] . ">" . $row["nome"] . " " . $row["cognome"] . "</option>";
+                    echo   "    </select>
 
-                        <label for='event'>A quale evento vuoi assegnare il volontario?</label>
-                        <select name='event' id='event'>";
-                            while ($row = ($resultE1->fetch_assoc()))
-                                echo "<option value=" . $row["id"] . ">" . $row["tipo"] . " il " . $row["data"] . "</option>";
-                            
-                echo   "</select>
+                                <label for='event'>A quale evento vuoi assegnare il volontario?</label>
+                                <select name='event' id='event'>";
+                                    while ($row = ($resultE1->fetch_assoc()))
+                                        echo "<option value=" . $row["id"] . ">" . $row["tipo"] . " il " . $row["data"] . "</option>";
+                    echo   "    </select>
 
-                        <label for='event_notes'>Aggiungi qualche nota utile</label>
-                        <textarea name='event_notes' id='notes' cols='30' rows='10' placeholder='Altre info utili'></textarea>
+                                <label for='event_notes'>Aggiungi qualche nota utile</label>
+                                <textarea name='event_notes' id='notes' cols='30' rows='10' placeholder='Altre info utili'></textarea>
 
-                        <input type='submit' value='AGGIUNGI' id='sub__addVoluToEvent'>
-                    </section>
+                                <input type='submit' value='AGGIUNGI' id='sub__addVoluToEvent'>
+                            </form>
+                        </section>
 
-                    <!-- Rimozione di un volontario da un evento -->
-                    <br><br>
-                    <section id='crud_volu__choice2'>
-                        <label for='volunteer'>Quale volontario vuoi rimuovere dall'evento?</label>";
-                        createTable($resultVE2, "admin__volu_event");
-            echo "  </section>
+                        <!-- Rimozione di un volontario da un evento -->
+                        <br><br>
+                        <section id='crud_volu__choice2'>
+                            <label for='volunteer'>Quale volontario vuoi rimuovere dall'evento?</label>";
+                            createTable($resultVE2, "admin__volu_event");
+                echo "  </section>
 
-                    <!-- Aggiornamento di un volontario a un nuovo evento -->
-                    <section id='crud_volu__choice3'>
-                        <label for='volunteer'>Quale volontario vuoi aggiornare?</label>
-                        <select name='volunteer' id='user'>";
-                            while ($row = ($resultV2->fetch_assoc()))
-                                echo "<option value=" . $row["id"] . ">" . $row["nome"] . " " . $row["cognome"] . "</option>";
-                echo   "</select>";
+                        <!-- Aggiornamento di un volontario a un nuovo evento -->
+                        <section id='crud_volu__choice3'>
+                            <label for='volunteer'>Quale volontario vuoi aggiornare?</label>
+                            <select name='volunteer' id='user'>";
+                                while ($row = ($resultV2->fetch_assoc()))
+                                    echo "<option value=" . $row["id"] . ">" . $row["nome"] . " " . $row["cognome"] . "</option>";
+                    echo   "</select>";
 
-                mysqli_data_seek($resultE1, 0);
-                
-                echo "  <label for='event'>A quale nuovo evento vuoi assegnare il volontario?</label>
-                        <select name='event' id='event'>";
-                            while ($row = ($resultE1->fetch_assoc()))
-                                echo "<option value=" . $row["id"] . ">" . $row["tipo"] . " il " . $row["data"] . "</option>";
-                echo   "</select>
+                    mysqli_data_seek($resultE1, 0);
+                    
+                    echo "  <label for='event'>A quale nuovo evento vuoi assegnare il volontario?</label>
+                            <select name='event' id='event'>";
+                                while ($row = ($resultE1->fetch_assoc()))
+                                    echo "<option value=" . $row["id"] . ">" . $row["tipo"] . " il " . $row["data"] . "</option>";
+                    echo   "</select>
 
-                        <input type='submit' value='AGGIUNGI' id='sub__addVoluToEvent'>
-                    </section>
+                            <input type='submit' value='AGGIUNGI' id='sub__addVoluToEvent'>
+                        </section>
 
-                    <!-- Visualizzazione di tutti i volontari collegati ai vari eventi -->
-                    <section id='crud_volu__choice4'>";
-                        createTable($resultVE3, "admin");
-            echo "  </section>
-                </form>";
+                        <!-- Visualizzazione di tutti i volontari collegati ai vari eventi -->
+                        <section id='crud_volu__choice4'>";
+                            createTable($resultVE3, "admin");
+                echo "  </section>
+                    </section>";
         } else 
             echo ERROR_DB;
     }
