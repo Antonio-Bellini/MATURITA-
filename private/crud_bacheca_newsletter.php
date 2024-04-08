@@ -11,12 +11,13 @@
     importActualStyle();
     session_start();
 
-    $table = null;
+    if (isset($_SESSION["operation"]))
+        $operation = $_SESSION["operation"];
+    if (isset($_SESSION["table"]))
+        $table = $_SESSION["table"];
 
-    if (isset($_GET["operation"]))
-        $operation = $_GET["operation"];
-    if (isset($_GET["table"]))
-        $table = $_GET["table"];
+    if (!isset($_SESSION["operation"]) && !isset($_SESSION["table"]))
+        header("Location: ../index.php");
 
     nav_menu();
 
@@ -110,24 +111,6 @@
             </main>";
     }
 
-    // eliminazione del file bacheca o newsletter selezionato
-    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
-        $table = $_POST["table_sel"];
-        $file = $_POST[$table];
-        $file_name = "../$table/" . $_POST["file_name"];
-        $query = "DELETE FROM $table WHERE id = $file";
-        $result = dbQuery($connection, $query);
-
-        if ($result) {
-            if (file_exists($file_name)) {
-                if (unlink($file_name)) {
-                    $_SESSION["file_deleted"] = true;
-                    header("Location: ../" . $table . "/" . $table . ".php");
-                }
-            }
-        }
-    }
-
     // funzione per aggiungere file in bacheca
     function addToBacheca($table) {
         echo "<br>
@@ -156,6 +139,7 @@
     function removeFromBacheca($table, $connection) {
         $query = "SELECT id, $table, data FROM $table";
         $result = dbQuery($connection, $query);
+
         echo "<br>
         <section id='form'>
             <h2>Eliminazione di un contenuto dalla " . $table . "</h2>
@@ -183,5 +167,23 @@
                     <input type='submit' name='submit' value='RIMUOVI'>
                 </form>
         </section>";
+    }
+
+    // eliminazione del file bacheca o newsletter selezionato
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
+        $table = $_POST["table_sel"];
+        $file = $_POST[$table];
+        $file_name = "../$table/" . $_POST["file_name"];
+        $query = "DELETE FROM $table WHERE id = $file";
+        $result = dbQuery($connection, $query);
+
+        if ($result) {
+            if (file_exists($file_name)) {
+                if (unlink($file_name)) {
+                    $_SESSION["file_deleted"] = true;
+                    header("Location: ../" . $table . "/" . $table . ".php");
+                }
+            }
+        }
     }
 ?>

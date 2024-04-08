@@ -15,15 +15,16 @@
     $operation = null;
     $userId = null;
     $profile = null;
+    
+    $operation = isset($_SESSION["operation"]) ? $_SESSION["operation"] : null;
 
-    if (isset($_GET["operation"]))
-        $operation = $_GET["operation"];
+    if (isset($_GET["operation"])) {
+        if ($_GET["operation"] === "LOGOUT")
+            $operation = $_GET["operation"];
+    }
 
-    if (isset($_GET["user"]))
-        $userId = $_GET["user"];
-
-    if (isset($_GET["profile"]))
-        $profile = $_GET["profile"];
+    $userId = isset($_SESSION["user"]) ? $_SESSION["user"] : null;
+    $profile = isset($_SESSION["profile"]) ? $_SESSION["profile"] : null;
 
     // possibili bottoni cliccati
     switch ($operation) {
@@ -49,7 +50,8 @@
 
                 case "assisted":
                     if ((isset($_SESSION["is_parent"]) && $_SESSION["is_parent"]) ||
-                        (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]))
+                        (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) ||
+                        (isset($_SESSION["is_terapist"]) && $_SESSION["is_terapist"]))
                         $connection = connectToDatabase(DB_HOST, DB_USER, USER_PW, DB_NAME);
                         modifyForm($connection, "assisted", $userId);
                     break;
@@ -59,8 +61,8 @@
                         modifyForm($connection, "volunteer", $userId);
                     break;
 
-                case "rls":
-                    header("Location: ../upload/page_upload.php?release={$userId}");
+                case "release":
+                    header("Location: ../upload/page_upload.php");
                     break;
 
                 case "admin":
@@ -109,7 +111,7 @@
 
                             if ($result) {
                                 $_SESSION["user_deleted"] = true;
-                                header("Location: area_personale.php?operation=view_user");
+                                header("Location: area_personale.php");
                             }  else 
                                 echo ERROR_DB;
                         }
@@ -163,7 +165,7 @@
                             echo ERROR_DB;
                         break;
 
-                    case "rls":
+                    case "release":
                         $query = "DELETE FROM liberatorie WHERE id = $userId";
                         $result = dbQuery($connection, $query);
 
@@ -182,7 +184,6 @@
                 $_SESSION["is_logged"] = false;
 
                 if (session_destroy()) {
-                    $_SESSION["not_logged"] = true;
                     header("Location: page_login.php"); 
                 } else 
                     echo ERROR_GEN;
@@ -246,7 +247,7 @@
 
                     echo "<br><section id='form'>
                             <h2>Modifica anagrafica utente</h2>
-                            <label>Cosa vuoi modificare?<br><br></label>
+                            <h3>Cosa vuoi modificare?<br><br></h3>
                             <h3>Nuovi dati</h3><br>
                                 <form action='update.php' method='POST' id='form_update__user'>
                                     <input type='hidden' name='type' value='user'>
@@ -295,6 +296,7 @@
 
             case "assisted":
                 if (isset($_SESSION["is_terapist"]) && $_SESSION["is_terapist"]) {
+                    $anamnesi = null;
                     $query = "SELECT anamnesi 
                                 FROM assistiti a
                                 INNER JOIN utenti u ON a.id_referente = u.id
@@ -306,17 +308,17 @@
                             $anamnesi = $row["anamnesi"];
                         echo "<br><section id='form'>
                                     <h2>Modifica anamnesi assistito</h2>
-                                    <label>Modifica l'anamnesi dell'assistito<br><br></label>
+                                    <h3>Modifica l'anamnesi dell'assistito<br><br></h3>
                                     
                                     <div id='name_surname__label'>
                                         <label for='anamnesi'>Anamnesi assistito</label>
                                     </div>
                                     <div id='name_surname__input'>
-                                        <button class='table--btn'><a href='../upload/" . $anamnesi . "' target='_blank'>Apri il file</a></button>
+                                        <button class='table--btn'><a href='../upload/medical_module" . $anamnesi . "' target='_blank'>Apri il file</a></button>
                                         &nbsp;&nbsp;
-                                        <button class='btn_delete'><a href='crud.php?operation=delete&user={$userId}&profile=anamnesi'>Elimina il file</a></button>
+                                        <button class='btn_delete' data-operation='delete' data-user='$userId' data-profile='anamnesi'>Elimina il file</button>
                                         &nbsp;&nbsp;
-                                        <button class='table--btn'><a href='../upload/page_upload_medical.php?user={$userId}'>Aggiungi nuovo file</a></button>
+                                        <button class='table--btn' data-user='$userId'><a href='../upload/page_upload_medical.php'>Aggiungi nuovo file</a></button>
                                     </div><br>
                                 </section>";
                     }  else 
@@ -336,7 +338,7 @@
 
                         echo "<br><section id='form'>
                                 <h2>Modifica anagrafica assistito</h2>
-                                <label>Cosa vuoi modificare?<br><br></label>
+                                <h3>Cosa vuoi modificare?<br><br></h3>
                                 <h3>Nuovi dati</h3><br>
                                     <form action='update.php' method='POST' id='form_update__assisted'>
                                         <input type='hidden' name='type' value='assisted'>
@@ -378,7 +380,7 @@
 
                     echo "<br><section id='form'>
                                 <h2>Modifica anagrafica volontario</h2>
-                                <label>Cosa vuoi modificare?<br><br></label>
+                                <h3>Cosa vuoi modificare?<br><br></h3>
                                 <h3>Nuovi dati</h3><br>
                                     <form action='update.php' method='POST' id='form_update__volunteer'>
                                         <input type='hidden' name='type' value='volunteer'>

@@ -14,23 +14,18 @@
 
     $function = null;
 
-    if (isset($_GET["function"]))
-        $function = $_GET["function"];
+    if (isset($_SESSION["function"]))
+        $function = $_SESSION["function"];
 
     nav_menu();
 
     if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) {
-        check_operation();
-
         switch ($function) {
             case "crud_volunteer_event":
                 try {
                     $volunteer = $_POST["volunteer"];
                     $event = $_POST["event"];
-                    $notes = null;
-
-                    if (isset($_POST["notes"]))
-                        $notes = $_POST["notes"];
+                    $notes = isset($_POST["notes"]) ? $_POST["notes"] : null;
 
                     $query = "INSERT INTO volontari_evento(id_evento, id_volontario, note)
                                     VALUES('$event', '$volunteer', '$notes');";
@@ -95,9 +90,10 @@
                                 INNER JOIN tipi_evento te ON e.tipo_evento = te.id";
                     $result = dbQuery($connection, $query);
 
-                    if ($result) 
+                    if ($result) {
+                        check_operation();
                         createTable($result, "admin");
-                    else 
+                    } else 
                         echo ERROR_DB;
                 } else {
                     $_SESSION["event_not_created"] = true;
@@ -123,35 +119,23 @@
 
             case "view_all_event":
                 $event = $_POST["event"];
+                $query = "SELECT e.id,
+                                te.tipo AS 'NOME EVENTO',
+                                e.data AS 'DATA EVENTO',
+                                e.note AS 'NOTE EVENTO',
+                                GROUP_CONCAT(DISTINCT CONCAT(a.nome, ' ', a.cognome) SEPARATOR '<br>') AS 'ASSISTITI REGISTRATI',
+                                GROUP_CONCAT(DISTINCT CONCAT(v.nome, ' ', v.cognome) SEPARATOR '<br>') AS 'VOLONTARI REGISTRATI'
+                            FROM eventi e
+                            LEFT JOIN assistiti_evento ae ON e.id = ae.id_evento
+                            LEFT JOIN volontari_evento ve ON e.id = ve.id_evento
+                            LEFT JOIN tipi_evento te ON e.tipo_evento = te.id
+                            LEFT JOIN assistiti a ON a.id = ae.id_assistito
+                            LEFT JOIN volontari v ON v.id = ve.id_volontario";
                 if ($event === "all") {
-                    $query = "SELECT e.id,
-                                    te.tipo AS 'NOME EVENTO',
-                                    e.data AS 'DATA EVENTO',
-                                    e.note AS 'NOTE EVENTO',
-                                    GROUP_CONCAT(DISTINCT CONCAT(a.nome, ' ', a.cognome) SEPARATOR '<br>') AS 'ASSISTITI REGISTRATI',
-                                    GROUP_CONCAT(DISTINCT CONCAT(v.nome, ' ', v.cognome) SEPARATOR '<br>') AS 'VOLONTARI REGISTRATI'
-                                FROM eventi e
-                                LEFT JOIN assistiti_evento ae ON e.id = ae.id_evento
-                                LEFT JOIN volontari_evento ve ON e.id = ve.id_evento
-                                LEFT JOIN tipi_evento te ON e.tipo_evento = te.id
-                                LEFT JOIN assistiti a ON a.id = ae.id_assistito
-                                LEFT JOIN volontari v ON v.id = ve.id_volontario
-                                GROUP BY e.id, te.tipo, e.data, e.note;";
+                    $query .= " GROUP BY e.id, te.tipo, e.data, e.note;";
                 } else {
-                    $query = "SELECT e.id,
-                                    te.tipo AS 'NOME EVENTO',
-                                    e.data AS 'DATA VENTO',
-                                    e.note AS 'NOTE EVENTO',
-                                    GROUP_CONCAT(DISTINCT CONCAT(a.nome, ' ', a.cognome) SEPARATOR '<br>') AS assistiti,
-                                    GROUP_CONCAT(DISTINCT CONCAT(v.nome, ' ', v.cognome) SEPARATOR '<br>') AS volontari
-                                FROM eventi e
-                                LEFT JOIN assistiti_evento ae ON e.id = ae.id_evento
-                                LEFT JOIN volontari_evento ve ON e.id = ve.id_evento
-                                LEFT JOIN tipi_evento te ON e.tipo_evento = te.id
-                                LEFT JOIN assistiti a ON a.id = ae.id_assistito
-                                LEFT JOIN volontari v ON v.id = ve.id_volontario
-                                WHERE e.id = '$event'
-                                GROUP BY e.id, te.tipo, e.data, e.note;";
+                    $query .= " WHERE e.id = '$event'
+                                GROUP BY e.id, te.tipo, e.data, e.note";
                 }
 
                 $result = dbQuery($connection, $query);

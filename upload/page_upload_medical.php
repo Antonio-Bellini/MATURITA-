@@ -55,7 +55,7 @@
                 <label for="assisted">L'assistito per cui stai caricando l'anamnesi é</label>
                 <select name="assisted" id="assisted">
                 <?php
-                    $userId = $_GET["user"]; 
+                    $userId = $_SESSION["user"]; 
                     $connection = connectToDatabase(DB_HOST, DB_TERAPIST, TERAPIST_PW, DB_NAME);
                     $query = "SELECT id, nome, cognome FROM assistiti WHERE id=$userId";
                     $result = dbQuery($connection, $query);

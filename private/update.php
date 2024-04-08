@@ -115,12 +115,12 @@
 
                 if ($result) {
                     $_SESSION["user_modified"] = true;
-                    header("Location: admin_operation.php?operation=view_volu");
+                    header("Location: area_personale.php");
                 } else
                     echo ERROR_DB;
             } else {
                 $_SESSION["user_not_modified"] = true;
-                header("Location: admin_operation.php?operation=view_volu");
+                header("Location: area_personale.php");
             }
             break;
 

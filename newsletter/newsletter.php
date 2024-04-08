@@ -22,13 +22,15 @@
                 check_operation();
                 
                 echo "<br><br>
-                        <button class='btn'>
-                            <a href='../private/crud_bacheca_newsletter.php?operation=add&table=newsletter'>Aggiungi contenuto</a>
+                    <section class='bacheca_newsletter__btn'>
+                        <button id='addNewsletterBtn' class='btn' data-operation='add' data-table='newsletter'>
+                            Aggiungi contenuto
                         </button>
                         &nbsp;
-                        <button class='btn'>
-                            <a href='../private/crud_bacheca_newsletter.php?operation=del&table=newsletter'>Elimina contenuto</a>
-                        </button>";
+                        <button id='delNewsletterBtn' class='btn' data-operation='del' data-table='newsletter'>
+                            Elimina contenuto
+                        </button>
+                    </section>";
         } else if (isset($_SESSION["is_parent"]) && $_SESSION["is_parent"]) {
             $connection = connectToDatabase(DB_HOST, DB_USER, USER_PW, DB_NAME);
         }  else if (isset($_SESSION["is_terapist"]) && $_SESSION["is_terapist"]) {
@@ -39,16 +41,22 @@
 
         $query = "SELECT newsletter, data FROM newsletter";
         $result = dbQuery($connection, $query);
-        echo "<br><br><h1>Newsletter dell'associazione</h1><br><br>";
-
+        
+        echo "<br><br>
+                <section class='bacheca_newsletter__content'>
+                    <h1>Newsletter dell'associazione</h1><br><br>";
         if ($result) {
+            echo "<div class='bacheca_newsletter__list'>";
+            if ($result->num_rows === 0)
+                echo "<h3>Nessun risultato trovato</h3>";
             while ($row = ($result->fetch_assoc())) {
-                echo "  <div class='bacheca-item'>
+                echo "  <div class='bacheca_newsletter-item'>
                             <div class='pdf-preview'>
                                 <embed src='" . $row["newsletter"] . "' type='application/pdf' width='80%' height='100%'>
                             </div>
                         </div>";
             }
+            echo "</div></section>";
         } else 
             echo ERROR_DB;
 

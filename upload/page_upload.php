@@ -46,7 +46,7 @@
         <h2>Pagina per il caricamento delle liberatorie</h2>
         <h3>Assicurati di caricare solo il file PDF firmato</h3><br><br>
         <label for="choice">Per chi vuoi caricare la liberatoria?</label>
-        <select name="choice" id="choice">
+        <select name="choice" id="upload_choice">
             <option value="1">Assistito</option>
             <option value="2">Volontario</option>
         </select>
@@ -63,8 +63,8 @@
                 <?php
                     $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
 
-                    if (isset($_GET["release"])) {
-                        $release = $_GET["release"];
+                    if (isset($_SESSION["profile"]) && $_SESSION["profile"] === "release") {
+                        $release = $_SESSION["user"];
                         $query = "SELECT a.id, nome, cognome 
                                     FROM assistiti a 
                                     INNER JOIN liberatorie l ON a.id_liberatoria = l.id

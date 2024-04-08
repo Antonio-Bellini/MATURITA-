@@ -14,8 +14,8 @@
 
     $operation = null;
 
-    if (isset($_GET["operation"]))
-        $operation = $_GET["operation"];
+    if (isset($_SESSION["operation"]))
+        $operation = $_SESSION["operation"];
 
     if (isset($_SESSION["is_logged"]) && $_SESSION["is_logged"]) {
         if ((isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) ||
@@ -42,6 +42,7 @@
 
                         // la stampa avviene tramite ajax
                         echo "<br><br><br><br>
+                            <section class='main'>
                                 <h3 id='user_title'></h3>
                                 <section id='table'></section>";
 
@@ -49,12 +50,13 @@
                         echo "  <section id='table'>    
                                     <h3 id='create_title'></h3>
                                     <button class='btn' id='button_parent'><a href='' id='button_title'>Crea account</a></button>
-                                </section>";
+                                </section>
+                            </section>";
                     } else
                         header("Location: ../index.php");
                     break;
 
-                case "view_volu":
+                case "view_volunteer":
                     if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) {
                         nav_menu();
 
@@ -88,15 +90,16 @@
                         header("Location: ../index.php");
                     break;
 
-                case "view_assi":
+                case "view_assisted":
                     nav_menu();
 
                     // funzione per la stampa dell'esito dell'operatione eseguita
                     check_operation();
                     
                     echo "<br><br>
-                            <section id='table'>
-                                <h3>ASSISTITI REGISTRATI</h3>";
+                    <section class='main'>
+                        <section id='table'>
+                            <h3>ASSISTITI REGISTRATI</h3>";
                     $query = "SELECT a.id, 
                                     a.NOME, 
                                     a.COGNOME, 
@@ -110,18 +113,24 @@
                                 LEFT JOIN liberatorie l ON a.id_liberatoria = l.id";
                     $result = dbQuery($connection, $query);
 
-                    if ($result)
+                    if ($result) 
                         createTable($result, "assisted");
                     else
                         echo ERROR_DB;
 
-                    echo "<br><br><br>
+                    if (isset($_SESSION["is_president"]) && $_SESSION["is_president"]) {
+                        return null; 
+                    }else {
+                        echo "<br><br><br>
                                 <h3>Crea un nuovo account assistito</h3>
                                 <button class='btn'><a href='../register/register_assisted.php'>Crea account</a></button>
-                            </section>";
+                            </section>
+                        </section>";
+                    }
+                    echo "</section>";
                     break;
 
-                case "mng_rls":
+                case "manage_release":
                     if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) {
                         nav_menu();
 
@@ -143,20 +152,20 @@
                         header("Location: ../index.php");
                     break;
                 
-                case "mng_event":
+                case "manage_event":
                     if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) {
                         nav_menu();
 
                         echo "<br>
                                 <section id='form'>
                                     <h2>Pagina eventi</h2>
-                                    <label>Quale operazione vuoi eseguire?</label>
+                                    <h3>Quale operazione vuoi eseguire?</h3>
                                     <select id='mng_event__selected'>
-                                        <option value='1'>CRUD volontari_evento</option>
-                                        <option value='2'>CRUD assistiti_evento</option>
+                                        <option value='1'>Gestisci i volontari e gli eventi</option>
+                                        <option value='2'>Gestisci gli assistiti e gli eventi</option>
                                         <option value='3'>Crea nuovo evento</option>
-                                        <option value='4'>CRUD tipi_evento</option>
-                                        <option value='5'>Visualizza eventi</option>
+                                        <option value='4'>Gestisci i tipi di evento</option>
+                                        <option value='5'>Visualizza tutti gli eventi</option>
                                     </select>";
                                     crud_volunteer_event($connection);
                                     crud_assisted_event($connection);
