@@ -72,16 +72,16 @@ nav {
   margin-left: 0; 
 }
 .nav_links ul li a {
-  color: #666; 
+  color: black; 
   text-decoration: none;
   font-size: 16px; 
   padding: 10px 15px; 
   border-radius: 10px; 
-  border: 1px solid transparent; 
+  border: 1px solid #f16d6d; 
   transition: background-color 0.3s ease; 
 }
 .nav_links ul li a:hover {
-  background-color: #e0e0e0;
+  background-color: #f16d6d;
 }
 nav img {
   width: 150px;
@@ -92,8 +92,8 @@ nav img {
   display: inline-block;
   text-decoration: none;
   text-align: center;
-  color: #555;
-  border: 1px solid #ccc;
+  color: black;
+  border: 1px solid #f16d6d;
   padding: 10px 20px;
   border-radius: 3px;
   font-size: 18px;
@@ -105,8 +105,12 @@ nav img {
   text-decoration: none;
   color: black;
 }
+.btn-sel{
+  background: #f16d6d;
+}
+
 .btn:hover {
-  background-color: #f0f0f0;
+  background-color: #f16d6d;
   color: #333;
 }
 
@@ -185,7 +189,7 @@ input[type="date"] {
   transition: background-color 0.3s ease;
 }
 #form input[type="submit"]:hover {
-  background-color: #45a049;
+  background-color: #ee3a3a;
 }
 #form label {
   font-weight: bold;
@@ -226,7 +230,7 @@ th, td {
   border-bottom: 1px solid #ddd;
 }
 th {
-  background-color: #f2f2f2;
+  background-color: #f16d6d ;
   color: #333;
   font-weight: bold;
   text-align: center;
@@ -251,14 +255,14 @@ tr:nth-child(even) {
   color: white;
 }
 .table--btn:hover, .btn_delete:hover {
-  background-color: #45a049;
+  background-color: #017206;
 }
 .btn_delete {
   background-color: #ff6347;
   color: white;
 }
 .btn_delete:hover {
-  background-color: #ff483b;
+  background-color: #ee3a3a;
 }
 
 /* stile per il form del login */
