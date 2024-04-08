@@ -55,7 +55,10 @@
                         if ($key !== "id")
                             echo "<td>" . printField($value) . "</td>";
                     }
-                    echo "<td>" . printButton($userType, $row["id"]) . "</td>";
+                    if (isset($row["ID EVENTO"]))
+                        echo "<td>" . printButton($userType, $row["ID VOLONTARIO"], $row["ID EVENTO"]) . "</td>";
+                    else 
+                        echo "<td>" . printButton($userType, $row["id"], null) . "</td>";
                     echo "</tr>";
                 }
                 echo "</table>";
@@ -73,7 +76,7 @@
     }
     
     // funzione per la stampa dei bottoni di modifica
-    function printButton($userType, $userId) {
+    function printButton($userType, $userId, $eventId) {
         switch ($userType) {
             case "user":
                 $result = "";
@@ -114,7 +117,7 @@
                         </button>";
                 break;
 
-            case "admin" || "admin__volu_event":
+            case "admin":
                 return "<button class='table--btn' data-operation='modify' data-user='$userId' data-profile='admin'>
                             Modifica
                         </button>
@@ -122,6 +125,10 @@
                         <button class='btn_delete' data-operation='delete' data-user='$userId' data-profile='admin'>
                             Elimina
                         </button>";
+                break;
+
+            case "admin__event":
+                return "RIMUOVI <input type='checkbox' name='volunteer_event[]' value='" . $userId . "%" . "$eventId-'>";
                 break;
 
             case "release":
@@ -194,19 +201,31 @@
 
     // funzione per mostrare il form per aggiungere un volontario a un evento
     function crud_volunteer_event($connection) {
-        $queryV1 = "SELECT id, nome, cognome FROM volontari";
-        $queryE1 = "SELECT e.id, te.tipo, e.data 
+        $queryV1 = "SELECT id, 
+                            nome, 
+                            cognome 
+                    FROM volontari";
+        $queryE1 = "SELECT e.id, 
+                            te.tipo, 
+                            e.data 
                     FROM eventi e
                     INNER JOIN tipi_evento te ON te.id = e.tipo_evento";
-        $queryVE2 = "SELECT v.id, v.nome, v.cognome, te.tipo, e.data, e.note 
+        $queryVE2 = "SELECT v.id AS 'ID VOLONTARIO', 
+                            v.NOME, v.COGNOME, 
+                            te.tipo AS 'TIPO EVENTO', 
+                            e.DATA, 
+                            e.NOTE, 
+                            e.id AS 'ID EVENTO'
                         FROM volontari v
                         INNER JOIN volontari_evento ve ON v.id = ve.id_volontario
                         INNER JOIN eventi e ON e.id = ve.id_evento
                         INNER JOIN tipi_evento te ON e.tipo_evento = te.id";
-        $queryV2 = "SELECT DISTINCT v.id, v.nome, v.cognome 
+        $queryV2 = "SELECT DISTINCT v.id, 
+                                    v.nome, 
+                                    v.cognome 
                     FROM volontari v
                     INNER JOIN volontari_evento ve ON ve.id_volontario = v.id";
-        $queryVE3 = "SELECT v.id, v.nome, v.cognome, te.tipo, e.data, e.note 
+        $queryVE3 = "SELECT v.id, v.NOME, v.COGNOME, te.tipo AS 'TIPO EVENTO', e.DATA, e.NOTE, e.id
                         FROM volontari v
                         INNER JOIN volontari_evento ve ON v.id = ve.id_volontario
                         INNER JOIN eventi e ON e.id = ve.id_evento
@@ -218,7 +237,7 @@
         $resultV2 = dbQuery($connection, $queryV2);
 
         if ($resultV1 && $resultE1) {
-            echo "  <section>
+            echo "  <section id='crud__volu_event'>
                         <br><br>
                         <label for='choice'>Cosa vuoi fare?</label>
                         <select name='crud_volu__choice' id='crud_volu__choice'>
@@ -230,18 +249,20 @@
 
                         <!-- Aggiunta di un volontario a un evento -->
                         <section id='crud_volu__choice1'>
-                            <form action='../private/event.php' id='addVolunteerToEvent' method='POST' class='addVolunteerToEvent'>
+                            <form action='../private/event.php' method='POST'>
+                                <input type='hidden' name='crud_volu_event__function' value='addVoluToEvent'>
+
                                 <label for='volunteer'>Quale volontario vuoi assegnare all'evento?</label>
                                 <select name='volunteer' id='user'>";
                                     while ($row = ($resultV1->fetch_assoc()))
                                         echo "<option value=" . $row["id"] . ">" . $row["nome"] . " " . $row["cognome"] . "</option>";
-                    echo   "    </select>
+            echo "              </select>
 
                                 <label for='event'>A quale evento vuoi assegnare il volontario?</label>
                                 <select name='event' id='event'>";
                                     while ($row = ($resultE1->fetch_assoc()))
                                         echo "<option value=" . $row["id"] . ">" . $row["tipo"] . " il " . $row["data"] . "</option>";
-                    echo   "    </select>
+            echo "              </select>
 
                                 <label for='event_notes'>Aggiungi qualche nota utile</label>
                                 <textarea name='event_notes' id='notes' cols='30' rows='10' placeholder='Altre info utili'></textarea>
@@ -253,33 +274,42 @@
                         <!-- Rimozione di un volontario da un evento -->
                         <br><br>
                         <section id='crud_volu__choice2'>
-                            <label for='volunteer'>Quale volontario vuoi rimuovere dall'evento?</label>";
-                            createTable($resultVE2, "admin__volu_event");
-                echo "  </section>
+                            <form action='../private/event.php' method='POST'>
+                                <input type='hidden' name='crud_volu_event__function' value='delVoluFromEvent'>
+                                
+                                <label for='volunteer'>Quale volontario vuoi rimuovere dall'evento?</label>";
+                                createTable($resultVE2, "admin__event");
+
+            echo "              <input type='submit' value='RIMUOVI'>";
+            echo "          </form>";
+            echo "      </section>
 
                         <!-- Aggiornamento di un volontario a un nuovo evento -->
                         <section id='crud_volu__choice3'>
-                            <label for='volunteer'>Quale volontario vuoi aggiornare?</label>
-                            <select name='volunteer' id='user'>";
-                                while ($row = ($resultV2->fetch_assoc()))
-                                    echo "<option value=" . $row["id"] . ">" . $row["nome"] . " " . $row["cognome"] . "</option>";
-                    echo   "</select>";
+                            <form action='../private/event.php' method='POST'>
+                                <input type='hidden' name='crud_volu_event__function' value='updVoluFromEvent'>
+
+                                <label for='volunteer'>Quale volontario vuoi aggiornare?</label>
+                                <select name='volunteer' id='user'>";
+                                    while ($row = ($resultV2->fetch_assoc()))
+                                        echo "<option value=" . $row["id"] . ">" . $row["nome"] . " " . $row["cognome"] . "</option>";
+            echo "              </select>";
 
                     mysqli_data_seek($resultE1, 0);
                     
-                    echo "  <label for='event'>A quale nuovo evento vuoi assegnare il volontario?</label>
+            echo "      <label for='event'>A quale nuovo evento vuoi assegnare il volontario?</label>
                             <select name='event' id='event'>";
                                 while ($row = ($resultE1->fetch_assoc()))
-                                    echo "<option value=" . $row["id"] . ">" . $row["tipo"] . " il " . $row["data"] . "</option>";
-                    echo   "</select>
+                                    echo "<option value='" . $row["id"] . "'>" . $row["tipo"] . " il " . $row["data"] . "</option>";
+            echo "          </select>
 
-                            <input type='submit' value='AGGIUNGI' id='sub__addVoluToEvent'>
+                            <input type='submit' value='AGGIORNA' id='sub__addVoluToEvent'>
                         </section>
 
                         <!-- Visualizzazione di tutti i volontari collegati ai vari eventi -->
                         <section id='crud_volu__choice4'>";
-                            createTable($resultVE3, "admin");
-                echo "  </section>
+                            createTable($resultVE3, null);
+            echo "      </section>
                     </section>";
         } else 
             echo ERROR_DB;
@@ -295,7 +325,7 @@
         $resultE = dbQuery($connection, $queryE);
 
         if ($resultA && $resultE) {
-            echo "<form action='../private/event.php' id='addAssistedToEvent' method='POST'>
+            echo "<section id='crud__assi_event'><form action='../private/event.php' id='addAssistedToEvent' method='POST'>
                     <br><br>
                     <label for='assisted'>Quale assistito vuoi aggiungere all'evento?</label>
                     <select name='assisted' id='user'>";
@@ -313,7 +343,7 @@
                     <textarea name='event_notes' id='notes' cols='30' rows='10' placeholder='Altre info utili'></textarea>
 
                     <input type='submit' value='AGGIUNGI' id='crud_assisted_event'>
-                </form>";
+                </form></section>";
         } else 
             echo ERROR_DB;
     }
@@ -324,7 +354,7 @@
         $result = dbQuery($connection, $query);
 
         if ($result) {
-            echo "<form action='../private/event.php' id='createNewEvent' method='POST'>
+            echo "<section id='crud__event'><form action='../private/event.php' method='POST'>
                         <br><br>
                         <label for='event_type'>Che tipo di evento sará?</label>
                         <select name='event_type' id='event_type'>";
@@ -339,20 +369,20 @@
                         <textarea name='event_notes' id='notes' cols='30' rows='10' placeholder='Altre info utili'></textarea>
 
                         <input type='submit' value='CREA EVENTO' id='crud_event'>
-                </form>";
+                </form></section>";
         } else 
             echo ERROR_DB;
     } 
 
     // funzione per mostrare il form per creare un nuovo tipo di evento
     function crud_eventType() {
-        echo "<form action='../private/event.php' id='addNewEventType' method='POST'>
+        echo "<section id='crud__eventType'><form action='../private/event.php' method='POST'>
                 <br><br>
                 <label>Quale sará il nome del nuovo evento?</label>
                 <textarea name='new_event' id='notes' cols='30' rows='10' placeholder='Nome nuovo evento' required></textarea>
 
                 <input type='submit' value='CREA NUOVO TIPO DI EVENTO' id='crud_eventType'>
-            </form>";
+            </form></section>";
     }
 
     // funzione per visualizzare l'associazione tra volontari-eventi-assistiti
@@ -363,7 +393,7 @@
         $result = dbQuery($connection, $query);
 
         if ($result) {
-            echo "<form action='../private/event.php' id='viewVoluEventAssi' method='POST'>
+            echo "<section id='view__all'><form action='../private/event.php' method='POST'>
                     <br><br>
                     <label>Quale tipo di evento vuoi vedere?</label>
                     <select name='event' id='event'>";
@@ -373,7 +403,7 @@
             echo    "</select>
 
                     <input type='submit' value='CERCA' id='view_all_event'>
-                </form>";
+                </form></section>";
         } else 
             echo ERROR_DB;
     }
@@ -419,10 +449,6 @@
         if (isset($_SESSION["file_deleted"]) && $_SESSION["file_deleted"]) {
             echo FILE_DEL;
             $_SESSION["file_deleted"] = false;
-        }
-        if (isset($_SESSION["event_deleted"]) && $_SESSION["event_deleted"]) {
-            echo EVENT_DEL;
-            $_SESSION["event_deleted"] = false;
         }
         if (isset($_SESSION["event_created"]) && $_SESSION["event_created"]) {
             echo EVENT_OK;

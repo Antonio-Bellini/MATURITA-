@@ -109,6 +109,10 @@ nav img {
   background-color: #f0f0f0;
   color: #333;
 }
+.btn__dis {
+  opacity: 0.5;     
+  cursor: not-allowed; 
+}
 
 #admin_btn {
   display: flex;

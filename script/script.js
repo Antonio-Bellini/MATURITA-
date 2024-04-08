@@ -128,29 +128,29 @@ $(document).ready(function () {
         // visualizzazione form degli eventi
         let selectedOption = $('#mng_event__selected').val();
         executeEventOperation(selectedOption);
-        $('#addVolunteerToEvent').show();
-        $('#addAssistedToEvent').hide();
-        $('#createNewEvent').hide();
-        $('#addNewEventType').hide();
-        $('#viewVoluEventAssi').hide();
+        $('#crud__volu_event').show();
+        $('#crud__assi_event').hide();
+        $('#crud__event').hide();
+        $('#crud__eventType').hide();
+        $('#view__all').hide();
         $('#mng_event__selected').change(function() {
             let selectedOption = $(this).val();
             executeEventOperation(selectedOption);
 
             // nascondo o mostro il menu in base all'opzione selezionata
             const mng_event__option = {
-                '1': { addVolunteerToEvent: true, addAssistedToEvent: false, createNewEvent: false, addNewEventType: false, viewVoluEventAssi: false },
-                '2': { addVolunteerToEvent: false, addAssistedToEvent: true, createNewEvent: false, addNewEventType: false, viewVoluEventAssi: false },
-                '3': { addVolunteerToEvent: false, addAssistedToEvent: false, createNewEvent: true, addNewEventType: false, viewVoluEventAssi: false },
-                '4': { addVolunteerToEvent: false, addAssistedToEvent: false, createNewEvent: false, addNewEventType: true, viewVoluEventAssi: false },
-                '5': { addVolunteerToEvent: false, addAssistedToEvent: false, createNewEvent: false, addNewEventType: false, viewVoluEventAssi: true }
+                '1': { crud__volu_event: true, crud__assi_event: false, crud__event: false, crud__eventType: false, view__all: false },
+                '2': { crud__volu_event: false, crud__assi_event: true, crud__event: false, crud__eventType: false, view__all: false },
+                '3': { crud__volu_event: false, crud__assi_event: false, crud__event: true, crud__eventType: false, view__all: false },
+                '4': { crud__volu_event: false, crud__assi_event: false, crud__event: false, crud__eventType: true, view__all: false },
+                '5': { crud__volu_event: false, crud__assi_event: false, crud__event: false, crud__eventType: false, view__all: true }
             };
             const mng_event__option_MAP = mng_event__option[selectedOption];
-            $('#addVolunteerToEvent').toggle(mng_event__option_MAP.addVolunteerToEvent);
-            $('#addAssistedToEvent').toggle(mng_event__option_MAP.addAssistedToEvent);
-            $('#createNewEvent').toggle(mng_event__option_MAP.createNewEvent);
-            $('#addNewEventType').toggle(mng_event__option_MAP.addNewEventType);
-            $('#viewVoluEventAssi').toggle(mng_event__option_MAP.viewVoluEventAssi);
+            $('#crud__volu_event').toggle(mng_event__option_MAP.crud__volu_event);
+            $('#crud__assi_event').toggle(mng_event__option_MAP.crud__assi_event);
+            $('#crud__event').toggle(mng_event__option_MAP.crud__event);
+            $('#crud__eventType').toggle(mng_event__option_MAP.crud__eventType);
+            $('#view__all').toggle(mng_event__option_MAP.view__all);
         });
 
         // gestione visualizzazione CRUD volontari_evento
@@ -187,6 +187,7 @@ $(document).ready(function () {
 
     // bottoni per aggiungere o eliminare contenuti da bacheca o newsletter
     if ((window.location.href.indexOf("bacheca.php") > -1) || (window.location.href.indexOf("newsletter.php") > -1)) {
+        // gestione dei click sui 2 bottoni presenti in bacheca o newsletter
         $('#addBachecaBtn').click(handleBachecaNewsletterBtnClick);
         $('#delBachecaBtn').click(handleBachecaNewsletterBtnClick);
         $('#addNewsletterBtn').click(handleBachecaNewsletterBtnClick);
@@ -195,6 +196,19 @@ $(document).ready(function () {
             let operation = $(this).data('operation');
             let table = $(this).data('table');
             crudBachecaNewsletter(operation, table);
+        }
+
+        // disabilito i bottoni di eliminazione se non é presente nessun elemento in bacheca o newsletter
+        if ($(".bacheca_newsletter__list h3:contains('Nessuno risultato trovato')").length === 0) {
+            $('#delBachecaBtn').prop('disabled', false);
+            $('#delNewsletterBtn').prop('disabled', false);
+            $('#delBachecaBtn').removeClass('btn__dis');
+            $('#delNewsletterBtn').removeClass('btn__dis');
+        } else {
+            $('#delBachecaBtn').prop('disabled', true);
+            $('#delNewsletterBtn').prop('disabled', true);
+            $('#delBachecaBtn').addClass('btn__dis');
+            $('#delNewsletterBtn').addClass('btn__dis');
         }
     }
 });

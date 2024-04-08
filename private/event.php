@@ -22,25 +22,93 @@
     if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) {
         switch ($function) {
             case "crud_volunteer_event":
-                try {
-                    $volunteer = $_POST["volunteer"];
-                    $event = $_POST["event"];
-                    $notes = isset($_POST["notes"]) ? $_POST["notes"] : null;
+                switch ($_POST["crud_volu_event__function"]) {
+                    case "addVoluToEvent":
+                        try {
+                            $volunteer = $_POST["volunteer"];
+                            $event = $_POST["event"];
+                            $notes = isset($_POST["notes"]) ? $_POST["notes"] : null;
+        
+                            $query = "INSERT INTO volontari_evento(id_evento, id_volontario, note)
+                                            VALUES('$event', '$volunteer', '$notes');";
+                            $result = dbQuery($connection, $query);
+        
+                            if ($result) {
+                                $_SESSION["added_to_event"] = true;
+                                header("Location: area_personale.php");
+                            } else {
+                                $_SESSION["not_added_to_event"] = true;
+                                header("Location: area_personale.php");
+                            }
+                        } catch(Exception $e) {
+                            echo ERROR_ALREADY_ADDED;
+                        }
+                        break;
+                    
+                    case "delVoluFromEvent":
+                        try {
+                            $volunteers_event = $_POST["volunteer_event"];
+                            $volunteer_id = array();
+                            $event_id = array();
+                        
+                            // ottengo gli id dei volontari e rispettivi eventi selezionati
+                            foreach ($volunteers_event as $value) {
+                                $secondary_values = explode("-", $value);
+                        
+                                foreach ($secondary_values as $secondary_value) {
+                                    $tertiary_values = explode("%", $secondary_value);
+                                    
+                                    if (count($tertiary_values) == 2) {
+                                        $volunteer_id[] = $tertiary_values[0];
+                                        $event_id[] = $tertiary_values[1];
+                                    }
+                                }
+                            }
+                        
+                            // eliminazione dei record nella tabella volontari_evento
+                            if (count($volunteer_id) === count($event_id)) {                        
+                                for ($i = 0; $i < count($volunteer_id); $i++) {
+                                    $current_volunteer_id = $volunteer_id[$i];
+                                    $current_event_id = $event_id[$i];
+                        
+                                    $query = "DELETE FROM volontari_evento 
+                                                    WHERE id_evento = $current_event_id 
+                                                    AND id_volontario = $current_volunteer_id";
+                                    $result = dbQuery($connection, $query);
+                                    
+                                    if ($success) {
+                                        $_SESSION["user_modified"] = true;
+                                        header("Location: area_personale.php");
+                                    } else {
+                                        $_SESSION["user_not_modified"] = true;
+                                        header("Location: area_personale.php");
+                                    }
+                                }                                
+                            } else
+                                echo ERROR_GEN;
+                        } catch (Exception $e) {
+                            echo ERROR_GEN;
+                        }
+                        
+                        break;
 
-                    $query = "INSERT INTO volontari_evento(id_evento, id_volontario, note)
-                                    VALUES('$event', '$volunteer', '$notes');";
-                    $result = dbQuery($connection, $query);
+                    case "updVoluFromEvent":
+                        $volunteer = $_POST["volunteer"];
+                        $event = $_POST["event"];
+                        $query = "UPDATE volontari_evento
+                                    SET id_evento = $event,
+                                    id_volontario = $volunteer";
+                        $result = dbQuery($connection, $query);
 
-                    if ($result) {
-                        $_SESSION["added_to_event"] = true;
-                        header("Location: area_personale.php");
-                    } else {
-                        $_SESSION["not_added_to_event"] = true;
-                        header("Location: area_personale.php");
-                    }
-                } catch(Exception $e) {
-                    echo ERROR_ALREADY_ADDED;
+                        echo $volunteer . ", " . $event;
+
+                        if ($result) 
+                            echo "cc";
+                        else 
+                            echo "nn";
+                        break;
                 }
+                
                 break;
 
             case "crud_assisted_event":
