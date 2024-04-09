@@ -35,6 +35,8 @@
     function createTable($result, $userType) {
         if ($result) {
             if (mysqli_num_rows($result) > 0) {
+                $excludedColumns = array("id", "ID VOLONTARIO", "ID ASSISTITO", "ID EVENTO");
+
                 echo "<table border='1'>";
                 
                 // colonne ottenute dalla query
@@ -42,21 +44,27 @@
                 
                     // stampa intestazione della tabella in base alle colonne ottenute dalla query
                     echo "<tr>";
-                    foreach ($column as $colonna)
-                        if ($colonna->name !== "id") {
+                    foreach ($column as $colonna) {
+                        if (!in_array($colonna->name, $excludedColumns)) {
                             echo "<th>" . $colonna->name . "</th>";
                         }
+                    }
                             echo "<th>      BOTTONI         </th>";
                     echo "</tr>";
                 
                 while ($row = mysqli_fetch_assoc($result)) {
                     echo "<tr>";
                     foreach ($row as $key => $value) {
-                        if ($key !== "id")
+                        if (!in_array($key, $excludedColumns))
                             echo "<td>" . printField($value) . "</td>";
                     }
-                    if (isset($row["ID EVENTO"]))
-                        echo "<td>" . printButton($userType, $row["ID VOLONTARIO"], $row["ID EVENTO"]) . "</td>";
+                    if (isset($row["ID EVENTO"])) {
+                        if (isset($row["ID VOLONTARIO"]))
+                            echo "<td>" . printButton($userType, $row["ID VOLONTARIO"], $row["ID EVENTO"]) . "</td>";
+                        else if (isset($row["ID ASSISTITO"]))
+                            echo "<td>" . printButton($userType, $row["ID ASSISTITO"], $row["ID EVENTO"]) . "</td>";
+                    }
+                        
                     else 
                         echo "<td>" . printButton($userType, $row["id"], null) . "</td>";
                     echo "</tr>";
@@ -123,6 +131,16 @@
                         </button>
                         &nbsp;&nbsp;
                         <button class='btn_delete' data-operation='delete' data-user='$userId' data-profile='admin'>
+                            Elimina
+                        </button>";
+                break;
+
+            case "admin__eventType":
+                return "<button class='table--btn' data-operation='modify' data-user='$userId' data-profile='admin__eventType'>
+                            Modifica
+                        </button>
+                        &nbsp;&nbsp;
+                        <button class='btn_delete' data-operation='delete' data-user='$userId' data-profile='admin__eventType'>
                             Elimina
                         </button>";
                 break;
@@ -223,9 +241,15 @@
         $queryV2 = "SELECT DISTINCT v.id, 
                                     v.nome, 
                                     v.cognome 
-                    FROM volontari v
-                    INNER JOIN volontari_evento ve ON ve.id_volontario = v.id";
-        $queryVE3 = "SELECT v.id, v.NOME, v.COGNOME, te.tipo AS 'TIPO EVENTO', e.DATA, e.NOTE, e.id
+                        FROM volontari v
+                        INNER JOIN volontari_evento ve ON ve.id_volontario = v.id";
+        $queryVE3 = "SELECT v.id, 
+                            v.NOME, 
+                            v.COGNOME, 
+                            te.tipo AS 'TIPO EVENTO', 
+                            e.id,
+                            e.DATA, 
+                            e.NOTE
                         FROM volontari v
                         INNER JOIN volontari_evento ve ON v.id = ve.id_volontario
                         INNER JOIN eventi e ON e.id = ve.id_evento
@@ -236,7 +260,7 @@
         $resultVE3 = dbQuery($connection, $queryVE3);
         $resultV2 = dbQuery($connection, $queryV2);
 
-        if ($resultV1 && $resultE1) {
+        if ($resultV1 && $resultE1 && $resultVE2 && $resultV2 && $resultVE3) {
             echo "  <section id='crud__volu_event'>
                         <br><br>
                         <label for='choice'>Cosa vuoi fare?</label>
@@ -255,24 +279,23 @@
                                 <label for='volunteer'>Quale volontario vuoi assegnare all'evento?</label>
                                 <select name='volunteer' id='user'>";
                                     while ($row = ($resultV1->fetch_assoc()))
-                                        echo "<option value=" . $row["id"] . ">" . $row["nome"] . " " . $row["cognome"] . "</option>";
+            echo "                      <option value=" . $row["id"] . ">" . $row["nome"] . " " . $row["cognome"] . "</option>";
             echo "              </select>
 
                                 <label for='event'>A quale evento vuoi assegnare il volontario?</label>
                                 <select name='event' id='event'>";
                                     while ($row = ($resultE1->fetch_assoc()))
-                                        echo "<option value=" . $row["id"] . ">" . $row["tipo"] . " il " . $row["data"] . "</option>";
+            echo "                      <option value=" . $row["id"] . ">" . $row["tipo"] . " il " . $row["data"] . "</option>";
             echo "              </select>
 
                                 <label for='event_notes'>Aggiungi qualche nota utile</label>
-                                <textarea name='event_notes' id='notes' cols='30' rows='10' placeholder='Altre info utili'></textarea>
+                                <textarea name='event_notes' cols='30' rows='10' placeholder='Altre info utili'></textarea>
 
-                                <input type='submit' value='AGGIUNGI' id='sub__addVoluToEvent'>
+                                <input type='submit' value='AGGIUNGI'>
                             </form>
                         </section>
 
                         <!-- Rimozione di un volontario da un evento -->
-                        <br><br>
                         <section id='crud_volu__choice2'>
                             <form action='../private/event.php' method='POST'>
                                 <input type='hidden' name='crud_volu_event__function' value='delVoluFromEvent'>
@@ -290,20 +313,22 @@
                                 <input type='hidden' name='crud_volu_event__function' value='updVoluFromEvent'>
 
                                 <label for='volunteer'>Quale volontario vuoi aggiornare?</label>
-                                <select name='volunteer' id='user'>";
+                                <select name='volunteer'>";
                                     while ($row = ($resultV2->fetch_assoc()))
-                                        echo "<option value=" . $row["id"] . ">" . $row["nome"] . " " . $row["cognome"] . "</option>";
+            echo "                      <option value=" . $row["id"] . ">" . $row["nome"] . " " . $row["cognome"] . "</option>";
             echo "              </select>";
 
-                    mysqli_data_seek($resultE1, 0);
+                        // riporto a 0 il puntatore per la lettura del risultato
+                        mysqli_data_seek($resultE1, 0);
                     
-            echo "      <label for='event'>A quale nuovo evento vuoi assegnare il volontario?</label>
-                            <select name='event' id='event'>";
-                                while ($row = ($resultE1->fetch_assoc()))
-                                    echo "<option value='" . $row["id"] . "'>" . $row["tipo"] . " il " . $row["data"] . "</option>";
-            echo "          </select>
+            echo "              <label for='event'>A quale nuovo evento vuoi assegnare il volontario?</label>
+                                <select name='event' id='event'>";
+                                    while ($row = ($resultE1->fetch_assoc()))
+            echo "                      <option value='" . $row["id"] . "'>" . $row["tipo"] . " il " . $row["data"] . "</option>";
+            echo "              </select>
 
-                            <input type='submit' value='AGGIORNA' id='sub__addVoluToEvent'>
+                                <input type='submit' value='AGGIORNA'>
+                            </form>
                         </section>
 
                         <!-- Visualizzazione di tutti i volontari collegati ai vari eventi -->
@@ -321,29 +346,103 @@
         $queryE = "SELECT e.id, te.tipo, e.data 
                     FROM eventi e
                     INNER JOIN tipi_evento te ON te.id = e.tipo_evento";
+        $queryAE1 = "SELECT a.id AS 'ID ASSISTITO', 
+                            a.NOME, a.COGNOME, 
+                            te.tipo AS 'TIPO EVENTO', 
+                            e.DATA, 
+                            e.NOTE, 
+                            e.id AS 'ID EVENTO'
+                        FROM assistiti a
+                        INNER JOIN assistiti_evento ae ON a.id = ae.id_assistito
+                        INNER JOIN eventi e ON e.id = ae.id_evento
+                        INNER JOIN tipi_evento te ON e.tipo_evento = te.id";
+        $queryAE2 = "SELECT a.id, a.NOME, a.COGNOME, te.tipo AS 'TIPO EVENTO', e.DATA, e.NOTE, e.id
+                        FROM assistiti a
+                        INNER JOIN assistiti_evento ae ON a.id = ae.id_assistito
+                        INNER JOIN eventi e ON e.id = ae.id_evento
+                        INNER JOIN tipi_evento te ON e.tipo_evento = te.id";
         $resultA = dbQuery($connection, $queryA);
         $resultE = dbQuery($connection, $queryE);
+        $resultAE1 = dbQuery($connection, $queryAE1);
+        $resultAE2 = dbQuery($connection, $queryAE2);
 
-        if ($resultA && $resultE) {
-            echo "<section id='crud__assi_event'><form action='../private/event.php' id='addAssistedToEvent' method='POST'>
-                    <br><br>
-                    <label for='assisted'>Quale assistito vuoi aggiungere all'evento?</label>
-                    <select name='assisted' id='user'>";
-                        while ($row = ($resultA->fetch_assoc()))
-                            echo "<option value=" . $row["id"] . ">" . $row["nome"] . " " . $row["cognome"] . "</option>";
-            echo    "</select>
+        if ($resultA && $resultE && $resultAE1 && $resultAE2) {
+            echo "  <section id='crud__assi_event'>
+                        <br><br>
+                        <label for='choice'>Cosa vuoi fare?</label>
+                        <select name='crud_assi__choice' id='crud_assi__choice'>
+                            <option value='1'>Aggiungi assistito a evento</option>
+                            <option value='2'>Rimuovi assistito da evento</option>
+                            <option value='3'>Aggiorna un assistito a un nuovo evento</option>
+                            <option value='4'>Visualizza tutti gli assistiti collegati agli eventi</option>
+                        </select>
 
-                    <label for='event'>A quale evento vuoi agiungere l'assistito?</label>
-                    <select name='event' id='event'>";
-                        while ($row = ($resultE->fetch_assoc()))
-                            echo "<option value=" . $row["id"] . ">" . $row["tipo"] . " il " . $row["data"] . "</option>";
-            echo    "</select>
+                        <!-- Aggiunta di un assistito a un evento -->
+                        <section id='crud_assi__choice1'>
+                            <form action='../private/event.php' method='POST'>
+                                <input type='hidden' name='crud_assi_event__function' value='addAssiToEvent'>
 
-                    <label for='event_notes'>Aggiungi qualche nota utile</label>
-                    <textarea name='event_notes' id='notes' cols='30' rows='10' placeholder='Altre info utili'></textarea>
+                                <label for='assisted'>Quale assistito vuoi aggiungere all'evento?</label>
+                                <select name='assisted'>";
+                                    while ($row = ($resultA->fetch_assoc()))
+            echo "                      <option value=" . $row["id"] . ">" . $row["nome"] . " " . $row["cognome"] . "</option>";
+            echo "              </select>
 
-                    <input type='submit' value='AGGIUNGI' id='crud_assisted_event'>
-                </form></section>";
+                                <label for='event'>A quale evento vuoi agiungere l'assistito?</label>
+                                <select name='event'>";
+                                    while ($row = ($resultE->fetch_assoc()))
+            echo "                      <option value=" . $row["id"] . ">" . $row["tipo"] . " il " . $row["data"] . "</option>";
+            echo "              </select>
+
+                                <label for='event_notes'>Aggiungi qualche nota utile</label>
+                                <textarea name='event_notes' cols='30' rows='10' placeholder='Altre info utili'></textarea>
+
+                                <input type='submit' value='AGGIUNGI'>
+                            </form>
+                        </section>
+
+                        <!-- Rimozione di un assistito da un evento -->
+                        <section id='crud_assi__choice2'>
+                            <form action='../private/event.php' method='POST'>
+                                <input type='hidden' name='crud_assi_event__function' value='delAssiFromEvent'>
+                                
+                                <label for='volunteer'>Quale Assistito vuoi rimuovere dall'evento?</label>";
+                                createTable($resultAE1, "admin__event");
+
+            echo "              <input type='submit' value='RIMUOVI'>";
+            echo "          </form>";
+            echo "      </section>";
+
+                        // riporto a 0 il puntatore per la lettura del risultato
+                        mysqli_data_seek($resultA, 0);
+                        mysqli_data_seek($resultE, 0);
+
+            echo "      <!-- Aggiornamento di un volontario a un nuovo evento -->
+                        <section id='crud_assi__choice3'>
+                            <form action='../private/event.php' method='POST'>
+                                <input type='hidden' name='crud_assi_event__function' value='updAssiFromEvent'>
+
+                                <label for='volunteer'>Quale Assistito vuoi aggiornare?</label>
+                                <select name='assisted'>";
+                                    while ($row = ($resultA->fetch_assoc()))
+            echo "                      <option value=" . $row["id"] . ">" . $row["nome"] . " " . $row["cognome"] . "</option>";
+            echo "              </select>";
+                    
+            echo "              <label for='event'>A quale nuovo evento vuoi assegnare l'assistito?</label>
+                                <select name='event' id='event'>";
+                                    while ($row = ($resultE->fetch_assoc()))
+            echo "                      <option value='" . $row["id"] . "'>" . $row["tipo"] . " il " . $row["data"] . "</option>";
+            echo "              </select>
+
+                                <input type='submit' value='AGGIORNA'>
+                            </form>
+                        </section>
+
+                        <!-- Visualizzazione di tutti gli assisiti collegati agli eventi -->
+                        <section id='crud_assi__choice4'>";
+                            createTable($resultAE2, null);
+            echo "      </section>
+                </section>";
         } else 
             echo ERROR_DB;
     }
@@ -354,35 +453,66 @@
         $result = dbQuery($connection, $query);
 
         if ($result) {
-            echo "<section id='crud__event'><form action='../private/event.php' method='POST'>
-                        <br><br>
-                        <label for='event_type'>Che tipo di evento sará?</label>
-                        <select name='event_type' id='event_type'>";
-                            while ($row = ($result->fetch_assoc()))
-                                echo "<option value=" . $row["id"] . ">" . $row["tipo"] . "</option>";
-            echo        "</select>
+            echo "  <section id='crud__event'>
+                        <form action='../private/event.php' method='POST'>
+                            <br><br>
+                            <label for='event_type'>Che tipo di evento sará?</label>
+                            <select name='event_type' id='event_type'>";
+                                while ($row = ($result->fetch_assoc()))
+                                    echo "<option value=" . $row["id"] . ">" . $row["tipo"] . "</option>";
+                echo        "</select>
 
-                        <label for='event_date'>Quando si terrá?</label>
-                        <input type='date' name='event_date' id='event_date' required>
+                            <label for='event_date'>Quando si terrá?</label>
+                            <input type='date' name='event_date' id='event_date' required>
 
-                        <label for='event_notes'>Aggiungi qualche nota utile sull'evento</label>
-                        <textarea name='event_notes' id='notes' cols='30' rows='10' placeholder='Altre info utili'></textarea>
+                            <label for='event_notes'>Aggiungi qualche nota utile sull'evento</label>
+                            <textarea name='event_notes' cols='30' rows='10' placeholder='Altre info utili'></textarea>
 
-                        <input type='submit' value='CREA EVENTO' id='crud_event'>
-                </form></section>";
+                            <input type='submit' value='CREA EVENTO'>
+                        </form>
+                    </section>";
         } else 
             echo ERROR_DB;
     } 
 
     // funzione per mostrare il form per creare un nuovo tipo di evento
-    function crud_eventType() {
-        echo "<section id='crud__eventType'><form action='../private/event.php' method='POST'>
-                <br><br>
-                <label>Quale sará il nome del nuovo evento?</label>
-                <textarea name='new_event' id='notes' cols='30' rows='10' placeholder='Nome nuovo evento' required></textarea>
+    function crud_eventType($connection) {
+        $queryTE1 = "SELECT id, tipo FROM tipi_evento";
+        $resultTE1 = dbQuery($connection, $queryTE1);
 
-                <input type='submit' value='CREA NUOVO TIPO DI EVENTO' id='crud_eventType'>
-            </form></section>";
+        if ($resultTE1) {
+            echo "  <section id='crud__eventType'>
+                        <br><br>
+                        <label for='choice'>Cosa vuoi fare?</label>
+                        <select name='crud_eventType__choice' id='crud_eventType__choice'>
+                            <option value='1'>Crea nuovo tipo di evento</option>
+                            <option value='2'>Visualizza, aggiorna o elimina tipo evento</option>
+                        </select>
+
+                        <!-- Creazione di un nuovo tipo di evento -->
+                        <section id='crud_eventType__choice1'>
+                            <form action='../private/event.php' method='POST'>
+                                <input type='hidden' name='crud_eventType__function' value='addNewEventType'>
+                                
+                                <label>Quale sará il nome del nuovo evento?</label>
+                                <textarea name='new_event' id='notes' cols='30' rows='10' placeholder='Nome nuovo evento' required></textarea>
+
+                                <input type='submit' value='CREA NUOVO TIPO DI EVENTO'>
+                            </form>
+                        </section>
+
+                        <!-- Rimozione, aggiornamento e visualizzazione dei tipi di evento -->
+                        <section id='crud_eventType__choice2'>
+                            <form action='../private/crud.php' method='POST'>
+                                <section id='table'>
+                                    <label for='event'>Tipi di evento esistente</label>";
+                                    createTable($resultTE1, "admin__eventType");
+            echo "              </section>
+                            </form>
+                        </section>
+                    </section>";
+        } else 
+            echo ERROR_DB;
     }
 
     // funzione per visualizzare l'associazione tra volontari-eventi-assistiti

@@ -26,6 +26,10 @@
     $userId = isset($_SESSION["user"]) ? $_SESSION["user"] : null;
     $profile = isset($_SESSION["profile"]) ? $_SESSION["profile"] : null;
 
+    echo $userId;
+    echo "<br>" . $profile;
+    echo "<br>" . $operation;
+
     // possibili bottoni cliccati
     switch ($operation) {
         case "modify":
@@ -33,7 +37,7 @@
             
             if (!isset($userId))
                 $userId = $_SESSION["user_id"];
-            
+
             switch ($profile) {
                 case "user":
                     if ((isset($_SESSION["is_parent"]) && $_SESSION["is_parent"]) ||
@@ -94,6 +98,9 @@
                                     </form>
                                 </section>";
                     }
+                    break;
+
+                case "admin__eventType":
                     break;
             }
             break;

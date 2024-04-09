@@ -4,22 +4,24 @@ $(document).ready(function () {
     $(".success, .error, .warning").delay(2500).fadeOut();
 
     // bottoni per eseguire modifica ed eliminazione di un record
-    $('#table').on('click', '.table--btn, .btn_delete', function() {
-        let operation = $(this).data('operation');
-        let user = $(this).data('user');
-        let profile = $(this).data('profile');
-        modify_delete_Profile(operation, user, profile);
-    });
-
-    // doppia conferma prima di eliminare un utente dal db
-    $(".btn_delete").click(function(e) {
-        e.preventDefault();
-        
-        // conferma di eliminazione
-        let confirmed = confirm("Sei sicuro di voler procedere con l'eliminazione?");
-        
-        if (confirmed)
-            window.location.href = "../area_personale.php";
+    $('#table').on('click', '.table--btn, .btn_delete', function(e) {
+        // chiedo la doppia conferma di eliminazione
+        if ($(this).hasClass('btn_delete')) {        
+            let confirmed = confirm("Sei sicuro di voler procedere con l'eliminazione?");
+            
+            if (confirmed) {
+                let operation = $(this).data('operation');
+                let user = $(this).data('user');
+                let profile = $(this).data('profile');
+                modify_delete_Profile(operation, user, profile);
+                window.location.href = "../area_personale.php";
+            }
+        } else {
+            let operation = $(this).data('operation');
+            let user = $(this).data('user');
+            let profile = $(this).data('profile');
+            modify_delete_Profile(operation, user, profile);
+        }
     });
 
     // controllo sulla disponibilitá dell'username
@@ -129,10 +131,7 @@ $(document).ready(function () {
         let selectedOption = $('#mng_event__selected').val();
         executeEventOperation(selectedOption);
         $('#crud__volu_event').show();
-        $('#crud__assi_event').hide();
-        $('#crud__event').hide();
-        $('#crud__eventType').hide();
-        $('#view__all').hide();
+        $('#crud__assi_event, #crud__event, #crud__eventType, #view__all').hide();
         $('#mng_event__selected').change(function() {
             let selectedOption = $(this).val();
             executeEventOperation(selectedOption);
@@ -146,6 +145,7 @@ $(document).ready(function () {
                 '5': { crud__volu_event: false, crud__assi_event: false, crud__event: false, crud__eventType: false, view__all: true }
             };
             const mng_event__option_MAP = mng_event__option[selectedOption];
+            
             $('#crud__volu_event').toggle(mng_event__option_MAP.crud__volu_event);
             $('#crud__assi_event').toggle(mng_event__option_MAP.crud__assi_event);
             $('#crud__event').toggle(mng_event__option_MAP.crud__event);
@@ -153,27 +153,37 @@ $(document).ready(function () {
             $('#view__all').toggle(mng_event__option_MAP.view__all);
         });
 
-        // gestione visualizzazione CRUD volontari_evento
-        $('#crud_volu__choice1').show();
-        $('#crud_volu__choice2').hide();
-        $('#crud_volu__choice3').hide();
-        $('#crud_volu__choice4').hide();
-        $('#crud_volu__choice').change(function() {
-            let selectedOption = $(this).val();
-
-            // nascondo o mostro il menu in base all'opzione selezionata
-            const crud_volu__option = {
-                '1': { crud_volu__choice1: true, crud_volu__choice2: false, crud_volu__choice3: false, crud_volu__choice4: false },
-                '2': { crud_volu__choice1: false, crud_volu__choice2: true, crud_volu__choice3: false, crud_volu__choice4: false },
-                '3': { crud_volu__choice1: false, crud_volu__choice2: false, crud_volu__choice3: true, crud_volu__choice4: false },
-                '4': { crud_volu__choice1: false, crud_volu__choice2: false, crud_volu__choice3: false, crud_volu__choice4: true }
+        // funzione per mostrare o nascondere i sotto menu della pagina gestione eventi
+        function togglechoices(prefix, maxChoices) {
+            // mostro la prima opzione e nascondo tutte le altre opzioni del sotto menu
+            $("#crud_" + prefix + "__choice1").show();
+            for (let i = 1; i <= maxChoices; i++) {
+                $("#crud_" + prefix + "__choice" + i).hide();
             }
-            const crud_volu__option_MAP = crud_volu__option[selectedOption];
-            $('#crud_volu__choice1').toggle(crud_volu__option_MAP.crud_volu__choice1);
-            $('#crud_volu__choice2').toggle(crud_volu__option_MAP.crud_volu__choice2);
-            $('#crud_volu__choice3').toggle(crud_volu__option_MAP.crud_volu__choice3);
-            $('#crud_volu__choice4').toggle(crud_volu__option_MAP.crud_volu__choice4);            
-        });
+
+            // applico la funzione change al menu desiderato per mostrare i sotto menu
+            $("#crud_" + prefix + "__choice").change(function() {
+                let selectedOption = $(this).val();
+                
+                const crud__option = {
+                    '1': { crud__choice1: true, crud__choice2: false, crud__choice3: false, crud__choice4: false },
+                    '2': { crud__choice1: false, crud__choice2: true, crud__choice3: false, crud__choice4: false },
+                    '3': { crud__choice1: false, crud__choice2: false, crud__choice3: true, crud__choice4: false },
+                    '4': { crud__choice1: false, crud__choice2: false, crud__choice3: false, crud__choice4: true }
+                }
+                const crud__option_MAP = crud__option[selectedOption];
+                
+                $("#crud_" + prefix + "__choice1").toggle(crud__option_MAP.crud__choice1);
+                $("#crud_" + prefix + "__choice2").toggle(crud__option_MAP.crud__choice2);
+                $("#crud_" + prefix + "__choice3").toggle(crud__option_MAP.crud__choice3);
+                $("#crud_" + prefix + "__choice4").toggle(crud__option_MAP.crud__choice4);
+            });
+        }
+
+        togglechoices("volu", 4);
+        togglechoices("assi", 4);
+        togglechoices("eventType", 2);
+        $("#crud_volu__choice1, #crud_assi__choice1, #crud_eventType__choice1").show();
     }
 
     // bottoni dell'area personale dell'admin
