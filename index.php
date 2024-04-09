@@ -9,7 +9,7 @@
     <script src="script/script.js"></script>
     <link rel="stylesheet" href="style/style.css">
     <link rel="icon" href="image/logos/logo.png" type="x-icon">
-    <title>Un aiuto per crescere insieme</title>
+    <title>Associazione Zero Tre</title>
 </head>
 
 <!-- STAMPA del BODY in BASE al COOKIE SALVATO -->
