@@ -144,6 +144,7 @@ nav img {
 #name_surname__input input[type="text"],
 #credentials__label label,
 #credentials__input input[type="text"],
+#credentials__input input[type="number"],
 #credentials__input input[type="password"],
 #phones__label label,
 #phones__input input[type="text"],
@@ -162,6 +163,7 @@ input[type="date"] {
   color: red;
 }
 #form input[type="text"],
+#form input[type="number"],
 #form input[type="email"],
 #form input[type="password"],
 #form input[type="file"],
@@ -198,6 +200,7 @@ input[type="date"] {
 }
 #form input[type="text"],
 #form input[type="email"],
+#form input[type="number"],
 #form input[type="password"],
 #form input[type="file"],
 select,
