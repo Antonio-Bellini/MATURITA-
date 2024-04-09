@@ -78,7 +78,7 @@
     // funzionio per la stampa di alcuni dati
     function printField($value) {
         if (substr($value, 0, 14) === "release_module" || substr($value, 0, 14) === "medical_module")
-            return "<button class='table--btn'><a href='../upload/" . $value . "' target='blank'>Apri il file</a></button>";
+            return "<button class='table--btn_file'><a href='../upload/" . $value . "' target='blank'>Apri il file</a></button>";
         else
             return $value;
     }

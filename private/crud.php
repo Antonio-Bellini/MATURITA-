@@ -353,11 +353,15 @@
                                         <label for='anamnesi'>Anamnesi assistito</label>
                                     </div>
                                     <div id='name_surname__input'>
-                                        <button class='table--btn'><a href='../upload/medical_module" . $anamnesi . "' target='_blank'>Apri il file</a></button>
-                                        &nbsp;&nbsp;
-                                        <button class='btn_delete' data-operation='delete' data-user='$userId' data-profile='anamnesi'>Elimina il file</button>
-                                        &nbsp;&nbsp;
-                                        <button class='table--btn' data-user='$userId'><a href='../upload/page_upload_medical.php'>Aggiungi nuovo file</a></button>
+                                        <section id='table'>
+                                            <button class='table--btn_file'><a href='../upload/medical_module" . $anamnesi . "' target='_blank'>Apri il file</a></button>
+                                            &nbsp;&nbsp;
+                                            <button class='btn_delete' data-operation='delete' data-user='$userId' data-profile='anamnesi'>Elimina il file</button>
+                                            &nbsp;&nbsp;
+                                        </section>
+                                        <section>
+                                            <button class='table--btn' data-user='$userId'><a href='../upload/page_upload_medical.php'>Aggiungi nuovo file</a></button>
+                                        </section>
                                     </div><br>
                                 </section>";
                     }  else 
