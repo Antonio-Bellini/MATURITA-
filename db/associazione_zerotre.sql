@@ -42,8 +42,8 @@ CREATE TABLE `assistiti` (
 --
 
 INSERT INTO `assistiti` (`id`, `nome`, `cognome`, `anamnesi`, `note`, `id_referente`, `id_liberatoria`) VALUES
-(1, 'Alessandro', 'Circhetta', '/anamnesi_a1.pdf', 'bravo ragazzo', 1, 1),
-(2, 'Guglielmo', 'Pansini', '/anamnesi_a2.pdf', 'cattivo ragazzo', 2, 2);
+(1, 'Alessandro', 'Circhetta', 'medical_module/anamnesi_a1.pdf', 'bravo ragazzo', 1, 1),
+(2, 'Guglielmo', 'Pansini', 'medical_module//anamnesi_a2.pdf', 'cattivo ragazzo', 2, 2);
 
 -- --------------------------------------------------------
 
@@ -62,9 +62,9 @@ CREATE TABLE `assistiti_evento` (
 --
 
 INSERT INTO `assistiti_evento` (`id_evento`, `id_assistito`, `note`) VALUES
-(1, 1, 'note test'),
-(1, 2, 'note test 2'),
-(2, 2, 'note test 3');
+(1, 1, 'Evento al mare costo 10 euro'),
+(1, 2, 'Evento in montagna costo 15 euro'),
+(2, 2, 'Evento in piscina costo 0 euro');
 
 -- --------------------------------------------------------
 
@@ -96,7 +96,7 @@ CREATE TABLE `eventi` (
 --
 
 INSERT INTO `eventi` (`id`, `tipo_evento`, `data`, `note`) VALUES
-(1, 1, '2024-04-01', 'evento prova'),
+(1, 1, '2024-04-01', 'evento prova 1'),
 (2, 2, '2023-04-23', 'evento prova 2');
 
 -- --------------------------------------------------------
@@ -116,8 +116,8 @@ CREATE TABLE `liberatorie` (
 --
 
 INSERT INTO `liberatorie` (`id`, `liberatoria`, `note`) VALUES
-(1, '/liberatoria_a1.pdf', 'prova liberatoria'),
-(2, '/liberatoria_a2.pdf', 'prova liberatoria 2');
+(1, 'release_module/liberatoria_a1.pdf', 'prova liberatoria assistito 1'),
+(2, 'release_module/liberatoria_a2.pdf', 'prova liberatoria assistito 2');
 
 -- --------------------------------------------------------
 
@@ -250,8 +250,8 @@ CREATE TABLE `utenti` (
 INSERT INTO `utenti` (`id`, `nome`, `cognome`, `username`, `password`, `email`, `telefono_fisso`, `telefono_mobile`, `note`, `id_profilo`) VALUES
 (1, 'Antonio', 'Bellini', 'anto', '32664e46830f538684e8255d05dc8938797695be3aecfaa29ce4d3bb8bf8d5f355dbe2051b5bc11cb051537d87cca9d7e39856a3a56df24dd1a9912255a39866:$=@|&YX*^ht2g7T8Bc*)XX[mNX^|0o5$', 'anto@gmail.com', '', '123456789', 'sono antonio bellini', 4),
 (2, 'Jacopo', 'Bordoni', 'bordo', 'f4fe48ee352b291c8eed01cc05f571391f600fa88173b27e8ba824e2788bb9e04ad9949be4afd5d6552a69ba250592a602f1395aca9e6ba298b7d55fa299ab15:at!<3W,N6M5S}(.yhTr*-d[vT1xqP*4F', 'bordo@gmail.com', '', '123456789', 'sono l admin di prova', 2),
-(3, 'Vincenzo Pio', 'D Agostino', 'dago', '00b3fe3b548c426e40ea48a468e4e6644e90375761654e9a405ac183a2c7649cb6cac01aae5b0a4900acc3829b0f128a73b5cc50c4628679e8cebbb80f6b090e:4i&3V&gk=C2zo|e+<1dF[[d+}ToD}}u}', 'dago@gmail.com', '', '123456789', 'sono un utente', 4),
-(4, 'Xiang', 'Zhenjie', 'xiang', 'f3bdb05632e68fa06223bb4e128fd15bfee5ad29adf790a633436141c396776617dab0ef413f5667ddaeb1a58f3382ed7c32c9c04f0eb6cb032bf73022f85c9f:IsxFSxn~RfMDCea7xsJ599>R$EX}djx^', 'xiang@gmail.com', '', '123456789', 'sono un ', 4);
+(3, 'Vincenzo Pio', 'D Agostino', 'dago', '00b3fe3b548c426e40ea48a468e4e6644e90375761654e9a405ac183a2c7649cb6cac01aae5b0a4900acc3829b0f128a73b5cc50c4628679e8cebbb80f6b090e:4i&3V&gk=C2zo|e+<1dF[[d+}ToD}}u}', 'dago@gmail.com', '', '123456789', 'sono un genitore di prova', 4),
+(4, 'Xiang', 'Zhenjie', 'xiang', 'f3bdb05632e68fa06223bb4e128fd15bfee5ad29adf790a633436141c396776617dab0ef413f5667ddaeb1a58f3382ed7c32c9c04f0eb6cb032bf73022f85c9f:IsxFSxn~RfMDCea7xsJ599>R$EX}djx^', 'xiang@gmail.com', '', '123456789', 'sono un altro genitore di prova', 4);
 
 -- --------------------------------------------------------
 
@@ -294,8 +294,8 @@ CREATE TABLE `volontari_evento` (
 --
 
 INSERT INTO `volontari_evento` (`id_evento`, `id_volontario`, `note`) VALUES
-(1, 1, ''),
-(1, 2, '');
+(1, 1, 'bagnino certificato'),
+(1, 2, 'sa sciare');
 
 --
 -- Indici per le tabelle scaricate
