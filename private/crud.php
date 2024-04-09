@@ -26,10 +26,6 @@
     $userId = isset($_SESSION["user"]) ? $_SESSION["user"] : null;
     $profile = isset($_SESSION["profile"]) ? $_SESSION["profile"] : null;
 
-    echo $userId;
-    echo "<br>" . $profile;
-    echo "<br>" . $operation;
-
     // possibili bottoni cliccati
     switch ($operation) {
         case "modify":
@@ -101,6 +97,30 @@
                     break;
 
                 case "admin__eventType":
+                    $query = "SELECT tipo FROM tipi_evento WHERE id = $userId";
+                    $result = dbQuery($connection, $query);
+
+                    if ($result) {
+                        while ($row = ($result->fetch_assoc())) {
+                            echo "<br><br>
+                                <section id='form'>
+                                    <h3>Cosa vuoi modificare?</h3><br><br>
+                                    <form action='update.php' method='POST'>
+                                        <input type='hidden' name='type' value='update_eventType'>
+                                        <input type='hidden' name='user_id' value=$userId>
+
+                                        <div id='name_surname__label'>
+                                            <label for='event_type'>Nuovo nome evento</label>
+                                        </div>
+                                        <div id='name_surname__input'>
+                                            <textarea name='new_name' cols='30' rows='10' placeholder='" . $row["tipo"] . "'></textarea>
+                                        </div>
+                                        <input type='submit' value='AGGIORNA'>
+                                    </form>
+                                </section>";
+                        }
+                    } else 
+                        echo ERROR_DB;
                     break;
             }
             break;
@@ -178,6 +198,17 @@
 
                         if ($result) {
                             $_SESSION["file_deleted"] = true;
+                            header("Location: area_personale.php");
+                        } else 
+                            echo ERROR_DB;
+                        break;
+
+                    case "admin__eventType":
+                        $query = "DELETE FROM tipi_evento WHERE id = $userId";
+                        $result = dbQuery($connection, $query);
+
+                        if ($result) {
+                            $_SESSION["event_deleted"] = true;
                             header("Location: area_personale.php");
                         } else 
                             echo ERROR_DB;

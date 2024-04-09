@@ -504,8 +504,12 @@
                         <!-- Rimozione, aggiornamento e visualizzazione dei tipi di evento -->
                         <section id='crud_eventType__choice2'>
                             <form action='../private/crud.php' method='POST'>
+                                <h3>ATTENZIONE!<br>
+                                    Se vuoi cancellare un tipo di evento assicurati 
+                                    che non esista nessun evento con quel tipo altrimenti verrá cancellato
+                                </h3>
                                 <section id='table'>
-                                    <label for='event'>Tipi di evento esistente</label>";
+                                    <label for='event'><br><br>Tipi di evento esistenti</label>";
                                     createTable($resultTE1, "admin__eventType");
             echo "              </section>
                             </form>
@@ -599,6 +603,10 @@
         if (isset($_SESSION["incorrect_pw"]) && $_SESSION["incorrect_pw"]) {
             echo ERROR_PW;
             $_SESSION["incorrect_pw"] = false;
+        }
+        if (isset($_SESSION["event_deleted"]) && $_SESSION["event_deleted"]) {
+            echo EVENT_DEL;
+            $_SESSION["event_deleted"] = false;
         }
     }
 ?>

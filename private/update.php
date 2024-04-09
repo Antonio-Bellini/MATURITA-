@@ -149,6 +149,25 @@
                 header("Location: area_personale.php");
             }
             break;
+
+        case "update_eventType":
+            $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
+            $update_query = "UPDATE tipi_evento SET ";
+
+            if (!empty($_POST["new_name"])) {
+                $update_query .= "tipo = '{$_POST["new_name"]}' WHERE id = $userId";
+                $result = dbQuery($connection, $update_query);
+
+                if ($result) {
+                    $_SESSION["event_modified"] = true;
+                    header("Location: area_personale.php");
+                } else
+                    echo ERROR_DB;
+            } else {
+                $_SESSION["event_not_modified"] = true;
+                header("Location: area_personale.php");
+            }
+            break;
     }
 
 

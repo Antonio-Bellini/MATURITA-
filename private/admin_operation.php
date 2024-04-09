@@ -165,7 +165,7 @@
                                         <option value='2'>Gestisci gli assistiti e gli eventi</option>
                                         <option value='3'>Crea nuovo evento</option>
                                         <option value='4'>Gestisci i tipi di evento</option>
-                                        <option value='5'>Visualizza tutti gli eventi</option>
+                                        <option value='5'>Visualizza gli eventi</option>
                                     </select>";
                                     crud_volunteer_event($connection);
                                     crud_assisted_event($connection);
