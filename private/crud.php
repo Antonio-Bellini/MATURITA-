@@ -8,6 +8,7 @@
     echo "<script src='http://52.47.171.54:8080/bootstrap.js'></script>";
     echo "<script src='../script/script.js'></script>";
     echo "<link rel='stylesheet' href='../style/style.css'>";
+    echo "<title>Associazione Zero Tre</title>";
     importActualStyle();
     session_start();
     $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
@@ -33,7 +34,7 @@
             
             if (!isset($userId))
                 $userId = $_SESSION["user_id"];
-            
+
             switch ($profile) {
                 case "user":
                     if ((isset($_SESSION["is_parent"]) && $_SESSION["is_parent"]) ||
@@ -94,6 +95,33 @@
                                     </form>
                                 </section>";
                     }
+                    break;
+
+                case "admin__eventType":
+                    $query = "SELECT tipo FROM tipi_evento WHERE id = $userId";
+                    $result = dbQuery($connection, $query);
+
+                    if ($result) {
+                        while ($row = ($result->fetch_assoc())) {
+                            echo "<br><br>
+                                <section id='form'>
+                                    <h3>Cosa vuoi modificare?</h3><br><br>
+                                    <form action='update.php' method='POST'>
+                                        <input type='hidden' name='type' value='update_eventType'>
+                                        <input type='hidden' name='user_id' value=$userId>
+
+                                        <div id='name_surname__label'>
+                                            <label for='event_type'>Nuovo nome evento</label>
+                                        </div>
+                                        <div id='name_surname__input'>
+                                            <textarea name='new_name' cols='30' rows='10' placeholder='" . $row["tipo"] . "'></textarea>
+                                        </div>
+                                        <input type='submit' value='AGGIORNA'>
+                                    </form>
+                                </section>";
+                        }
+                    } else 
+                        echo ERROR_DB;
                     break;
             }
             break;
@@ -171,6 +199,17 @@
 
                         if ($result) {
                             $_SESSION["file_deleted"] = true;
+                            header("Location: area_personale.php");
+                        } else 
+                            echo ERROR_DB;
+                        break;
+
+                    case "admin__eventType":
+                        $query = "DELETE FROM tipi_evento WHERE id = $userId";
+                        $result = dbQuery($connection, $query);
+
+                        if ($result) {
+                            $_SESSION["event_deleted"] = true;
                             header("Location: area_personale.php");
                         } else 
                             echo ERROR_DB;
@@ -314,11 +353,15 @@
                                         <label for='anamnesi'>Anamnesi assistito</label>
                                     </div>
                                     <div id='name_surname__input'>
-                                        <button class='table--btn'><a href='../upload/medical_module" . $anamnesi . "' target='_blank'>Apri il file</a></button>
-                                        &nbsp;&nbsp;
-                                        <button class='btn_delete' data-operation='delete' data-user='$userId' data-profile='anamnesi'>Elimina il file</button>
-                                        &nbsp;&nbsp;
-                                        <button class='table--btn' data-user='$userId'><a href='../upload/page_upload_medical.php'>Aggiungi nuovo file</a></button>
+                                        <section id='table'>
+                                            <button class='table--btn_file'><a href='../upload/medical_module" . $anamnesi . "' target='_blank'>Apri il file</a></button>
+                                            &nbsp;&nbsp;
+                                            <button class='btn_delete' data-operation='delete' data-user='$userId' data-profile='anamnesi'>Elimina il file</button>
+                                            &nbsp;&nbsp;
+                                        </section>
+                                        <section>
+                                            <button class='table--btn' data-user='$userId'><a href='../upload/page_upload_medical.php'>Aggiungi nuovo file</a></button>
+                                        </section>
                                     </div><br>
                                 </section>";
                     }  else 

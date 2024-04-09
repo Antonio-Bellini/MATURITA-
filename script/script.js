@@ -4,22 +4,24 @@ $(document).ready(function () {
     $(".success, .error, .warning").delay(2500).fadeOut();
 
     // bottoni per eseguire modifica ed eliminazione di un record
-    $('#table').on('click', '.table--btn, .btn_delete', function() {
-        let operation = $(this).data('operation');
-        let user = $(this).data('user');
-        let profile = $(this).data('profile');
-        modify_delete_Profile(operation, user, profile);
-    });
-
-    // doppia conferma prima di eliminare un utente dal db
-    $(".btn_delete").click(function(e) {
-        e.preventDefault();
-        
-        // conferma di eliminazione
-        let confirmed = confirm("Sei sicuro di voler procedere con l'eliminazione?");
-        
-        if (confirmed)
-            window.location.href = "../area_personale.php";
+    $('#table').on('click', '.table--btn, .btn_delete', function(e) {
+        // chiedo la doppia conferma di eliminazione
+        if ($(this).hasClass('btn_delete')) {        
+            let confirmed = confirm("Sei sicuro di voler procedere con l'eliminazione?");
+            
+            if (confirmed) {
+                let operation = $(this).data('operation');
+                let user = $(this).data('user');
+                let profile = $(this).data('profile');
+                modify_delete_Profile(operation, user, profile);
+                window.location.href = "../area_personale.php";
+            }
+        } else {
+            let operation = $(this).data('operation');
+            let user = $(this).data('user');
+            let profile = $(this).data('profile');
+            modify_delete_Profile(operation, user, profile);
+        }
     });
 
     // controllo sulla disponibilitá dell'username
@@ -128,52 +130,60 @@ $(document).ready(function () {
         // visualizzazione form degli eventi
         let selectedOption = $('#mng_event__selected').val();
         executeEventOperation(selectedOption);
-        $('#addVolunteerToEvent').show();
-        $('#addAssistedToEvent').hide();
-        $('#createNewEvent').hide();
-        $('#addNewEventType').hide();
-        $('#viewVoluEventAssi').hide();
+        $('#crud__volu_event').show();
+        $('#crud__assi_event, #crud__event, #crud__eventType, #view__all').hide();
         $('#mng_event__selected').change(function() {
             let selectedOption = $(this).val();
             executeEventOperation(selectedOption);
 
             // nascondo o mostro il menu in base all'opzione selezionata
             const mng_event__option = {
-                '1': { addVolunteerToEvent: true, addAssistedToEvent: false, createNewEvent: false, addNewEventType: false, viewVoluEventAssi: false },
-                '2': { addVolunteerToEvent: false, addAssistedToEvent: true, createNewEvent: false, addNewEventType: false, viewVoluEventAssi: false },
-                '3': { addVolunteerToEvent: false, addAssistedToEvent: false, createNewEvent: true, addNewEventType: false, viewVoluEventAssi: false },
-                '4': { addVolunteerToEvent: false, addAssistedToEvent: false, createNewEvent: false, addNewEventType: true, viewVoluEventAssi: false },
-                '5': { addVolunteerToEvent: false, addAssistedToEvent: false, createNewEvent: false, addNewEventType: false, viewVoluEventAssi: true }
+                '1': { crud__volu_event: true, crud__assi_event: false, crud__event: false, crud__eventType: false, view__all: false },
+                '2': { crud__volu_event: false, crud__assi_event: true, crud__event: false, crud__eventType: false, view__all: false },
+                '3': { crud__volu_event: false, crud__assi_event: false, crud__event: true, crud__eventType: false, view__all: false },
+                '4': { crud__volu_event: false, crud__assi_event: false, crud__event: false, crud__eventType: true, view__all: false },
+                '5': { crud__volu_event: false, crud__assi_event: false, crud__event: false, crud__eventType: false, view__all: true }
             };
             const mng_event__option_MAP = mng_event__option[selectedOption];
-            $('#addVolunteerToEvent').toggle(mng_event__option_MAP.addVolunteerToEvent);
-            $('#addAssistedToEvent').toggle(mng_event__option_MAP.addAssistedToEvent);
-            $('#createNewEvent').toggle(mng_event__option_MAP.createNewEvent);
-            $('#addNewEventType').toggle(mng_event__option_MAP.addNewEventType);
-            $('#viewVoluEventAssi').toggle(mng_event__option_MAP.viewVoluEventAssi);
+            
+            $('#crud__volu_event').toggle(mng_event__option_MAP.crud__volu_event);
+            $('#crud__assi_event').toggle(mng_event__option_MAP.crud__assi_event);
+            $('#crud__event').toggle(mng_event__option_MAP.crud__event);
+            $('#crud__eventType').toggle(mng_event__option_MAP.crud__eventType);
+            $('#view__all').toggle(mng_event__option_MAP.view__all);
         });
 
-        // gestione visualizzazione CRUD volontari_evento
-        $('#crud_volu__choice1').show();
-        $('#crud_volu__choice2').hide();
-        $('#crud_volu__choice3').hide();
-        $('#crud_volu__choice4').hide();
-        $('#crud_volu__choice').change(function() {
-            let selectedOption = $(this).val();
-
-            // nascondo o mostro il menu in base all'opzione selezionata
-            const crud_volu__option = {
-                '1': { crud_volu__choice1: true, crud_volu__choice2: false, crud_volu__choice3: false, crud_volu__choice4: false },
-                '2': { crud_volu__choice1: false, crud_volu__choice2: true, crud_volu__choice3: false, crud_volu__choice4: false },
-                '3': { crud_volu__choice1: false, crud_volu__choice2: false, crud_volu__choice3: true, crud_volu__choice4: false },
-                '4': { crud_volu__choice1: false, crud_volu__choice2: false, crud_volu__choice3: false, crud_volu__choice4: true }
+        // funzione per mostrare o nascondere i sotto menu della pagina gestione eventi
+        function togglechoices(prefix, maxChoices) {
+            // mostro la prima opzione e nascondo tutte le altre opzioni del sotto menu
+            $("#crud_" + prefix + "__choice1").show();
+            for (let i = 1; i <= maxChoices; i++) {
+                $("#crud_" + prefix + "__choice" + i).hide();
             }
-            const crud_volu__option_MAP = crud_volu__option[selectedOption];
-            $('#crud_volu__choice1').toggle(crud_volu__option_MAP.crud_volu__choice1);
-            $('#crud_volu__choice2').toggle(crud_volu__option_MAP.crud_volu__choice2);
-            $('#crud_volu__choice3').toggle(crud_volu__option_MAP.crud_volu__choice3);
-            $('#crud_volu__choice4').toggle(crud_volu__option_MAP.crud_volu__choice4);            
-        });
+
+            // applico la funzione change al menu desiderato per mostrare i sotto menu
+            $("#crud_" + prefix + "__choice").change(function() {
+                let selectedOption = $(this).val();
+                
+                const crud__option = {
+                    '1': { crud__choice1: true, crud__choice2: false, crud__choice3: false, crud__choice4: false },
+                    '2': { crud__choice1: false, crud__choice2: true, crud__choice3: false, crud__choice4: false },
+                    '3': { crud__choice1: false, crud__choice2: false, crud__choice3: true, crud__choice4: false },
+                    '4': { crud__choice1: false, crud__choice2: false, crud__choice3: false, crud__choice4: true }
+                }
+                const crud__option_MAP = crud__option[selectedOption];
+                
+                $("#crud_" + prefix + "__choice1").toggle(crud__option_MAP.crud__choice1);
+                $("#crud_" + prefix + "__choice2").toggle(crud__option_MAP.crud__choice2);
+                $("#crud_" + prefix + "__choice3").toggle(crud__option_MAP.crud__choice3);
+                $("#crud_" + prefix + "__choice4").toggle(crud__option_MAP.crud__choice4);
+            });
+        }
+
+        togglechoices("volu", 4);
+        togglechoices("assi", 4);
+        togglechoices("eventType", 2);
+        $("#crud_volu__choice1, #crud_assi__choice1, #crud_eventType__choice1").show();
     }
 
     // bottoni dell'area personale dell'admin
@@ -187,6 +197,7 @@ $(document).ready(function () {
 
     // bottoni per aggiungere o eliminare contenuti da bacheca o newsletter
     if ((window.location.href.indexOf("bacheca.php") > -1) || (window.location.href.indexOf("newsletter.php") > -1)) {
+        // gestione dei click sui 2 bottoni presenti in bacheca o newsletter
         $('#addBachecaBtn').click(handleBachecaNewsletterBtnClick);
         $('#delBachecaBtn').click(handleBachecaNewsletterBtnClick);
         $('#addNewsletterBtn').click(handleBachecaNewsletterBtnClick);
@@ -195,6 +206,19 @@ $(document).ready(function () {
             let operation = $(this).data('operation');
             let table = $(this).data('table');
             crudBachecaNewsletter(operation, table);
+        }
+
+        // disabilito i bottoni di eliminazione se non é presente nessun elemento in bacheca o newsletter
+        if ($(".bacheca_newsletter__list h3:contains('Nessuno risultato trovato')").length === 0) {
+            $('#delBachecaBtn').prop('disabled', false);
+            $('#delNewsletterBtn').prop('disabled', false);
+            $('#delBachecaBtn').removeClass('btn__dis');
+            $('#delNewsletterBtn').removeClass('btn__dis');
+        } else {
+            $('#delBachecaBtn').prop('disabled', true);
+            $('#delNewsletterBtn').prop('disabled', true);
+            $('#delBachecaBtn').addClass('btn__dis');
+            $('#delNewsletterBtn').addClass('btn__dis');
         }
     }
 });

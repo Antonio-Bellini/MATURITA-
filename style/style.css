@@ -109,6 +109,10 @@ nav img {
   background-color: #f0f0f0;
   color: #333;
 }
+.btn__dis {
+  opacity: 0.5;     
+  cursor: not-allowed; 
+}
 
 #admin_btn {
   display: flex;
@@ -234,7 +238,7 @@ th {
 tr:nth-child(even) {
   background-color: #f9f9f9;
 }
-.table--btn, .btn_delete {
+.table--btn, .table--btn_file, .btn_delete {
   background-color: #4CAF50;
   color: white;
   border: none;
@@ -246,11 +250,11 @@ tr:nth-child(even) {
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
-.table--btn a, .btn_delete a {
+.table--btn a, .table--btn_file a, .btn_delete a {
   text-decoration: none;
   color: white;
 }
-.table--btn:hover, .btn_delete:hover {
+.table--btn:hover, .table--btn_file:hover, .btn_delete:hover {
   background-color: #45a049;
 }
 .btn_delete {

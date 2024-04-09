@@ -8,6 +8,7 @@
     echo "<script src='http://52.47.171.54:8080/bootstrap.js'></script>";
     echo "<script src='../script/script.js'></script>";
     echo "<link rel='stylesheet' href='../style/style.css'>";
+    echo "<title>Associazione Zero Tre</title>";
     importActualStyle();
     session_start();
 
@@ -137,6 +138,25 @@
             if (!empty($new_data)) {
                 $update_query .= implode(", ", $new_data);
                 $update_query .= " WHERE id = $userId";
+                $result = dbQuery($connection, $update_query);
+
+                if ($result) {
+                    $_SESSION["event_modified"] = true;
+                    header("Location: area_personale.php");
+                } else
+                    echo ERROR_DB;
+            } else {
+                $_SESSION["event_not_modified"] = true;
+                header("Location: area_personale.php");
+            }
+            break;
+
+        case "update_eventType":
+            $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
+            $update_query = "UPDATE tipi_evento SET ";
+
+            if (!empty($_POST["new_name"])) {
+                $update_query .= "tipo = '{$_POST["new_name"]}' WHERE id = $userId";
                 $result = dbQuery($connection, $update_query);
 
                 if ($result) {
