@@ -134,13 +134,29 @@
                 switch ($profile) {
                     case "user":
                         if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) {
-                            $query = "DELETE FROM utenti WHERE id = '$userId'";
+                            $is_deletable = false;
+
+                            $query = "SELECT id_profilo FROM utenti";
                             $result = dbQuery($connection, $query);
 
                             if ($result) {
-                                $_SESSION["user_deleted"] = true;
-                                header("Location: area_personale.php");
-                            }  else 
+                                while ($row = ($result->fetch_assoc())) {
+                                    if ($row["id_profilo"] != 2)
+                                        $is_deletable = true;
+                                }
+
+                                if ($is_deletable) {
+                                    $query = "DELETE FROM utenti WHERE id = '$userId'";
+                                    $result = dbQuery($connection, $query);
+    
+                                    if ($result) {
+                                        $_SESSION["user_deleted"] = true;
+                                        header("Location: area_personale.php");
+                                    }  else 
+                                        echo ERROR_DB;
+                                } else 
+                                    echo IMPB_DEL;
+                            } else 
                                 echo ERROR_DB;
                         }
                         break;
