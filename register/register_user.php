@@ -58,9 +58,9 @@
                                 <label for='phone_m'>Inserisci il numero di telefono *</label>
                             </div>
                             <div id='phones__input'>
-                                <input type='number' name='phone_f' id='phone_f' maxlength='9'>
+                                <input type='number' name='phone_f' id='phone_f'>
                                 &nbsp;&nbsp;
-                                <input type='number' name='phone_m' id='phone_m' maxlength='9' required>
+                                <input type='number' name='phone_m' id='phone_m' required>
                             </div>
                             
                             <label for='notes'>Inserisci qualche nota aggiuntiva</label>

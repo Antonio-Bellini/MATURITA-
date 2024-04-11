@@ -310,9 +310,9 @@
                                         <label for='new_tm'>Telefono mobile</label>
                                     </div>
                                     <div id='phones__input'>
-                                        <input type='text' name='new_tf' maxlength='9' placeholder='" . $tf . "'>
+                                        <input type='number' id='new_tf' name='new_tf' placeholder='" . $tf . "'>
                                         &nbsp;&nbsp;
-                                        <input type='text' name='new_tm' maxlength='9' placeholder='" . $tm . "'>
+                                        <input type='number' id='new_tm' name='new_tm' placeholder='" . $tm . "'>
                                     </div>
 
                                     <div id='name_surname__label'>
@@ -447,9 +447,9 @@
                                             <label for='new_tm'>Telefono mobile</label>
                                         </div>
                                         <div id='phones__input'>
-                                            <input type='text' name='new_tf' maxlength='9' placeholder='" . $tf . "'>
+                                            <input type='number' id='new_tf' name='new_tf' placeholder='" . $tf . "'>
                                             &nbsp;&nbsp;
-                                            <input type='text' name='new_tm' maxlength='9' placeholder='" . $tm . "'>
+                                            <input type='number' id='new_tm' name='new_tm' placeholder='" . $tm . "'>
                                         </div>
 
                                         <input type='submit' value='AGGIORNA DATI'>

@@ -221,6 +221,13 @@ $(document).ready(function () {
             $('#delNewsletterBtn').addClass('btn__dis');
         }
     }
+
+    // controllo per limitare a max 9 caratteri l'input del numero di telefono
+    $('#new_tf, #new_tm, #phone_f, #phone_m').on("input", function() {
+        let input = $(this).val();
+        if (input > 9)
+            $(this).val(input.slice(0, 9));
+    });
 });
 
 // -------------------------- FUNZIONI AJAX ----------------------------- \\
