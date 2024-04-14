@@ -8,13 +8,10 @@
     echo "<script src='http://52.47.171.54:8080/bootstrap.js'></script>";
     echo "<script src='../script/script.js'></script>";
     echo "<link rel='stylesheet' href='../style/style.css'>";
+    echo "<title>Associazione Zero Tre</title>";
     importActualStyle();
     session_start();
     $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
-
-    $operation = null;
-    $userId = null;
-    $profile = null;
     
     $operation = isset($_SESSION["operation"]) ? $_SESSION["operation"] : null;
 
@@ -33,7 +30,7 @@
             
             if (!isset($userId))
                 $userId = $_SESSION["user_id"];
-            
+
             switch ($profile) {
                 case "user":
                     if ((isset($_SESSION["is_parent"]) && $_SESSION["is_parent"]) ||
@@ -65,7 +62,7 @@
                     header("Location: ../upload/page_upload.php");
                     break;
 
-                case "admin":
+                case "event":
                     $query1 = "SELECT id, tipo FROM tipi_evento";
                     $result1 = dbQuery($connection, $query1);
                     $query2 = "SELECT te.tipo FROM tipi_evento te INNER JOIN eventi e ON e.tipo_evento = te.id WHERE e.id=$userId";
@@ -95,6 +92,33 @@
                                 </section>";
                     }
                     break;
+
+                case "eventType":
+                    $query = "SELECT tipo FROM tipi_evento WHERE id = $userId";
+                    $result = dbQuery($connection, $query);
+
+                    if ($result) {
+                        while ($row = ($result->fetch_assoc())) {
+                            echo "<br><br>
+                                <section id='form'>
+                                    <h3>Cosa vuoi modificare?</h3><br><br>
+                                    <form action='update.php' method='POST'>
+                                        <input type='hidden' name='type' value='update_eventType'>
+                                        <input type='hidden' name='user_id' value=$userId>
+
+                                        <div id='name_surname__label'>
+                                            <label for='event_type'>Nuovo nome evento</label>
+                                        </div>
+                                        <div id='name_surname__input'>
+                                            <textarea name='new_name' cols='30' rows='10' placeholder='" . $row["tipo"] . "'></textarea>
+                                        </div>
+                                        <input type='submit' value='AGGIORNA'>
+                                    </form>
+                                </section>";
+                        }
+                    } else 
+                        echo ERROR_DB;
+                    break;
             }
             break;
 
@@ -106,13 +130,31 @@
                 switch ($profile) {
                     case "user":
                         if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) {
-                            $query = "DELETE FROM utenti WHERE id = '$userId'";
+                            $is_deletable = false;
+
+                            $query = "SELECT id_profilo FROM utenti WHERE id=$userId";
                             $result = dbQuery($connection, $query);
 
                             if ($result) {
-                                $_SESSION["user_deleted"] = true;
-                                header("Location: area_personale.php");
-                            }  else 
+                                while ($row = ($result->fetch_assoc())) {
+                                    if ($row["id_profilo"] != 2)
+                                        $is_deletable = true;
+                                }
+
+                                if ($is_deletable) {
+                                    $query = "DELETE FROM utenti WHERE id = '$userId'";
+                                    $result = dbQuery($connection, $query);
+    
+                                    if ($result) {
+                                        $_SESSION["user_deleted"] = true;
+                                        header("Location: area_personale.php");
+                                    }  else
+                                        echo ERROR_DB;
+                                } else {
+                                    $_SESSION["impb_del"] = true;
+                                    header("Location: area_personale.php");
+                                }
+                            } else 
                                 echo ERROR_DB;
                         }
                         break;
@@ -124,7 +166,7 @@
 
                             if ($result) {
                                 $_SESSION["user_deleted"] = true;
-                                header("Location: admin_operation.php?operation=view_assi");
+                                header("Location: area_personale.php");
                             } else 
                                 echo ERROR_DB;
                         }
@@ -137,24 +179,41 @@
 
                             if ($result) {
                                 $_SESSION["user_deleted"] = true;
-                                header("Location: admin_operation.php?operation=view_volu");
+                                header("Location: area_personale.php");
                             } else 
                                 echo ERROR_DB;
                         }
                         break;
 
                     case "anamnesi":
-                        $query = "UPDATE assistiti SET anamnesi = null WHERE id = '$userId'";
+                        $file_name = null;
+                        $query = "SELECT anamnesi FROM assistiti WHERE id = '$userId'";
                         $result = dbQuery($connection, $query);
 
                         if ($result) {
-                            $_SESSION["file_deleted"] = true;
-                            header("Location: area_personale.php");
+                            while($row = ($result->fetch_assoc())) {
+                                $file_name = "../upload/" . $row["anamnesi"];
+                            }
+
+                            if (file_exists($file_name)) {
+                                if (unlink($file_name)) {
+                                    $query = "UPDATE assistiti SET anamnesi = null WHERE id = $userId";
+                                    $result = dbQuery($connection, $query);
+
+                                    if ($result) {
+                                        $_SESSION["file_deleted"] = true;
+                                        header("Location: area_personale.php");
+                                    } else 
+                                        echo ERROR_DB;
+                                } else 
+                                    echo ERROR_GEN;
+                            } else 
+                                echo ERROR_GEN;
                         } else 
                             echo ERROR_DB;
                         break;
 
-                    case "admin":
+                    case "event":
                         $query = "DELETE FROM eventi WHERE id = $userId";
                         $result = dbQuery($connection, $query);
 
@@ -166,11 +225,39 @@
                         break;
 
                     case "release":
-                        $query = "DELETE FROM liberatorie WHERE id = $userId";
+                        $file_name = null;
+                        $query = "SELECT liberatoria FROM liberatorie WHERE id = '$userId'";
                         $result = dbQuery($connection, $query);
 
                         if ($result) {
-                            $_SESSION["file_deleted"] = true;
+                            while($row = ($result->fetch_assoc())) {
+                                $file_name = "../upload/" . $row["liberatoria"];
+                            }
+
+                            if (file_exists($file_name)) {
+                                if (unlink($file_name)) {
+                                    $query = "DELETE FROM liberatorie WHERE id = $userId";
+                                    $result = dbQuery($connection, $query);
+
+                                    if ($result) {
+                                        $_SESSION["file_deleted"] = true;
+                                        header("Location: area_personale.php");
+                                    } else 
+                                        echo ERROR_DB;
+                                } else 
+                                    echo ERROR_GEN;
+                            } else 
+                                echo ERROR_GEN;
+                        } else 
+                            echo ERROR_DB;
+                        break;
+
+                    case "eventType":
+                        $query = "DELETE FROM tipi_evento WHERE id = $userId";
+                        $result = dbQuery($connection, $query);
+
+                        if ($result) {
+                            $_SESSION["event_deleted"] = true;
                             header("Location: area_personale.php");
                         } else 
                             echo ERROR_DB;
@@ -271,9 +358,9 @@
                                         <label for='new_tm'>Telefono mobile</label>
                                     </div>
                                     <div id='phones__input'>
-                                        <input type='text' name='new_tf' maxlength='9' placeholder='" . $tf . "'>
+                                        <input type='number' id='new_tf' name='new_tf' placeholder='" . $tf . "'>
                                         &nbsp;&nbsp;
-                                        <input type='text' name='new_tm' maxlength='9' placeholder='" . $tm . "'>
+                                        <input type='number' id='new_tm' name='new_tm' placeholder='" . $tm . "'>
                                     </div>
 
                                     <div id='name_surname__label'>
@@ -314,11 +401,15 @@
                                         <label for='anamnesi'>Anamnesi assistito</label>
                                     </div>
                                     <div id='name_surname__input'>
-                                        <button class='table--btn'><a href='../upload/medical_module" . $anamnesi . "' target='_blank'>Apri il file</a></button>
-                                        &nbsp;&nbsp;
-                                        <button class='btn_delete' data-operation='delete' data-user='$userId' data-profile='anamnesi'>Elimina il file</button>
-                                        &nbsp;&nbsp;
-                                        <button class='table--btn' data-user='$userId'><a href='../upload/page_upload_medical.php'>Aggiungi nuovo file</a></button>
+                                        <section id='table'>
+                                            <button class='table--btn_file'><a href='../upload/medical_module" . $anamnesi . "' target='_blank'>Apri il file</a></button>
+                                            &nbsp;&nbsp;
+                                            <button class='btn_delete' data-operation='delete' data-user='$userId' data-profile='anamnesi'>Elimina il file</button>
+                                            &nbsp;&nbsp;
+                                        </section>
+                                        <section>
+                                            <button class='table--btn' data-user='$userId'><a href='../upload/page_upload_medical.php'>Aggiungi nuovo file</a></button>
+                                        </section>
                                     </div><br>
                                 </section>";
                     }  else 
@@ -404,9 +495,9 @@
                                             <label for='new_tm'>Telefono mobile</label>
                                         </div>
                                         <div id='phones__input'>
-                                            <input type='text' name='new_tf' maxlength='9' placeholder='" . $tf . "'>
+                                            <input type='number' id='new_tf' name='new_tf' placeholder='" . $tf . "'>
                                             &nbsp;&nbsp;
-                                            <input type='text' name='new_tm' maxlength='9' placeholder='" . $tm . "'>
+                                            <input type='number' id='new_tm' name='new_tm' placeholder='" . $tm . "'>
                                         </div>
 
                                         <input type='submit' value='AGGIORNA DATI'>

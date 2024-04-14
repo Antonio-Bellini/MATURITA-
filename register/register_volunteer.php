@@ -48,16 +48,16 @@
                                 <label for='phone_m'>Inserisci il numero di telefono *</label>
                             </div>
                             <div id='phones__input'>
-                                <input type='text' name='phone_f' id='phone_f' maxlength='9'>
+                                <input type='number' name='phone_f' id='phone_f'>
                                 &nbsp;&nbsp;
-                                <input type='text' name='phone_m' id='phone_m' maxlength='9' required>
+                                <input type='number' name='phone_m' id='phone_m' required>
                             </div>
 
                             <label for='release'>Carica la liberatoria *</label>
                             <input type='file' name='release' id='release' accept='.pdf' enctype='multipart/form-data' required>
 
-                            <label for='notes'>Note utili</label>
-                            <textarea name='notes' id='notes' cols='30' rows='10' placeholder='Altre info utili'></textarea>
+                            <label for='notes'>Note utili sulla liberatoria</label>
+                            <textarea name='notes' id='notes' cols='30' rows='10' placeholder='Altre info utili sul file liberatoria'></textarea>
 
                             <input type='submit' value='Crea Account Volontario'>
                         </form>

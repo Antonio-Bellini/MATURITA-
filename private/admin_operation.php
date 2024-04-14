@@ -8,14 +8,12 @@
     echo "<script src='http://52.47.171.54:8080/bootstrap.js'></script>";
     echo "<script src='../script/script.js'></script>";
     echo "<link rel='stylesheet' href='../style/style.css'>";
+    echo "<title>Associazione Zero Tre</title>";
     importActualStyle();
     session_start();
     $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
 
-    $operation = null;
-
-    if (isset($_SESSION["operation"]))
-        $operation = $_SESSION["operation"];
+    $operation = isset($_SESSION["operation"]) ? $_SESSION["operation"] : null;
 
     if (isset($_SESSION["is_logged"]) && $_SESSION["is_logged"]) {
         if ((isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) ||
@@ -165,7 +163,7 @@
                                         <option value='2'>Gestisci gli assistiti e gli eventi</option>
                                         <option value='3'>Crea nuovo evento</option>
                                         <option value='4'>Gestisci i tipi di evento</option>
-                                        <option value='5'>Visualizza tutti gli eventi</option>
+                                        <option value='5'>Visualizza gli eventi</option>
                                     </select>";
                                     crud_volunteer_event($connection);
                                     crud_assisted_event($connection);

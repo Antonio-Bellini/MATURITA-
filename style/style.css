@@ -113,6 +113,10 @@ nav img {
   background-color: #E83C2F; /* #E83C2F */
   color: #333;
 }
+.btn__dis {
+  opacity: 0.5;     
+  cursor: not-allowed; 
+}
 
 #admin_btn {
   display: flex;
@@ -145,6 +149,7 @@ nav img {
 #name_surname__input input[type="text"],
 #credentials__label label,
 #credentials__input input[type="text"],
+#credentials__input input[type="number"],
 #credentials__input input[type="password"],
 #phones__label label,
 #phones__input input[type="text"],
@@ -163,6 +168,7 @@ input[type="date"] {
   color: red; /* Red */
 }
 #form input[type="text"],
+#form input[type="number"],
 #form input[type="email"],
 #form input[type="password"],
 #form input[type="file"],
@@ -199,6 +205,7 @@ input[type="date"] {
 }
 #form input[type="text"],
 #form input[type="email"],
+#form input[type="number"],
 #form input[type="password"],
 #form input[type="file"],
 select,

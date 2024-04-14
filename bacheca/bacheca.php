@@ -9,6 +9,7 @@
     echo "<script src='http://52.47.171.54:8080/bootstrap.js'></script>";
     echo "<script src='../script/script.js'></script>";
     echo "<link rel='stylesheet' href='../style/style.css'>";
+    echo "<title>Associazione Zero Tre</title>";
     importActualStyle();
     session_start();
     $connection = null;

@@ -18,6 +18,7 @@
     define("ERROR_FILE", "<div class='error' id='message'>Si é verificato un errore durante il caricamento dei file</div>");
     define("ERROR_UNK_USER", "<div class='error' id='message'>L'username inserito non esiste</div>");
     define("ERROR_ALREADY_ADDED", "<div class='error' id='message'>L'utente é gia stato inserito a questo evento</div>");
+    define("IMPB_DEL", "<div class='error'>Non puoi eliminare l'admin del sito!</div>");
 
     // stampa degli esiti
     define("MOD_OK", "<div class='success' id='message'>Modifiche eseguite correttamente</div>");
