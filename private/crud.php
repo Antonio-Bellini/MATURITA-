@@ -186,12 +186,29 @@
                         break;
 
                     case "anamnesi":
-                        $query = "UPDATE assistiti SET anamnesi = null WHERE id = '$userId'";
+                        $file_name = null;
+                        $query = "SELECT anamnesi FROM assistiti WHERE id = '$userId'";
                         $result = dbQuery($connection, $query);
 
                         if ($result) {
-                            $_SESSION["file_deleted"] = true;
-                            header("Location: area_personale.php");
+                            while($row = ($result->fetch_assoc())) {
+                                $file_name = "../upload/" . $row["anamnesi"];
+                            }
+
+                            if (file_exists($file_name)) {
+                                if (unlink($file_name)) {
+                                    $query = "UPDATE assistiti SET anamnesi = null WHERE id = $userId";
+                                    $result = dbQuery($connection, $query);
+
+                                    if ($result) {
+                                        $_SESSION["file_deleted"] = true;
+                                        header("Location: area_personale.php");
+                                    } else 
+                                        echo ERROR_DB;
+                                } else 
+                                    echo ERROR_GEN;
+                            } else 
+                                echo ERROR_GEN;
                         } else 
                             echo ERROR_DB;
                         break;
@@ -208,12 +225,29 @@
                         break;
 
                     case "release":
-                        $query = "DELETE FROM liberatorie WHERE id = $userId";
+                        $file_name = null;
+                        $query = "SELECT liberatoria FROM liberatorie WHERE id = '$userId'";
                         $result = dbQuery($connection, $query);
 
                         if ($result) {
-                            $_SESSION["file_deleted"] = true;
-                            header("Location: area_personale.php");
+                            while($row = ($result->fetch_assoc())) {
+                                $file_name = "../upload/" . $row["liberatoria"];
+                            }
+
+                            if (file_exists($file_name)) {
+                                if (unlink($file_name)) {
+                                    $query = "DELETE FROM liberatorie WHERE id = $userId";
+                                    $result = dbQuery($connection, $query);
+
+                                    if ($result) {
+                                        $_SESSION["file_deleted"] = true;
+                                        header("Location: area_personale.php");
+                                    } else 
+                                        echo ERROR_DB;
+                                } else 
+                                    echo ERROR_GEN;
+                            } else 
+                                echo ERROR_GEN;
                         } else 
                             echo ERROR_DB;
                         break;
