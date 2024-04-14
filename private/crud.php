@@ -12,10 +12,6 @@
     importActualStyle();
     session_start();
     $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
-
-    $operation = null;
-    $userId = null;
-    $profile = null;
     
     $operation = isset($_SESSION["operation"]) ? $_SESSION["operation"] : null;
 

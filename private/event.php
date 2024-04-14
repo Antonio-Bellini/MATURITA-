@@ -13,10 +13,7 @@
     session_start();
     $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
 
-    $function = null;
-
-    if (isset($_SESSION["function"]))
-        $function = $_SESSION["function"];
+    $function = isset($_SESSION["function"]) ? $_SESSION["function"] : null;
 
     nav_menu();
 
