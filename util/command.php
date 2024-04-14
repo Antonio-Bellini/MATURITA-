@@ -126,21 +126,21 @@
                 break;
 
             case "admin":
-                return "<button class='table--btn' data-operation='modify' data-user='$userId' data-profile='admin'>
+                return "<button class='table--btn' data-operation='modify' data-user='$userId' data-profile='event'>
                             Modifica
                         </button>
                         &nbsp;&nbsp;
-                        <button class='btn_delete' data-operation='delete' data-user='$userId' data-profile='admin'>
+                        <button class='btn_delete' data-operation='delete' data-user='$userId' data-profile='event'>
                             Elimina
                         </button>";
                 break;
 
-            case "admin__eventType":
-                return "<button class='table--btn' data-operation='modify' data-user='$userId' data-profile='admin__eventType'>
+            case "eventType":
+                return "<button class='table--btn' data-operation='modify' data-user='$userId' data-profile='eventType'>
                             Modifica
                         </button>
                         &nbsp;&nbsp;
-                        <button class='btn_delete' data-operation='delete' data-user='$userId' data-profile='admin__eventType'>
+                        <button class='btn_delete' data-operation='delete' data-user='$userId' data-profile='eventType'>
                             Elimina
                         </button>";
                 break;
@@ -510,7 +510,7 @@
                                 </h3>
                                 <section id='table'>
                                     <label for='event'><br><br>Tipi di evento esistenti</label>";
-                                    createTable($resultTE1, "admin__eventType");
+                                    createTable($resultTE1, "eventType");
             echo "              </section>
                             </form>
                         </section>
@@ -607,6 +607,10 @@
         if (isset($_SESSION["event_deleted"]) && $_SESSION["event_deleted"]) {
             echo EVENT_DEL;
             $_SESSION["event_deleted"] = false;
+        }
+        if (isset($_SESSION["impb_del"]) && $_SESSION["impb_del"]) {
+            echo IMPB_DEL;
+            $_SESSION["impb_del"] = false;
         }
     }
 ?>

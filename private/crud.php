@@ -66,7 +66,7 @@
                     header("Location: ../upload/page_upload.php");
                     break;
 
-                case "admin":
+                case "event":
                     $query1 = "SELECT id, tipo FROM tipi_evento";
                     $result1 = dbQuery($connection, $query1);
                     $query2 = "SELECT te.tipo FROM tipi_evento te INNER JOIN eventi e ON e.tipo_evento = te.id WHERE e.id=$userId";
@@ -97,7 +97,7 @@
                     }
                     break;
 
-                case "admin__eventType":
+                case "eventType":
                     $query = "SELECT tipo FROM tipi_evento WHERE id = $userId";
                     $result = dbQuery($connection, $query);
 
@@ -136,7 +136,7 @@
                         if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) {
                             $is_deletable = false;
 
-                            $query = "SELECT id_profilo FROM utenti";
+                            $query = "SELECT id_profilo FROM utenti WHERE id=$userId";
                             $result = dbQuery($connection, $query);
 
                             if ($result) {
@@ -152,10 +152,12 @@
                                     if ($result) {
                                         $_SESSION["user_deleted"] = true;
                                         header("Location: area_personale.php");
-                                    }  else 
+                                    }  else
                                         echo ERROR_DB;
-                                } else 
-                                    echo IMPB_DEL;
+                                } else {
+                                    $_SESSION["impb_del"] = true;
+                                    header("Location: area_personale.php");
+                                }
                             } else 
                                 echo ERROR_DB;
                         }
@@ -198,7 +200,7 @@
                             echo ERROR_DB;
                         break;
 
-                    case "admin":
+                    case "event":
                         $query = "DELETE FROM eventi WHERE id = $userId";
                         $result = dbQuery($connection, $query);
 
@@ -220,7 +222,7 @@
                             echo ERROR_DB;
                         break;
 
-                    case "admin__eventType":
+                    case "eventType":
                         $query = "DELETE FROM tipi_evento WHERE id = $userId";
                         $result = dbQuery($connection, $query);
 
