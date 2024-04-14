@@ -170,7 +170,7 @@
 
                             if ($result) {
                                 $_SESSION["user_deleted"] = true;
-                                header("Location: admin_operation.php?operation=view_assi");
+                                header("Location: area_personale.php");
                             } else 
                                 echo ERROR_DB;
                         }
@@ -183,7 +183,7 @@
 
                             if ($result) {
                                 $_SESSION["user_deleted"] = true;
-                                header("Location: admin_operation.php?operation=view_volu");
+                                header("Location: area_personale.php");
                             } else 
                                 echo ERROR_DB;
                         }

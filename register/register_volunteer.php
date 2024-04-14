@@ -56,8 +56,8 @@
                             <label for='release'>Carica la liberatoria *</label>
                             <input type='file' name='release' id='release' accept='.pdf' enctype='multipart/form-data' required>
 
-                            <label for='notes'>Note utili</label>
-                            <textarea name='notes' id='notes' cols='30' rows='10' placeholder='Altre info utili'></textarea>
+                            <label for='notes'>Note utili sulla liberatoria</label>
+                            <textarea name='notes' id='notes' cols='30' rows='10' placeholder='Altre info utili sul file liberatoria'></textarea>
 
                             <input type='submit' value='Crea Account Volontario'>
                         </form>

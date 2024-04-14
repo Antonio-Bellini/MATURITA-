@@ -77,7 +77,7 @@
                                                     AND id_volontario = $current_volunteer_id";
                                     $result = dbQuery($connection, $query);
                                     
-                                    if ($success) {
+                                    if ($result) {
                                         $_SESSION["user_modified"] = true;
                                         header("Location: area_personale.php");
                                     } else {
@@ -170,7 +170,7 @@
                                                     AND id_assistito = $current_assisted_id";
                                     $result = dbQuery($connection, $query);
                                     
-                                    if ($success) {
+                                    if ($result) {
                                         $_SESSION["user_modified"] = true;
                                         header("Location: area_personale.php");
                                     } else {
@@ -219,19 +219,7 @@
 
                 if ($result) {
                     $_SESSION["event_created"] = true;
-                    $query = "SELECT e.id,
-                                    tipo AS 'NOME EVENTO',
-                                    data AS 'DATA EVENTO',
-                                    note AS 'NOTE EVENTO'
-                                FROM eventi e
-                                INNER JOIN tipi_evento te ON e.tipo_evento = te.id";
-                    $result = dbQuery($connection, $query);
-
-                    if ($result) {
-                        check_operation();
-                        createTable($result, "admin");
-                    } else 
-                        echo ERROR_DB;
+                    header("Location: area_personale.php");
                 } else {
                     $_SESSION["event_not_created"] = true;
                     header("Location: area_personale.php");
@@ -265,6 +253,7 @@
                                 e.data AS 'DATA EVENTO',
                                 e.note AS 'NOTE EVENTO',
                                 GROUP_CONCAT(DISTINCT CONCAT(a.nome, ' ', a.cognome) SEPARATOR '<br>') AS 'ASSISTITI REGISTRATI',
+                                a.note AS 'NOTE ASSISTITO',
                                 GROUP_CONCAT(DISTINCT CONCAT(v.nome, ' ', v.cognome) SEPARATOR '<br>') AS 'VOLONTARI REGISTRATI'
                             FROM eventi e
                             LEFT JOIN assistiti_evento ae ON e.id = ae.id_evento
