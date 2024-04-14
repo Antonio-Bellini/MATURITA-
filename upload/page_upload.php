@@ -67,7 +67,7 @@
                         $release = $_SESSION["user"];
                         $query = "SELECT a.id, nome, cognome 
                                     FROM assistiti a 
-                                    INNER JOIN liberatorie l ON a.id_liberatoria = l.id
+                                    LEFT JOIN liberatorie l ON a.id_liberatoria = l.id
                                     WHERE l.id = $release";
                         $result = dbQuery($connection, $query);
 
@@ -113,7 +113,7 @@
                         $release = $_GET["release"];
                         $query = "SELECT a.id, nome, cognome 
                                     FROM volontari a 
-                                    INNER JOIN liberatorie l ON a.id_liberatoria = l.id
+                                    LEFT JOIN liberatorie l ON a.id_liberatoria = l.id
                                     WHERE l.id = $release";
                         $result = dbQuery($connection, $query);
 

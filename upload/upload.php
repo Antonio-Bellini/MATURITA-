@@ -13,22 +13,10 @@
     session_start();
     $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
 
-    $assistedId = null;
-    $volunteerId = null;
-    $notes = null;
-    $table = null;
-
-    if (isset($_POST["assisted"]))
-        $assistedId = $_POST["assisted"];
-
-    if (isset($_POST["volunteer"]))
-        $volunteerId = $_POST["volunteer"];
-
-    if (isset($_POST["notes"]))
-        $notes = $_POST["notes"];
-
-    if (isset($_POST["table"]))
-        $table = $_POST["table"];
+    $assistedId = isset($_POST["assisted"]) ? $_POST["assisted"] : null;
+    $volunteerId = isset($_POST["volunteer"]) ? $_POST["volunteer"] : null;
+    $notes = isset($_POST["notes"]) ? $_POST["notes"] : null;
+    $table = isset($_POST["table"]) ? $_POST["table"] : null;
 
     // caricamento della liberatoria
     if (isset($_FILES['release'])) {
@@ -76,7 +64,8 @@
                         $_SESSION["file_not_uploaded"] = true;
                         header("Location: ../private/area_personale.php");
                     }
-                }
+                } else 
+                    echo ERROR_GEN;
             }
         } else {
             nav_menu();

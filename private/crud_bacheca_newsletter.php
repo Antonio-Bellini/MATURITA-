@@ -12,13 +12,11 @@
     importActualStyle();
     session_start();
 
-    if (isset($_SESSION["operation"]))
-        $operation = $_SESSION["operation"];
-    if (isset($_SESSION["table"]))
-        $table = $_SESSION["table"];
-
     if (!isset($_SESSION["operation"]) && !isset($_SESSION["table"]))
         header("Location: ../index.php");
+
+    $operation = isset($_SESSION["operation"]) ? $_SESSION["operation"] : null;
+    $table = isset($_SESSION["table"]) ? $_SESSION["table"] : null;
 
     nav_menu();
 

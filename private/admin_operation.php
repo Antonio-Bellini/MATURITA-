@@ -13,10 +13,7 @@
     session_start();
     $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
 
-    $operation = null;
-
-    if (isset($_SESSION["operation"]))
-        $operation = $_SESSION["operation"];
+    $operation = isset($_SESSION["operation"]) ? $_SESSION["operation"] : null;
 
     if (isset($_SESSION["is_logged"]) && $_SESSION["is_logged"]) {
         if ((isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) ||
