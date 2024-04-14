@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/a730223cdf.js" crossorigin="anonymous"></script>
     <script src='https://code.jquery.com/jquery-3.6.4.min.js'></script>
     <script src="http://52.47.171.54:8080/bootstrap.js"></script>
     <script src="script/script.js"></script>
@@ -44,10 +45,10 @@
     </main>
 
     <section class="body__main">
-        <h1 class="title">Associazione Zero Tre</h1>
+        <h1 class="title">Associazione ZeroTre</h1>
         <p class="paragraph">
-            Siamo genitori che credono nel mutuo soccorso perche lo scambio di emozioni ed
-            esperienze evita la chiusura nel dolore e migliora la qualitá di vita familiare
+        SIAMO GENITORI CHE CREDONO NEL MUTUO SOCCORSO PERCHÉ LO SCAMBIO DI EMOZIONI ED
+            ESPERIENZE EVITA LA CHIUSURA NEL DOLORE E MIGLIORA LA QUALITÀ DI VITA FAMILIARE
         </p>
         <div class="gallery">
             <img class="photo" src="image/content/image1.jpg" alt="immagine 1 della premiazione">

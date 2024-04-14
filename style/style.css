@@ -46,7 +46,7 @@ h5 {
 .header {
   padding: 20px;
   border-bottom: 1px solid #ccc;
-  border-top: 25px solid #f16d6d;
+  border-top: 25px solid #E83C2F; /* vecchio colore salmonato #f16d6d */
   background-color: #f9f9f9;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
@@ -72,16 +72,16 @@ nav {
   margin-left: 0; 
 }
 .nav_links ul li a {
-  color: #666; 
+  color: black; 
   text-decoration: none;
   font-size: 16px; 
   padding: 10px 15px; 
   border-radius: 10px; 
-  border: 1px solid transparent; 
+  border: 1px solid #E83C2F; /* #E83C2F */
   transition: background-color 0.3s ease; 
 }
 .nav_links ul li a:hover {
-  background-color: #e0e0e0;
+  background-color: #E83C2F; /* #E83C2F */
 }
 nav img {
   width: 150px;
@@ -92,8 +92,8 @@ nav img {
   display: inline-block;
   text-decoration: none;
   text-align: center;
-  color: #555;
-  border: 1px solid #ccc;
+  color: black;
+  border: 1px solid #E83C2F; /* #E83C2F */
   padding: 10px 20px;
   border-radius: 3px;
   font-size: 18px;
@@ -105,8 +105,12 @@ nav img {
   text-decoration: none;
   color: black;
 }
+.btn-sel{
+  background: #E83C2F; /* #E83C2F */
+}
+
 .btn:hover {
-  background-color: #f0f0f0;
+  background-color: #E83C2F; /* #E83C2F */
   color: #333;
 }
 .btn__dis {
@@ -123,12 +127,13 @@ nav img {
   margin: 5px;
 }
 
+
 /* Stile dei form */
 #form {
   background-color: #f9f9f9;
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 10px rgba(232, 60, 47, 0.1); /* #E83C2F */
   max-width: 1000px;
   margin: 0 auto;
 }
@@ -160,7 +165,7 @@ input[type="date"] {
 }
 #credentials__input span {
   margin-left: 10px;
-  color: red;
+  color: red; /* Red */
 }
 #form input[type="text"],
 #form input[type="number"],
@@ -179,7 +184,7 @@ input[type="date"] {
   font-size: 16px;
 }
 #form input[type="submit"] {
-  background-color: #f16d6d;
+  background-color: #f16d6d; /* #E83C2F */
   color: white;
   padding: 14px 24px;
   border: none;
@@ -191,7 +196,7 @@ input[type="date"] {
   transition: background-color 0.3s ease;
 }
 #form input[type="submit"]:hover {
-  background-color: #45a049;
+  background-color: #ee3a3a; /* Darker Red */
 }
 #form label {
   font-weight: bold;
@@ -233,7 +238,7 @@ th, td {
   border-bottom: 1px solid #ddd;
 }
 th {
-  background-color: #f2f2f2;
+  background-color: #F98275; /* Lighter Red */
   color: #333;
   font-weight: bold;
   text-align: center;
@@ -241,8 +246,7 @@ th {
 tr:nth-child(even) {
   background-color: #f9f9f9;
 }
-.table--btn, .table--btn_file, .btn_delete {
-  background-color: #4CAF50;
+.table--btn, .btn_delete, .table--btn_file {
   color: white;
   border: none;
   padding: 8px 12px;
@@ -253,19 +257,34 @@ tr:nth-child(even) {
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
-.table--btn a, .table--btn_file a, .btn_delete a {
+.table--btn a, .btn_delete a, .table--btn_file a {
   text-decoration: none;
   color: white;
 }
-.table--btn:hover, .table--btn_file:hover, .btn_delete:hover {
-  background-color: #45a049;
+.table--btn:hover, .btn_delete:hover {
+  filter: brightness(1.2); /* Incrementa la luminosità al passaggio del mouse */
 }
 .btn_delete {
-  background-color: #ff6347;
-  color: white;
+  background-color: #FF6359; /* Bright Red */
 }
 .btn_delete:hover {
-  background-color: #ff483b;
+  background-color: #EE3A3A; /* Darker Red */
+}
+
+.table--btn_file{
+  background-color: #51DE81; /* Green */
+  color: white;
+}
+.table--btn_file:hover {
+  filter: brightness(1.2); /* Incrementa la luminosità al passaggio del mouse */
+}
+
+.table--btn {
+  background-color: #53A8FF; /* Blue */
+  color: white;
+}
+.table--btn:hover {
+  filter: brightness(1.2); /* Incrementa la luminosità al passaggio del mouse */
 }
 
 /* stile per il form del login */
@@ -273,31 +292,31 @@ tr:nth-child(even) {
   max-width: 400px;
   margin: 100px auto;
   padding: 40px;
-  background-color: #fff;
+  background-color: #ffe6e6; /* Cambiato */
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 #login_form__title {
   text-align: center;
   margin-bottom: 30px;
-  color: #333;
+  color: #E83C2F; /* Cambiato */
 }
 #login_form__label {
   display: block;
   margin-bottom: 5px;
-  color: #555;
+  color: #E83C2F; /* Cambiato */
 }
 #login_form__input {
   width: 100%;
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid #ffcccc; 
   border-radius: 4px;
   margin-bottom: 10px;
 }
 .login_form__submit {
   width: 100%;
   padding: 12px;
-  background-color: #f16d6d;
+  background-color: #E83C2F; /* Cambiato */
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -305,7 +324,7 @@ tr:nth-child(even) {
   transition: background-color 0.3s ease;
 }
 .login_form__submit:hover {
-  background-color: #45a049;
+  background-color: #cc0000;
 }
 
 /* Stile per bacheca e newsletter*/
@@ -357,7 +376,7 @@ tr:nth-child(even) {
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 3;
-  color: #f16d6d;
+  color: #E83C2F;
   font-size: 48px;
   font-weight: bold;
   text-align: center; 
@@ -419,7 +438,7 @@ tr:nth-child(even) {
 /* footer di tutte le pagine */
 footer {
   width: 100%;
-  background-color: #333;
+  background-color: #5e5e5e; /* Cambiato */
   color: #fff;
   padding: 30px 0;
   text-align: center;
@@ -443,8 +462,108 @@ footer {
 .contact-info p:first-child {
   margin-top: 15px;
 }
+.footer-title {
+  font-size: 35px; /* Modifica la dimensione del testo a 24px */
+}
+.footer-hr {
+  border: 2px solid #fff; /* Linea più spessa */
+  margin: 0 auto; /* Centra l'hr */
+  width: 55%; /* Larghezza dell'hr */
+  border-radius: 5px; /* Smussatura degli angoli */
+}
 iframe {
   border-radius: 10px;
+}
+.card {
+  width: fit-content;
+  height: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 25px 25px;
+  gap: 20px;
+}
+
+/* for all social containers*/
+.socialContainer {
+  width: 30px;
+  height: 30px;
+  background-color: rgb(44, 44, 44);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition-duration: .3s;
+}
+/* instagram*/
+.containerOne:hover {
+  background-color: #d62976;
+  transition-duration: .3s;
+}
+/* facebook*/
+.containerTwo:hover {
+  background-color: #0866FF;
+  transition-duration: .3s;
+}
+
+.socialContainer:active {
+  transform: scale(0.9);
+  transition-duration: .3s;
+}
+
+.socialSvg {
+  width: 15px;
+}
+
+.socialSvg path {
+  fill: rgb(255, 255, 255);
+}
+
+.socialContainer:hover .socialSvg {
+  animation: slide-in-top 0.3s both;
+}
+
+@keyframes slide-in-top {
+  0% {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Aggiunta di regole CSS per le nuove colonne */
+.contact-info-and-social {
+  display: flex;
+  flex-direction: row; /* Organizza i contenuti in una riga */
+  justify-content: space-between; /* Spazio uniforme tra le colonne */
+  margin-top: 1px; /* Aggiunge un margine superiore */
+}
+
+.contact-info {
+  flex-grow: 1; /* La colonna occupa lo spazio rimanente */
+  margin-right: 30px; /* Aggiunge spazio tra le colonne */
+}
+
+.social-buttons {
+  display: flex;
+  gap: 10px; /* Spazio tra i bottoni social */
+  align-items: center; /* Allinea i bottoni social verticalmente */
+  justify-content: center; /* Centra i bottoni social */
+}
+
+/* Regole CSS aggiuntive per i contenuti delle colonne */
+.contact-info p {
+  margin: 0; /* Rimuove i margini dei paragrafi */
+}
+
+.socialContainer {
+  width: 40px; /* Aumenta leggermente la larghezza dei bottoni */
+  height: 40px;
 }
 
 /*----------------------------------DA QUA IN GIU STILE DA RIVEDERE-------------------------------------*/

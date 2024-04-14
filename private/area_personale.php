@@ -152,7 +152,7 @@
                                 <li><a href='../newsletter/newsletter.php'  class='btn'>Newsletter   </a></li>
                                 <li><a href='../bacheca/bacheca.php'        class='btn'>Bacheca       </a></li>
                                 <li><a href='https://stripe.com/it'         class='btn' target='blank'>Donazioni</a></li>
-                                <li><a href='area_personale.php'            class='btn'>Area Personale</a></li>
+                                <li><a href='area_personale.php'            class='btn btn-sel'>Area Personale</a></li>
                                 <li><a href='crud.php?operation=LOGOUT'     class='btn'>Logout</a></li>
                             </ul>
                         </div>
