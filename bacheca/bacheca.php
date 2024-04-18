@@ -38,27 +38,59 @@
             $connection = connectToDatabase(DB_HOST, DB_USER, USER_PW, DB_NAME);
         }
 
-        $query = "SELECT bacheca, data FROM bacheca";
-        $result = dbQuery($connection, $query);
-
         echo "<br><br>
-                <section class='bacheca_newsletter__content'>
-                    <h1>Bacheca dell'associazione</h1><br><br>";
-        if ($result) {
-            echo "<div class='bacheca_newsletter__list'>";
-            if ($result->num_rows === 0)
-                echo "<h3>Nessun risultato trovato</h3>";
-            while ($row = ($result->fetch_assoc())) {
-                echo "  <div class='bacheca_newsletter-item'>
-                            <div class='pdf-preview'>
-                                <embed src='" . $row["bacheca"] . "' type='application/pdf' width='80%' height='100%'>
-                            </div>
-                        </div>";
-            }
-            echo "</div></section>";
-        } else 
-            echo ERROR_DB;
+            <section class='bacheca_newsletter__content'>
+                <h1>Bacheca dell'associazione</h1><br><br>
+                <form id='form' action='" . htmlspecialchars($_SERVER["PHP_SELF"]) . "' method='POST'>
+                    <h3>Ricerca dei contenuti in bacheca</h3>
+                    <br><br>
+                    <div id='name_surname__label'>
+                        <label>Inserisci la data di partenza (deve essere nel passato)</label>
+                        <label>Inserisci la data di fine (deve essere nel futuro)</label>
+                    </div>
+                    <div id='name_surname__input'>
+                        <input type='date' id='bacheca_start' name='bacheca_start'>
+                        &nbsp;&nbsp;
+                        <input type='date' id='bacheca_end' name='bacheca_end'>
+                    </div>
 
+                    <input type='submit' value='CERCA'>
+                </form>";
+
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $starting_date = null;
+            $finish_date = null;
+
+            if (!empty($_POST["bacheca_start"]) && !empty($_POST["bacheca_end"])) {
+                $starting_date = $_POST["bacheca_start"];
+                $finish_date = $_POST["bacheca_end"];
+            } else {
+                $starting_date = date("Y-m-d", strtotime("-1 month", strtotime($starting_date)));
+                $finish_date = date("Y-m-d");
+            }
+
+            $query = "SELECT bacheca, data 
+                        FROM bacheca
+                        WHERE data BETWEEN '$starting_date' AND '$finish_date'";
+            $result = dbQuery($connection, $query);
+
+            if ($result) {
+                echo "  <section class='bacheca_newsletter__content'>
+                            <div class='bacheca_newsletter__list'>";
+                if ($result->num_rows === 0)
+                    echo "      <h3>Nessun risultato trovato</h3>";
+                while ($row = ($result->fetch_assoc())) {
+                    echo "  <div class='bacheca_newsletter-item'>
+                                <div class='pdf-preview'>
+                                    <embed src='" . $row["bacheca"] . "' type='application/pdf' width='80%' height='100%'>
+                                </div>
+                            </div>";
+                }
+                echo "</div></section>";
+            } else 
+                echo ERROR_DB;
+        }
+        
         show_footer();
     } else 
         header("Location: ../private/page_login.php");
