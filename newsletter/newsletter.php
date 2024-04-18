@@ -70,15 +70,15 @@
                 $starting_date = $_POST["newsletter_start"];
                 $finish_date = $_POST["newsletter_end"];
             } else {
-                $starting_date = date("Y-m-d", strtotime("-1 month", strtotime($starting_date)));
                 $finish_date = date("Y-m-d");
+                $starting_date = date("Y-m-d", strtotime("-1 year", strtotime($finish_date)));
             }
 
             $query = "SELECT newsletter, data 
                         FROM newsletter
                         WHERE data BETWEEN '$starting_date' AND '$finish_date'";
             $result = dbQuery($connection, $query);
-
+            
             if ($result) {
                 echo "  <section class='bacheca_newsletter__content'>
                             <div class='bacheca_newsletter__list'>";
