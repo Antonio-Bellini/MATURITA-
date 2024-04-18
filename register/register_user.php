@@ -48,6 +48,7 @@
                                 <input type='text' name='username' id='username' maxlength='20' required>
                                 <span id='usernameError'></span>                        
                                 <input type='password' name='password' id='password' maxlength='255' required>
+                                <span id='togglePassword' class='toggle-password'>&#128065;</span>
                             </div>
                             
                             <label for='email'>Inserisci l'email *</label>
@@ -55,7 +56,7 @@
                 
                             <div id='phones__label'>
                                 <label for='phone_f'>Inserisci il numero di telefono fisso</label>
-                                <label for='phone_m'>Inserisci il numero di telefono *</label>
+                                <label for='phone_m'>Inserisci il numero di telefono mobile *</label>
                             </div>
                             <div id='phones__input'>
                                 <input type='number' name='phone_f' id='phone_f'>

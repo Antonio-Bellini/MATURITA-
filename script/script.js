@@ -3,6 +3,20 @@ $(document).ready(function () {
     $(".success, .error, .warning").fadeIn();
     $(".success, .error, .warning").delay(2500).fadeOut();
 
+    // funzione per mostrare o nascondere la password
+    $('#togglePassword').click(function(){
+        let passwordField = $('#password, #new_psw');
+        let passwordFieldType = passwordField.attr('type');
+        
+        if (passwordFieldType === 'password') {
+          passwordField.attr('type', 'text');
+          $('#togglePassword').html('&#x1f441;').addClass('active');
+        } else {
+          passwordField.attr('type', 'password');
+          $('#togglePassword').html('&#x1f441;').removeClass('active');
+        }
+      });
+
     // bottoni per eseguire modifica ed eliminazione di un record
     $('#table').on('click', '.table--btn, .btn_delete', function(e) {
         // chiedo la doppia conferma di eliminazione

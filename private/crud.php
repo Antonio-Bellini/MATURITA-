@@ -372,6 +372,7 @@
                                         &nbsp;&nbsp;
                                         <input type='password' name='new_psw' id='new_psw' maxlength='255'>
                                         <span id='passwordError'></span>
+                                        <span id='togglePassword' class='toggle-password'>&#128065;</span>
                                     </div>
 
                                     <input type='submit' value='AGGIORNA DATI'>
