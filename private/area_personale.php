@@ -91,13 +91,13 @@
                     // ottengo i dati dell'utente e li stampo
                     echo "<br><br><section id='table'><h3>I tuoi dati</h3>";
                     $query = "SELECT u.id, 
-                                    u.nome,
-                                    u.cognome,
-                                    u.username,
-                                    u.email,
-                                    u.telefono_fisso,
-                                    u.telefono_mobile,
-                                    u.note
+                                    u.NOME,
+                                    u.COGNOME,
+                                    u.USERNAME,
+                                    u.EMAIL,
+                                    u.telefono_fisso AS 'TELEFONO FISSO',
+                                    u.telefono_mobile AS 'TELEFONO MOBILE',
+                                    u.NOTE
                                 FROM utenti u
                                 WHERE u.id = '" . $_SESSION["user_id"] . "'";
                     $result = dbQuery($connection, $query);
@@ -108,12 +108,14 @@
                         // ottengo i dati degli assistiti collegati a questo utente e li stampo
                         echo "<br><br><h3>I tuoi assistiti</h3>";
                         $query = "SELECT a.id,
-                                        a.nome,
-                                        a.cognome, 
-                                        a.anamnesi,
-                                        a.note
+                                        a.NOME,
+                                        a.COGNOME, 
+                                        a.ANAMNESI,
+                                        a.NOTE, 
+                                        l.LIBERATORIA
                                     FROM assistiti a 
                                     INNER JOIN utenti u ON a.id_referente = u.id
+                                    INNER JOIN liberatorie l ON a.id_liberatoria = l.id
                                     WHERE u.id = '" . $_SESSION["user_id"] . "'";
                         $result = dbQuery($connection, $query);
                         
