@@ -53,8 +53,15 @@
                                     <input type='text' name='surname' id='surname' maxlength='30' required>
                                 </div>
 
-                                <label for='med'>Inserisci il file dell'anamnesi *</label>
-                                <input type='file' name='med' id='med' accept='.pdf' enctype='multipart/form-data' required> <br>
+                                <div id='credentials__label'>
+                                    <label for='med'>Inserisci il file dell'anamnesi *</label>
+                                    <label for='rel'>Inserisci il file liberatoria *</label>
+                                </div>
+                                <div id='credentials__input'>
+                                    <input type='file' name='med' id='med' accept='.pdf' required>
+                                    &nbsp;&nbsp;
+                                    <input type='file' name='rel' id='rel' accept='.pdf' required>
+                                </div>
 
                                 <label for='notes'>Inserisci qualche nota aggiuntiva sull'assistito</label>
                                 <textarea name='notes' id='notes' cols='30' rows='10' placeholder='Altre info utili'></textarea>

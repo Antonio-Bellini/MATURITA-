@@ -112,16 +112,40 @@
                 else 
                     $parent = $_SESSION["user_id"];
 
-                // inserimento dell'assistito nel db
-                $query = "INSERT INTO assistiti(nome, cognome, anamnesi, note, id_referente)
-                                VALUES('$name', '$surname', '$uploadedFileName', '$notes', '$parent');";
-                $result = dbQuery($connection, $query);
+                // caricamento della liberatoria in locale
+                $fileName = $_FILES['rel']['name'];
+                $fileTmpName = $_FILES['rel']['tmp_name'];
+                $uploadDirectory = '../upload/release_module/';
 
-                if ($result) {
-                    $_SESSION["user_created"] = true;
-                    header("Location: ../private/area_personale.php");
+                $newFilePath = $uploadDirectory . $fileName;
+
+                if (move_uploaded_file($fileTmpName, $newFilePath)) {
+                    $uploadedFileName = "release_module/" . $fileName;
+                    
+                    // inserimento della liberatoria nel db
+                    $query = "INSERT INTO liberatorie(liberatoria) 
+                                VALUES('$uploadedFileName')";
+                    $result = dbQuery($connection, $query);
+
+                    // inserimento dell'assistito nel db se il caricamento dei file é andato a buon fine
+                    if ($result) {
+                        $rel_id = $connection->insert_id;
+
+                        $query = "INSERT INTO assistiti(nome, cognome, anamnesi, note, id_referente, id_liberatoria)
+                                    VALUES('$name', '$surname', '$uploadedFileName', '$notes', '$parent', '$rel_id');";
+                        $result = dbQuery($connection, $query);
+
+                        if ($result) {
+                            $_SESSION["user_created"] = true;
+                            header("Location: ../private/area_personale.php");
+                        } else {
+                            $_SESSION["user_not_created"] = true;
+                            header("Location: ../private/area_personale.php");
+                        }
+                    } else 
+                        echo ERROR_DB;
                 } else {
-                    $_SESSION["user_not_created"] = true;
+                    $_SESSION["file_not_uploaded"] = true;
                     header("Location: ../private/area_personale.php");
                 }
             } else {
