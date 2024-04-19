@@ -38,6 +38,7 @@
             $connection = connectToDatabase(DB_HOST, DB_USER, USER_PW, DB_NAME);
         }
 
+        // ricerca di contenuti per range di date
         echo "<br><br>
             <section class='bacheca_newsletter__content'>
                 <h1>Bacheca dell'associazione</h1><br><br>
@@ -57,10 +58,8 @@
                     <input type='submit' value='CERCA'>
                 </form>";
 
+        // ottengo i record che soddisfano il range di date messo in input
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $starting_date = null;
-            $finish_date = null;
-
             if (!empty($_POST["bacheca_start"]) && !empty($_POST["bacheca_end"])) {
                 $starting_date = $_POST["bacheca_start"];
                 $finish_date = $_POST["bacheca_end"];
@@ -69,10 +68,11 @@
                 $finish_date = date("Y-m-d");
             }
 
-            $query = "SELECT bacheca, data 
-                        FROM bacheca
-                        WHERE data BETWEEN '$starting_date' AND '$finish_date'";
-            $result = dbQuery($connection, $query);
+            // eseguo la query usando prepared statement per evitare sql injection
+            $stmt = $connection->prepare("SELECT bacheca, data FROM bacheca WHERE data BETWEEN ? AND ?");
+            $stmt->bind_param("ss", $starting_date, $finish_date);
+            $stmt->execute();
+            $result = $stmt->get_result();
 
             if ($result) {
                 echo "  <section class='bacheca_newsletter__content'>
@@ -87,6 +87,8 @@
                             </div>";
                 }
                 echo "</div></section>";
+
+                $stmt->close();
             } else 
                 echo ERROR_DB;
         }

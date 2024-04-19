@@ -39,33 +39,28 @@
         } else if (isset($_SESSION["is_president"]) && $_SESSION["is_president"]) {
             $connection = connectToDatabase(DB_HOST, DB_PRESIDENT, PRESIDENT_PW, DB_NAME);
         }
-
-        $query = "SELECT newsletter, data FROM newsletter";
-        $result = dbQuery($connection, $query);
         
+        // form per la ricerca di contenuti compresi in un range di date
         echo "<br><br>
                 <section class='bacheca_newsletter__content'>
                     <h1>Newsletter dell'associazione</h1><br><br>
                     <form id='form' action='" . htmlspecialchars($_SERVER["PHP_SELF"]) . "' method='POST'>
-                    <h3>Ricerca dei contenuti in newsletter</h3>
-                    <br><br>
-                    <div id='name_surname__label'>
-                        <label>Inserisci la data di partenza (deve essere nel passato)</label>
-                        <label>Inserisci la data di fine (deve essere nel futuro)</label>
-                    </div>
-                    <div id='name_surname__input'>
-                        <input type='date' id='bacheca_start' name='newsletter_start'>
-                        &nbsp;&nbsp;
-                        <input type='date' id='bacheca_end' name='newsletter_end'>
-                    </div>
+                        <h3>Ricerca dei contenuti in newsletter</h3>
+                        <br><br>
+                        <div id='name_surname__label'>
+                            <label>Inserisci la data di partenza (deve essere nel passato)</label>
+                            <label>Inserisci la data di fine (deve essere nel futuro)</label>
+                        </div>
+                        <div id='name_surname__input'>
+                            <input type='date' id='bacheca_start' name='newsletter_start'>
+                            &nbsp;&nbsp;
+                            <input type='date' id='bacheca_end' name='newsletter_end'>
+                        </div>
 
-                    <input type='submit' value='CERCA'>
-                </form>";
+                        <input type='submit' value='CERCA'>
+                    </form>";
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $starting_date = null;
-            $finish_date = null;
-
             if (!empty($_POST["newsletter_start"]) && !empty($_POST["newsletter_end"])) {
                 $starting_date = $_POST["newsletter_start"];
                 $finish_date = $_POST["newsletter_end"];
@@ -74,10 +69,11 @@
                 $starting_date = date("Y-m-d", strtotime("-1 year", strtotime($finish_date)));
             }
 
-            $query = "SELECT newsletter, data 
-                        FROM newsletter
-                        WHERE data BETWEEN '$starting_date' AND '$finish_date'";
-            $result = dbQuery($connection, $query);
+            // eseguo la query usando prepared statement per evitare sql injection
+            $stmt = $connection->prepare("SELECT newsletter, data FROM newsletter WHERE data BETWEEN ? AND ?");
+            $stmt->bind_param("ss", $starting_date, $finish_date);
+            $stmt->execute();
+            $result = $stmt->get_result();
             
             if ($result) {
                 echo "  <section class='bacheca_newsletter__content'>
@@ -92,6 +88,8 @@
                             </div>";
                 }
                 echo "</div></section>";
+
+                $stmt->close();
             } else 
                 echo ERROR_DB;
         }
