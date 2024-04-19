@@ -383,7 +383,8 @@
                 break;
 
             case "assisted":
-                if (isset($_SESSION["is_terapist"]) && $_SESSION["is_terapist"]) {
+                if ((isset($_SESSION["is_terapist"]) && $_SESSION["is_terapist"]) ||
+                    (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"])) {
                     $anamnesi = null;
                     $query = "SELECT anamnesi 
                                 FROM assistiti a
@@ -394,7 +395,9 @@
                     if ($result) {
                         while ($row = ($result->fetch_assoc()))
                             $anamnesi = $row["anamnesi"];
-                        echo "<br><section id='form'>
+                        
+                        echo "<br>
+                                <section id='form'>
                                     <h2>Modifica anamnesi assistito</h2>
                                     <h3>Modifica l'anamnesi dell'assistito<br><br></h3>
                                     
@@ -411,48 +414,47 @@
                                         <section>
                                             <button class='table--btn' data-user='$userId'><a href='../upload/page_upload_medical.php'>Aggiungi nuovo file</a></button>
                                         </section>
-                                    </div><br>
+                                    </div>
                                 </section>";
                     }  else 
                         echo ERROR_DB;
-                } else {
-                    $query = "SELECT a.nome, a.cognome
-                            FROM assistiti a
-                            INNER JOIN utenti u ON a.id_referente = u.id
-                            WHERE a.id = '$userId'";
-                    $result = dbQuery($connection, $query);
-
-                    if ($result) {
-                        while ($row = ($result->fetch_assoc())) {
-                            $name = $row["nome"];
-                            $surname = $row["cognome"];
-                        }
-
-                        echo "<br><section id='form'>
-                                <h2>Modifica anagrafica assistito</h2>
-                                <h3>Cosa vuoi modificare?<br><br></h3>
-                                <h3>Nuovi dati</h3><br>
-                                    <form action='update.php' method='POST' id='form_update__assisted'>
-                                        <input type='hidden' name='type' value='assisted'>
-                                        <input type='hidden' name='user_id' value='$userId'>
-
-                                        <div id='name_surname__label'>
-                                            <label for='new_name'>Nome</label>
-                                            <label for='new_surname'>Cognome</label>
-                                        </div>
-
-                                        <div id='name_surname__input'>
-                                            <input type='text' name='new_name' maxlength='30' placeholder='" . htmlspecialchars($name) . "'>
-                                            &nbsp;&nbsp;
-                                            <input type='text' name='new_surname' maxlength='30' placeholder='" . htmlspecialchars($surname) . "'>
-                                        </div>
-
-                                        <input type='submit' value='AGGIORNA DATI'>
-                                    </form>
-                            </section>";
-                    }  else 
-                        echo ERROR_DB;
                 }
+                $query = "SELECT a.nome, a.cognome
+                        FROM assistiti a
+                        INNER JOIN utenti u ON a.id_referente = u.id
+                        WHERE a.id = '$userId'";
+                $result = dbQuery($connection, $query);
+
+                if ($result) {
+                    while ($row = ($result->fetch_assoc())) {
+                        $name = $row["nome"];
+                        $surname = $row["cognome"];
+                    }
+
+                    echo "<br><section id='form'>
+                            <h2>Modifica anagrafica assistito</h2>
+                            <h3>Cosa vuoi modificare?<br><br></h3>
+                            <h3>Nuovi dati</h3><br>
+                                <form action='update.php' method='POST' id='form_update__assisted'>
+                                    <input type='hidden' name='type' value='assisted'>
+                                    <input type='hidden' name='user_id' value='$userId'>
+
+                                    <div id='name_surname__label'>
+                                        <label for='new_name'>Nome</label>
+                                        <label for='new_surname'>Cognome</label>
+                                    </div>
+
+                                    <div id='name_surname__input'>
+                                        <input type='text' name='new_name' maxlength='30' placeholder='" . htmlspecialchars($name) . "'>
+                                        &nbsp;&nbsp;
+                                        <input type='text' name='new_surname' maxlength='30' placeholder='" . htmlspecialchars($surname) . "'>
+                                    </div>
+
+                                    <input type='submit' value='AGGIORNA DATI'>
+                                </form>
+                        </section>";
+                }  else 
+                    echo ERROR_DB;
                 break;
 
             case "volunteer":
