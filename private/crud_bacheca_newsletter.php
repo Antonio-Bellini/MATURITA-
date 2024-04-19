@@ -27,11 +27,11 @@
                 
                 switch ($operation) {
                     case "add":
-                        addToBacheca($table);
+                        addToTable($table);
                         break;
 
                     case "del":
-                        removeFromBacheca($table, $connection);
+                        removeFromTable($table, $connection);
                         break;
                 }
             } catch(Exception $e) {
@@ -45,11 +45,11 @@
 
                 switch ($operation) {
                     case "add":
-                        addToBacheca($table);
+                        addToTable($table);
                         break;
 
                     case "del":
-                        removeFromBacheca($table, $connection);
+                        removeFromTable($table, $connection);
                         break;
                 }
             } catch(Exception $e) {
@@ -63,11 +63,11 @@
 
                 switch ($operation) {
                     case "add":
-                        addToBacheca($table);
+                        addToTable($table);
                         break;
 
                     case "del":
-                        removeFromBacheca($table, $connection);
+                        removeFromTable($table, $connection);
                         break;
                 }
             } catch(Exception $e) {
@@ -110,8 +110,8 @@
             </main>";
     }
 
-    // funzione per aggiungere file in bacheca
-    function addToBacheca($table) {
+    // funzione per aggiungere file in bacheca o in newsletter
+    function addToTable($table) {
         echo "<br>
         <section id='form'>
             <h2>Aggiunta di un contenuto in " . $table . "</h2>
@@ -124,7 +124,7 @@
                         <label for='date'>Seleziona la data del file</label>
                     </div>
                     <div id='name_surname__input'>
-                        <input type='file' name='" . $table . "' accept='.pdf' enctype='multipart/form-data' required>
+                        <input type='file' name='" . $table . "' accept='.pdf' required>
                         &nbsp;&nbsp;
                         <input type='date' name='date' required>
                     </div>
@@ -134,8 +134,8 @@
         </section>";
     }
 
-    // funzione per eliminare file dalla bacheca
-    function removeFromBacheca($table, $connection) {
+    // funzione per eliminare file dalla bacheca o dalla newsletter
+    function removeFromTable($table, $connection) {
         $query = "SELECT id, $table, data FROM $table";
         $result = dbQuery($connection, $query);
 
@@ -174,20 +174,34 @@
         $file_id = intval($_POST["file_id"]);
 
         $query = "DELETE FROM $table WHERE id = $file_id";
-        $result = dbQuery($connection, $query);
 
         if ($result) {
-            $file_name = "../$table/" . $_POST["file_name"];
+            echo "<br>
+            <section id='form'>
+                <h2>Eliminazione di un contenuto dalla " . $table . "</h2>
+                    <form action='" . htmlspecialchars($_SERVER["PHP_SELF"]) . "' method='POST'>
+                        <br><br>";
+                        while ($row = ($result->fetch_assoc())) {
+                            echo "  <input type='hidden' name='file_name' value='" . $row["$table"] . "'>
+                                    <input type='hidden' name='table_sel' value=$table>";
+                        }
 
-            if (file_exists($file_name) && unlink($file_name)) {
-                $_SESSION["file_deleted"] = true;
-                header("Location: ../$table/$table.php");
-                exit();
-            } else {
-                echo ERROR_FILE;
-            }
-        } else {
+                        mysqli_data_seek($result, 0);
+
+            echo "      <div id='name_surname__label'>
+                            <label for='" . $table . "'>Seleziona il file che vuoi eliminare dalla " . $table . "</label>
+                        </div>
+                        <select name='" . $table . "'>";
+                            while ($row = ($result->fetch_assoc())) {
+                                echo "<option value='" . $row["id"] . "'>" . $row["$table"] . " del " . $row["data"] . "</option>";
+                            }    
+            echo "      </select>
+
+
+                        <input type='submit' name='submit_remove' value='RIMUOVI'>
+                    </form>
+            </section>";
+        } else 
             echo ERROR_DB;
-        }
     }
 ?>
