@@ -140,49 +140,54 @@
         $result = dbQuery($connection, $query);
 
         echo "<br>
-        <section id='form'>
-            <h2>Eliminazione di un contenuto dalla " . $table . "</h2>
-                <form action='" . htmlspecialchars($_SERVER["PHP_SELF"]) . "' method='POST' enctype='multipart/form-data'>
+            <section id='form'>
+                <h2>Eliminazione di un contenuto dalla $table</h2>
+                <form action='" . htmlspecialchars($_SERVER["PHP_SELF"]) . "' method='POST'>
                     <br><br>";
-                    if ($result) {
-                        while ($row = ($result->fetch_assoc())) 
-                            echo "<input type='hidden' name='file_name' value='" . $row["$table"] . "'>
-                                    <input type='hidden' name='table_sel' value=$table>";
 
-                        mysqli_data_seek($result, 0);
-                    }
+        // se ci sono risultati nella tabella mostro cosa si puo eliminare
+        if ($result && $result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                echo "  <input type='hidden' name='file_id' value='" . $row["id"] . "'>
+                        <input type='hidden' name='table_sel' value='$table'>";
+            }
+            mysqli_data_seek($result, 0);
+        }
 
-        echo "      <div id='name_surname__label'>
-                        <label for='" . $table . "'>Seleziona il file che vuoi eliminare dalla " . $table . "</label>
-                    </div>
-                    <select name='" . $table . "'>";
-                    if ($result) {
-                        while ($row = ($result->fetch_assoc())) {
-                            echo "<option value='" . $row["id"] . "'>" . $row["$table"] . " del " . $row["data"] . "</option>";
-                        }
-                    }
-                
-        echo "      </select>
-                    <input type='submit' name='submit' value='RIMUOVI'>
-                </form>
-        </section>";
+        echo "  <div id='name_surname__label'>
+                    <label for='$table'>Seleziona il file che vuoi eliminare dalla $table</label>
+                </div>
+                <select name='file_id'>";
+        while ($row = $result->fetch_assoc()) {
+            echo "<option value='" . $row["id"] . "'>" . $row["$table"] . " del " . $row["data"] . "</option>";
+        }
+
+        echo "  </select>
+                <input type='submit' name='submit' value='RIMUOVI'>
+            </form>
+            </section>";
     }
 
-    // eliminazione del file bacheca o newsletter selezionato
+    // Elaborazione del modulo di eliminazione
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
-        $table = $_POST["table_sel"];
-        $file = $_POST[$table];
-        $file_name = "../$table/" . $_POST["file_name"];
-        $query = "DELETE FROM $table WHERE id = $file";
+        $table = mysqli_real_escape_string($connection, $_POST["table_sel"]);
+        $file_id = intval($_POST["file_id"]);
+
+        $query = "DELETE FROM $table WHERE id = $file_id";
         $result = dbQuery($connection, $query);
 
         if ($result) {
-            if (file_exists($file_name)) {
-                if (unlink($file_name)) {
-                    $_SESSION["file_deleted"] = true;
-                    header("Location: ../" . $table . "/" . $table . ".php");
-                }
+            $file_name = "../$table/" . $_POST["file_name"];
+
+            if (file_exists($file_name) && unlink($file_name)) {
+                $_SESSION["file_deleted"] = true;
+                header("Location: ../$table/$table.php");
+                exit();
+            } else {
+                echo ERROR_FILE;
             }
+        } else {
+            echo ERROR_DB;
         }
     }
 ?>

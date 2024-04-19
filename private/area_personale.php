@@ -89,7 +89,6 @@
                     $_SESSION["is_parent"] = true;
 
                     // ottengo i dati dell'utente e li stampo
-                    echo "<br><br><section id='table'><h3>I tuoi dati</h3>";
                     $query = "SELECT u.id, 
                                     u.NOME,
                                     u.COGNOME,
@@ -103,7 +102,9 @@
                     $result = dbQuery($connection, $query);
                     
                     if ($result) {
-                        createTable($result, "user");
+                        echo "<br><br>
+                            <section id='table'><h3>I tuoi dati</h3>";
+                                createTable($result, "user");
 
                         // ottengo i dati degli assistiti collegati a questo utente e li stampo
                         echo "<br><br><h3>I tuoi assistiti</h3>";

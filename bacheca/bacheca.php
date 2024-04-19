@@ -63,9 +63,9 @@
             if (!empty($_POST["bacheca_start"]) && !empty($_POST["bacheca_end"])) {
                 $starting_date = $_POST["bacheca_start"];
                 $finish_date = $_POST["bacheca_end"];
-            } else {
-                $starting_date = date("Y-m-d", strtotime("-1 month", strtotime($starting_date)));
+            } else {                
                 $finish_date = date("Y-m-d");
+                $starting_date = date("Y-m-d", strtotime("-1 month", strtotime($finish_date)));
             }
 
             // eseguo la query usando prepared statement per evitare sql injection
