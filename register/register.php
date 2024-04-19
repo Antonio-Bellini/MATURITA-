@@ -16,14 +16,14 @@
     if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) {
         if (isset($_POST["form_user"])) {
             // ottengo i dati scritti nel form
-            $name = $_POST["name"];
-            $surname = $_POST["surname"];
-            $username = $_POST["username"];
+            $name = mysqli_real_escape_string($connection, $_POST['name']);
+            $surname = mysqli_real_escape_string($connection, $_POST["surname"]);
+            $username = mysqli_real_escape_string($connection, $_POST["username"]);
             $password_clear = $_POST["password"];
             $email = $_POST["email"];
             $phone_f = $_POST["phone_f"];
             $phone_m = $_POST["phone_m"];
-            $notes = $_POST["notes"];
+            $notes = isset($_POST["notes"]) ? mysqli_real_escape_string($connection, $_POST["notes"]) : null;
 
             if (isset($_POST["form_terapist"])) 
                 $profile = $_POST["form_terapist"];
@@ -47,15 +47,12 @@
             }
         } else if (isset($_POST["form_volunteer"])) {
             // ottengo i dati scritti nel form
-            $name = $_POST["name"];
-            $surname = $_POST["surname"];
+            $name = mysqli_real_escape_string($connection, $_POST["name"]);
+            $surname = mysqli_real_escape_string($connection, $_POST["surname"]);
             $email = $_POST["email"];
             $phone_f = $_POST["phone_f"];
             $phone_m = $_POST["phone_m"];
-            $notes = null;
-            
-            if (isset($_POST["notes"]))
-                $notes = $_POST["notes"];
+            $notes = isset($_POST["notes"]) ? mysqli_real_escape_string($connection, $_POST["notes"]) : null;
 
             $uploadDirectory = '../upload/release_module/'; 
         
@@ -91,9 +88,9 @@
             }
         } else if (isset($_POST["form_assisted"])) {
             // ottengo i dati dal form
-            $name = $_POST["name"];
-            $surname = $_POST["surname"];
-            $notes = $_POST["notes"];
+            $name = mysqli_real_escape_string($connection, $_POST["name"]);
+            $surname = mysqli_real_escape_string($connection, $_POST["surname"]);
+            $notes = isset($_POST["notes"]) ? mysqli_real_escape_string($connection, $_POST["notes"]) : null;
             $parent = null;
             
             $uploadDirectory = '../upload/medical_module/'; 
@@ -112,16 +109,40 @@
                 else 
                     $parent = $_SESSION["user_id"];
 
-                // inserimento dell'assistito nel db
-                $query = "INSERT INTO assistiti(nome, cognome, anamnesi, note, id_referente)
-                                VALUES('$name', '$surname', '$uploadedFileName', '$notes', '$parent');";
-                $result = dbQuery($connection, $query);
+                // caricamento della liberatoria in locale
+                $fileName = $_FILES['rel']['name'];
+                $fileTmpName = $_FILES['rel']['tmp_name'];
+                $uploadDirectory = '../upload/release_module/';
 
-                if ($result) {
-                    $_SESSION["user_created"] = true;
-                    header("Location: ../private/area_personale.php");
+                $newFilePath = $uploadDirectory . $fileName;
+
+                if (move_uploaded_file($fileTmpName, $newFilePath)) {
+                    $uploadedFileName = "release_module/" . $fileName;
+                    
+                    // inserimento della liberatoria nel db
+                    $query = "INSERT INTO liberatorie(liberatoria) 
+                                VALUES('$uploadedFileName')";
+                    $result = dbQuery($connection, $query);
+
+                    // inserimento dell'assistito nel db se il caricamento dei file é andato a buon fine
+                    if ($result) {
+                        $rel_id = $connection->insert_id;
+
+                        $query = "INSERT INTO assistiti(nome, cognome, anamnesi, note, id_referente, id_liberatoria)
+                                    VALUES('$name', '$surname', '$uploadedFileName', '$notes', '$parent', '$rel_id');";
+                        $result = dbQuery($connection, $query);
+
+                        if ($result) {
+                            $_SESSION["user_created"] = true;
+                            header("Location: ../private/area_personale.php");
+                        } else {
+                            $_SESSION["user_not_created"] = true;
+                            header("Location: ../private/area_personale.php");
+                        }
+                    } else 
+                        echo ERROR_DB;
                 } else {
-                    $_SESSION["user_not_created"] = true;
+                    $_SESSION["file_not_uploaded"] = true;
                     header("Location: ../private/area_personale.php");
                 }
             } else {

@@ -21,7 +21,8 @@
     if (!$_SESSION['is_logged']) {
         try {
             if (isset($_POST["username"]) && isset($_POST["password"])) {
-                $username = $_POST["username"];
+                // sanifico i dati in input del form
+                $username = mysqli_real_escape_string($connection, $_POST["username"]);
                 $password = $_POST["password"];
 
                 $query = "SELECT id, password

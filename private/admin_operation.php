@@ -27,7 +27,7 @@
                         // funzione per la stampa dell'esito dell'operatione eseguita
                         check_operation();
 
-                        echo " <br><br>
+                        echo "<br><br>
                                 <section id='form'>
                                     <h3>Quale tipo di utente vuoi visualizzare?</h3><br>
                                     <select id='user_selected'>
@@ -60,10 +60,7 @@
 
                         // funzione per la stampa dell'esito dell'operatione eseguita
                         check_operation();
-                        
-                        echo "<br><br>
-                                <section id='table'>
-                                    <h3>VOLONTARI REGISTRATI</h3>";
+
                         $query = "SELECT v.id, 
                                         v.NOME, 
                                         v.COGNOME, 
@@ -74,10 +71,13 @@
                                     FROM volontari v
                                     LEFT JOIN liberatorie l ON v.id_liberatoria = l.id";
                         $result = dbQuery($connection, $query);
-
-                        if ($result)
-                            createTable($result, "volunteer");
-                        else 
+                          
+                        if ($result) {
+                            echo "<br><br>
+                                <section id='table'>
+                                    <h3>VOLONTARI REGISTRATI</h3>";
+                                    createTable($result, "volunteer");
+                        } else 
                             echo ERROR_DB;
 
                         echo "<br><br><br>
@@ -93,11 +93,7 @@
 
                     // funzione per la stampa dell'esito dell'operatione eseguita
                     check_operation();
-                    
-                    echo "<br><br>
-                    <section class='main'>
-                        <section id='table'>
-                            <h3>ASSISTITI REGISTRATI</h3>";
+
                     $query = "SELECT a.id, 
                                     a.NOME, 
                                     a.COGNOME, 
@@ -111,14 +107,18 @@
                                 LEFT JOIN liberatorie l ON a.id_liberatoria = l.id";
                     $result = dbQuery($connection, $query);
 
-                    if ($result) 
-                        createTable($result, "assisted");
-                    else
+                    if ($result) {
+                        echo "<br><br>
+                            <section class='main'>
+                                <section id='table'>
+                                    <h3>ASSISTITI REGISTRATI</h3>";
+                                    createTable($result, "assisted");
+                    } else
                         echo ERROR_DB;
 
                     if (isset($_SESSION["is_president"]) && $_SESSION["is_president"]) {
                         return null; 
-                    }else {
+                    } else {
                         echo "<br><br><br>
                                 <h3>Crea un nuovo account assistito</h3>
                                 <button class='btn'><a href='../register/register_assisted.php'>Crea account</a></button>

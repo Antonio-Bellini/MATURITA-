@@ -139,6 +139,42 @@
         $query = "SELECT id, $table, data FROM $table";
         $result = dbQuery($connection, $query);
 
+        echo "<br>
+            <section id='form'>
+                <h2>Eliminazione di un contenuto dalla $table</h2>
+                <form action='" . htmlspecialchars($_SERVER["PHP_SELF"]) . "' method='POST'>
+                    <br><br>";
+
+        // se ci sono risultati nella tabella mostro cosa si puo eliminare
+        if ($result && $result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                echo "  <input type='hidden' name='file_id' value='" . $row["id"] . "'>
+                        <input type='hidden' name='table_sel' value='$table'>";
+            }
+            mysqli_data_seek($result, 0);
+        }
+
+        echo "  <div id='name_surname__label'>
+                    <label for='$table'>Seleziona il file che vuoi eliminare dalla $table</label>
+                </div>
+                <select name='file_id'>";
+        while ($row = $result->fetch_assoc()) {
+            echo "<option value='" . $row["id"] . "'>" . $row["$table"] . " del " . $row["data"] . "</option>";
+        }
+
+        echo "  </select>
+                <input type='submit' name='submit' value='RIMUOVI'>
+            </form>
+            </section>";
+    }
+
+    // Elaborazione del modulo di eliminazione
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
+        $table = mysqli_real_escape_string($connection, $_POST["table_sel"]);
+        $file_id = intval($_POST["file_id"]);
+
+        $query = "DELETE FROM $table WHERE id = $file_id";
+
         if ($result) {
             echo "<br>
             <section id='form'>
@@ -167,23 +203,5 @@
             </section>";
         } else 
             echo ERROR_DB;
-    }
-
-    // eliminazione del file bacheca o newsletter selezionato
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $table = $_POST["table_sel"];
-        $file = $_POST[$table];
-        $file_name = "../$table/" . $_POST["file_name"];
-        $query = "DELETE FROM $table WHERE id = $file";
-        $result = dbQuery($connection, $query);
-
-        if ($result) {
-            if (file_exists($file_name)) {
-                if (unlink($file_name)) {
-                    $_SESSION["file_deleted"] = true;
-                    header("Location: ../" . $table . "/" . $table . ".php");
-                }
-            }
-        }
     }
 ?>

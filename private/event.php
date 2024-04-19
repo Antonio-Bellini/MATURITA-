@@ -25,7 +25,7 @@
                         try {
                             $volunteer = $_POST["volunteer"];
                             $event = $_POST["event"];
-                            $notes = isset($_POST["notes"]) ? $_POST["notes"] : null;
+                            $notes = isset($_POST["notes"]) ? mysqli_real_escape_string($connection, $_POST["notes"]) : null;
         
                             $query = "INSERT INTO volontari_evento(id_evento, id_volontario, note)
                                             VALUES('$event', '$volunteer', '$notes');";
@@ -115,11 +115,8 @@
                         try {
                             $assisted = $_POST["assisted"];
                             $event = $_POST["event"];
-                            $notes = null;
-        
-                            if (isset($_POST["notes"]))
-                                $notes = $_POST["notes"];
-        
+                            $notes = isset($_POST["notes"]) ? mysqli_real_escape_string($connection, $_POST["notes"]) : null;
+
                             $query = "INSERT INTO assistiti_evento(id_evento, id_assistito, note)
                                             VALUES('$event', '$assisted', '$notes');";
                             $result = dbQuery($connection, $query);
@@ -205,10 +202,7 @@
             case "crud_event":
                 $event_type = $_POST["event_type"];
                 $event_date = $_POST["event_date"];
-                $event_notes = null;
-
-                if (isset($_POST["event_notes"]))
-                    $event_notes = $_POST["event_notes"];
+                $event_notes = isset($_POST["notes"]) ? mysqli_real_escape_string($connection, $_POST["event_notes"]) : null;
 
                 $query = "INSERT INTO eventi(tipo_evento, data, note)
                                 VALUES('$event_type', '$event_date', '$event_notes');";
@@ -226,7 +220,7 @@
             case "crud_eventType":
                 switch ($_POST["crud_eventType__function"]) {
                     case "addNewEventType":
-                        $new_event = $_POST["new_event"];
+                        $new_event = isset($_POST["new_event"]) ? mysqli_real_escape_string($connection, $_POST["new_event"]) : null;
 
                         $query = "INSERT INTO tipi_evento(tipo)
                                         VALUES('$new_event');";
@@ -268,8 +262,10 @@
                 $result = dbQuery($connection, $query);
 
                 if ($result) {
-                    echo "<br><br><section id='table'><h3>Lista di tutti gli eventi</h3>";
-                    createTable($result, "admin");
+                    echo "<br><br>
+                            <section id='table'>
+                                <h3>Lista di tutti gli eventi</h3>";
+                                createTable($result, "admin");
                 } else 
                     echo ERROR_DB;
                 break;

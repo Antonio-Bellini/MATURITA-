@@ -132,7 +132,7 @@
                         if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) {
                             $is_deletable = false;
 
-                            $query = "SELECT id_profilo FROM utenti WHERE id=$userId";
+                            $query = "SELECT id_profilo FROM utenti WHERE id = $userId";
                             $result = dbQuery($connection, $query);
 
                             if ($result) {
@@ -345,13 +345,13 @@
                                         <label for='new_surname'>Cognome</label>
                                     </div>
                                     <div id='name_surname__input'>
-                                        <input type='text' name='new_name' maxlength='30' placeholder='" . $name . "'>
+                                        <input type='text' name='new_name' maxlength='30' placeholder='" . htmlspecialchars($name) . "'>
                                         &nbsp;&nbsp;
-                                        <input type='text' name='new_surname' maxlength='30' placeholder='" . $surname . "'>
+                                        <input type='text' name='new_surname' maxlength='30' placeholder='" . htmlspecialchars($surname) . "'>
                                     </div>
 
                                     <label><br>Email</label>
-                                    <input type='email' name='new_email' maxlength='30' placeholder='" . $email ."'>
+                                    <input type='email' name='new_email' maxlength='30' placeholder='" . htmlspecialchars($email) ."'>
 
                                     <div id='phones__label'>
                                         <label for='new_tf'>Telefono fisso</label>
@@ -372,6 +372,7 @@
                                         &nbsp;&nbsp;
                                         <input type='password' name='new_psw' id='new_psw' maxlength='255'>
                                         <span id='passwordError'></span>
+                                        <span id='togglePassword' class='toggle-password'>&#128065;</span>
                                     </div>
 
                                     <input type='submit' value='AGGIORNA DATI'>
@@ -441,9 +442,9 @@
                                         </div>
 
                                         <div id='name_surname__input'>
-                                            <input type='text' name='new_name' maxlength='30' placeholder='" . $name . "'>
+                                            <input type='text' name='new_name' maxlength='30' placeholder='" . htmlspecialchars($name) . "'>
                                             &nbsp;&nbsp;
-                                            <input type='text' name='new_surname' maxlength='30' placeholder='" . $surname . "'>
+                                            <input type='text' name='new_surname' maxlength='30' placeholder='" . htmlspecialchars($surname) . "'>
                                         </div>
 
                                         <input type='submit' value='AGGIORNA DATI'>
@@ -482,13 +483,13 @@
                                             <label for='new_surname'>Cognome</label>
                                         </div>
                                         <div id='name_surname__input'>
-                                            <input type='text' name='new_name' maxlength='30' placeholder='" . $name . "'>
+                                            <input type='text' name='new_name' maxlength='30' placeholder='" . htmlspecialchars($name) . "'>
                                             &nbsp;&nbsp;
-                                            <input type='text' name='new_surname' maxlength='30' placeholder='" . $surname . "'>
+                                            <input type='text' name='new_surname' maxlength='30' placeholder='" . htmlspecialchars($surname) . "'>
                                         </div>
                                         
                                         <label for='new_email'>Email</label>
-                                        <input type='email' name='new_email' maxlength='30' placeholder='" . $email . "'>
+                                        <input type='email' name='new_email' maxlength='30' placeholder='" . htmlspecialchars($email) . "'>
 
                                         <div id='phones__label'>
                                             <label for='new_tf'>Telefono fisso</label>

@@ -27,11 +27,15 @@
             $connection = connectToDatabase(DB_HOST, DB_USER, USER_PW, DB_NAME);
             $update_query = "UPDATE utenti SET ";
 
-            if (!empty($_POST["new_name"]))
-                $new_data[] = "nome = '{$_POST["new_name"]}'";
-
-            if (!empty($_POST["new_surname"]))
-                $new_data[] = "cognome = '{$_POST["new_surname"]}'";
+            if (!empty($_POST["new_name"])) {
+                $new_name = mysqli_real_escape_string($connection, $_POST['new_name']);
+                $new_data[] = "nome = '{$new_name}'";
+            }
+                
+            if (!empty($_POST["new_surname"])) {
+                $new_surname = mysqli_real_escape_string($connection, $_POST['new_surname']);
+                $new_data[] = "cognome = '{$new_surname}'";
+            }
 
             if (!empty($_POST["new_email"]))
                 $new_data[] = "email = '{$_POST["new_email"]}'";
@@ -68,11 +72,16 @@
             $connection = connectToDatabase(DB_HOST, DB_USER, USER_PW, DB_NAME);
             $update_query = "UPDATE assistiti SET ";
 
-            if (!empty($_POST["new_name"]))
-                $new_data[] = "nome = '{$_POST["new_name"]}'";
+            if (!empty($_POST["new_name"])) {
+                $new_name = mysqli_real_escape_string($connection, $_POST['new_name']);
+                $new_data[] = "nome = '{$new_name}'";
+            }
+                
 
-            if (!empty($_POST["new_surname"]))
-                $new_data[] = "cognome = '{$_POST["new_surname"]}'";
+            if (!empty($_POST["new_surname"])) {
+                $new_surname = mysqli_real_escape_string($connection, $_POST['new_surname']);
+                $new_data[] = "cognome = '{$new_surname}'";
+            }
 
             if (!empty($new_data)) {
                 $update_query .= implode(", ", $new_data);
@@ -94,11 +103,15 @@
             $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
             $update_query = "UPDATE volontari SET ";
 
-            if (!empty($_POST["new_name"]))
-                $new_data[] = "nome = '{$_POST["new_name"]}'";
+            if (!empty($_POST["new_name"])) {
+                $new_name = mysqli_real_escape_string($connection, $_POST['new_name']);
+                $new_data[] = "nome = '{$new_name}'";
+            }
 
-            if (!empty($_POST["new_surname"]))
-                $new_data[] = "cognome = '{$_POST["new_surname"]}'";
+            if (!empty($_POST["new_surname"])) {
+                $new_surname = mysqli_real_escape_string($connection, $_POST['new_surname']);
+                $new_data[] = "cognome = '{$new_surname}'";
+            }
 
             if (!empty($_POST["new_email"]))
                 $new_data[] = "email = '{$_POST["new_email"]}'";
@@ -156,7 +169,8 @@
             $update_query = "UPDATE tipi_evento SET ";
 
             if (!empty($_POST["new_name"])) {
-                $update_query .= "tipo = '{$_POST["new_name"]}' WHERE id = $userId";
+                $new_name = mysqli_real_escape_string($connection, $_POST['new_name']);
+                $update_query .= "tipo = '{$new_name}' WHERE id = $userId";
                 $result = dbQuery($connection, $update_query);
 
                 if ($result) {
