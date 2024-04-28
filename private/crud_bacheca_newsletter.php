@@ -142,7 +142,7 @@
         echo "<br>
             <section id='form'>
                 <h2>Eliminazione di un contenuto dalla $table</h2>
-                <form action='" . htmlspecialchars($_SERVER["PHP_SELF"]) . "' method='POST'>
+                <form action='delete_content.php' method='POST'>
                     <br><br>";
 
         // se ci sono risultati nella tabella mostro cosa si puo eliminare
@@ -166,42 +166,5 @@
                 <input type='submit' name='submit' value='RIMUOVI'>
             </form>
             </section>";
-    }
-
-    // Elaborazione del modulo di eliminazione
-    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
-        $table = mysqli_real_escape_string($connection, $_POST["table_sel"]);
-        $file_id = intval($_POST["file_id"]);
-
-        $query = "DELETE FROM $table WHERE id = $file_id";
-
-        if ($result) {
-            echo "<br>
-            <section id='form'>
-                <h2>Eliminazione di un contenuto dalla " . $table . "</h2>
-                    <form action='" . htmlspecialchars($_SERVER["PHP_SELF"]) . "' method='POST'>
-                        <br><br>";
-                        while ($row = ($result->fetch_assoc())) {
-                            echo "  <input type='hidden' name='file_name' value='" . $row["$table"] . "'>
-                                    <input type='hidden' name='table_sel' value=$table>";
-                        }
-
-                        mysqli_data_seek($result, 0);
-
-            echo "      <div id='name_surname__label'>
-                            <label for='" . $table . "'>Seleziona il file che vuoi eliminare dalla " . $table . "</label>
-                        </div>
-                        <select name='" . $table . "'>";
-                            while ($row = ($result->fetch_assoc())) {
-                                echo "<option value='" . $row["id"] . "'>" . $row["$table"] . " del " . $row["data"] . "</option>";
-                            }    
-            echo "      </select>
-
-
-                        <input type='submit' name='submit_remove' value='RIMUOVI'>
-                    </form>
-            </section>";
-        } else 
-            echo ERROR_DB;
     }
 ?>
