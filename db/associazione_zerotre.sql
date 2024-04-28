@@ -29,8 +29,8 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `assistiti` (
   `id` int(11) NOT NULL,
-  `nome` varchar(30) DEFAULT NULL,
-  `cognome` varchar(30) DEFAULT NULL,
+  `nome` varchar(255) DEFAULT NULL,
+  `cognome` varchar(255) DEFAULT NULL,
   `anamnesi` text DEFAULT NULL,
   `note` text DEFAULT NULL,
   `id_referente` int(11) DEFAULT NULL,
@@ -194,13 +194,13 @@ INSERT INTO `tipi_profilo` (`id`, `tipo`) VALUES
 
 CREATE TABLE `utenti` (
   `id` int(11) NOT NULL,
-  `nome` varchar(30) DEFAULT NULL,
-  `cognome` varchar(30) DEFAULT NULL,
-  `username` varchar(20) DEFAULT NULL,
+  `nome` varchar(255) DEFAULT NULL,
+  `cognome` varchar(255) DEFAULT NULL,
+  `username` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
-  `email` varchar(30) DEFAULT NULL,
-  `telefono_fisso` varchar(9) DEFAULT NULL,
-  `telefono_mobile` varchar(9) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `telefono_fisso` varchar(255) DEFAULT NULL,
+  `telefono_mobile` varchar(255) DEFAULT NULL,
   `note` text DEFAULT NULL,
   `id_profilo` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -221,11 +221,11 @@ INSERT INTO `utenti` (`id`, `nome`, `cognome`, `username`, `password`, `email`, 
 
 CREATE TABLE `volontari` (
   `id` int(11) NOT NULL,
-  `nome` varchar(30) DEFAULT NULL,
-  `cognome` varchar(30) DEFAULT NULL,
-  `email` varchar(30) DEFAULT NULL,
-  `telefono_fisso` varchar(9) DEFAULT NULL,
-  `telefono_mobile` varchar(9) DEFAULT NULL,
+  `nome` varchar(255) DEFAULT NULL,
+  `cognome` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `telefono_fisso` varchar(255) DEFAULT NULL,
+  `telefono_mobile` varchar(255) DEFAULT NULL,
   `id_liberatoria` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
