@@ -54,11 +54,11 @@
                                 </div>
 
                                 <div id='credentials__label'>
-                                    <label for='med'>Inserisci il file dell'anamnesi *</label>
+                                    <label for='med'>Inserisci il file dell'anamnesi</label>
                                     <label for='rel'>Inserisci il file liberatoria *</label>
                                 </div>
                                 <div id='credentials__input'>
-                                    <input type='file' name='med' id='med' accept='.pdf' required>
+                                    <input type='file' name='med' id='med' accept='.pdf'>
                                     &nbsp;&nbsp;
                                     <input type='file' name='rel' id='rel' accept='.pdf' required>
                                 </div>
