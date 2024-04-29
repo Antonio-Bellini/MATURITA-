@@ -33,6 +33,10 @@
                     case "del":
                         removeFromTable($table, $connection);
                         break;
+
+                    case null:
+                        header("Location: ../index.php");
+                        break;
                 }
             } catch(Exception $e) {
                 echo ERROR_GEN;
@@ -51,6 +55,10 @@
                     case "del":
                         removeFromTable($table, $connection);
                         break;
+
+                    case null:
+                        header("Location: ../index.php");
+                        break;
                 }
             } catch(Exception $e) {
                 echo ERROR_GEN;
@@ -68,6 +76,10 @@
 
                     case "del":
                         removeFromTable($table, $connection);
+                        break;
+
+                    case null:
+                        header("Location: ../index.php");
                         break;
                 }
             } catch(Exception $e) {

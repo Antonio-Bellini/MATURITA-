@@ -278,10 +278,10 @@
                 header("Location: page_login.php");
             break;
 
-        case null:
-            header("Location: ../index.php");
-            break;
     }
+
+    if (!isset($operation))
+        header("Location: ../index.php");
 
     show_footer();
 

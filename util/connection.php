@@ -1,4 +1,10 @@
 <?php 
+    // reindirizzo alla home se si cerca di accedere a questa pagina
+    if (strpos($_SERVER['REQUEST_URI'], "/util/connection.php") !== false) {
+        header('Location: ../index.php');
+        exit;
+    }
+
     // funzione per connettersi al database
     function connectToDatabase($hN, $uN, $pw, $dN) {
         $hostName = $hN;

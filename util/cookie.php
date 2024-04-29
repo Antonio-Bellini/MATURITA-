@@ -1,5 +1,11 @@
 <?php
-    // FUNZIONE per CREARE un NUOVO COOKIE
+    // reindirizzo alla home se si cerca di accedere a questa pagina
+    if (strpos($_SERVER['REQUEST_URI'], "/util/cookie.php") !== false) {
+        header('Location: ../index.php');
+        exit;
+    }
+
+    // funzione per creare un nuovo cookie
     function setNewCookie($name, $value) {
         $cookie_name = $name;
         $cookie_value = $value;
@@ -9,7 +15,7 @@
         importActualStyle();
     }
 
-    // FUNZIONE per IMPORTARE lo STILE in BASE al COOKIE
+    // funzione per importare lo stile dal cookie
     function importActualStyle() {
         if(isset($_COOKIE['DarkMode']))
             echo "<body class='" . $_COOKIE['DarkMode'] . "' id='body'>"; 
