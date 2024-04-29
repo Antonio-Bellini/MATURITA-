@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src='https://code.jquery.com/jquery-3.6.4.min.js'></script>
-    <script src="http://52.47.171.54:8080/bootstrap.js"></script>
+    <?php echo WEBALL; ?>
     <script src='../script/script.js'></script>
     <link rel='stylesheet' href='../style/style.css'>
     <title>Associazione ZeroTre</title>

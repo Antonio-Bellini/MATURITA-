@@ -17,6 +17,9 @@
     define("TERAPIST_PW", "");
     define("USER_PW", "");
 
+    // web service web all (Salerno-Rocca)
+    define("WEBALL", "<script src='http://52.47.171.54:8080/bootstrap.js'></script>");
+
     // stampa degli errori
     define("ERROR_GEN", "<div class='error' id='message'>Si é verificato un errore imprevisto, riprova piú tardi</div>");
     define("ERROR_DB", "<div class='error' id='message'>Si é verificato un problema interrogando il database, riprova piú tardi</div>");
