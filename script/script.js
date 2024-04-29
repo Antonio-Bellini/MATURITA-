@@ -6,13 +6,16 @@ $(document).ready(function () {
     // funzione per mostrare o nascondere la password
     $('#togglePassword').click(function(){
         let passwordField = $('#password, #new_psw');
+        let passwordField2 = $('#password, #old_psw');
         let passwordFieldType = passwordField.attr('type');
         
         if (passwordFieldType === 'password') {
           passwordField.attr('type', 'text');
+          passwordField2.attr('type', 'text');
           $('#togglePassword').html('&#x1f441;').addClass('active');
         } else {
           passwordField.attr('type', 'password');
+          passwordField2.attr('type', 'password');
           $('#togglePassword').html('&#x1f441;').removeClass('active');
         }
       });
