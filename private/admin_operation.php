@@ -183,7 +183,7 @@
         } else
             header("Location: ../index.php");
     } else
-        header("Location: ../page_login.php");
+        header("Location: page_login.php");
 
         
     // funzione per mostrare il menu di navigazione

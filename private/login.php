@@ -25,10 +25,10 @@
                 $username = mysqli_real_escape_string($connection, $_POST["username"]);
                 $password = $_POST["password"];
 
-                $query = "SELECT id, password
-                            FROM utenti
-                            WHERE username = '$username';";
-                $result = dbQuery($connection, $query);
+                $stmt = $connection->prepare("SELECT id, password FROM utenti WHERE username = ?");
+                $stmt->bind_param("s", $username);
+                $stmt->execute();
+                $result = $stmt->get_result();
 
                 // controllo se esiste l'utente
                 if ($result->num_rows === 0) {
@@ -48,6 +48,8 @@
                                 header("Location: page_login.php");
                             }
                         }
+
+                        $stmt->close();
                     } else {
                         nav_menu();
                         echo ERROR_DB;

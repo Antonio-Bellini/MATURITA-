@@ -100,8 +100,7 @@
                         if ($result) {
                             $_SESSION["user_modified"] = true;
                             header("Location: area_personale.php");
-                        }
-                        else {
+                        } else {
                             $_SESSION["user_not_modified"] = true;
                             header("Location: area_personale.php");
                         }
@@ -190,8 +189,7 @@
                         if ($result) {
                             $_SESSION["user_modified"] = true;
                             header("Location: area_personale.php");
-                        }
-                        else {
+                        } else {
                             $_SESSION["user_not_modified"] = true;
                             header("Location: area_personale.php");
                         }
