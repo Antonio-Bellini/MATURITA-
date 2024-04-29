@@ -93,11 +93,10 @@ $(document).ready(function () {
     }    
 
     // scorimento immagini nella pagina index
-    if (window.location.href.indexOf("index.php") > -1) {
-        const gallery = document.querySelector('.gallery');
+    const gallery = document.querySelector('.gallery');
+    if (gallery) {
         const images = document.querySelectorAll('.photo');
         let currentIndex = 0;
-
         let isTransitioning = false;
 
         // tempo dopo cui viene eseguita la funzione (5 secondi)
