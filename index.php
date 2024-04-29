@@ -47,8 +47,10 @@
     <section class="body__main">
         <h1 class="title">Associazione ZeroTre</h1>
         <p class="paragraph">
-        SIAMO GENITORI CHE CREDONO NEL MUTUO SOCCORSO PERCHÉ LO SCAMBIO DI EMOZIONI ED
+            SIAMO GENITORI CHE CREDONO NEL MUTUO SOCCORSO PERCHÉ LO SCAMBIO DI EMOZIONI ED
             ESPERIENZE EVITA LA CHIUSURA NEL DOLORE E MIGLIORA LA QUALITÀ DI VITA FAMILIARE
+            <br><br>
+            <button><a href="volunteer_request.php">DIVENTA UN VOLONTARIO</a></button>
         </p>
         <div class="gallery">
             <img class="photo" src="image/content/image1.jpg" alt="immagine 1 della premiazione">
