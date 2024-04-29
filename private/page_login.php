@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src='https://code.jquery.com/jquery-3.6.4.min.js'></script>
-    <script src="http://52.47.171.54:8080/bootstrap.js"></script>
+    <?php echo WEBALL; ?>
     <script src='../script/script.js'></script>
     <link rel='stylesheet' href='../style/style.css'>
     <title>Associazione ZeroTre</title>
@@ -29,10 +29,7 @@
     check_operation();
 
     // controllo cosa mostrare in base a se é gia loggato oppure ancora no
-    if ($_SESSION["is_logged"]) {
-        nav_menu();
-        welcome($connection, $_SESSION["username"]);
-    } else {
+    if (!$_SESSION["is_logged"]) {
         nav_menu();
         echo "<section id='login_form'>
                 <h1 id='login_form__title'>Accedi al tuo account</h1>
@@ -46,7 +43,8 @@
                     <input class='login_form__submit' type='submit' value='ACCEDI'>
                 </form>
             </section>";
-    }
+    } else 
+        header("Location: ../index.php");
 
     show_footer();
 

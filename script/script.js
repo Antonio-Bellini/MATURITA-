@@ -6,13 +6,16 @@ $(document).ready(function () {
     // funzione per mostrare o nascondere la password
     $('#togglePassword').click(function(){
         let passwordField = $('#password, #new_psw');
+        let passwordField2 = $('#password, #old_psw');
         let passwordFieldType = passwordField.attr('type');
         
         if (passwordFieldType === 'password') {
           passwordField.attr('type', 'text');
+          passwordField2.attr('type', 'text');
           $('#togglePassword').html('&#x1f441;').addClass('active');
         } else {
           passwordField.attr('type', 'password');
+          passwordField2.attr('type', 'password');
           $('#togglePassword').html('&#x1f441;').removeClass('active');
         }
       });
@@ -90,11 +93,10 @@ $(document).ready(function () {
     }    
 
     // scorimento immagini nella pagina index
-    if (window.location.href.indexOf("index.php") > -1) {
-        const gallery = document.querySelector('.gallery');
+    const gallery = document.querySelector('.gallery');
+    if (gallery) {
         const images = document.querySelectorAll('.photo');
         let currentIndex = 0;
-
         let isTransitioning = false;
 
         // tempo dopo cui viene eseguita la funzione (5 secondi)

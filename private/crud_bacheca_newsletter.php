@@ -5,7 +5,7 @@
     include("../util/cookie.php");
 
     echo "<script src='https://code.jquery.com/jquery-3.6.4.min.js'></script>";
-    echo "<script src='http://52.47.171.54:8080/bootstrap.js'></script>";
+    echo WEBALL;
     echo "<script src='../script/script.js'></script>";
     echo "<link rel='stylesheet' href='../style/style.css'>";
     echo "<title>Associazione Zero Tre</title>";
@@ -33,6 +33,10 @@
                     case "del":
                         removeFromTable($table, $connection);
                         break;
+
+                    case null:
+                        header("Location: ../index.php");
+                        break;
                 }
             } catch(Exception $e) {
                 echo ERROR_GEN;
@@ -51,6 +55,10 @@
                     case "del":
                         removeFromTable($table, $connection);
                         break;
+
+                    case null:
+                        header("Location: ../index.php");
+                        break;
                 }
             } catch(Exception $e) {
                 echo ERROR_GEN;
@@ -68,6 +76,10 @@
 
                     case "del":
                         removeFromTable($table, $connection);
+                        break;
+
+                    case null:
+                        header("Location: ../index.php");
                         break;
                 }
             } catch(Exception $e) {
@@ -157,14 +169,14 @@
         echo "  <div id='name_surname__label'>
                     <label for='$table'>Seleziona il file che vuoi eliminare dalla $table</label>
                 </div>
-                <select name='file_id'>";
+                    <select name='file_id'>";
         while ($row = $result->fetch_assoc()) {
-            echo "<option value='" . $row["id"] . "'>" . $row["$table"] . " del " . $row["data"] . "</option>";
+            echo "      <option value='" . $row["id"] . "'>" . $row["$table"] . " del " . $row["data"] . "</option>";
         }
 
-        echo "  </select>
-                <input type='submit' name='submit' value='RIMUOVI'>
-            </form>
+        echo "      </select>
+                    <input type='submit' name='submit' value='RIMUOVI'>
+                </form>
             </section>";
     }
 ?>

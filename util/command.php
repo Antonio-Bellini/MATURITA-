@@ -1,6 +1,12 @@
 <?php
     require_once("constants.php");
 
+    // reindirizzo alla home se si cerca di accedere a questa pagina
+    if (strpos($_SERVER['REQUEST_URI'], "/util/command.php") !== false) {
+        header('Location: ../index.php');
+        exit;
+    }
+
     // funzione per mostrare il footer
     function show_footer() {
         echo "  <footer>

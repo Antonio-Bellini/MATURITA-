@@ -5,7 +5,7 @@
     include("../util/cookie.php");
 
     echo "<script src='https://code.jquery.com/jquery-3.6.4.min.js'></script>";
-    echo "<script src='http://52.47.171.54:8080/bootstrap.js'></script>";
+    echo WEBALL;
     echo "<script src='../script/script.js'></script>";
     echo "<link rel='stylesheet' href='../style/style.css'>";
     echo "<title>Associazione Zero Tre</title>";
@@ -18,30 +18,107 @@
     $notes = isset($_POST["notes"]) ? $_POST["notes"] : null;
     $table = isset($_POST["table"]) ? $_POST["table"] : null;
 
-    // caricamento della liberatoria
-    if (isset($_FILES['release'])) {
-        $uploadDirectory = 'release_module/'; 
-    
-        $fileName = $_FILES['release']['name'];
-        $fileTmpName = $_FILES['release']['tmp_name'];
-    
-        // aggiungo il nome del file al percorso della cartella di destinazione
-        $newFilePath = $uploadDirectory . $fileName;
-    
-        if (move_uploaded_file($fileTmpName, $newFilePath)) {
-            $uploadedFileName = "release_module/" . $fileName;
+    if (isset($_SESSION["is_logged"]) && $_SESSION["is_logged"]) {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            // caricamento della liberatoria
+            if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) {
+                if (isset($_FILES['release'])) {
+                    $uploadDirectory = 'release_module/'; 
+                
+                    $fileName = $_FILES['release']['name'];
+                    $fileTmpName = $_FILES['release']['tmp_name'];
+                
+                    // aggiungo il nome del file al percorso della cartella di destinazione
+                    $newFilePath = $uploadDirectory . $fileName;
+                
+                    if (move_uploaded_file($fileTmpName, $newFilePath)) {
+                        $uploadedFileName = "release_module/" . $fileName;
 
-            $query = "INSERT INTO liberatorie(liberatoria, note)
-                            VALUES('$uploadedFileName', '$notes');";
-            $result = dbQuery($connection, $query);
+                        $query = "INSERT INTO liberatorie(liberatoria, note)
+                                        VALUES('$uploadedFileName', '$notes');";
+                        $result = dbQuery($connection, $query);
 
-            if ($result) {
-                $module_id = $connection->insert_id;
+                        if ($result) {
+                            $module_id = $connection->insert_id;
 
-                if ($assistedId != null) {
-                    $query = "UPDATE assistiti
-                                SET id_liberatoria = '$module_id'
-                                WHERE id = '$assistedId';";
+                            if ($assistedId != null) {
+                                $query = "UPDATE assistiti
+                                            SET id_liberatoria = '$module_id'
+                                            WHERE id = '$assistedId';";
+                                $result = dbQuery($connection, $query);
+
+                                if ($result) {
+                                    $_SESSION["file_uploaded"] = true;
+                                    header("Location: ../private/area_personale.php");
+                                } else {
+                                    $_SESSION["file_not_uploaded"] = true;
+                                    header("Location: ../private/area_personale.php");
+                                }
+                            } else if ($volunteerId != null) {
+                                $query = "UPDATE volontari
+                                            SET id_liberatoria = '$module_id'
+                                            WHERE id = '$volunteerId';";
+                                $result = dbQuery($connection, $query);
+
+                                if ($result) {
+                                    $_SESSION["file_uploaded"] = true;
+                                    header("Location: ../private/area_personale.php");
+                                } else {
+                                    $_SESSION["file_not_uploaded"] = true;
+                                    header("Location: ../private/area_personale.php");
+                                }
+                            } else 
+                                echo ERROR_GEN;
+                        }
+                    } else {
+                        nav_menu();
+                        echo ERROR_GEN;
+                    }
+                }
+            }
+
+            // caricamento di file nella bacheca o nella newsletter
+            if (isset($_FILES[$table])) {
+                $uploadDirectory = "../" . $table . "/files/"; 
+            
+                $fileName = $_FILES[$table]['name'];
+                $fileTmpName = $_FILES[$table]['tmp_name'];
+                $date = $_POST["date"];
+
+                // aggiungo il nome del file al percorso della cartella di destinazione
+                $newFilePath = $uploadDirectory . $fileName;
+            
+                if(move_uploaded_file($fileTmpName, $newFilePath)) {
+                    $uploadedFileName = "files/" . $fileName;
+
+                    $query = "INSERT INTO $table($table, data)
+                                    VALUES('$uploadedFileName', '$date');";
+                    $result = dbQuery($connection, $query);
+
+                    if ($result) {
+                        $_SESSION["file_uploaded"] = true;
+                        header("Location: ../" . $table . "/" . $table . ".php");
+                    } else {
+                        $_SESSION["file_not_uploaded"] = true;
+                        header("Location: ../" . $table . "/" . $table . ".php");
+                    }
+                }
+            }
+
+            // caricamento di file anamnesi
+            if (isset($_FILES["medical"])) {
+                $uploadDirectory = "medical_module/"; 
+            
+                $fileName = $_FILES["medical"]['name'];
+                $fileTmpName = $_FILES["medical"]['tmp_name'];
+
+                // aggiungo il nome del file al percorso della cartella di destinazione
+                $newFilePath = $uploadDirectory . $fileName;
+            
+                if(move_uploaded_file($fileTmpName, $newFilePath)) {
+                    $uploadedFileName = "medical_module/" . $fileName;
+
+                    $query = "UPDATE assistiti SET anamnesi = '$uploadedFileName' WHERE id = $assistedId";
                     $result = dbQuery($connection, $query);
 
                     if ($result) {
@@ -51,84 +128,15 @@
                         $_SESSION["file_not_uploaded"] = true;
                         header("Location: ../private/area_personale.php");
                     }
-                } else if ($volunteerId != null) {
-                    $query = "UPDATE volontari
-                                SET id_liberatoria = '$module_id'
-                                WHERE id = '$volunteerId';";
-                    $result = dbQuery($connection, $query);
-
-                    if ($result) {
-                        $_SESSION["file_uploaded"] = true;
-                        header("Location: ../private/area_personale.php");
-                    } else {
-                        $_SESSION["file_not_uploaded"] = true;
-                        header("Location: ../private/area_personale.php");
-                    }
-                } else 
-                    echo ERROR_GEN;
-            }
-        } else {
-            nav_menu();
-            echo ERROR_GEN;
-        }
-    }
-
-    // caricamento di file nella bacheca o nella newsletter
-    if (isset($_FILES[$table])) {
-        $uploadDirectory = "../" . $table . "/files/"; 
-    
-        $fileName = $_FILES[$table]['name'];
-        $fileTmpName = $_FILES[$table]['tmp_name'];
-        $date = $_POST["date"];
-
-        // aggiungo il nome del file al percorso della cartella di destinazione
-        $newFilePath = $uploadDirectory . $fileName;
-    
-        if(move_uploaded_file($fileTmpName, $newFilePath)) {
-            $uploadedFileName = "files/" . $fileName;
-
-            $query = "INSERT INTO $table($table, data)
-                            VALUES('$uploadedFileName', '$date');";
-            $result = dbQuery($connection, $query);
-
-            if ($result) {
-                $_SESSION["file_uploaded"] = true;
-                header("Location: ../" . $table . "/" . $table . ".php");
+                }
             } else {
-                $_SESSION["file_not_uploaded"] = true;
-                header("Location: ../" . $table . "/" . $table . ".php");
+                nav_menu();
+                echo NO_FILE;
             }
-        }
-    }
-
-    // caricamento di file anamnesi
-    if (isset($_FILES["medical"])) {
-        $uploadDirectory = "medical_module/"; 
-    
-        $fileName = $_FILES["medical"]['name'];
-        $fileTmpName = $_FILES["medical"]['tmp_name'];
-
-        // aggiungo il nome del file al percorso della cartella di destinazione
-        $newFilePath = $uploadDirectory . $fileName;
-    
-        if(move_uploaded_file($fileTmpName, $newFilePath)) {
-            $uploadedFileName = "medical_module/" . $fileName;
-
-            $query = "UPDATE assistiti SET anamnesi = '$uploadedFileName' WHERE id = $assistedId";
-            $result = dbQuery($connection, $query);
-
-            if ($result) {
-                $_SESSION["file_uploaded"] = true;
-                header("Location: ../private/area_personale.php");
-            } else {
-                $_SESSION["file_not_uploaded"] = true;
-                header("Location: ../private/area_personale.php");
-            }
-        }
-    } else {
-        nav_menu();
-        echo NO_FILE;
-    }
+        } else 
+            header("Location: ../index.php");
+    } else 
+        header("Location: ../index.php");
 
 
     // menu di navigazione

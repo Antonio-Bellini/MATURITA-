@@ -1,4 +1,10 @@
 <?php
+    // reindirizzo alla home se si cerca di accedere a questa pagina
+    if (strpos($_SERVER['REQUEST_URI'], "/util/constants.php") !== false) {
+        header('Location: ../index.php');
+        exit;
+    }
+
     // impostazione rapida del db
     define("DB_HOST", "localhost");
     define("DB_NAME", "my_testzerotre");
@@ -10,6 +16,9 @@
     define("ADMIN_PW", "");
     define("TERAPIST_PW", "");
     define("USER_PW", "");
+
+    // web service web all (Salerno-Rocca)
+    define("WEBALL", "<script src='http://52.47.171.54:8080/bootstrap.js'></script>");
 
     // stampa degli errori
     define("ERROR_GEN", "<div class='error' id='message'>Si é verificato un errore imprevisto, riprova piú tardi</div>");

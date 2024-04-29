@@ -6,7 +6,7 @@
 
     session_start();
 
-    // Elaborazione del modulo di eliminazione
+    // eliminazione di un contenuto dalla bacheca o dalla newsletter
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
         $table = $_POST["table_sel"];

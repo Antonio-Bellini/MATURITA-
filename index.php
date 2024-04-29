@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/a730223cdf.js" crossorigin="anonymous"></script>
     <script src='https://code.jquery.com/jquery-3.6.4.min.js'></script>
-    <script src="http://52.47.171.54:8080/bootstrap.js"></script>
+    <?php echo WEBALL; ?>
     <script src="script/script.js"></script>
     <link rel="stylesheet" href="style/style.css">
     <link rel="icon" href="image/logos/logo.png" type="x-icon">
@@ -47,8 +47,10 @@
     <section class="body__main">
         <h1 class="title">Associazione ZeroTre</h1>
         <p class="paragraph">
-        SIAMO GENITORI CHE CREDONO NEL MUTUO SOCCORSO PERCHÉ LO SCAMBIO DI EMOZIONI ED
+            SIAMO GENITORI CHE CREDONO NEL MUTUO SOCCORSO PERCHÉ LO SCAMBIO DI EMOZIONI ED
             ESPERIENZE EVITA LA CHIUSURA NEL DOLORE E MIGLIORA LA QUALITÀ DI VITA FAMILIARE
+            <br><br>
+            <button><a href="volunteer_request.php">DIVENTA UN VOLONTARIO</a></button>
         </p>
         <div class="gallery">
             <img class="photo" src="image/content/image1.jpg" alt="immagine 1 della premiazione">

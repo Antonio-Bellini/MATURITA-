@@ -5,7 +5,7 @@
     include("../util/cookie.php");
 
     echo "<script src='https://code.jquery.com/jquery-3.6.4.min.js'></script>";
-    echo "<script src='http://52.47.171.54:8080/bootstrap.js'></script>";
+    echo WEBALL;
     echo "<script src='../script/script.js'></script>";
     echo "<link rel='stylesheet' href='../style/style.css'>";
     echo "<title>Associazione Zero Tre</title>";
@@ -278,10 +278,10 @@
                 header("Location: page_login.php");
             break;
 
-        case null:
-            header("Location: ../index.php");
-            break;
     }
+
+    if (!isset($operation))
+        header("Location: ../index.php");
 
     show_footer();
 
