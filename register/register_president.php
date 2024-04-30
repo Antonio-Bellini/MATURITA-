@@ -57,6 +57,7 @@
 
                             <label for='confirm_password'>Riscrivi la password inserita</label>
                             <input type='password' name='confirm_password' id='confirm_password' maxlength='255' required>
+                            <span id='confirm_passwordError'></span>
                             
                             <label for='email'>Inserisci l'email *</label>
                             <input type='email' name='email' id='email' maxlength='30' required>

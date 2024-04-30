@@ -50,14 +50,25 @@ $(document).ready(function () {
             let username = $(this).val();
             checkInputUsername(username);
         });
+
+        $('#confirm_password').on("input", function() {
+            let password = $("#password").val();
+            let other_password = $(this).val();
+            confirm_password(password, other_password);
+        });
     }
     
     // vieto l'invio del form nel caso in cui l'username sia occupato
-    if (window.location.href.indexOf("register_user.php") > -1) {
+    if (window.location.href.includes("register") > -1) {
         $('#form_register__user').submit(function (event) {
             if ($("#usernameError").text().includes("Username non disponibile")) {
                 event.preventDefault();
                 alert("Non puoi inviare il modulo perché l'username non è disponibile.");
+            }
+
+            if ($("#confirm_passwordError").text().includes("Le due password non sono uguali")) {
+                event.preventDefault();
+                alert("Non puoi inviare il modulo perché le due password non sono uguali.");
             }
         });
     }
@@ -449,4 +460,20 @@ function executeEventOperation(selected) {
             });
             break;
     }
+}
+
+// funzione per confermare se la password reinserita é uguale a quella scritta prima
+function confirm_password(password, other_password) {
+    $.ajax({
+        type: "POST",
+        url: "../util/ajax/confirm_password.php",
+        data: { password: password, other_password: other_password },
+        success: function (response) {
+            console.log(response);
+            if (response === "not_correct")
+                $("#confirm_passwordError").text("Le due password non sono uguali");
+            else
+                $("#confirm_passwordError").text("");
+        }
+    });
 }
