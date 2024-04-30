@@ -7,15 +7,18 @@ $(document).ready(function () {
     $('#togglePassword').click(function(){
         let passwordField = $('#password, #new_psw');
         let passwordField2 = $('#password, #old_psw');
+        let passwordField3 = $('#password, #confirm_password');
         let passwordFieldType = passwordField.attr('type');
         
         if (passwordFieldType === 'password') {
           passwordField.attr('type', 'text');
           passwordField2.attr('type', 'text');
+          passwordField3.attr('type', 'text');
           $('#togglePassword').html('&#x1f441;').addClass('active');
         } else {
           passwordField.attr('type', 'password');
           passwordField2.attr('type', 'password');
+          passwordField3.attr('type', 'password');
           $('#togglePassword').html('&#x1f441;').removeClass('active');
         }
       });
