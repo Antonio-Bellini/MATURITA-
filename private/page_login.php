@@ -1,25 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src='https://code.jquery.com/jquery-3.6.4.min.js'></script>
-    <?php echo WEBALL; ?>
-    <script src='../script/script.js'></script>
-    <link rel='stylesheet' href='../style/style.css'>
-    <title>Associazione ZeroTre</title>
-</head>
-
-<!-- STAMPA del BODY in BASE al COOKIE SALVATO -->
 <?php
+    include "../util/constants.php";
     include "../util/cookie.php";
-    importActualStyle();
-?>
-
-<!-- SEZIONE PRINCIPALE della PAGINA DI LOGIN -->
-<?php
-    include "../util/connection.php";
     include "../util/command.php";
+    include "../util/connection.php";
+
+    echo "
+        <head>
+            <meta charset='UTF-8'>
+            <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+            <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+            <script src='https://kit.fontawesome.com/a730223cdf.js' crossorigin='anonymous'></script>
+            <script src='https://code.jquery.com/jquery-3.6.4.min.js'></script>";
+    echo    WEBALL;
+    echo "  <script src='../script/script.js'></script>
+            <link rel='stylesheet' href='../style/style.css'>
+            <link rel='icon' href='../image/logos/logo.png' type='x-icon'>
+            <title>Associazione Zero Tre</title>
+        </head>";
+
+    importActualStyle();
+
     $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
     session_start();
 
