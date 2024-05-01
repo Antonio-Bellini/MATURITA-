@@ -41,13 +41,13 @@
                                 <label for='surname'>Inserisci il cognome *</label>
                             </div>
                             <div id='name_surname__input'>
-                                <input type='text' name='name' id='name' maxlength='30' required>
+                                <input type='text' name='name' id='name' maxlength='255' required>
                                 &nbsp;&nbsp;
-                                <input type='text' name='surname' id='surname' maxlength='30' required>
+                                <input type='text' name='surname' id='surname' maxlength='255' required>
                             </div>
 
                             <label for='email'>Inserisci l'email *</label>
-                            <input type='email' name='email' id='email' maxlength='30' required>
+                            <input type='email' name='email' id='email' maxlength='255' required>
 
                             <div id='phones__label'>
                                 <label for='phone_f'>Inserisci il numero del telefono fisso</label>

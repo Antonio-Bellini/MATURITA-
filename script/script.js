@@ -21,7 +21,7 @@ $(document).ready(function () {
           passwordField3.attr('type', 'password');
           $('#togglePassword').html('&#x1f441;').removeClass('active');
         }
-      });
+    });
 
     // bottoni per eseguire modifica ed eliminazione di un record
     $('#table').on('click', '.table--btn, .btn_delete', function(e) {
@@ -272,7 +272,7 @@ $(document).ready(function () {
     $('#new_tf, #new_tm, #phone_f, #phone_m').on("input", function() {
         let input = $(this).val();
         if (input > 15)
-            $(this).val(input.slice(0, 15));
+            $(this).val(input.slice(0, 255));
     });
 });
 

@@ -39,9 +39,9 @@
                                 <label for='cognome'>Inserisci il cognome *</label>
                             </div>
                             <div id='name_surname__input'>
-                                <input type='text' name='name' id='name' maxlength='30' required>
+                                <input type='text' name='name' id='name' maxlength='255' required>
                                 &nbsp;&nbsp;
-                                <input type='text' name='surname' id='surname' maxlength='30' required>
+                                <input type='text' name='surname' id='surname' maxlength='255' required>
                             </div>
                 
                             <div id='credentials__label'>
@@ -49,7 +49,7 @@
                                 <label for='password'>Crea una password *</label>
                             </div>
                             <div id='credentials__input'>
-                                <input type='text' name='username' id='username' maxlength='20' required>
+                                <input type='text' name='username' id='username' maxlength='255' required>
                                 <span id='usernameError'></span>                        
                                 <input type='password' name='password' id='password' maxlength='255' required>
                                 <span id='togglePassword' class='toggle-password'>&#128065;</span>

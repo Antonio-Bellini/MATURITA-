@@ -54,9 +54,9 @@
                                     <label for='surname'>Inserisci il cognome dell'assistito *</label>
                                 </div>
                                 <div id='name_surname__input'>
-                                    <input type='text' name='name' id='name' maxlength='30' required>
+                                    <input type='text' name='name' id='name' maxlength='255' required>
                                     &nbsp;&nbsp;
-                                    <input type='text' name='surname' id='surname' maxlength='30' required>
+                                    <input type='text' name='surname' id='surname' maxlength='255' required>
                                 </div>
 
                                 <div id='credentials__label'>
