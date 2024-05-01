@@ -11,8 +11,8 @@
     echo "<title>Associazione Zero Tre</title>";
     importActualStyle();
     session_start();
+    
     $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
-
     $function = isset($_SESSION["function"]) ? $_SESSION["function"] : null;
 
     nav_menu();

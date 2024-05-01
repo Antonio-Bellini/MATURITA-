@@ -232,7 +232,7 @@
                         GROUP_CONCAT(tf.tipo SEPARATOR ',<br>') AS tipo_funzione,
                         p.tipo_operazione AS operazione_permessa
                 FROM utenti u 
-                INNER JOIN profili p ON p.tipo_profilo = u.id_profilo
+                INNER JOIN profili p ON p.tipo_profilo = u.id_tipo_profilo
                 INNER JOIN tipi_profilo tp ON tp.id = p.tipo_profilo
                 INNER JOIN tipi_funzione tf ON tf.id = p.tipo_funzione
                 WHERE u.username = '$username'

@@ -7,18 +7,21 @@ $(document).ready(function () {
     $('#togglePassword').click(function(){
         let passwordField = $('#password, #new_psw');
         let passwordField2 = $('#password, #old_psw');
+        let passwordField3 = $('#password, #confirm_password');
         let passwordFieldType = passwordField.attr('type');
         
         if (passwordFieldType === 'password') {
           passwordField.attr('type', 'text');
           passwordField2.attr('type', 'text');
+          passwordField3.attr('type', 'text');
           $('#togglePassword').html('&#x1f441;').addClass('active');
         } else {
           passwordField.attr('type', 'password');
           passwordField2.attr('type', 'password');
+          passwordField3.attr('type', 'password');
           $('#togglePassword').html('&#x1f441;').removeClass('active');
         }
-      });
+    });
 
     // bottoni per eseguire modifica ed eliminazione di un record
     $('#table').on('click', '.table--btn, .btn_delete', function(e) {
@@ -47,14 +50,25 @@ $(document).ready(function () {
             let username = $(this).val();
             checkInputUsername(username);
         });
+
+        $('#confirm_password').on("input", function() {
+            let password = $("#password").val();
+            let other_password = $(this).val();
+            confirm_password(password, other_password);
+        });
     }
     
     // vieto l'invio del form nel caso in cui l'username sia occupato
-    if (window.location.href.indexOf("register_user.php") > -1) {
+    if (window.location.href.includes("register") > -1) {
         $('#form_register__user').submit(function (event) {
             if ($("#usernameError").text().includes("Username non disponibile")) {
                 event.preventDefault();
                 alert("Non puoi inviare il modulo perché l'username non è disponibile.");
+            }
+
+            if ($("#confirm_passwordError").text().includes("Le due password non sono uguali")) {
+                event.preventDefault();
+                alert("Non puoi inviare il modulo perché le due password non sono uguali.");
             }
         });
     }
@@ -68,6 +82,13 @@ $(document).ready(function () {
             checkNewPassword(old_psw, new_psw);
         });
 
+        // controllo che la password nuova sia stata riscritta uguale
+        $('#confirm_password').on("input", function() {
+            let password = $("#password, #new_psw").val();
+            let other_password = $(this).val();
+            confirm_password(password, other_password);
+        });
+
         // vieto l'invio del form se la password non soddisfa i requisiti 
         $('#form_update__user').submit(function (event) {
             if ($("#passwordError").text().includes("Le due password non possono essere uguali") || 
@@ -75,7 +96,12 @@ $(document).ready(function () {
                 event.preventDefault();
                 alert("La password non rispetta i requisiti");
             }
-        });  
+
+            if ($("#confirm_passwordError").text().includes("Le due password non sono uguali")) {
+                event.preventDefault();
+                alert("Non puoi inviare il modulo perché le due password non sono uguali.");
+            }
+        });
     }
 
     // alterno i due form in base all'opzione selezionata
@@ -124,6 +150,22 @@ $(document).ready(function () {
             }
         }
     }
+
+    // mostro la modale per aggiornare i dati dell'associazione
+    $("#updateButton").click(function() {
+        $("#newData_modal").css("display", "block");
+    });
+
+    // chiudo la modale quando si clicca la x
+    $(".close").click(function() {
+        $("#newData_modal").css("display", "none");
+    });
+
+    // salvo localmente i nuovi dati inseriti e chiudo la modale
+    $("#saveButton").click(function() {
+        saveDataLocally();
+        $("#newData_modal").css("display", "none");
+    });
 
     // visualizzazione di diversi tipi di utenti 
     if (window.location.href.indexOf("admin_operation.php") > -1) {
@@ -242,7 +284,7 @@ $(document).ready(function () {
     $('#new_tf, #new_tm, #phone_f, #phone_m').on("input", function() {
         let input = $(this).val();
         if (input > 15)
-            $(this).val(input.slice(0, 15));
+            $(this).val(input.slice(0, 255));
     });
 });
 
@@ -446,4 +488,20 @@ function executeEventOperation(selected) {
             });
             break;
     }
+}
+
+// funzione per confermare se la password reinserita é uguale a quella scritta prima
+function confirm_password(password, other_password) {
+    $.ajax({
+        type: "POST",
+        url: "../util/ajax/confirm_password.php",
+        data: { password: password, other_password: other_password },
+        success: function (response) {
+            console.log(response);
+            if (response === "not_correct")
+                $("#confirm_passwordError").text("Le due password non sono uguali");
+            else
+                $("#confirm_passwordError").text("");
+        }
+    });
 }

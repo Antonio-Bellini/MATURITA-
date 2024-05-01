@@ -18,7 +18,7 @@
     define("USER_PW", "");
 
     // web service web all (Salerno-Rocca)
-    define("WEBALL", "<script src='http://52.47.171.54:8080/bootstrap.js'></script>");
+    define("WEBALL", "<script src='http://52.47.171.54:8080/init.js'></script>");
 
     // stampa degli errori
     define("ERROR_GEN", "<div class='error' id='message'>Si é verificato un errore imprevisto, riprova piú tardi</div>");

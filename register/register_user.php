@@ -1,24 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <?php echo WEBALL; ?>
-    <script src="../script/script.js"></script>
-    <link rel="stylesheet" href="../style/style.css">
-    <title>Associazione ZeroTre</title>
-</head>
-<!-- STAMPA del BODY in BASE al COOKIE SALVATO -->
 <?php
+    include "../util/constants.php";
     include "../util/cookie.php";
     include "../util/command.php";
-    importActualStyle();
-    session_start();
 
-    nav_menu();
-?>
-<?php
+    echo "
+        <head>
+            <meta charset='UTF-8'>
+            <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+            <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+            <script src='https://kit.fontawesome.com/a730223cdf.js' crossorigin='anonymous'></script>
+            <script src='https://code.jquery.com/jquery-3.6.4.min.js'></script>";
+    echo    WEBALL;
+    echo "  <script src='../script/script.js'></script>
+            <link rel='stylesheet' href='../style/style.css'>
+            <link rel='icon' href='../image/logos/logo.png' type='x-icon'>
+            <title>Associazione Zero Tre</title>
+        </head>";
+
+        importActualStyle();
+
+        session_start();
+
+        nav_menu();
+    
     if (!isset($_SESSION["is_admin"]))
         $_SESSION["is_admin"] = false;
 
@@ -35,9 +41,9 @@
                                 <label for='cognome'>Inserisci il cognome *</label>
                             </div>
                             <div id='name_surname__input'>
-                                <input type='text' name='name' id='name' maxlength='30' required>
+                                <input type='text' name='name' id='name' maxlength='255' required>
                                 &nbsp;&nbsp;
-                                <input type='text' name='surname' id='surname' maxlength='30' required>
+                                <input type='text' name='surname' id='surname' maxlength='255' required>
                             </div>
                 
                             <div id='credentials__label'>
@@ -45,14 +51,18 @@
                                 <label for='password'>Crea una password *</label>
                             </div>
                             <div id='credentials__input'>
-                                <input type='text' name='username' id='username' maxlength='20' required>
+                                <input type='text' name='username' id='username' maxlength='255' required>
                                 <span id='usernameError'></span>                        
                                 <input type='password' name='password' id='password' maxlength='255' required>
                                 <span id='togglePassword' class='toggle-password'>&#128065;</span>
                             </div>
+
+                            <label for='confirm_password'>Riscrivi la password inserita</label>
+                            <input type='password' name='confirm_password' id='confirm_password' maxlength='255' required>
+                            <span id='confirm_passwordError'></span>
                             
                             <label for='email'>Inserisci l'email *</label>
-                            <input type='email' name='email' id='email' maxlength='30' required>
+                            <input type='email' name='email' id='email' maxlength='255' required>
                 
                             <div id='phones__label'>
                                 <label for='phone_f'>Inserisci il numero di telefono fisso</label>

@@ -345,13 +345,13 @@
                                         <label for='new_surname'>Cognome</label>
                                     </div>
                                     <div id='name_surname__input'>
-                                        <input type='text' name='new_name' maxlength='30' placeholder='" . htmlspecialchars($name) . "'>
+                                        <input type='text' name='new_name' maxlength='255' placeholder='" . htmlspecialchars($name) . "'>
                                         &nbsp;&nbsp;
-                                        <input type='text' name='new_surname' maxlength='30' placeholder='" . htmlspecialchars($surname) . "'>
+                                        <input type='text' name='new_surname' maxlength='255' placeholder='" . htmlspecialchars($surname) . "'>
                                     </div>
 
                                     <label><br>Email</label>
-                                    <input type='email' name='new_email' maxlength='30' placeholder='" . htmlspecialchars($email) ."'>
+                                    <input type='email' name='new_email' maxlength='255' placeholder='" . htmlspecialchars($email) ."'>
 
                                     <div id='phones__label'>
                                         <label for='new_tf'>Telefono fisso</label>
@@ -374,6 +374,10 @@
                                         <span id='passwordError'></span>
                                         <span id='togglePassword' class='toggle-password'>&#128065;</span>
                                     </div>
+
+                                    <label for='confirm_password'>Riscrivi la password inserita</label>
+                                    <input type='password' name='confirm_password' id='confirm_password' maxlength='255' required>
+                                    <span id='confirm_passwordError'></span>
 
                                     <input type='submit' value='AGGIORNA DATI'>
                                 </form>
@@ -445,9 +449,9 @@
                                     </div>
 
                                     <div id='name_surname__input'>
-                                        <input type='text' name='new_name' maxlength='30' placeholder='" . htmlspecialchars($name) . "'>
+                                        <input type='text' name='new_name' maxlength='255' placeholder='" . htmlspecialchars($name) . "'>
                                         &nbsp;&nbsp;
-                                        <input type='text' name='new_surname' maxlength='30' placeholder='" . htmlspecialchars($surname) . "'>
+                                        <input type='text' name='new_surname' maxlength='255' placeholder='" . htmlspecialchars($surname) . "'>
                                     </div>
 
                                     <input type='submit' value='AGGIORNA DATI'>
@@ -485,13 +489,13 @@
                                             <label for='new_surname'>Cognome</label>
                                         </div>
                                         <div id='name_surname__input'>
-                                            <input type='text' name='new_name' maxlength='30' placeholder='" . htmlspecialchars($name) . "'>
+                                            <input type='text' name='new_name' maxlength='255' placeholder='" . htmlspecialchars($name) . "'>
                                             &nbsp;&nbsp;
-                                            <input type='text' name='new_surname' maxlength='30' placeholder='" . htmlspecialchars($surname) . "'>
+                                            <input type='text' name='new_surname' maxlength='255' placeholder='" . htmlspecialchars($surname) . "'>
                                         </div>
                                         
                                         <label for='new_email'>Email</label>
-                                        <input type='email' name='new_email' maxlength='30' placeholder='" . htmlspecialchars($email) . "'>
+                                        <input type='email' name='new_email' maxlength='255' placeholder='" . htmlspecialchars($email) . "'>
 
                                         <div id='phones__label'>
                                             <label for='new_tf'>Telefono fisso</label>
