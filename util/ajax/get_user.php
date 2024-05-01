@@ -19,7 +19,7 @@
                             telefono_mobile AS 'TELEFONO MOBILE', 
                             NOTE
                         FROM utenti 
-                        WHERE id_profilo = $user_selected";
+                        WHERE id_tipo_profilo = $user_selected";
             $result = dbQuery($connection, $query);
             
             if ($result) {

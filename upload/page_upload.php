@@ -4,6 +4,7 @@
     include "../util/constants.php";
     include "../util/cookie.php";
     include "../util/command.php";
+    include "../util/connection.php";
 
     echo "
         <head>
@@ -23,6 +24,7 @@
 
         session_start();
 
+        $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
 
     // menu di navigazione
     echo "<main>
@@ -69,11 +71,9 @@
 
                         <label for='assisted'>Per quale assistito vuoi caricare la liberatoria?</label>
                         <select name='assisted' id='assisted'>";
-                            $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
-
                             if (isset($_SESSION["profile"]) && $_SESSION["profile"] === "release") {
                                 $release = $_SESSION["user"];
-                                $query = "SELECT a.id, nome, cognome 
+                                $query = "SELECT a.id, a.nome, a.cognome 
                                             FROM assistiti a 
                                             LEFT JOIN liberatorie l ON a.id_liberatoria = l.id
                                             WHERE l.id = $release";

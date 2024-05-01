@@ -33,7 +33,7 @@
     
     if (isset($_SESSION["is_logged"]) && $_SESSION["is_logged"]) {
         if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) {
-            $query = "SELECT id, nome, cognome FROM utenti WHERE id_profilo = 4";
+            $query = "SELECT id, nome, cognome FROM utenti WHERE id_tipo_profilo = 4";
             $result = dbQuery($connection, $query);
 
             if ($result) {
