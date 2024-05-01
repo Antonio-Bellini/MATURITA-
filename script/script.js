@@ -82,6 +82,13 @@ $(document).ready(function () {
             checkNewPassword(old_psw, new_psw);
         });
 
+        // controllo che la password nuova sia stata riscritta uguale
+        $('#confirm_password').on("input", function() {
+            let password = $("#password, #new_psw").val();
+            let other_password = $(this).val();
+            confirm_password(password, other_password);
+        });
+
         // vieto l'invio del form se la password non soddisfa i requisiti 
         $('#form_update__user').submit(function (event) {
             if ($("#passwordError").text().includes("Le due password non possono essere uguali") || 
@@ -89,7 +96,12 @@ $(document).ready(function () {
                 event.preventDefault();
                 alert("La password non rispetta i requisiti");
             }
-        });  
+
+            if ($("#confirm_passwordError").text().includes("Le due password non sono uguali")) {
+                event.preventDefault();
+                alert("Non puoi inviare il modulo perché le due password non sono uguali.");
+            }
+        });
     }
 
     // alterno i due form in base all'opzione selezionata

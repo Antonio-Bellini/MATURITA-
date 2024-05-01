@@ -375,6 +375,10 @@
                                         <span id='togglePassword' class='toggle-password'>&#128065;</span>
                                     </div>
 
+                                    <label for='confirm_password'>Riscrivi la password inserita</label>
+                                    <input type='password' name='confirm_password' id='confirm_password' maxlength='255' required>
+                                    <span id='confirm_passwordError'></span>
+
                                     <input type='submit' value='AGGIORNA DATI'>
                                 </form>
                         </section>";
