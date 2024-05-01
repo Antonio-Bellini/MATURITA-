@@ -139,6 +139,22 @@ $(document).ready(function () {
         }
     }
 
+    // mostro la modale per aggiornare i dati dell'associazione
+    $("#updateButton").click(function() {
+        $("#newData_modal").css("display", "block");
+    });
+
+    // chiudo la modale quando si clicca la x
+    $(".close").click(function() {
+        $("#newData_modal").css("display", "none");
+    });
+
+    // salvo localmente i nuovi dati inseriti e chiudo la modale
+    $("#saveButton").click(function() {
+        saveDataLocally();
+        $("#newData_modal").css("display", "none");
+    });
+
     // visualizzazione di diversi tipi di utenti 
     if (window.location.href.indexOf("admin_operation.php") > -1) {
         // bottone per mostrare un determinato tipo di utente

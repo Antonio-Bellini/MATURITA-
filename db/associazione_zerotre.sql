@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Mar 25, 2024 alle 22:58
--- Versione del server: 10.4.28-MariaDB
--- Versione PHP: 8.2.4
+-- Creato il: Mag 01, 2024 alle 16:00
+-- Versione del server: 10.4.32-MariaDB
+-- Versione PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `associazione_zerotre`
+-- Database: `my_testzerotre`
 --
 
 -- --------------------------------------------------------
@@ -49,6 +49,8 @@ CREATE TABLE `assistiti_evento` (
   `note` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
 --
 -- Struttura della tabella `bacheca`
 --
@@ -71,6 +73,8 @@ CREATE TABLE `eventi` (
   `data` date DEFAULT NULL,
   `note` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
 
 --
 -- Struttura della tabella `liberatorie`
@@ -122,6 +126,26 @@ INSERT INTO `profili` (`id`, `tipo_profilo`, `tipo_funzione`, `tipo_operazione`)
 (8, 3, 4, 'CRUD'),
 (9, 4, 2, 'READ'),
 (10, 4, 3, 'READ');
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `registro_associazione`
+--
+
+CREATE TABLE `registro_associazione` (
+  `id` int(11) NOT NULL,
+  `anni_associazione` varchar(255) DEFAULT NULL,
+  `volontari_attivi` varchar(255) DEFAULT NULL,
+  `famiglie_aiutate` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dump dei dati per la tabella `registro_associazione`
+--
+
+INSERT INTO `registro_associazione` (`id`, `anni_associazione`, `volontari_attivi`, `famiglie_aiutate`) VALUES
+(1, '1', '2', '3');
 
 -- --------------------------------------------------------
 
@@ -202,14 +226,14 @@ CREATE TABLE `utenti` (
   `telefono_fisso` varchar(255) DEFAULT NULL,
   `telefono_mobile` varchar(255) DEFAULT NULL,
   `note` text DEFAULT NULL,
-  `id_profilo` int(11) DEFAULT NULL
+  `id_tipo_profilo` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dump dei dati per la tabella `utenti`
 --
 
-INSERT INTO `utenti` (`id`, `nome`, `cognome`, `username`, `password`, `email`, `telefono_fisso`, `telefono_mobile`, `note`, `id_profilo`) VALUES
+INSERT INTO `utenti` (`id`, `nome`, `cognome`, `username`, `password`, `email`, `telefono_fisso`, `telefono_mobile`, `note`, `id_tipo_profilo`) VALUES
 (1, 'Jacopo', 'Bordoni', 'bordo', 'f4fe48ee352b291c8eed01cc05f571391f600fa88173b27e8ba824e2788bb9e04ad9949be4afd5d6552a69ba250592a602f1395aca9e6ba298b7d55fa299ab15:at!<3W,N6M5S}(.yhTr*-d[vT1xqP*4F', 'bordo@gmail.com', '', '123456789', 'sono l admin di prova', 2),
 (2, 'Antonio', 'Bellini', 'anto', '32664e46830f538684e8255d05dc8938797695be3aecfaa29ce4d3bb8bf8d5f355dbe2051b5bc11cb051537d87cca9d7e39856a3a56df24dd1a9912255a39866:$=@|&YX*^ht2g7T8Bc*)XX[mNX^|0o5$', 'anto@gmail.com', '', '123456789', 'sono un genitore di prova', 4);
 
@@ -294,6 +318,12 @@ ALTER TABLE `profili`
   ADD KEY `tipo_funzione` (`tipo_funzione`);
 
 --
+-- Indici per le tabelle `registro_associazione`
+--
+ALTER TABLE `registro_associazione`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indici per le tabelle `tipi_evento`
 --
 ALTER TABLE `tipi_evento`
@@ -317,7 +347,7 @@ ALTER TABLE `tipi_profilo`
 ALTER TABLE `utenti`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `username` (`username`),
-  ADD KEY `id_profilo` (`id_profilo`);
+  ADD KEY `id_tipo_profilo` (`id_tipo_profilo`);
 
 --
 -- Indici per le tabelle `volontari`
@@ -341,7 +371,7 @@ ALTER TABLE `volontari_evento`
 -- AUTO_INCREMENT per la tabella `assistiti`
 --
 ALTER TABLE `assistiti`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT per la tabella `bacheca`
@@ -353,13 +383,13 @@ ALTER TABLE `bacheca`
 -- AUTO_INCREMENT per la tabella `eventi`
 --
 ALTER TABLE `eventi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT per la tabella `liberatorie`
 --
 ALTER TABLE `liberatorie`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT per la tabella `newsletter`
@@ -372,6 +402,12 @@ ALTER TABLE `newsletter`
 --
 ALTER TABLE `profili`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT per la tabella `registro_associazione`
+--
+ALTER TABLE `registro_associazione`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT per la tabella `tipi_evento`
@@ -401,7 +437,7 @@ ALTER TABLE `utenti`
 -- AUTO_INCREMENT per la tabella `volontari`
 --
 ALTER TABLE `volontari`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Limiti per le tabelle scaricate
@@ -412,7 +448,7 @@ ALTER TABLE `volontari`
 --
 ALTER TABLE `assistiti`
   ADD CONSTRAINT `assistiti_ibfk_1` FOREIGN KEY (`id_referente`) REFERENCES `utenti` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `assistiti_ibfk_2` FOREIGN KEY (`id_liberatoria`) REFERENCES `liberatorie` (`id`) ON UPDATE CASCADE ON DELETE SET NULL;
+  ADD CONSTRAINT `assistiti_ibfk_2` FOREIGN KEY (`id_liberatoria`) REFERENCES `liberatorie` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Limiti per la tabella `assistiti_evento`
@@ -438,14 +474,14 @@ ALTER TABLE `profili`
 -- Limiti per la tabella `utenti`
 --
 ALTER TABLE `utenti`
-  ADD CONSTRAINT `utenti_ibfk_1` FOREIGN KEY (`id_profilo`) REFERENCES `profili` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `utenti_ibfk_1` FOREIGN KEY (`id_tipo_profilo`) REFERENCES `tipi_profilo` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limiti per la tabella `volontari`
 --
 ALTER TABLE `volontari`
-  ADD CONSTRAINT `volontari_ibfk_1` FOREIGN KEY (`id_liberatoria`) REFERENCES `liberatorie` (`id`) ON UPDATE CASCADE ON DELETE SET NULL,
-  ADD CONSTRAINT `volontari_ibfk_2` FOREIGN KEY (`id_liberatoria`) REFERENCES `liberatorie` (`id`) ON UPDATE CASCADE ON DELETE SET NULL;
+  ADD CONSTRAINT `volontari_ibfk_1` FOREIGN KEY (`id_liberatoria`) REFERENCES `liberatorie` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `volontari_ibfk_2` FOREIGN KEY (`id_liberatoria`) REFERENCES `liberatorie` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Limiti per la tabella `volontari_evento`
