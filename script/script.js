@@ -44,6 +44,26 @@ $(document).ready(function () {
         }
     });
 
+    // eliminazione di un contenuto news nella home
+    $("#del_content_button").on("click", function() {
+        let operation = $(this).data('operation');
+        let user = $(this).data('user');
+        let profile = $(this).data('profile');
+
+        let confirmed = confirm("Sei sicuro di voler procedere con l'eliminazione?");
+
+        if (confirmed) {
+            $.ajax({
+                type: "POST",
+                url: "util/ajax/send_data.php",
+                data: { operation: operation, user: user, profile: profile },
+                success: function (response) {
+                    window.location.href = "private/crud.php";
+                }
+            });
+        }
+    });
+
     // controllo sulla disponibilitá dell'username
     if (window.location.href.includes("register") > -1) {
         $('#username').on("input", function() {
@@ -151,20 +171,20 @@ $(document).ready(function () {
         }
     }
 
-    // mostro la modale per aggiornare i dati dell'associazione
-    $("#updateButton").click(function() {
+    // mostro la modale per aggiornare i dati dell'associazione o aggiungere news
+    $("#updateButton, #add_content_button").click(function() {
         $("#newData_modal").css("display", "block");
     });
-
+    $("#add_content_button").click(function() {
+        $("#newNews_modal").css("display", "block");
+    });
     // chiudo la modale quando si clicca la x
     $(".close").click(function() {
-        $("#newData_modal").css("display", "none");
+        $(".modal").css("display", "none");
     });
-
-    // salvo localmente i nuovi dati inseriti e chiudo la modale
+    // salvo i dati inseriti
     $("#saveButton").click(function() {
-        saveDataLocally();
-        $("#newData_modal").css("display", "none");
+        $("#newData_modal, #newNews_modal").css("display", "none");
     });
 
     // visualizzazione di diversi tipi di utenti 
