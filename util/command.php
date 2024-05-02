@@ -104,8 +104,11 @@
     function printField($value) {
         if (substr($value, 0, 14) === "release_module" || substr($value, 0, 14) === "medical_module")
             return "<button class='table--btn_file'><a href='../upload/" . $value . "' target='blank'>Apri il file</a></button>";
-        else
+        else if (preg_match("/^\d{4}-\d{2}-\d{2}$/", $value)) {
+            return date("d-m-Y", strtotime($value));
+        } else {
             return $value;
+        }
     }
     
     // funzione per la stampa dei bottoni di modifica

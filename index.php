@@ -116,7 +116,7 @@
                                 <img src='image/" . $row["news"] . "' alt='Immagine news'>
                                 <div class='news__content'>
                                     <h3 class='news__title'>" . $row["titolo"] . "</h3>
-                                    <p class='news__date'>" . $row["data"] . "</p>
+                                    <p class='news__date'>" . date("d-m-Y", strtotime($row["data"])) . "</p>
                                     <p class='news__text'>" . $row["testo"] . "</p>
                                 </div>";
                                 if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"])
