@@ -56,7 +56,7 @@
             SIAMO GENITORI CHE CREDONO NEL MUTUO SOCCORSO PERCHÉ LO SCAMBIO DI EMOZIONI ED
             ESPERIENZE EVITA LA CHIUSURA NEL DOLORE E MIGLIORA LA QUALITÀ DI VITA FAMILIARE
             <br><br>
-            <button><a href="volunteer_request.php">DIVENTA UN VOLONTARIO</a></button>
+            <button class="btn__volunteer"><a href="volunteer_request.php">DIVENTA UN VOLONTARIO</a></button>
         </p>
         <div class="gallery">
             <img class="photo" src="image/content/image1.jpg" alt="immagine 1 della premiazione">
@@ -105,6 +105,9 @@
                 $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
                 $query = "SELECT id, news, titolo, data, testo FROM news";
                 $result = dbQuery($connection, $query);
+
+                if (!$result->num_rows>0) 
+                    echo "<h3>Nessuna news presente</h3>";
 
                 if ($result) {
                     while ($row = ($result->fetch_assoc())) {

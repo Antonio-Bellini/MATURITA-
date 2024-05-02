@@ -126,6 +126,33 @@ nav img {
   margin: 5px;
 }
 
+/* Stile del bottone per diventare volontario */
+.btn__volunteer {
+  display: inline-block;
+  padding: 20px 40px;
+  background-color: #4c51af;
+  color: #ffffff;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 8px;
+  border: none;
+  font-size: 18px;
+  transition: all 0.3s ease;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+.btn__volunteer a {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  color: inherit;
+  text-decoration: none;
+}
+.btn__volunteer:hover {
+  background-color: #45a049; 
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+}
+
 /* Stile dei form */
 #form {
   background-color: #f9f9f9;
@@ -472,6 +499,8 @@ tr:nth-child(even) {
 }
 .news__title {
   margin: 20px 0 20px 0;
+  font-size: 40px;
+  color: #333;
 }
 .news__blocks {
   display: flex;
