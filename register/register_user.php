@@ -36,21 +36,21 @@
                         <form name='form_user' action='register.php' id='form_register__user' method='POST'>
                             <input type='hidden' name='form_user'>
                             
-                            <div id='name_surname__label'>
+                            <div class='div__label'>
                                 <label for='nome'>Inserisci il nome *</label>
                                 <label for='cognome'>Inserisci il cognome *</label>
                             </div>
-                            <div id='name_surname__input'>
+                            <div class='div__input'>
                                 <input type='text' name='name' id='name' maxlength='255' required>
                                 &nbsp;&nbsp;
                                 <input type='text' name='surname' id='surname' maxlength='255' required>
                             </div>
                 
-                            <div id='credentials__label'>
+                            <div class='div__label'>
                                 <label for='username'>Inserisci lo username *</label>
                                 <label for='password'>Crea una password *</label>
                             </div>
-                            <div id='credentials__input'>
+                            <div class='div__input'>
                                 <input type='text' name='username' id='username' maxlength='255' required>
                                 <span id='usernameError'></span>                        
                                 <input type='password' name='password' id='password' maxlength='255' required>
@@ -64,11 +64,11 @@
                             <label for='email'>Inserisci l'email *</label>
                             <input type='email' name='email' id='email' maxlength='255' required>
                 
-                            <div id='phones__label'>
+                            <div class='div__label'>
                                 <label for='phone_f'>Inserisci il numero di telefono fisso</label>
                                 <label for='phone_m'>Inserisci il numero di telefono mobile *</label>
                             </div>
-                            <div id='phones__input'>
+                            <div class='div__input'>
                                 <input type='number' name='phone_f' id='phone_f'>
                                 &nbsp;&nbsp;
                                 <input type='number' name='phone_m' id='phone_m' required>

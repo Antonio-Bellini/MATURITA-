@@ -56,7 +56,7 @@
             SIAMO GENITORI CHE CREDONO NEL MUTUO SOCCORSO PERCHÉ LO SCAMBIO DI EMOZIONI ED
             ESPERIENZE EVITA LA CHIUSURA NEL DOLORE E MIGLIORA LA QUALITÀ DI VITA FAMILIARE
             <br><br>
-            <button class="btn__volunteer"><a href="volunteer_request.php">DIVENTA UN VOLONTARIO</a></button>
+            <button id="btn_volunteer"><a href="volunteer_request.php">DIVENTA UN VOLONTARIO</a></button>
         </p>
         <div class="gallery">
             <img class="photo" src="image/content/image1.jpg" alt="immagine 1 della premiazione">
@@ -120,7 +120,7 @@
                                     <p class='news__text'>" . $row["testo"] . "</p>
                                 </div>";
                                 if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"])
-                                    echo "<button id='del_content_button' data-operation='delete' data-profile='home_news' data-user=" . $row["id"] . ">Elimina contenuto</button>";
+                                    echo "<button class='del_content_button' data-operation='delete' data-profile='home_news' data-user=" . $row["id"] . ">Elimina contenuto</button>";
                         echo "</div>";
                     }
                 } else 

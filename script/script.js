@@ -45,7 +45,7 @@ $(document).ready(function () {
     });
 
     // eliminazione di un contenuto news nella home
-    $("#del_content_button").on("click", function() {
+    $(".del_content_button").on("click", function() {
         let operation = $(this).data('operation');
         let user = $(this).data('user');
         let profile = $(this).data('profile');
