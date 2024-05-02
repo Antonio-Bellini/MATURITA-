@@ -23,6 +23,9 @@
     $userId = isset($_SESSION["user"]) ? $_SESSION["user"] : null;
     $profile = isset($_SESSION["profile"]) ? $_SESSION["profile"] : null;
 
+    if (!isset($operation))
+        header("Location: ../index.php");
+
     // possibili bottoni cliccati
     switch ($operation) {
         case "modify":
@@ -279,9 +282,6 @@
             break;
 
     }
-
-    if (!isset($operation))
-        header("Location: ../index.php");
 
     show_footer();
 

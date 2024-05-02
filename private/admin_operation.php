@@ -38,7 +38,7 @@
                                     </select>
                                 </section>";
 
-                        // la stampa avviene tramite ajax
+                        // la stampa avviene tramite ajax dentro la section con id="table"
                         echo "<br><br><br><br>
                             <section class='main'>
                                 <h3 id='user_title'></h3>
@@ -117,7 +117,7 @@
                         echo ERROR_DB;
 
                     if (isset($_SESSION["is_president"]) && $_SESSION["is_president"]) {
-                        return null; 
+                        echo "</section>"; 
                     } else {
                         echo "<br><br><br>
                                 <h3>Crea un nuovo account assistito</h3>
@@ -175,8 +175,6 @@
                         header("Location: ../index.php");
                     break;
 
-                case null:
-                    header("Location: ../index.php");
             }
 
             show_footer();
