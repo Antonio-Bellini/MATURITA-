@@ -24,7 +24,7 @@ $(document).ready(function () {
     });
 
     // bottoni per eseguire modifica ed eliminazione di un record
-    $('#table').on('click', '.table--btn, .btn_delete', function(e) {
+    $('#table').on('click', '.table_btn, .btn_delete', function(e) {
         // chiedo la doppia conferma di eliminazione
         if ($(this).hasClass('btn_delete')) {        
             let confirmed = confirm("Sei sicuro di voler procedere con l'eliminazione?");
@@ -139,7 +139,7 @@ $(document).ready(function () {
     }    
 
     // scorimento immagini nella pagina index
-    const gallery = document.querySelector('.gallery');
+    const gallery = document.querySelector('.body__main_gallery');
     if (gallery) {
         const images = document.querySelectorAll('.photo');
         let currentIndex = 0;

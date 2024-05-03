@@ -46,18 +46,19 @@
                 <form id='form' action='" . htmlspecialchars($_SERVER["PHP_SELF"]) . "' method='POST'>
                     <h3>Ricerca dei contenuti in bacheca</h3>
                     <br><br>
-                    <div id='name_surname__label'>
+                    <div class='div__label'>
                         <label>Inserisci la data di partenza (deve essere nel passato)</label>
                         <label>Inserisci la data di fine (deve essere nel futuro)</label>
                     </div>
-                    <div id='name_surname__input'>
+                    <div class='div__input'>
                         <input type='date' id='bacheca_start' name='bacheca_start'>
                         &nbsp;&nbsp;
                         <input type='date' id='bacheca_end' name='bacheca_end'>
                     </div>
 
                     <input type='submit' value='CERCA'>
-                </form>";
+                </form>
+            </section>";
 
         // ottengo i record che soddisfano il range di date messo in input
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -81,8 +82,8 @@
                 if ($result->num_rows === 0)
                     echo "      <h3>Nessun risultato trovato, prova con un intervallo di date diverso</h3>";
                 while ($row = ($result->fetch_assoc())) {
-                    echo "  <div class='bacheca_newsletter-item'>
-                                <div class='pdf-preview'>
+                    echo "  <div class='bacheca_newsletter__list-item'>
+                                <div class='bacheca_newsletter__list__pdf-preview'>
                                     <embed src='" . $row["bacheca"] . "' type='application/pdf' width='80%' height='100%'>
                                 </div>
                             </div>";

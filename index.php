@@ -51,14 +51,16 @@
 
     <!-- Sezione centrale della home con le foto -->
     <section class="body__main">
-        <h1 class="title">Associazione ZeroTre</h1>
-        <p class="paragraph">
-            SIAMO GENITORI CHE CREDONO NEL MUTUO SOCCORSO PERCHÉ LO SCAMBIO DI EMOZIONI ED
-            ESPERIENZE EVITA LA CHIUSURA NEL DOLORE E MIGLIORA LA QUALITÀ DI VITA FAMILIARE
-            <br><br>
-            <button id="btn_volunteer"><a href="volunteer_request.php">DIVENTA UN VOLONTARIO</a></button>
-        </p>
-        <div class="gallery">
+        <div class="body__main_title">
+            <h1 class="title">Associazione ZeroTre</h1>
+            <p class="paragraph">
+                SIAMO GENITORI CHE CREDONO NEL MUTUO SOCCORSO PERCHÉ LO SCAMBIO DI EMOZIONI ED
+                ESPERIENZE EVITA LA CHIUSURA NEL DOLORE E MIGLIORA LA QUALITÀ DI VITA FAMILIARE
+                <br><br>
+                <button id="btn_volunteer"><a href="volunteer_request.php">DIVENTA UN VOLONTARIO</a></button>
+            </p>
+        </div>
+        <div class="body__main_gallery">
             <img class="photo" src="image/content/image1.jpg" alt="immagine 1 della premiazione">
             <img class="photo" src="image/content/image2.jpg" alt="immagine 2 della premiazione">
             <img class="photo" src="image/content/image3.jpg" alt="immagine 3 della premiazione">

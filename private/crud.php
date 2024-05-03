@@ -367,11 +367,11 @@
                                     <input type='hidden' name='type' value='user'>
                                     <input type='hidden' name='user_id' value='$userId'>
 
-                                    <div id='name_surname__label'>
+                                    <div class='div__label'>
                                         <label for='new_name'>Nome</label>
                                         <label for='new_surname'>Cognome</label>
                                     </div>
-                                    <div id='name_surname__input'>
+                                    <div class='div__input'>
                                         <input type='text' name='new_name' maxlength='255' placeholder='" . htmlspecialchars($name) . "'>
                                         &nbsp;&nbsp;
                                         <input type='text' name='new_surname' maxlength='255' placeholder='" . htmlspecialchars($surname) . "'>
@@ -380,21 +380,21 @@
                                     <label><br>Email</label>
                                     <input type='email' name='new_email' maxlength='255' placeholder='" . htmlspecialchars($email) ."'>
 
-                                    <div id='phones__label'>
+                                    <div class='div__label'>
                                         <label for='new_tf'>Telefono fisso</label>
                                         <label for='new_tm'>Telefono mobile</label>
                                     </div>
-                                    <div id='phones__input'>
+                                    <div class='div__input'>
                                         <input type='number' id='new_tf' name='new_tf' placeholder='" . $tf . "'>
                                         &nbsp;&nbsp;
                                         <input type='number' id='new_tm' name='new_tm' placeholder='" . $tm . "'>
                                     </div>
 
-                                    <div id='name_surname__label'>
+                                    <div class='div__label'>
                                         <label for='old_psw'>Password attuale</label>
                                         <label for='new_psw'>Nuova password</label>
                                     </div>
-                                    <div id='name_surname__input'>
+                                    <div class='div__input'>
                                         <input type='password' name='old_psw' id='old_psw'>
                                         &nbsp;&nbsp;
                                         <input type='password' name='new_psw' id='new_psw' maxlength='255'>
@@ -432,18 +432,18 @@
                                     <h2>Modifica anamnesi assistito</h2>
                                     <h3>Modifica l'anamnesi dell'assistito<br><br></h3>
                                     
-                                    <div id='name_surname__label'>
+                                    <div class='div__label'>
                                         <label for='anamnesi'>Anamnesi assistito</label>
                                     </div>
-                                    <div id='name_surname__input'>
+                                    <div class='div__input'>
                                         <section id='table'>
-                                            <button class='table--btn_file'><a href='../upload/" . $anamnesi . "' target='_blank'>Apri il file</a></button>
+                                            <button class='table_btn__file'><a href='../upload/" . $anamnesi . "' target='_blank'>Apri il file</a></button>
                                             &nbsp;&nbsp;
                                             <button class='btn_delete' data-operation='delete' data-user='$userId' data-profile='anamnesi'>Elimina il file</button>
                                             &nbsp;&nbsp;
                                         </section>
                                         <section>
-                                            <button class='table--btn' data-user='$userId'><a href='../upload/page_upload_medical.php'>Aggiungi nuovo file</a></button>
+                                            <button class='table_btn' data-user='$userId'><a href='../upload/page_upload_medical.php'>Aggiungi nuovo file</a></button>
                                         </section>
                                     </div>
                                 </section>";
@@ -470,12 +470,12 @@
                                     <input type='hidden' name='type' value='assisted'>
                                     <input type='hidden' name='user_id' value='$userId'>
 
-                                    <div id='name_surname__label'>
+                                    <div class='div__label'>
                                         <label for='new_name'>Nome</label>
                                         <label for='new_surname'>Cognome</label>
                                     </div>
 
-                                    <div id='name_surname__input'>
+                                    <div class='div__input'>
                                         <input type='text' name='new_name' maxlength='255' placeholder='" . htmlspecialchars($name) . "'>
                                         &nbsp;&nbsp;
                                         <input type='text' name='new_surname' maxlength='255' placeholder='" . htmlspecialchars($surname) . "'>
@@ -511,11 +511,11 @@
                                         <input type='hidden' name='type' value='volunteer'>
                                         <input type='hidden' name='user_id' value='$userId'>
 
-                                        <div id='name_surname__label'>
+                                        <div class='div__label'>
                                             <label for='new_name'>Nome</label>
                                             <label for='new_surname'>Cognome</label>
                                         </div>
-                                        <div id='name_surname__input'>
+                                        <div class='div__input'>
                                             <input type='text' name='new_name' maxlength='255' placeholder='" . htmlspecialchars($name) . "'>
                                             &nbsp;&nbsp;
                                             <input type='text' name='new_surname' maxlength='255' placeholder='" . htmlspecialchars($surname) . "'>
@@ -524,11 +524,11 @@
                                         <label for='new_email'>Email</label>
                                         <input type='email' name='new_email' maxlength='255' placeholder='" . htmlspecialchars($email) . "'>
 
-                                        <div id='phones__label'>
+                                        <div class='div__label'>
                                             <label for='new_tf'>Telefono fisso</label>
                                             <label for='new_tm'>Telefono mobile</label>
                                         </div>
-                                        <div id='phones__input'>
+                                        <div class='div__input'>
                                             <input type='number' id='new_tf' name='new_tf' placeholder='" . $tf . "'>
                                             &nbsp;&nbsp;
                                             <input type='number' id='new_tm' name='new_tm' placeholder='" . $tm . "'>
