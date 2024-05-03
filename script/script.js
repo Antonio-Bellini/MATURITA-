@@ -300,7 +300,7 @@ $(document).ready(function () {
         }
     }
 
-    // controllo per limitare a max 9 caratteri l'input del numero di telefono
+    // controllo per limitare a max 255 caratteri l'input del numero di telefono
     $('#new_tf, #new_tm, #phone_f, #phone_m').on("input", function() {
         let input = $(this).val();
         if (input > 15)
