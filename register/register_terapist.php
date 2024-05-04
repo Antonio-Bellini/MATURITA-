@@ -50,14 +50,14 @@
                             </div>
                             <div class='div__input'>
                                 <input type='text' name='username' id='username' maxlength='255' required>
-                                <span id='usernameError'></span>                        
+                                <span id='usernameError' class='span_error'></span>                        
                                 <input type='password' name='password' id='password' maxlength='255' required>
                                 <span id='togglePassword' class='toggle-password'>&#128065;</span>
                             </div>
 
                             <label for='confirm_password'>Riscrivi la password inserita</label>
                             <input type='password' name='confirm_password' id='confirm_password' maxlength='255' required>
-                            <span id='confirm_passwordError'></span>
+                            <span id='confirm_passwordError' class='span_error'></span>
                             
                             <label for='email'>Inserisci l'email *</label>
                             <input type='email' name='email' id='email' maxlength='255' required>
