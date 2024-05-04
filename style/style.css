@@ -141,7 +141,9 @@ nav img {
   color: #ff0800; /* colore rosso */
   font-size: 14px;
   margin-top: 5px;
+  font-weight: bold; /* testo in grassetto */
 }
+
 
 /* Stile del bottone per diventare volontario */
 #btn_volunteer {

@@ -399,7 +399,7 @@
                                         &nbsp;&nbsp;
                                         <input type='password' name='new_psw' id='new_psw' maxlength='255'>
                                         <span id='passwordError'></span>
-                                        <span id='togglePassword' class='toggle-password span_error'>&#128065;</span>
+                                        <span id='togglePassword' class='toggle-password span_error'>👁️</span>
                                     </div>
 
                                     <label for='confirm_password'>Riscrivi la password inserita</label>
