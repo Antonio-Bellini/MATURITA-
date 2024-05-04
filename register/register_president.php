@@ -52,7 +52,7 @@
                                 <input type='text' name='username' id='username' maxlength='255' required>
                                 <span id='usernameError' class='span_error'></span>                        
                                 <input type='password' name='password' id='password' maxlength='255' required>
-                                <span id='togglePassword' class='toggle-password'>&#128065;</span>
+                                <span id='togglePassword' class='toggle-password'>👁️</span>
                             </div>
 
                             <label for='confirm_password'>Riscrivi la password inserita</label>

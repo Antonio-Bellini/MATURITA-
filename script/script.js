@@ -14,12 +14,12 @@ $(document).ready(function () {
           passwordField.attr('type', 'text');
           passwordField2.attr('type', 'text');
           passwordField3.attr('type', 'text');
-          $('#togglePassword').html('&#x1f441;').addClass('active');
+          $('#togglePassword').html('👁️').addClass('active');
         } else {
           passwordField.attr('type', 'password');
           passwordField2.attr('type', 'password');
           passwordField3.attr('type', 'password');
-          $('#togglePassword').html('&#x1f441;').removeClass('active');
+          $('#togglePassword').html('👁️').removeClass('active');
         }
     });
 
