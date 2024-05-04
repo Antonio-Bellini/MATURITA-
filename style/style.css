@@ -136,6 +136,13 @@ nav img {
   margin: 5px;
 }
 
+.span_error {
+  display: block;
+  color: #ff0800; /* colore rosso */
+  font-size: 14px;
+  margin-top: 5px;
+}
+
 /* Stile del bottone per diventare volontario */
 #btn_volunteer {
   display: inline-block;
