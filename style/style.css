@@ -364,15 +364,45 @@ tr:nth-child(even) {
   flex: 0 0 calc(33.33% - 20px); 
   max-width: calc(33.33% - 20px);
   margin: 10px;
+  height: 245px;
+}
+.bacheca_newsletter__list-item__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.bacheca_newsletter__list__pdf-preview:hover .bacheca_newsletter__list-item__overlay {
+  opacity: 1;
+}
+.bacheca_newsletter__list-item__visualize {
+  background-color: #fff;
+  color: #000;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.bacheca_newsletter__list-item__visualize:hover {
+  background-color: #ccc;
 }
 .bacheca_newsletter__list__pdf-preview {
   border: 1px solid #ccc;
   border-radius: 5px;
   overflow: hidden;
+  position: relative;
 }
 .bacheca_newsletter__list__pdf-preview embed {
-  width: 100%; 
-  height: 200px;
+  width: 100%;
+  height: 100%;
 }
 
 /* sezione iniziale della home (galleria scorrevole) */

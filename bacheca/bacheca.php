@@ -84,7 +84,12 @@
                 while ($row = ($result->fetch_assoc())) {
                     echo "  <div class='bacheca_newsletter__list-item'>
                                 <div class='bacheca_newsletter__list__pdf-preview'>
-                                    <embed src='" . $row["bacheca"] . "' type='application/pdf' width='80%' height='100%'>
+                                    <a href='" . $row["bacheca"] . "' target='_blank'>
+                                        <embed src='" . $row["bacheca"] ."' type='application/pdf'>
+                                        <div class='bacheca_newsletter__list-item__overlay'>
+                                            <button class='bacheca_newsletter__list-item__visualize'>Visualizza altro</button>
+                                        </div>
+                                    </a>
                                 </div>
                             </div>";
                 }
