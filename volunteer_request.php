@@ -21,12 +21,12 @@
             <form name='volunteer_request' action='private/send_email.php' id='volunteer_request' method='POST'>
                 <br><br>
 
-                <div id='name_surname__label'>
+                <div class='div__label'>
                     <label for='name'>Inserisci il tuo nome *</label>
                     <label for='surname'>Inserisci il tuo cognome *</label>
                 </div>
 
-                <div id='name_surname__input'>
+                <div class='div__input'>
                     <input type='text' name='name' id='name' required>
                     &nbsp;&nbsp;
                     <input type='text' name='surname' id='surname' required>
@@ -35,17 +35,17 @@
                 <label for='email'>Inserisci la tua email *</label>
                 <input type='email' name='email' id='email'>
 
-                <div id='phones__label'>
+                <div class='div__label'>
                     <label for='tf'>Inserisci il numero di telefono fisso</label>
                     <label for='tm'>Inserisci il numero di telefono mobile *</label>
                 </div>
-                <div id='phones__input'>
+                <div class='div__input'>
                     <input type='number' name='tf' id='tf'>
                     &nbsp;&nbsp;
                     <input type='number' name='tm' id='tm' required>
                 </div>
 
-                <label for='info'>Parlaci un po di te</label>
+                <label for='info'>Parlaci un po' di te</label>
                 <textarea name='info' id='info' cols='30' rows='10' placeholder='Dicci qualcosa su di te'></textarea>
 
                 <input type='submit' value='INVIA'>

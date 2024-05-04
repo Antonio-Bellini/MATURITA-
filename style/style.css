@@ -136,9 +136,10 @@ nav img {
   margin: 5px;
 }
 
+/* stile dell'errore di possibili errori come username non disponibile o password errata*/
 .span_error {
   display: block;
-  color: #ff0800; /* colore rosso */
+  color: #ff0800;
   font-size: 14px;
   margin-top: 5px;
 }

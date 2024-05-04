@@ -274,31 +274,24 @@ $(document).ready(function () {
     }
 
     // bottoni per aggiungere o eliminare contenuti da bacheca o newsletter
-    if ((window.location.href.indexOf("bacheca.php") > -1) || (window.location.href.indexOf("newsletter.php") > -1)) {
-        let is_deletable = false;
+    if (window.location.href.includes("bacheca.php") || window.location.href.includes("newsletter.php")) {
+        let is_deletable = $("#bacheca_newsletter__title").length > 0;
+        $('#delBachecaBtn, #delNewsletterBtn').toggleClass("btn_dis", is_deletable);
 
-        // gestione dei click sui 2 bottoni presenti in bacheca o newsletter
-        $('#addBachecaBtn').click(handleBachecaNewsletterBtnClick);
-        $('#delBachecaBtn').click(handleBachecaNewsletterBtnClick);
-        $('#addNewsletterBtn').click(handleBachecaNewsletterBtnClick);
-        $('#delNewsletterBtn').click(handleBachecaNewsletterBtnClick);
-        function handleBachecaNewsletterBtnClick() {
+        // listener sui due bottoni per far aggiungere o eliminare contenuti
+        $('#addBachecaBtn, #addNewsletterBtn').click(function() {
             let operation = $(this).data('operation');
             let table = $(this).data('table');
-
-            crudBachecaNewsletter(operation, table);
-        }
-
-        if ($(".bacheca_newsletter__list h3:contains('Nessuno risultato trovato')").length === 0) {
-            $('#delBachecaBtn').addClass("btn_dis");
-            $('#delNewsletterBtn').addClass("btn_dis");
-            is_deletable = false;
-        } else {
-            $('#delBachecaBtn').removeClass("btn_dis");
-            $('#delNewsletterBtn').removeClass("btn_dis");
-            is_deletable = true;
-        }
-    }
+            crudBachecaNewsletterAdd(operation, table);
+        });
+        $('#delBachecaBtn, #delNewsletterBtn').click(function() {
+            if (!is_deletable) {
+                let operation = $(this).data('operation');
+                let table = $(this).data('table');
+                crudBachecaNewsletterDel(operation, table);
+            }
+        });
+    }    
 
     // controllo per limitare a max 255 caratteri l'input del numero di telefono
     $('#new_tf, #new_tm, #phone_f, #phone_m').on("input", function() {
@@ -412,7 +405,18 @@ function doRlsEvent(choice) {
 }
 
 // ajax per fare il CRUD su bacheca e newsletter
-function crudBachecaNewsletter(operation, table) {
+function crudBachecaNewsletterAdd(operation, table) {
+    $.ajax({
+        type: "POST",
+        url: "../util/ajax/send_data.php",
+        data: { operation: operation, table: table },
+        success: function (response) {
+            window.location.href = "../private/crud_bacheca_newsletter.php";
+            window.history.pushState({}, '', '../' + table + '/' + table + '.php');
+        }
+    });
+}
+function crudBachecaNewsletterDel(operation, table) {
     $.ajax({
         type: "POST",
         url: "../util/ajax/send_data.php",

@@ -80,7 +80,7 @@
                 echo "  <section class='bacheca_newsletter__content'>
                             <div class='bacheca_newsletter__list'>";
                 if ($result->num_rows === 0)
-                    echo "      <h3>Nessun risultato trovato, prova con un intervallo di date diverso</h3>";
+                    echo "      <h3 id='bacheca_newsletter__title'>Nessun risultato trovato, prova con un intervallo di date diverso</h3>";
                 while ($row = ($result->fetch_assoc())) {
                     echo "  <div class='bacheca_newsletter__list-item'>
                                 <div class='bacheca_newsletter__list__pdf-preview'>
