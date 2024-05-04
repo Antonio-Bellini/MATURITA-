@@ -275,28 +275,28 @@ $(document).ready(function () {
 
     // bottoni per aggiungere o eliminare contenuti da bacheca o newsletter
     if ((window.location.href.indexOf("bacheca.php") > -1) || (window.location.href.indexOf("newsletter.php") > -1)) {
+        let is_deletable = false;
+
         // gestione dei click sui 2 bottoni presenti in bacheca o newsletter
         $('#addBachecaBtn').click(handleBachecaNewsletterBtnClick);
         $('#delBachecaBtn').click(handleBachecaNewsletterBtnClick);
         $('#addNewsletterBtn').click(handleBachecaNewsletterBtnClick);
-        $('#delNewsletterBtn').click(handleBachecaNewsletterBtnClick);   
+        $('#delNewsletterBtn').click(handleBachecaNewsletterBtnClick);
         function handleBachecaNewsletterBtnClick() {
             let operation = $(this).data('operation');
             let table = $(this).data('table');
+
             crudBachecaNewsletter(operation, table);
         }
 
-        // disabilito i bottoni di eliminazione se non é presente nessun elemento in bacheca o newsletter
         if ($(".bacheca_newsletter__list h3:contains('Nessuno risultato trovato')").length === 0) {
-            $('#delBachecaBtn').prop('disabled', false);
-            $('#delNewsletterBtn').prop('disabled', false);
-            $('#delBachecaBtn').removeClass('btn__dis');
-            $('#delNewsletterBtn').removeClass('btn__dis');
+            $('#delBachecaBtn').addClass("btn_dis");
+            $('#delNewsletterBtn').addClass("btn_dis");
+            is_deletable = false;
         } else {
-            $('#delBachecaBtn').prop('disabled', true);
-            $('#delNewsletterBtn').prop('disabled', true);
-            $('#delBachecaBtn').addClass('btn__dis');
-            $('#delNewsletterBtn').addClass('btn__dis');
+            $('#delBachecaBtn').removeClass("btn_dis");
+            $('#delNewsletterBtn').removeClass("btn_dis");
+            is_deletable = true;
         }
     }
 

@@ -127,22 +127,22 @@
         echo "<br>
         <section id='form'>
             <h2>Aggiunta di un contenuto in " . $table . "</h2>
-                <form action='../upload/upload.php' method='POST' enctype='multipart/form-data'>
-                    <input type='hidden' name='table' value=$table>
-                    <br><br>
+            <form action='../upload/upload.php' method='POST' enctype='multipart/form-data'>
+                <input type='hidden' name='table' value=$table>
+                <br><br>
 
-                    <div id='name_surname__label'>
-                        <label for='" . $table . "'>Seleziona il file che vuoi aggiungere in ". $table . "</label>
-                        <label for='date'>Seleziona la data del file</label>
-                    </div>
-                    <div id='name_surname__input'>
-                        <input type='file' name='" . $table . "' accept='.pdf' required>
-                        &nbsp;&nbsp;
-                        <input type='date' name='date' required>
-                    </div>
+                <div class='div__label'>
+                    <label for='" . $table . "'>Seleziona il file che vuoi aggiungere in ". $table . "</label>
+                    <label for='date'>Seleziona la data del file</label>
+                </div>
+                <div class='div__input'>
+                    <input type='file' name='" . $table . "' accept='.pdf' required>
+                    &nbsp;&nbsp;
+                    <input type='date' name='date' required>
+                </div>
 
-                    <input type='submit' value='AGGIUNGI'>
-                </form>
+                <input type='submit' value='AGGIUNGI'>
+            </form>
         </section>";
     }
 
