@@ -49,21 +49,25 @@
         </section>
     </main>
 
+    <!-- Sezione centrale della home con le foto -->
     <section class="body__main">
-        <h1 class="title">Associazione ZeroTre</h1>
-        <p class="paragraph">
-            SIAMO GENITORI CHE CREDONO NEL MUTUO SOCCORSO PERCHÉ LO SCAMBIO DI EMOZIONI ED
-            ESPERIENZE EVITA LA CHIUSURA NEL DOLORE E MIGLIORA LA QUALITÀ DI VITA FAMILIARE
-            <br><br>
-            <button><a href="volunteer_request.php">DIVENTA UN VOLONTARIO</a></button>
-        </p>
-        <div class="gallery">
+        <div class="body__main_title">
+            <h1 class="title">Associazione ZeroTre</h1>
+            <p class="paragraph">
+                SIAMO GENITORI CHE CREDONO NEL MUTUO SOCCORSO PERCHÉ LO SCAMBIO DI EMOZIONI ED
+                ESPERIENZE EVITA LA CHIUSURA NEL DOLORE E MIGLIORA LA QUALITÀ DI VITA FAMILIARE
+                <br><br>
+                <button id="btn_volunteer"><a href="volunteer_request.php">DIVENTA UN VOLONTARIO</a></button>
+            </p>
+        </div>
+        <div class="body__main_gallery">
             <img class="photo" src="image/content/image1.jpg" alt="immagine 1 della premiazione">
             <img class="photo" src="image/content/image2.jpg" alt="immagine 2 della premiazione">
             <img class="photo" src="image/content/image3.jpg" alt="immagine 3 della premiazione">
         </div>
     </section>
 
+    <!-- Sezione con alcuni dati importanti dell'associazione -->
     <section class="association__info">
         <?php
             $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
@@ -95,13 +99,52 @@
         ?>
     </section>
 
-    <!-- Modale per l'inserimento dei nuovi dati -->
+    <!-- Sezione delle news dell'associazione -->
+    <section class="association__news">
+        <h2 class="news__title">News</h2>
+        <div id="news_container" class="news__blocks">
+            <?php
+                $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
+                $query = "SELECT id, news, titolo, data, testo FROM news";
+                $result = dbQuery($connection, $query);
+
+                if (!$result->num_rows>0) 
+                    echo "<h3>Nessuna news presente</h3>";
+
+                if ($result) {
+                    while ($row = ($result->fetch_assoc())) {
+                        echo "
+                            <div class='news__block'>
+                                <img src='image/" . $row["news"] . "' alt='Immagine news'>
+                                <div class='news__content'>
+                                    <h3 class='news__title'>" . $row["titolo"] . "</h3>
+                                    <p class='news__date'>" . date("d-m-Y", strtotime($row["data"])) . "</p>
+                                    <p class='news__text'>" . $row["testo"] . "</p>
+                                </div>";
+                                if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"])
+                                    echo "<button class='del_content_button' data-operation='delete' data-profile='home_news' data-user=" . $row["id"] . ">Elimina contenuto</button>";
+                        echo "</div>";
+                    }
+                } else 
+                    echo ERROR_DB;
+            ?>
+        </div>
+
+        <?php
+            if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"])
+                echo "<button id='add_content_button'>Aggiungi contenuti</button>";
+        ?>
+    </section>
+
+    <!-- Modale per l'inserimento dei nuovi dati dell'associazione -->
     <div id="newData_modal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
             <br>
             
             <form action="private/update_home.php" method="POST">
+                <input type="hidden" name="type" value="home_info">
+
                 <label for="newYears">Anni di attività:</label>
                 <input type="number" id="newYears" class="modal__input" name="newYears">
                 
@@ -110,6 +153,35 @@
                 
                 <label for="newFamilies">Famiglie aiutate:</label>
                 <input type="number" id="newFamilies" class="modal__input" name="newFamilies">
+
+                <input type="submit" id="saveButton" class="btn" value="SALVA">
+            </form>
+        </div>
+    </div>
+
+    <!-- modale per inserire un nuovo contenuto news -->
+    <div id="newNews_modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <br>
+
+            <h2>Inserimento di una news</h2>
+            <br>
+            
+            <form action="private/update_home.php" enctype="multipart/form-data" method="POST">
+                <input type="hidden" name="type" value="home_news">
+
+                <label for="image">Seleziona la foto</label><br>
+                <input type="file" id="image" class="modal__input" name="news__image" accept="image/*" required>
+                
+                <br><label for="title">Inserisci il titolo della news</label>
+                <input type="text" id="title" class="modal__input" name="news__title" maxlength="255" required>
+                
+                <label for="date">Inserisci la data di inserimento della news</label>
+                <input type="date" id="date" class="modal__input" name="news__date" required>
+
+                <label for="text">Inserisci il testo</label>
+                <textarea name="news__text" id="text" cols='30' rows='10' placeholder="Inserisci il testo della news" class="modal__input" maxlength="255" required></textarea> 
 
                 <input type="submit" id="saveButton" class="btn" value="SALVA">
             </form>

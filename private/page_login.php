@@ -42,7 +42,7 @@
                     <label for='password' id='login_form__label'>Password</label>
                     <input type='password' name='password' id='login_form__input' required>
 
-                    <input class='login_form__submit' type='submit' value='ACCEDI'>
+                    <input id='login_form__submit' type='submit' value='ACCEDI'>
                 </form>
             </section>";
     } else 

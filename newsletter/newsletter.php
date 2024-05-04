@@ -47,18 +47,19 @@
                     <form id='form' action='" . htmlspecialchars($_SERVER["PHP_SELF"]) . "' method='POST'>
                         <h3>Ricerca dei contenuti in newsletter</h3>
                         <br><br>
-                        <div id='name_surname__label'>
+                        <div class='div__label'>
                             <label>Inserisci la data di partenza (deve essere nel passato)</label>
                             <label>Inserisci la data di fine (deve essere nel futuro)</label>
                         </div>
-                        <div id='name_surname__input'>
+                        <div class='div__input'>
                             <input type='date' id='bacheca_start' name='newsletter_start'>
                             &nbsp;&nbsp;
                             <input type='date' id='bacheca_end' name='newsletter_end'>
                         </div>
 
                         <input type='submit' value='CERCA'>
-                    </form>";
+                    </form>
+                </section>";
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (!empty($_POST["newsletter_start"]) && !empty($_POST["newsletter_end"])) {
@@ -81,8 +82,8 @@
                 if ($result->num_rows === 0)
                     echo "      <h3>Nessun risultato trovato, prova con un intervallo di date diverso</h3>";
                 while ($row = ($result->fetch_assoc())) {
-                    echo "  <div class='bacheca_newsletter-item'>
-                                <div class='pdf-preview'>
+                    echo "  <div class='bacheca_newsletter__list-item'>
+                                <div class='bacheca_newsletter__list__pdf-preview'>
                                     <embed src='" . $row["newsletter"] . "' type='application/pdf' width='80%' height='100%'>
                                 </div>
                             </div>";
@@ -114,7 +115,7 @@
                         </a>
                         <div class='nav_links' id='navLinks'>
                             <ul>
-                                <li><a href='newsletter.php'                    class='btn btn-sel'>Newsletter   </a></li>
+                                <li><a href='newsletter.php'                    class='btn btn_sel'>Newsletter   </a></li>
                                 <li><a href='../bacheca/bacheca.php'            class='btn'>Bacheca       </a></li>
                                 <li><a href='https://stripe.com/it'             class='btn' target='blank'>Donazioni</a></li>
                                 <li><a href='../private/area_personale.php'     class='btn'>Area Personale</a></li>

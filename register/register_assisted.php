@@ -49,21 +49,21 @@
                                         echo "<option value='" . $row["id"] . "'>" . $row["nome"] . " " . $row["cognome"] . "</option>";
                                 echo "</select>
 
-                                <div id='name_surname__label'>
+                                <div class='div__label'>
                                     <label for='name'>Inserisci il nome dell'assistito *</label>
                                     <label for='surname'>Inserisci il cognome dell'assistito *</label>
                                 </div>
-                                <div id='name_surname__input'>
+                                <div class='div__input'>
                                     <input type='text' name='name' id='name' maxlength='255' required>
                                     &nbsp;&nbsp;
                                     <input type='text' name='surname' id='surname' maxlength='255' required>
                                 </div>
 
-                                <div id='credentials__label'>
+                                <div class='div__label'>
                                     <label for='med'>Inserisci il file dell'anamnesi</label>
                                     <label for='rel'>Inserisci il file liberatoria *</label>
                                 </div>
-                                <div id='credentials__input'>
+                                <div class='div__input'>
                                     <input type='file' name='med' id='med' accept='.pdf'>
                                     &nbsp;&nbsp;
                                     <input type='file' name='rel' id='rel' accept='.pdf' required>

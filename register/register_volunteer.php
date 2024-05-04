@@ -36,11 +36,11 @@
                         <form name='form_volunteer' action='register.php' id='form_register__volunteer' method='POST' enctype='multipart/form-data'>
                             <input type='hidden' name='form_volunteer'>
 
-                            <div id='name_surname__label'>
+                            <div class='div__label'>
                                 <label for='name'>Inserisci il nome *</label>
                                 <label for='surname'>Inserisci il cognome *</label>
                             </div>
-                            <div id='name_surname__input'>
+                            <div class='div__input'>
                                 <input type='text' name='name' id='name' maxlength='255' required>
                                 &nbsp;&nbsp;
                                 <input type='text' name='surname' id='surname' maxlength='255' required>
@@ -49,18 +49,18 @@
                             <label for='email'>Inserisci l'email *</label>
                             <input type='email' name='email' id='email' maxlength='255' required>
 
-                            <div id='phones__label'>
+                            <div class='div__label'>
                                 <label for='phone_f'>Inserisci il numero del telefono fisso</label>
                                 <label for='phone_m'>Inserisci il numero di telefono *</label>
                             </div>
-                            <div id='phones__input'>
+                            <div class='div__input'>
                                 <input type='number' name='phone_f' id='phone_f'>
                                 &nbsp;&nbsp;
                                 <input type='number' name='phone_m' id='phone_m' required>
                             </div>
 
                             <label for='release'>Carica la liberatoria *</label>
-                            <input type='file' name='release' id='release' accept='.pdf' enctype='multipart/form-data' required>
+                            <input type='file' name='release' id='release' accept='.pdf' required>
 
                             <label for='notes'>Note utili sulla liberatoria</label>
                             <textarea name='notes' id='notes' cols='30' rows='10' placeholder='Altre info utili sul file liberatoria'></textarea>

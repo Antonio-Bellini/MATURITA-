@@ -24,7 +24,7 @@ $(document).ready(function () {
     });
 
     // bottoni per eseguire modifica ed eliminazione di un record
-    $('#table').on('click', '.table--btn, .btn_delete', function(e) {
+    $('#table').on('click', '.table_btn, .btn_delete', function(e) {
         // chiedo la doppia conferma di eliminazione
         if ($(this).hasClass('btn_delete')) {        
             let confirmed = confirm("Sei sicuro di voler procedere con l'eliminazione?");
@@ -41,6 +41,26 @@ $(document).ready(function () {
             let user = $(this).data('user');
             let profile = $(this).data('profile');
             modify_delete_Profile(operation, user, profile);
+        }
+    });
+
+    // eliminazione di un contenuto news nella home
+    $(".del_content_button").on("click", function() {
+        let operation = $(this).data('operation');
+        let user = $(this).data('user');
+        let profile = $(this).data('profile');
+
+        let confirmed = confirm("Sei sicuro di voler procedere con l'eliminazione?");
+
+        if (confirmed) {
+            $.ajax({
+                type: "POST",
+                url: "util/ajax/send_data.php",
+                data: { operation: operation, user: user, profile: profile },
+                success: function (response) {
+                    window.location.href = "private/crud.php";
+                }
+            });
         }
     });
 
@@ -119,7 +139,7 @@ $(document).ready(function () {
     }    
 
     // scorimento immagini nella pagina index
-    const gallery = document.querySelector('.gallery');
+    const gallery = document.querySelector('.body__main_gallery');
     if (gallery) {
         const images = document.querySelectorAll('.photo');
         let currentIndex = 0;
@@ -151,20 +171,20 @@ $(document).ready(function () {
         }
     }
 
-    // mostro la modale per aggiornare i dati dell'associazione
-    $("#updateButton").click(function() {
+    // mostro la modale per aggiornare i dati dell'associazione o aggiungere news
+    $("#updateButton, #add_content_button").click(function() {
         $("#newData_modal").css("display", "block");
     });
-
+    $("#add_content_button").click(function() {
+        $("#newNews_modal").css("display", "block");
+    });
     // chiudo la modale quando si clicca la x
     $(".close").click(function() {
-        $("#newData_modal").css("display", "none");
+        $(".modal").css("display", "none");
     });
-
-    // salvo localmente i nuovi dati inseriti e chiudo la modale
+    // salvo i dati inseriti
     $("#saveButton").click(function() {
-        saveDataLocally();
-        $("#newData_modal").css("display", "none");
+        $("#newData_modal, #newNews_modal").css("display", "none");
     });
 
     // visualizzazione di diversi tipi di utenti 
@@ -280,7 +300,7 @@ $(document).ready(function () {
         }
     }
 
-    // controllo per limitare a max 9 caratteri l'input del numero di telefono
+    // controllo per limitare a max 255 caratteri l'input del numero di telefono
     $('#new_tf, #new_tm, #phone_f, #phone_m').on("input", function() {
         let input = $(this).val();
         if (input > 15)
