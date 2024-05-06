@@ -54,8 +54,8 @@
         <div class="body__main_title">
             <h1 class="title">Associazione ZeroTre</h1>
             <p class="paragraph">
-                SIAMO GENITORI CHE CREDONO NEL MUTUO SOCCORSO PERCHÉ LO SCAMBIO DI EMOZIONI ED
-                ESPERIENZE EVITA LA CHIUSURA NEL DOLORE E MIGLIORA LA QUALITÀ DI VITA FAMILIARE
+                SIAMO GENITORI CHE CREDONO NEL MUTUO SOCCORSO PERCHÉ <br>LO SCAMBIO DI EMOZIONI ED
+                ESPERIENZE EVITA LA CHIUSURA <br> NEL DOLORE E MIGLIORA LA QUALITÀ DI VITA <br> FAMILIARE
                 <br><br>
                 <button id="btn_volunteer"><a href="volunteer_request.php">DIVENTA UN VOLONTARIO</a></button>
             </p>
@@ -66,6 +66,7 @@
             <img class="photo" src="image/content/image3.jpg" alt="immagine 3 della premiazione">
         </div>
     </section>
+
 
     <!-- Sezione con alcuni dati importanti dell'associazione -->
     <section class="association__info">

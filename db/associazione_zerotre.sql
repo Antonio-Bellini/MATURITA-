@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Mag 01, 2024 alle 16:00
+-- Creato il: Mag 06, 2024 alle 13:03
 -- Versione del server: 10.4.32-MariaDB
 -- Versione PHP: 8.2.12
 
@@ -84,6 +84,20 @@ CREATE TABLE `liberatorie` (
   `id` int(11) NOT NULL,
   `liberatoria` text DEFAULT NULL,
   `note` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `news`
+--
+
+CREATE TABLE `news` (
+  `id` int(11) NOT NULL,
+  `news` text NOT NULL,
+  `titolo` text DEFAULT NULL,
+  `data` date DEFAULT NULL,
+  `testo` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -235,7 +249,7 @@ CREATE TABLE `utenti` (
 
 INSERT INTO `utenti` (`id`, `nome`, `cognome`, `username`, `password`, `email`, `telefono_fisso`, `telefono_mobile`, `note`, `id_tipo_profilo`) VALUES
 (1, 'Jacopo', 'Bordoni', 'bordo', 'f4fe48ee352b291c8eed01cc05f571391f600fa88173b27e8ba824e2788bb9e04ad9949be4afd5d6552a69ba250592a602f1395aca9e6ba298b7d55fa299ab15:at!<3W,N6M5S}(.yhTr*-d[vT1xqP*4F', 'bordo@gmail.com', '', '123456789', 'sono l admin di prova', 2),
-(2, 'Antonio', 'Bellini', 'anto', '32664e46830f538684e8255d05dc8938797695be3aecfaa29ce4d3bb8bf8d5f355dbe2051b5bc11cb051537d87cca9d7e39856a3a56df24dd1a9912255a39866:$=@|&YX*^ht2g7T8Bc*)XX[mNX^|0o5$', 'anto@gmail.com', '', '123456789', 'sono un genitore di prova', 4);
+(2, 'Antonio', 'Bellini', 'anto', '7b105600f371d78b9397e7f0e177df7034da7002f45d02a2dcbf0d6969d5a4762f4a016bcfef6662ceb68d0068b9c93cdaab1362f3a15b15ad14db84b13c205f:o|*z30k/$SZEk/0kz+s4{rXsKlJmP!dq', 'anto@gmail.com', '', '123456789', 'sono un genitore di prova', 4);
 
 -- --------------------------------------------------------
 
@@ -301,6 +315,12 @@ ALTER TABLE `eventi`
 -- Indici per le tabelle `liberatorie`
 --
 ALTER TABLE `liberatorie`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indici per le tabelle `news`
+--
+ALTER TABLE `news`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -377,7 +397,7 @@ ALTER TABLE `assistiti`
 -- AUTO_INCREMENT per la tabella `bacheca`
 --
 ALTER TABLE `bacheca`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT per la tabella `eventi`
@@ -392,10 +412,16 @@ ALTER TABLE `liberatorie`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT per la tabella `news`
+--
+ALTER TABLE `news`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
 -- AUTO_INCREMENT per la tabella `newsletter`
 --
 ALTER TABLE `newsletter`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT per la tabella `profili`
