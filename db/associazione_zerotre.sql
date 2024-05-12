@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Mag 06, 2024 alle 13:03
+-- Creato il: Mag 12, 2024 alle 16:48
 -- Versione del server: 10.4.32-MariaDB
 -- Versione PHP: 8.2.12
 
@@ -77,6 +77,17 @@ CREATE TABLE `eventi` (
 -- --------------------------------------------------------
 
 --
+-- Struttura della tabella `images`
+--
+
+CREATE TABLE `images` (
+  `id` int(11) NOT NULL,
+  `path` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Struttura della tabella `liberatorie`
 --
 
@@ -94,7 +105,7 @@ CREATE TABLE `liberatorie` (
 
 CREATE TABLE `news` (
   `id` int(11) NOT NULL,
-  `news` text NOT NULL,
+  `id_image` int(11) NOT NULL,
   `titolo` text DEFAULT NULL,
   `data` date DEFAULT NULL,
   `testo` text DEFAULT NULL
@@ -312,6 +323,12 @@ ALTER TABLE `eventi`
   ADD KEY `tipo_evento` (`tipo_evento`);
 
 --
+-- Indici per le tabelle `images`
+--
+ALTER TABLE `images`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indici per le tabelle `liberatorie`
 --
 ALTER TABLE `liberatorie`
@@ -321,7 +338,8 @@ ALTER TABLE `liberatorie`
 -- Indici per le tabelle `news`
 --
 ALTER TABLE `news`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_image` (`id_image`);
 
 --
 -- Indici per le tabelle `newsletter`
@@ -406,6 +424,12 @@ ALTER TABLE `eventi`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT per la tabella `images`
+--
+ALTER TABLE `images`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
 -- AUTO_INCREMENT per la tabella `liberatorie`
 --
 ALTER TABLE `liberatorie`
@@ -433,7 +457,7 @@ ALTER TABLE `profili`
 -- AUTO_INCREMENT per la tabella `registro_associazione`
 --
 ALTER TABLE `registro_associazione`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT per la tabella `tipi_evento`
@@ -488,6 +512,12 @@ ALTER TABLE `assistiti_evento`
 --
 ALTER TABLE `eventi`
   ADD CONSTRAINT `eventi_ibfk_1` FOREIGN KEY (`tipo_evento`) REFERENCES `tipi_evento` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Limiti per la tabella `news`
+--
+ALTER TABLE `news`
+  ADD CONSTRAINT `news_ibfk_1` FOREIGN KEY (`id_image`) REFERENCES `images` (`id`)ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limiti per la tabella `profili`
