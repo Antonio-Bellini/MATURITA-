@@ -268,12 +268,16 @@
 
                     case "home_news":
                         $file_name = null;
-                        $query = "SELECT news FROM news WHERE id = $userId";
+                        $query = "SELECT i.id, i.path FROM images i
+                                    INNER JOIN news n ON n.id_image = i.id 
+                                    WHERE n.id = $userId";
                         $result = dbQuery($connection, $query);
 
                         if ($result) {
-                            while ($row = ($result->fetch_assoc()))
-                                $file_name = "../image/" . $row["news"];
+                            while ($row = ($result->fetch_assoc())) {
+                                $file_name = "../image/" . $row["path"];
+                                $image_id = $row["id"];
+                            }
 
                             if (file_exists($file_name)) {
                                 if (unlink($file_name)) {
@@ -281,8 +285,13 @@
                                     $result = dbQuery($connection, $query);
 
                                     if ($result) {
-                                        $_SESSION["file_deleted"] = true;
-                                        header("Location: ../index.php");
+                                        $query = "DELETE FROM images WHERE id = $image_id";
+                                        $result = dbQuery($connection, $query);
+
+                                        if ($result) {
+                                            $_SESSION["file_deleted"] = true;
+                                            header("Location: ../index.php");
+                                        }
                                     } else 
                                         echo ERROR_DB;
                                 } else 
