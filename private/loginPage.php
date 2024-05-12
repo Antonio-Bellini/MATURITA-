@@ -25,29 +25,8 @@
 
         // controllo cosa mostrare in base a se é gia loggato oppure ancora no
         if ($_SESSION["is_logged"]) {
-            // menu di navigazione
-            echo "<main>
-                    <section class='header'>
-                        <nav>
-                            <a href='../index.php'>
-                                <img 
-                                    src='../image/logos/logo.png'
-                                    class='logo'
-                                    id='logoImg'
-                                    alt='logo associazione'
-                                />
-                            </a>
-                            <div class='nav_links' id='navLinks'>
-                                <ul>
-                                    <li><a href='../newsletter.php'     class='btn'>Newsletter   </a></li>
-                                    <li><a href='../bacheca.php'        class='btn'>Bacheca       </a></li>
-                                    <li><a href='https://stripe.com/it' class='btn'>Donazioni     </a></li>
-                                    <li><a href='area_personale.php'    class='btn'>Area Personale</a></li>
-                                </ul>
-                            </div>
-                        </nav>            
-                    </section>
-                </main>";
+            nav_menu();
+            
             welcome($connection, $_SESSION["username"]);
         } else {
             echo "<main>

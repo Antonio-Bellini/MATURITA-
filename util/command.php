@@ -51,6 +51,62 @@
                 </footer>";
     }
 
+    // funzione per il menu di navigazione
+    function nav_menu() {
+        echo "<main>
+                <section class='header'>
+                    <nav>
+                        <a href='../index.php'>
+                            <img 
+                                src='../image/logos/logo.png'
+                                class='logo'
+                                id='logoImg'
+                                alt='logo associazione'
+                            />
+                        </a>
+                        <div class='nav_links' id='navLinks'>
+                            <ul>
+                                <li><a href='../about.php'                          class='btn'>Perché ci siamo     </a></li>
+                                <li><a href='../about.php'                          class='btn'>Cosa offriamo       </a></li>                 
+                                <li><a href='../image/gallery.php'                  class='btn'>Galleria            </a></li>
+                                <li><a href='../newsletter/newsletter.php'          class='btn'>Newsletter          </a></li>
+                                <li><a href='../bacheca/bacheca.php'                class='btn'>Bacheca             </a></li>
+                                <li><a href='../private/area_personale.php'         class='btn'>Area Personale      </a></li>
+                                <li><a href='../private/crud.php?operation=LOGOUT'  class='btn'>Logout</a></li>
+                            </ul>
+                        </div>
+                    </nav>            
+                </section>
+            </main>";
+    }
+    function nav_menu2() {
+        echo "<main>
+                <section class='header'>
+                    <nav>
+                        <a href='index.php'>
+                            <img 
+                                src='image/logos/logo.png'
+                                class='logo'
+                                id='logoImg'
+                                alt='logo associazione'
+                            />
+                        </a>
+                        <div class='nav_links' id='navLinks'>
+                            <ul>
+                                <li><a href='about.php'                             class='btn'>Perché ci siamo     </a></li>
+                                <li><a href='about.php'                             class='btn'>Cosa offriamo       </a></li>                 
+                                <li><a href='image/gallery.php'                     class='btn'>Galleria            </a></li>
+                                <li><a href='newsletter/newsletter.php'             class='btn'>Newsletter          </a></li>
+                                <li><a href='bacheca/bacheca.php'                   class='btn'>Bacheca             </a></li>
+                                <li><a href='private/area_personale.php'            class='btn'>Area Personale      </a></li>
+                                <li><a href='private/crud.php?operation=LOGOUT'     class='btn'>Logout</a></li>
+                            </ul>
+                        </div>
+                    </nav>            
+                </section>
+            </main>";
+    }
+
     // funzione per eseguire una query sul db
     function dbQuery($connection, $query) {
         return $connection -> query($query);
