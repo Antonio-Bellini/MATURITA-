@@ -39,10 +39,14 @@
                 </a>
                 <div class="nav_links" id="navLinks">
                     <ul>
-                        <li><a href="newsletter/newsletter.php"     class="btn">Newsletter   </a></li>
-                        <li><a href="bacheca/bacheca.php"           class="btn">Bacheca       </a></li>
-                        <li><a href="https://stripe.com/it"         class="btn" target="blank">Donazioni</a></li>
-                        <li><a href="private/area_personale.php"    class="btn">Area Personale</a></li>
+                        <li><a href="about.php"                     class="btn">Perché ci siamo   </a></li>                       
+                        <li><a href="about.php"                     class="btn">Cosa offriamo     </a></li>
+                        <li><a href="image/gallery.php"             class="btn">Galleria          </a></li>
+                        <li><a href="newsletter/newsletter.php"     class="btn">Newsletter        </a></li>
+                        <li><a href="bacheca/bacheca.php"           class="btn">Bacheca           </a></li>
+                        <li><a href="private/area_personale.php"    class="btn">Area Personale    </a></li>
+                        
+                        
                     </ul>
                 </div>
             </nav>            
@@ -58,12 +62,14 @@
                 ESPERIENZE EVITA LA CHIUSURA NEL DOLORE E MIGLIORA LA QUALITÀ DI VITA FAMILIARE
                 <br><br>
                 <button id="btn_volunteer"><a href="volunteer_request.php">DIVENTA UN VOLONTARIO</a></button>
+                <br><br>
+                <button id="btn_volunteer" onclick="window.open('https://stripe.com/it', '_blank')">DONA ORA</button>
             </p>
         </div>
         <div class="body__main_gallery">
-            <img class="photo" src="image/content/image1.jpg" alt="immagine 1 della premiazione">
-            <img class="photo" src="image/content/image2.jpg" alt="immagine 2 della premiazione">
-            <img class="photo" src="image/content/image3.jpg" alt="immagine 3 della premiazione">
+            <img class="photo" src="image/content/foto1.jpg" alt="immagine 1 della premiazione">
+            <img class="photo" src="image/content/foto2.jpg" alt="immagine 2 della premiazione">
+            <img class="photo" src="image/content/foto3.jpg" alt="immagine 3 della premiazione">
         </div>
     </section>
 
