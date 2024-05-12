@@ -58,8 +58,8 @@
         <div class="body__main_title">
             <h1 class="title">Associazione ZeroTre</h1>
             <p class="paragraph">
-                SIAMO GENITORI CHE CREDONO NEL MUTUO SOCCORSO PERCHÉ LO SCAMBIO DI EMOZIONI ED
-                ESPERIENZE EVITA LA CHIUSURA NEL DOLORE E MIGLIORA LA QUALITÀ DI VITA FAMILIARE
+                SIAMO GENITORI CHE CREDONO NEL MUTUO SOCCORSO PERCHÉ <br>LO SCAMBIO DI EMOZIONI ED
+                ESPERIENZE EVITA LA CHIUSURA <br> NEL DOLORE E MIGLIORA LA QUALITÀ DI VITA <br> FAMILIARE
                 <br><br>
                 <button id="btn_volunteer"><a href="volunteer_request.php">DIVENTA UN VOLONTARIO</a></button>
                 <br><br>
@@ -72,6 +72,7 @@
             <img class="photo" src="image/content/foto3.jpg" alt="immagine 3 della premiazione">
         </div>
     </section>
+
 
     <!-- Sezione con alcuni dati importanti dell'associazione -->
     <section class="association__info">
@@ -111,7 +112,9 @@
         <div id="news_container" class="news__blocks">
             <?php
                 $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
-                $query = "SELECT id, news, titolo, data, testo FROM news";
+                $query = "SELECT n.id, i.path, n.titolo, n.data, n.testo 
+                            FROM news n
+                            INNER JOIN images i ON n.id_image = i.id";
                 $result = dbQuery($connection, $query);
 
                 if (!$result->num_rows>0) 
@@ -121,7 +124,7 @@
                     while ($row = ($result->fetch_assoc())) {
                         echo "
                             <div class='news__block'>
-                                <img src='image/" . $row["news"] . "' alt='Immagine news'>
+                                <img src='image/" . $row["path"] . "' alt='Immagine news'>
                                 <div class='news__content'>
                                     <h3 class='news__title'>" . $row["titolo"] . "</h3>
                                     <p class='news__date'>" . date("d-m-Y", strtotime($row["data"])) . "</p>

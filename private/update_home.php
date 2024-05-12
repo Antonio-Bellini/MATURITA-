@@ -82,14 +82,22 @@
                     $date = $_POST["news__date"];
                     $text = mysqli_real_escape_string($connection, $_POST["news__text"]);
 
-                    $query = "INSERT INTO news(news, titolo, data, testo) 
-                                VALUES ('$uploadedFileName', '$title', '$date', '$text')";
+                    $query = "INSERT INTO images(path) VALUES('$uploadedFileName')";
                     $result = dbQuery($connection, $query);
 
                     if ($result) {
-                        $_SESSION["user_modified"] = true;
-                        header("Location: ../index.php");
-                    } else 
+                        $id_image = $connection->insert_id;
+
+                        $query = "INSERT INTO news(id_image, titolo, data, testo) 
+                                    VALUES ('$id_image', '$title', '$date', '$text')";
+                        $result = dbQuery($connection, $query);
+
+                        if ($result) {
+                            $_SESSION["user_modified"] = true;
+                            header("Location: ../index.php");
+                        } else 
+                            echo ERROR_DB;
+                    } else
                         echo ERROR_DB;
                 } else {
                     echo ERROR_GEN;
