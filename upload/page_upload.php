@@ -26,29 +26,7 @@
 
         $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
 
-    // menu di navigazione
-    echo "<main>
-            <section class='header'>
-                <nav>
-                    <a href='../index.php'>
-                        <img 
-                            src='../image/logos/logo.png'
-                            class='logo'
-                            id='logoImg'
-                            alt='logo associazione'
-                        />
-                    </a>
-                    <div class='nav_links' id='navLinks'>
-                        <ul>
-                            <li><a href='../newsletter/newsletter.php'  class='btn'>Newsletter   </a></li>
-                            <li><a href='../bacheca/bacheca.php'        class='btn'>Bacheca       </a></li>
-                            <li><a href='https://stripe.com/it'         class='btn' target='blank'>Donazioni</a></li>
-                            <li><a href='../private/area_personale.php' class='btn'>Area Personale</a></li>
-                        </ul>
-                    </div>
-                </nav>            
-            </section>
-        </main>";
+    nav_menu();
 
     if (isset($_SESSION["is_logged"]) && $_SESSION["is_logged"]) {
         if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) {

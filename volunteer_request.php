@@ -12,7 +12,7 @@
     importActualStyle();
     session_start();
 
-    nav_menu();
+    nav_menu2();
 
     echo "<br>
         <section id='form'>
