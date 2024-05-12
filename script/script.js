@@ -27,7 +27,7 @@ $(document).ready(function () {
     $('#table').on('click', '.table_btn, .btn_delete', function(e) {
         // chiedo la doppia conferma di eliminazione
         if ($(this).hasClass('btn_delete')) {        
-            let confirmed = confirm("Sei sicuro di voler procedere con l'eliminazione?");
+            let confirmed = confirm("Sei sicuro di voler procedere con l'eliminazione?\n\nATTENZIONE!\nQuesta azione è irreversibile e tutti i dati saranno persi in modo irrecuperabile.");
             
             if (confirmed) {
                 let operation = $(this).data('operation');
@@ -50,7 +50,7 @@ $(document).ready(function () {
         let user = $(this).data('user');
         let profile = $(this).data('profile');
 
-        let confirmed = confirm("Sei sicuro di voler procedere con l'eliminazione?");
+        let confirmed = confirm("Sei sicuro di voler procedere con l'eliminazione?\n\nATTENZIONE!\nQuesta azione è irreversibile e tutti i dati saranno persi in modo irrecuperabile.");
 
         if (confirmed) {
             $.ajax({
