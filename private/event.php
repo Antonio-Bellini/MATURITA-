@@ -28,10 +28,12 @@
                                     $volunteer = $_POST["volunteer"];
                                     $event = $_POST["event"];
                                     $notes = isset($_POST["notes"]) ? mysqli_real_escape_string($connection, $_POST["notes"]) : null;
-                
-                                    $query = "INSERT INTO volontari_evento(id_evento, id_volontario, note)
-                                                    VALUES('$event', '$volunteer', '$notes');";
-                                    $result = dbQuery($connection, $query);
+
+                                    $stmt = $connection->prepare("INSERT INTO volontari_evento(id_evento, id_volontario, note)
+                                                                    VALUES(?, ?, ?)");
+                                    $stmt->bind_param("iis", $volunteer, $event, $notes);
+                                    $stmt->execute();
+                                    $result = $stmt->get_result();
                 
                                     if ($result) {
                                         $_SESSION["added_to_event"] = true;
@@ -40,6 +42,8 @@
                                         $_SESSION["not_added_to_event"] = true;
                                         header("Location: area_personale.php");
                                     }
+
+                                    $stmt->close();
                                 } catch(Exception $e) {
                                     echo ERROR_ALREADY_ADDED;
                                 }
@@ -70,11 +74,13 @@
                                         for ($i = 0; $i < count($volunteer_id); $i++) {
                                             $current_volunteer_id = $volunteer_id[$i];
                                             $current_event_id = $event_id[$i];
-                                
-                                            $query = "DELETE FROM volontari_evento 
-                                                            WHERE id_evento = $current_event_id 
-                                                            AND id_volontario = $current_volunteer_id";
-                                            $result = dbQuery($connection, $query);
+                                            
+                                            $stmt = $connection->prepare("DELETE FROM volontari_evento 
+                                                                            WHERE id_evento = ?
+                                                                            AND id_volontario = ?");
+                                            $stmt->bind_param("ii", $current_event_id, $current_volunteer_id);
+                                            $stmt->execute();
+                                            $result = $stmt->get_result();
                                             
                                             if ($result) {
                                                 $_SESSION["user_modified"] = true;
@@ -83,7 +89,9 @@
                                                 $_SESSION["user_not_modified"] = true;
                                                 header("Location: area_personale.php");
                                             }
-                                        }                                
+
+                                            $stmt->close();
+                                        }   
                                     } else
                                         echo ERROR_GEN;
                                 } catch (Exception $e) {
@@ -94,10 +102,13 @@
                             case "updVoluFromEvent":
                                 $volunteer = $_POST["volunteer"];
                                 $event = $_POST["event"];
-                                $query = "UPDATE volontari_evento
-                                            SET id_evento = $event
-                                            WHERE id_volontario = $volunteer";
-                                $result = dbQuery($connection, $query);
+
+                                $stmt = $connection->prepare("UPDATE volontari_evento
+                                                                SET id_evento = ?
+                                                                WHERE id_volontario = ?");
+                                $stmt->bind_param("ii", $event, $volunteer);
+                                $stmt->execute();
+                                $result = $stmt->get_result();
 
                                 if ($result) {
                                     $_SESSION["user_modified"] = true;
@@ -106,6 +117,8 @@
                                     $_SESSION["user_not_modified"] = true;
                                     header("Location: area_personale.php");
                                 }
+
+                                $stmt->close();
                                 break;
                         }
                         break;
@@ -118,9 +131,11 @@
                                     $event = $_POST["event"];
                                     $notes = isset($_POST["notes"]) ? mysqli_real_escape_string($connection, $_POST["notes"]) : null;
 
-                                    $query = "INSERT INTO assistiti_evento(id_evento, id_assistito, note)
-                                                    VALUES('$event', '$assisted', '$notes');";
-                                    $result = dbQuery($connection, $query);
+                                    $stmt = $connection->prepare("INSERT INTO assistiti_evento(id_evento, id_assistito, note)
+                                                                    VALUES(?, ?, ?)");
+                                    $stmt->bind_param("iis", $event,  $assisted, $notes);
+                                    $stmt->execute();
+                                    $result = $stmt->get_result();
                 
                                     if ($result) {
                                         $_SESSION["added_to_event"] = true;
@@ -129,6 +144,8 @@
                                         $_SESSION["not_added_to_event"] = true;
                                         header("Location: area_personale.php");
                                     }
+
+                                    $stmt->close();
                                 } catch(Exception $e) {
                                     echo ERROR_ALREADY_ADDED;
                                 }
@@ -159,11 +176,13 @@
                                         for ($i = 0; $i < count($assisted_id); $i++) {
                                             $current_assisted_id = $assisted_id[$i];
                                             $current_event_id = $event_id[$i];
-                                
-                                            $query = "DELETE FROM assistiti_evento 
-                                                            WHERE id_evento = $current_event_id 
-                                                            AND id_assistito = $current_assisted_id";
-                                            $result = dbQuery($connection, $query);
+
+                                            $stmt = $connection->prepare("DELETE FROM assistiti_evento 
+                                                                            WHERE id_evento = ?
+                                                                            AND id_assistito = ?");
+                                            $stmt->bind_param("ii", $current_event_id, $current_assisted_id);
+                                            $stmt->execute();
+                                            $result = $stmt->get_result();
                                             
                                             if ($result) {
                                                 $_SESSION["user_modified"] = true;
@@ -172,6 +191,8 @@
                                                 $_SESSION["user_not_modified"] = true;
                                                 header("Location: area_personale.php");
                                             }
+
+                                            $stmt->close();
                                         }                                
                                     } else
                                         echo ERROR_GEN;
@@ -183,10 +204,13 @@
                             case "updAssiFromEvent":
                                 $assisted = $_POST["assisted"];
                                 $event = $_POST["event"];
-                                $query = "UPDATE assistiti_evento
-                                            SET id_evento = $event
-                                            WHERE id_assistito = $assisted";
-                                $result = dbQuery($connection, $query);
+
+                                $stmt = $connection->prepare("UPDATE assistiti_evento
+                                                                SET id_evento = ?
+                                                                WHERE id_assistito = ?");
+                                $stmt->bind_param("ii", $event, $assisted);
+                                $stmt->execute();
+                                $result = $stmt->get_result();
 
                                 if ($result) {
                                     $_SESSION["user_modified"] = true;
@@ -195,6 +219,8 @@
                                     $_SESSION["user_not_modified"] = true;
                                     header("Location: area_personale.php");
                                 }
+
+                                $stmt->close();
                                 break;
                         }
                         break;
@@ -204,9 +230,11 @@
                         $event_date = $_POST["event_date"];
                         $event_notes = isset($_POST["notes"]) ? mysqli_real_escape_string($connection, $_POST["event_notes"]) : null;
 
-                        $query = "INSERT INTO eventi(tipo_evento, data, note)
-                                        VALUES('$event_type', '$event_date', '$event_notes');";
-                        $result = dbQuery($connection, $query);
+                        $stmt = $connection->prepare("INSERT INTO eventi(tipo_evento, data, note)
+                                                        VALUES(?, ?, ?)");
+                        $stmt->bind_param("iss", $event_type, $event_date, $event_notes);
+                        $stmt->execute();
+                        $result = $stmt->get_result();
 
                         if ($result) {
                             $_SESSION["event_created"] = true;
@@ -215,6 +243,8 @@
                             $_SESSION["event_not_created"] = true;
                             header("Location: area_personale.php");
                         }
+
+                        $stmt->close();
                         break;
 
                     case "crud_eventType":
@@ -222,9 +252,11 @@
                             case "addNewEventType":
                                 $new_event = isset($_POST["new_event"]) ? mysqli_real_escape_string($connection, $_POST["new_event"]) : null;
 
-                                $query = "INSERT INTO tipi_evento(tipo)
-                                                VALUES('$new_event');";
-                                $result = dbQuery($connection, $query);
+                                $stmt = $connection->prepare("INSERT INTO tipi_evento(tipo)
+                                                                VALUES('$new_event')");
+                                $stmt->bind_param("s", $new_event);
+                                $stmt->execute();
+                                $result = $stmt->get_result();
 
                                 if ($result) {
                                     $_SESSION["event_created"] = true;
@@ -233,6 +265,8 @@
                                     $_SESSION["event_not_created"] = true;
                                     header("Location: area_personale.php");
                                 }
+
+                                $stmt->close();
                                 break;
                         }
                         break;
