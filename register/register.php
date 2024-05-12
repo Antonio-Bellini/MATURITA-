@@ -15,8 +15,8 @@
                     $name = mysqli_real_escape_string($connection, $_POST['name']);
                     $surname = mysqli_real_escape_string($connection, $_POST["surname"]);
                     $username = mysqli_real_escape_string($connection, $_POST["username"]);
-                    $password_clear = $_POST["password"];
-                    $email = $_POST["email"];
+                    $password_clear = mysqli_real_escape_string($connection, $_POST["password"]);
+                    $email = mysqli_real_escape_string($connection, $_POST["email"]);
                     $phone_f = $_POST["phone_f"];
                     $phone_m = $_POST["phone_m"];
                     $notes = isset($_POST["notes"]) ? mysqli_real_escape_string($connection, $_POST["notes"]) : null;
@@ -30,9 +30,11 @@
 
                     // inserimento  dell'utente nel db
                     $password_enc = encryptPassword($password_clear);
-                    $query = "INSERT INTO utenti(nome, cognome, username, password, email, telefono_fisso, telefono_mobile, note, id_profilo)
-                                VALUES ('$name', '$surname', '$username', '$password_enc', '$email', '$phone_f', '$phone_m', '$notes', $profile);";
-                    $result = dbQuery($connection, $query);
+                    $stmt = $connection->prepare("INSERT INTO utenti(nome, cognome, username, password, email, telefono_fisso, telefono_mobile, note, id_profilo)
+                                                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                    $stmt->bind_param("ssssssssi", $name, $surname, $username, $password_enc, $email, $phone_f, $phone_m, $notes, $profile);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
 
                     if ($result) {
                         $_SESSION["user_created"] = true;
@@ -45,7 +47,7 @@
                     // ottengo i dati scritti nel form
                     $name = mysqli_real_escape_string($connection, $_POST["name"]);
                     $surname = mysqli_real_escape_string($connection, $_POST["surname"]);
-                    $email = $_POST["email"];
+                    $email = mysqli_real_escape_string($connection, $_POST["email"]);
                     $phone_f = $_POST["phone_f"];
                     $phone_m = $_POST["phone_m"];
                     $notes = isset($_POST["notes"]) ? mysqli_real_escape_string($connection, $_POST["notes"]) : null;
@@ -60,15 +62,21 @@
                 
                     if(move_uploaded_file($fileTmpName, $newFilePath)) {
                         $uploadedFileName = "release_module/" . $fileName;
+                        $stmt = $connection->prepare("INSERT INTO liberatorie(liberatoria, note) VALUES(?, ?)");
+                        $stmt->bind_param("ss", $uploadedFileName, $notes);
+                        $stmt->execute();
+                        $result = $stmt->get_result();
                         $query = "INSERT INTO liberatorie(liberatoria, note) VALUES('$uploadedFileName', '$notes')";
                         $result = dbQuery($connection, $query);
 
                         if ($result) {
                             $lastId = $connection -> insert_id;
                             // inserimento dell'utente nel db
-                            $query = "INSERT INTO volontari(nome, cognome, email, telefono_fisso, telefono_mobile, id_liberatoria)
-                                        VALUES('$name', '$surname', '$email', '$phone_f', '$phone_m', '$lastId');";
-                            $result = dbQuery($connection, $query);
+                            $stmt = $connection->prepare("INSERT INTO volontari(nome, cognome, email, telefono_fisso, telefono_mobile, id_liberatoria)
+                                                            VALUES(?, ?, ?, ?, ?, ?)");
+                            $stmt->bind_param("sssssi", $name, $surname, $email, $phone_f, $phone_m, $lastId);
+                            $stmt->execute();
+                            $result = $stmt->get_result();
 
                             if ($result) {
                                 $_SESSION["user_created"] = true;
@@ -116,17 +124,21 @@
                             $uploadedFileName = "release_module/" . $fileName;
                             
                             // inserimento della liberatoria nel db
-                            $query = "INSERT INTO liberatorie(liberatoria) 
-                                        VALUES('$uploadedFileName')";
-                            $result = dbQuery($connection, $query);
+                            $stmt = $connection->prepare("INSERT INTO liberatorie(liberatoria) 
+                                                            VALUES(?)");
+                            $stmt->bind_param("s", $uploadedFileName);
+                            $stmt->execute();
+                            $result = $stmt->get_result();
 
                             // inserimento dell'assistito nel db se il caricamento dei file é andato a buon fine
                             if ($result) {
                                 $rel_id = $connection->insert_id;
 
-                                $query = "INSERT INTO assistiti(nome, cognome, anamnesi, note, id_referente, id_liberatoria)
-                                            VALUES('$name', '$surname', '$uploadedFileName', '$notes', '$parent', '$rel_id');";
-                                $result = dbQuery($connection, $query);
+                                $stmt = $connection->prepare("INSERT INTO assistiti(nome, cognome, anamnesi, note, id_referente, id_liberatoria)
+                                                            VALUES(?, ?, ?, ?, ?, ?)");
+                                $stmt->bind_param("ssssii", $name, $surname, $uploadedFileName, $notes, $parent, $rel_id);
+                                $stmt->execute();
+                                $result = $stmt->get_result();
 
                                 if ($result) {
                                     $_SESSION["user_created"] = true;

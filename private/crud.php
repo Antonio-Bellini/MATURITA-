@@ -68,7 +68,7 @@
                 case "event":
                     $query1 = "SELECT id, tipo FROM tipi_evento";
                     $result1 = dbQuery($connection, $query1);
-                    $query2 = "SELECT te.tipo FROM tipi_evento te INNER JOIN eventi e ON e.tipo_evento = te.id WHERE e.id=$userId";
+                    $query2 = "SELECT te.tipo FROM tipi_evento te INNER JOIN eventi e ON e.tipo_evento = te.id WHERE e.id = $userId";
                     $result2 = dbQuery($connection, $query2);
 
                     if ($result1 && $result2) {

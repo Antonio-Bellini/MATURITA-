@@ -19,7 +19,7 @@
                 if (isset($_POST["username"]) && isset($_POST["password"])) {
                     // sanifico i dati in input del form
                     $username = mysqli_real_escape_string($connection, $_POST["username"]);
-                    $password = $_POST["password"];
+                    $password = mysqli_real_escape_string($connection, $_POST["password"]);
 
                     $stmt = $connection->prepare("SELECT id, password FROM utenti WHERE username = ?");
                     $stmt->bind_param("s", $username);
