@@ -13,7 +13,7 @@
     session_start();
     $connection = connectToDatabase(DB_HOST, DB_USER, USER_PW, DB_NAME);
 
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {        
         $name = $_POST["name"];
         $surname = $_POST["surname"];
         $email = $_POST["email"];

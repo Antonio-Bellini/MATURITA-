@@ -68,7 +68,7 @@
                 case "event":
                     $query1 = "SELECT id, tipo FROM tipi_evento";
                     $result1 = dbQuery($connection, $query1);
-                    $query2 = "SELECT te.tipo FROM tipi_evento te INNER JOIN eventi e ON e.tipo_evento = te.id WHERE e.id=$userId";
+                    $query2 = "SELECT te.tipo FROM tipi_evento te INNER JOIN eventi e ON e.tipo_evento = te.id WHERE e.id = $userId";
                     $result2 = dbQuery($connection, $query2);
 
                     if ($result1 && $result2) {
@@ -268,12 +268,16 @@
 
                     case "home_news":
                         $file_name = null;
-                        $query = "SELECT news FROM news WHERE id = $userId";
+                        $query = "SELECT i.id, i.path FROM images i
+                                    INNER JOIN news n ON n.id_image = i.id 
+                                    WHERE n.id = $userId";
                         $result = dbQuery($connection, $query);
 
                         if ($result) {
-                            while ($row = ($result->fetch_assoc()))
-                                $file_name = "../image/" . $row["news"];
+                            while ($row = ($result->fetch_assoc())) {
+                                $file_name = "../image/" . $row["path"];
+                                $image_id = $row["id"];
+                            }
 
                             if (file_exists($file_name)) {
                                 if (unlink($file_name)) {
@@ -281,8 +285,13 @@
                                     $result = dbQuery($connection, $query);
 
                                     if ($result) {
-                                        $_SESSION["file_deleted"] = true;
-                                        header("Location: ../index.php");
+                                        $query = "DELETE FROM images WHERE id = $image_id";
+                                        $result = dbQuery($connection, $query);
+
+                                        if ($result) {
+                                            $_SESSION["file_deleted"] = true;
+                                            header("Location: ../index.php");
+                                        }
                                     } else 
                                         echo ERROR_DB;
                                 } else 
@@ -311,34 +320,6 @@
     }
 
     show_footer();
-
-
-    // menu di navigazione
-    function nav_menu() {
-        echo "<main>
-                <section class='header'>
-                    <nav>
-                        <a href='../index.php'>
-                            <img 
-                                src='../image/logos/logo.png'
-                                class='logo'
-                                id='logoImg'
-                                alt='logo associazione'
-                            />
-                        </a>
-                        <div class='nav_links' id='navLinks'>
-                            <ul>
-                                <li><a href='../newsletter/newsletter.php'  class='btn'>Newsletter   </a></li>
-                                <li><a href='../bacheca/bacheca.php'        class='btn'>Bacheca       </a></li>
-                                <li><a href='https://stripe.com/it'         class='btn' target='blank'>Donazioni</a></li>
-                                <li><a href='area_personale.php'            class='btn'>Area Personale</a></li>
-                                <li><a href='crud.php?operation=LOGOUT'     class='btn'>Logout</a></li>
-                            </ul>
-                        </div>
-                    </nav>            
-                </section>
-            </main>";
-    }
 
     // funzione per mostrare il form di modifica
     function modifyForm($connection, $type, $userId) {

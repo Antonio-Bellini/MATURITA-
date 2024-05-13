@@ -28,18 +28,22 @@
                     if (move_uploaded_file($fileTmpName, $newFilePath)) {
                         $uploadedFileName = "release_module/" . $fileName;
 
-                        $query = "INSERT INTO liberatorie(liberatoria, note)
-                                        VALUES('$uploadedFileName', '$notes');";
-                        $result = dbQuery($connection, $query);
+                        $stmt = $connection->prepare("INSERT INTO liberatorie(liberatoria, note)
+                                                        VALUES(?, ?)");
+                        $stmt->bind_param("ss", $uploadedFileName, $notes);
+                        $stmt->execute();
+                        $result = $stmt->get_result();
 
                         if ($result) {
                             $module_id = $connection->insert_id;
 
                             if ($assistedId != null) {
-                                $query = "UPDATE assistiti
-                                            SET id_liberatoria = '$module_id'
-                                            WHERE id = '$assistedId';";
-                                $result = dbQuery($connection, $query);
+                                $stmt = $connection->prepare("UPDATE assistiti
+                                                                SET id_liberatoria = ?
+                                                                WHERE id = ?");
+                                $stmt->bind_param("ii", $module_id, $assistedId);
+                                $stmt->execute();
+                                $result = $stmt->get_result();
 
                                 if ($result) {
                                     $_SESSION["file_uploaded"] = true;
@@ -49,10 +53,12 @@
                                     header("Location: ../private/area_personale.php");
                                 }
                             } else if ($volunteerId != null) {
-                                $query = "UPDATE volontari
-                                            SET id_liberatoria = '$module_id'
-                                            WHERE id = '$volunteerId';";
-                                $result = dbQuery($connection, $query);
+                                $stmt = $connection->prepare("UPDATE volontari
+                                                                SET id_liberatoria = ?
+                                                                WHERE id = ?");
+                                $stmt->bind_param("ii", $module_id, $volunteerId);
+                                $stmt->execute();
+                                $result = $stmt->get_result();
 
                                 if ($result) {
                                     $_SESSION["file_uploaded"] = true;
@@ -85,9 +91,11 @@
                 if(move_uploaded_file($fileTmpName, $newFilePath)) {
                     $uploadedFileName = "files/" . $fileName;
 
-                    $query = "INSERT INTO $table($table, data)
-                                    VALUES('$uploadedFileName', '$date');";
-                    $result = dbQuery($connection, $query);
+                    $stmt = $connection->prepare("INSERT INTO $table($table, data)
+                                                    VALUES(?, ?)");
+                    $stmt->bind_param("ss", $uploadedFileName, $date);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
 
                     if ($result) {
                         $_SESSION["file_uploaded"] = true;
@@ -112,8 +120,10 @@
                 if(move_uploaded_file($fileTmpName, $newFilePath)) {
                     $uploadedFileName = "medical_module/" . $fileName;
 
-                    $query = "UPDATE assistiti SET anamnesi = '$uploadedFileName' WHERE id = $assistedId";
-                    $result = dbQuery($connection, $query);
+                    $stmt = $connection->prepare("UPDATE assistiti SET anamnesi = ? WHERE id = ?");
+                    $stmt->bind_param("si", $uploadedFileName, $assistedId);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
 
                     if ($result) {
                         $_SESSION["file_uploaded"] = true;
@@ -131,31 +141,4 @@
             header("Location: ../index.php");
     } else 
         header("Location: ../index.php");
-
-
-    // menu di navigazione
-    function nav_menu() {
-        echo "<main>
-                <section class='header'>
-                    <nav>
-                        <a href='../index.php'>
-                            <img 
-                                src='../image/logos/logo.png'
-                                class='logo'
-                                id='logoImg'
-                                alt='logo associazione'
-                            />
-                        </a>
-                        <div class='nav_links' id='navLinks'>
-                            <ul>
-                                <li><a href='../newsletter/newsletter.php'  class='btn'>Newsletter   </a></li>
-                                <li><a href='../bacheca/bacheca.php'        class='btn'>Bacheca       </a></li>
-                                <li><a href='https://stripe.com/it'         class='btn' target='blank'>Donazioni</a></li>
-                                <li><a href='../private/area_personale.php' class='btn'>Area Personale</a></li>
-                            </ul>
-                        </div>
-                    </nav>            
-                </section>
-            </main>";
-    }
 ?>

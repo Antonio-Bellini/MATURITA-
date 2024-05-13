@@ -19,7 +19,7 @@
                 if (isset($_POST["username"]) && isset($_POST["password"])) {
                     // sanifico i dati in input del form
                     $username = mysqli_real_escape_string($connection, $_POST["username"]);
-                    $password = $_POST["password"];
+                    $password = mysqli_real_escape_string($connection, $_POST["password"]);
 
                     $stmt = $connection->prepare("SELECT id, password FROM utenti WHERE username = ?");
                     $stmt->bind_param("s", $username);
@@ -60,30 +60,4 @@
             header("Location: ../index.php");
     } else 
         header("Location: ../index.php");
-
-    // funzione per mostrare il menu
-    function nav_menu() {
-        echo "<main>
-                <section class='header'>
-                    <nav>
-                        <a href='../index.php'>
-                            <img 
-                                src='../image/logos/logo.png'
-                                class='logo'
-                                id='logoImg'
-                                alt='logo associazione'
-                            />
-                        </a>
-                        <div class='nav_links' id='navLinks'>
-                            <ul>
-                                <li><a href='../newsletter/newsletter.php'  class='btn'>Newsletter   </a></li>
-                                <li><a href='../bacheca/bacheca.php'        class='btn'>Bacheca       </a></li>
-                                <li><a href='https://stripe.com/it'         class='btn' target='blank'>Donazioni</a></li>
-                                <li><a href='area_personale.php'            class='btn'>Area Personale</a></li>
-                            </ul>
-                        </div>
-                    </nav>            
-                </section>
-            </main>";
-    }
 ?>
