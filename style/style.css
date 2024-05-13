@@ -603,7 +603,7 @@ label {
   background-color: #45a049;
 }
 
-/* footer di tutte le pagine */
+/* footer di tutte le pagine
 footer {
   width: 100%;
   background-color: #5e5e5e;
@@ -612,7 +612,6 @@ footer {
   text-align: center;
 }
 .footer__title {
-  font-size: 35px;
 }
 .footer__hr {
   border: 2px solid #fff;
@@ -644,7 +643,103 @@ footer {
   flex-direction: row; 
   justify-content: space-between;
   margin-top: 1px;
+} */
+
+/* Stile base per il footer */
+footer {
+  width: 100%;
+  background-color: #5e5e5e;
+  color: #fff;
+  padding: 30px 0;
+  text-align: center;
 }
+
+.footer__title {
+  font-size: 35px;
+  margin-bottom: 20px;
+}
+
+  .footer__hr {
+      border: 2px solid #fff;
+  margin: 0 auto;
+  width: 55%;
+  border-radius: 5px;
+  }
+
+  .footer__content {
+      /* border: 1px solid red; */
+      flex-direction: row;
+      display: flex;
+      justify-content: space-evenly;
+      align-items: flex-start;
+  }
+
+  .footer__item1 {
+    /* border: 1px solid red; */
+      width: calc(50% - 20px);
+  }
+
+  .footer__item2 {
+    /* border: 1px solid red; */
+    width: calc(10% - 20px);
+    margin: 0 auto;
+    padding: top 0px;
+    text-align: left; 
+    font-size: 18px; 
+    line-height: 35px; 
+}
+
+  .footer__item3 {
+    /* border: 1px solid red; */
+    width: calc(25% - 20px);
+    margin: 0 auto;
+    padding: top 0px;
+    text-align: left; 
+    font-size: 18px; 
+    line-height: 24px; 
+  }
+
+  .footer__item4 {
+    /* border: 1px solid red; */
+      width: calc(15% - 20px);
+      margin-right: 10px;
+  }
+
+  .footer__item1 iframe {
+      width: 85%;
+      border-radius: 10px;
+      border: none;
+  }
+
+  .footer__contact-info {
+      text-align: left;
+  }
+
+  .social_buttons {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+  }
+
+  .socialContainer {
+      margin: 0 10px;
+  }
+
+/* Stile per i link */
+.footer__link {
+  color: white; /* Imposta il colore del testo a bianco */
+  text-decoration: none;
+}
+
+/* Stile per i link visitati */
+.footer__link:visited {
+  color: white; /* Imposta il colore del testo dei link visitati a bianco */
+}
+
+
+  .footer__link:hover {
+      text-decoration: underline;
+  }
 
 /* contenitore dei social nel footer */
 .socialContainer {
