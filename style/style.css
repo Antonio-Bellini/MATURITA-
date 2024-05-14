@@ -145,6 +145,44 @@ nav img {
   font-weight: bold;
 }
 
+/* stile della pagina about */
+.about__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.about__title {
+  font-size: 46px;
+  color: #E83C2F;
+  margin-bottom: 20px;
+}
+.about__container_sub {
+  max-width: 100%;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 20px;
+}
+.about__container_sub__other {
+  width: calc(50% - 20px);
+  padding: 35px;
+  margin-bottom: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+.highlight {
+  color: #E83C2F;
+  font-weight: bold;
+}
+
 /* Stile dei form */
 #form {
   background-color: #f9f9f9;

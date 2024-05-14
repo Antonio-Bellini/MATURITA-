@@ -64,22 +64,22 @@ $(document).ready(function () {
         }
     });
 
-    // controllo sulla disponibilitá dell'username
+    // controlli vari in fase di registrazione
     if (window.location.href.includes("register") > -1) {
+        //controllo sulla disponibilitá dell'username
         $('#username').on("input", function() {
             let username = $(this).val();
             checkInputUsername(username);
         });
 
+        // controllo di conferma password
         $('#confirm_password').on("input", function() {
             let password = $("#password").val();
             let other_password = $(this).val();
             confirm_password(password, other_password);
         });
-    }
-    
-    // vieto l'invio del form nel caso in cui l'username sia occupato
-    if (window.location.href.includes("register") > -1) {
+
+        // vieto l'invio del form nel caso in cui l'username sia occupato
         $('#form_register__user').submit(function (event) {
             if ($("#usernameError").text().includes("Username non disponibile")) {
                 event.preventDefault();
