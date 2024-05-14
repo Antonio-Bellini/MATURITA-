@@ -887,15 +887,22 @@ textarea {
 
 /* Stile per la pagina offer */
 .scrollable-images {
-  width: 150%;
+  width: 100%;
   overflow-x: auto;
   white-space: nowrap;
+  text-align: center;
 }
 
 .scrollable-images img {
-  width: auto;
-  height: 850px; /* Altezza desiderata delle immagini */
-  margin-right: 25px; /* Spazio tra le immagini */
+  width: 500px; /* Imposta una larghezza fissa più grande per tutte le immagini */
+  height: auto; /* Mantiene il rapporto di aspetto originale */
+  display: inline-block;
+  margin: 5px; /* Aggiungi un po' di margine tra le immagini */
+}
+
+.image-container {
+  display: inline-block;
+  vertical-align: top; /* Allinea le immagini in alto */
 }
 
 .offer-h1 {
@@ -904,7 +911,6 @@ textarea {
 
 .offer-h2 {
   text-align: center;
-  margin-top: 20px; /* Modifica questo valore per regolare lo spazio superiore */
+  margin-top: 40px; /* Modifica questo valore per regolare lo spazio superiore */
   margin-bottom: 20px; /* Modifica questo valore per regolare lo spazio inferiore */
 }
-
