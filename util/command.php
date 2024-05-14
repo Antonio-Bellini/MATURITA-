@@ -110,7 +110,6 @@
             </main>";
     }
 
-
     // funzione per eseguire una query sul db
     function dbQuery($connection, $query) {
         return $connection -> query($query);
