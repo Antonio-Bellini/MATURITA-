@@ -48,7 +48,7 @@
     } else 
         header("Location: ../index.php");
 
-    show_footer();
+    show_footer2();
 ?>
 </body>
 </html>

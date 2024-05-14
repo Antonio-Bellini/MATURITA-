@@ -35,13 +35,12 @@
                 SIAMO GENITORI CHE CREDONO NEL MUTUO SOCCORSO PERCHÉ <br>LO SCAMBIO DI EMOZIONI ED
                 ESPERIENZE EVITA LA CHIUSURA <br> NEL DOLORE E MIGLIORA LA QUALITÀ DI VITA <br> FAMILIARE
                 <br><br>
-                <button id="btn_volunteer"><a href="volunteer_request.php">DIVENTA UN VOLONTARIO</a></button>
+                <button id="btn_volunteer_donation"><a href="volunteer_request.php">DIVENTA UN VOLONTARIO</a></button>
                 <br><br>
-                <button id="btn_volunteer" onclick="window.open('https://stripe.com/it', '_blank')">DONA ORA</button>
+                <button id="btn_volunteer_donation" onclick="window.open('https://buy.stripe.com/7sI4gE1ACbz61c46oo', '_blank')">DONA ORA</button>
             </p>
         </div>
         <div class="body__main_gallery">
-            <img class="photo" src="image/content/foto1.jpg" alt="immagine 1 della premiazione">
             <img class="photo" src="image/content/foto2.jpg" alt="immagine 2 della premiazione">
             <img class="photo" src="image/content/foto3.jpg" alt="immagine 3 della premiazione">
         </div>
