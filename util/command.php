@@ -127,8 +127,8 @@
                                 <li><a href='../image/gallery.php'                  class='btn' id= 'gallery'>Galleria            </a></li>
                                 <li><a href='../newsletter/newsletter.php'          class='btn' id= 'newsletter'>Newsletter          </a></li>
                                 <li><a href='../bacheca/bacheca.php'                class='btn' id= 'bacheca'>Bacheca             </a></li>
-                                <li><a href='../private/area_personale.php'         class='btn' id= 'personal'>Area Personale      </a></li>
-                                ";if (isset($_SESSION["is_logged"]) && $_SESSION["is_logged"]) 
+                                <li><a href='../private/area_personale.php'         class='btn' id= 'personal'>Area Personale      </a></li>";
+                                if (isset($_SESSION["is_logged"]) && $_SESSION["is_logged"]) 
                                     echo "<li><a href='../private/crud.php?operation=LOGOUT'  class='btn'>Logout</a></li>";
                                 
                                 echo "
@@ -157,8 +157,8 @@
                                 <li><a href='image/gallery.php'                  class='btn' id= 'gallery'>Galleria            </a></li>
                                 <li><a href='newsletter/newsletter.php'          class='btn' id= 'newsletter'>Newsletter          </a></li>
                                 <li><a href='bacheca/bacheca.php'                class='btn' id= 'bacheca'>Bacheca             </a></li>
-                                <li><a href='private/area_personale.php'         class='btn' id= 'personal'>Area Personale      </a></li>
-                                ";if (isset($_SESSION["is_logged"]) && $_SESSION["is_logged"]) 
+                                <li><a href='private/area_personale.php'         class='btn' id= 'personal'>Area Personale      </a></li>";
+                                if (isset($_SESSION["is_logged"]) && $_SESSION["is_logged"]) 
                                     echo "<li><a href='../private/crud.php?operation=LOGOUT'  class='btn'>Logout</a></li>";
                                 
                                 echo "

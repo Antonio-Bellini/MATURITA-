@@ -30,13 +30,61 @@
         
 ?>
 <body>
-    <h2>Work in progress...</h2>
-    <br><br><br>
-    <br><br><br>
-    <br><br><br>
-    <br><br><br>
+    <!-- Sezione delle immagini dei ragazzi -->
+    <section class="association__news">
+        <h2 class="news__title">Immagini dei ragazzi</h2>
+        <div id="news_container" class="news__blocks">
+            <?php
+                $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
+                $query = "SELECT id, path FROM images";
+                $result = dbQuery($connection, $query);
+
+                if (!$result->num_rows>0) 
+                    echo "<h3>Nessuna immagine presente</h3>";
+
+                if ($result) {
+                    while ($row = ($result->fetch_assoc())) {
+                        echo "
+                            <div class='news__block'>
+                                <img src='" . $row["path"] . "' alt='Immagine'>";
+                                if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"])
+                                    echo "<button class='del_content_button' data-operation='delete' data-profile='home_images' data-user=" . $row["id"] . ">Elimina contenuto</button>";
+                        echo "</div>";
+                    }
+                } else 
+                    echo ERROR_DB;
+            ?>
+        </div>
+
+        <?php
+            if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"])
+                echo "<button id='add_content_button'>Aggiungi contenuti</button>";
+        ?>
+    </section>
+
+    <!-- modale per inserire una nuova pagina -->
+    <div id="newNews_modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <br>
+
+            <h2>Inserimento di una nuova immagine</h2>
+            <br>
+            
+            <form action="../private/update_home.php" enctype="multipart/form-data" method="POST">
+                <input type="hidden" name="type" value="home_images">
+
+                <label for="image">Seleziona la foto</label><br>
+                <input type="file" id="image" class="modal__input" name="ragazzi__image" accept="image/*" required>
+                
+
+                <input type="submit" id="saveButton" class="btn" value="SALVA">
+            </form>
+        </div>
+    </div>
+
     <?php 
-    show_footer2();
+        show_footer2();
     ?>
 </body>
 </html>

@@ -87,7 +87,7 @@
                     $stmt->execute();
                     $result = $stmt->get_result();
 
-                    if ($result) {
+                    if (!$stmt->error) {
                         $id_image = $connection->insert_id;
 
                         $stmt = $connection->prepare("INSERT INTO news(id_image, titolo, data, testo) 
@@ -96,13 +96,40 @@
                         $stmt->execute();
                         $result = $stmt->get_result();
 
-                        if ($result) {
+                        if (!$stmt->error) {
                             $_SESSION["user_modified"] = true;
                             header("Location: ../index.php");
                         } else 
                             echo ERROR_DB;
                     } else
                         echo ERROR_DB;
+
+                    $stmt->close();
+                } else {
+                    echo ERROR_GEN;
+                }
+                break;
+
+            case "home_images":
+                $uploadDirectory = '../image/ragazzi/'; 
+                $fileName = $_FILES['ragazzi__image']['name'];
+                $fileTmpName = $_FILES['ragazzi__image']['tmp_name'];
+                $newFilePath = $uploadDirectory . $fileName;
+
+                if (move_uploaded_file($fileTmpName, $newFilePath)) {
+                    $uploadedFileName = "ragazzi/" . $fileName;
+
+                    $stmt = $connection->prepare("INSERT INTO images(path) VALUES(?)");
+                    $stmt->bind_param("s", $uploadedFileName);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+
+                    if (!$stmt->error) {
+                        $_SESSION["user_modified"] = true;
+                        header("Location: ../image/gallery.php");
+                    } else {
+                        echo ERROR_DB;
+                    }
 
                     $stmt->close();
                 } else {
