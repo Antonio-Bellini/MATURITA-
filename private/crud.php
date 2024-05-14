@@ -301,6 +301,35 @@
                         } else 
                             echo ERROR_DB;
                         break;
+
+                    case "home_images":
+                        $file_name = null;
+                        $query = "SELECT id, path FROM images WHERE id = $userId";
+                        $result = dbQuery($connection, $query);
+
+                        if ($result) {
+                            while ($row = ($result->fetch_assoc())) {
+                                $file_name = "../image/" . $row["path"];
+                                $image_id = $row["id"];
+                            }
+
+                            if (file_exists($file_name)) {
+                                if (unlink($file_name)) {
+                                    $query = "DELETE FROM images WHERE id = $userId";
+                                    $result = dbQuery($connection, $query);
+
+                                    if ($result) {
+                                        $_SESSION["file_deleted"] = true;
+                                        header("Location: ../index.php");
+                                    } else 
+                                        echo ERROR_DB;
+                                } else 
+                                    echo ERROR_GEN;
+                            } else 
+                                echo ERROR_GEN;
+                        } else 
+                            echo ERROR_DB;
+                        break;
                 }
             }
             break;
