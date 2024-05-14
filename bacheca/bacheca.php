@@ -76,7 +76,7 @@
             $stmt->execute();
             $result = $stmt->get_result();
 
-            if ($result) {
+            if (!$stmt->error) {
                 echo "  <section class='bacheca_newsletter__content'>
                             <div class='bacheca_newsletter__list'>";
                 if ($result->num_rows === 0)
