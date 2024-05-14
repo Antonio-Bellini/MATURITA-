@@ -29,6 +29,42 @@
 ?>
 
 <body>
-    <h2>Work in progress...</h2>
+    <div class="about__container">
+        <h1 class="about__title">Perché ci siamo?</h1>
+
+        <div class="about__container_sub">
+            <div class="about__container_sub__other">
+                <h2>
+                    Perché crediamo <span class="highlight">fermamente</span> che anche nelle sfide più difficili, 
+                    esista sempre una luce da seguire.
+                </h2>
+            </div>
+             
+            <div class="about__container_sub__other">
+                <h2>
+                    Perché ci impegniamo a essere un <span class="highlight">porto sicuro</span> per chi ha bisogno 
+                    di condividere le proprie emozioni, senza giudizi.
+                </h2>
+            </div>
+            
+            <div class="about__container_sub__other">
+                <h2>
+                    Perché vogliamo <span class="highlight">ispirare</span> speranza e coraggio, 
+                    dimostrando che nessuno è mai solo nella propria battaglia.
+                </h2>
+            </div>
+            
+            <div class="about__container_sub__other">
+                <h2>
+                    Perché crediamo che <span class="highlight">ogni passo avanti</span>, 
+                    anche il più piccolo, meriti di essere celebrato con gioia e gratitudine.
+                </h2>
+            </div>
+        </div>
+    </div>
+
+    <?php
+        show_footer2();
+    ?>
 </body>
 </html>
