@@ -22,6 +22,9 @@
             <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css'>
             <script src='https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js'></script>
             <title>Associazione Zero Tre</title>
+            <style>
+
+            </style>
         </head>";
 
         importActualStyle();
@@ -46,7 +49,9 @@
                 // Mostrare le immagini
                 foreach ($files as $file) {
                     if (is_file($file)) {
-                        echo "<a href='$file' data-lightbox='image-gallery'><img src='$file' alt='offer_imgs'></a>";
+                        echo "<div class='image-container'>
+                                <a href='$file' data-lightbox='image-gallery'><img src='$file' alt='offer_imgs'></a>
+                            </div>";
                     }
                 }
             ?>
