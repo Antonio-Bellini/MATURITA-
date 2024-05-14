@@ -887,15 +887,15 @@ textarea {
 
 /* Stile per la pagina offer */
 .scrollable-images {
-  width: 100%;
+  width: 150%;
   overflow-x: auto;
   white-space: nowrap;
 }
 
 .scrollable-images img {
   width: auto;
-  height: 500px; /* Altezza desiderata delle immagini */
-  margin-right: 10px; /* Spazio tra le immagini */
+  height: 850px; /* Altezza desiderata delle immagini */
+  margin-right: 25px; /* Spazio tra le immagini */
 }
 
 .offer-h1 {
