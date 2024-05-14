@@ -177,7 +177,7 @@
 
             }
 
-            show_footer();
+            show_footer2();
         } else
             header("Location: ../index.php");
     } else

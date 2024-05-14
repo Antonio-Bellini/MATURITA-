@@ -92,7 +92,7 @@
             break;
     }
 
-    show_footer();
+    show_footer2();
 
     // funzione per aggiungere file in bacheca o in newsletter
     function addToTable($table) {

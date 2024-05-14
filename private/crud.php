@@ -319,7 +319,7 @@
 
     }
 
-    show_footer();
+    show_footer2();
 
     // funzione per mostrare il form di modifica
     function modifyForm($connection, $type, $userId) {

@@ -100,7 +100,7 @@
                 echo ERROR_DB;
         }
         
-        show_footer();
+        show_footer2();
     } else 
         header("Location: ../private/page_login.php");
 ?>

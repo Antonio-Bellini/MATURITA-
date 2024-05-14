@@ -265,16 +265,21 @@ $(document).ready(function () {
     }
 
     // bottoni dell'area personale dell'admin
-    if (window.location.href.indexOf("area_personale.php") > -1) {
+    if (window.location.href.indexOf("area_personale.php") > -1) {    
+        $("#personal").addClass("btn_sel");
         $('#admin_btn').on('click', '.btn', handlePersonalAreaBtnClick);
         function handlePersonalAreaBtnClick() {
             let operation = $(this).data('operation');
             personalAreaAction(operation);
         }
     }
+    if (window.location.href.includes("admin_operation.php")) {
+        $("#personal").addClass("btn_sel");
+    }
 
     // bottoni per aggiungere o eliminare contenuti da bacheca o newsletter
     if (window.location.href.includes("bacheca.php") || window.location.href.includes("newsletter.php")) {
+
         let is_deletable = $("#bacheca_newsletter__title").length > 0;
         $('#delBachecaBtn, #delNewsletterBtn').toggleClass("btn_dis", is_deletable);
 
@@ -293,12 +298,37 @@ $(document).ready(function () {
         });
     }    
 
+    if (window.location.href.includes("bacheca.php")) {
+        $("#bacheca").addClass("btn_sel");
+    }
+    if (window.location.href.includes("newsletter.php")) {
+        $("#newsletter").addClass("btn_sel");
+    }
+    if (window.location.href.includes("crud_bacheca_newsletter.php")) {
+        $("#newsletter").removeClass("btn_sel");
+        $("#bacheca").removeClass("btn_sel");
+
+    }
+
     // controllo per limitare a max 255 caratteri l'input del numero di telefono
     $('#new_tf, #new_tm, #phone_f, #phone_m').on("input", function() {
         let input = $(this).val();
         if (input > 15)
             $(this).val(input.slice(0, 255));
     });
+
+
+
+    if (window.location.href.includes("about.php")) {
+        $("#about").addClass("btn_sel");
+    }
+    if (window.location.href.includes("offer.php")) {
+        $("#offer").addClass("btn_sel");
+    }
+    if (window.location.href.includes("gallery.php")) {
+        $("#gallery").addClass("btn_sel");
+    }
+    
 });
 
 // -------------------------- FUNZIONI AJAX ----------------------------- \\

@@ -460,7 +460,7 @@ tr:nth-child(even) {
   width: 100vw;
   height: auto;
 }
-#btn_volunteer {
+#btn_volunteer_donation {
   background-color: #E83C2F;
   color: white;
   padding: 14px 28px;
@@ -470,12 +470,12 @@ tr:nth-child(even) {
   transition: background-color 0.3s ease;
   font-size: 18px;
 }
-#btn_volunteer a {
+#btn_volunteer_donation a {
   text-decoration: none;
   color: white;
 }
-#btn_volunteer:hover {
-  background-color: #45a049;
+#btn_volunteer_donation:hover {
+  background-color: #de6b63;
 }
 
 /* info aggiuntive dell'associazione (sotto galleria nella home) */
@@ -714,39 +714,39 @@ footer {
 
   .footer__item1 {
     /* border: 1px solid red; */
-      width: calc(50% - 20px);
+    width: calc(50% - 20px);
+  }
+
+  .footer__item1 iframe {
+    width: 85%;
+    border-radius: 10px;
+    border: none;
   }
 
   .footer__item2 {
     /* border: 1px solid red; */
-    width: calc(10% - 20px);
+    width: calc(15% - 20px);
     margin: 0 auto;
     padding: top 0px;
     text-align: left; 
     font-size: 18px; 
-    line-height: 35px; 
+    line-height: 29px; 
 }
 
   .footer__item3 {
     /* border: 1px solid red; */
-    width: calc(25% - 20px);
+    width: calc(22% - 20px);
     margin: 0 auto;
     padding: top 0px;
     text-align: left; 
     font-size: 18px; 
-    line-height: 24px; 
+    line-height: 33px; 
   }
 
   .footer__item4 {
-    /* border: 1px solid red; */
-      width: calc(15% - 20px);
+      /* border: 1px solid red;  */
+      width: calc(13% - 20px);
       margin-right: 10px;
-  }
-
-  .footer__item1 iframe {
-      width: 85%;
-      border-radius: 10px;
-      border: none;
   }
 
   .footer__contact-info {
@@ -806,12 +806,12 @@ footer {
   padding: 10px;
 }
 /* instagram*/
-.containerOne:hover {
+.containerOne {
   background-color: #d62976;
   transition-duration: .3s;
 }
 /* facebook*/
-.containerTwo:hover {
+.containerTwo{
   background-color: #0866FF;
   transition-duration: .3s;
 }
@@ -884,3 +884,27 @@ textarea {
   font-weight: bold;
   z-index: 1000;
 }
+
+/* Stile per la pagina offer */
+.scrollable-images {
+  width: 100%;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.scrollable-images img {
+  width: auto;
+  height: 500px; /* Altezza desiderata delle immagini */
+  margin-right: 10px; /* Spazio tra le immagini */
+}
+
+.offer-h1 {
+  text-align: center;
+}
+
+.offer-h2 {
+  text-align: center;
+  margin-top: 20px; /* Modifica questo valore per regolare lo spazio superiore */
+  margin-bottom: 20px; /* Modifica questo valore per regolare lo spazio inferiore */
+}
+
