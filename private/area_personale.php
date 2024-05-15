@@ -133,6 +133,7 @@
                 }
             break;
         }
+        
         show_footer2();
     } else
         header("Location: page_login.php");

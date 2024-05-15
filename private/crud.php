@@ -20,8 +20,14 @@
             $operation = $_GET["operation"];
     }
 
+    // caso eliminazione da bacheca o newsletter
+    $operation = isset($_POST["operation"]) ? $_POST["operation"] : $operation;
+
     $userId = isset($_SESSION["user"]) ? $_SESSION["user"] : null;
     $profile = isset($_SESSION["profile"]) ? $_SESSION["profile"] : null;
+
+    // caso eliminazione da bacheca o newsletter
+    $profile = isset($_POST["profile"]) ? $_POST["profile"] : $profile;
 
     if (!isset($operation))
         header("Location: ../index.php");
@@ -330,6 +336,32 @@
                         } else 
                             echo ERROR_DB;
                         break;
+
+                    case "bacheca_newsletter":
+                        $table = $_POST["table_sel"];
+                        $file_id = $_POST["file_id"];
+                        $file_name = null;
+
+                        $query = "SELECT $table FROM $table WHERE id = '$file_id'";
+                        $result = dbQuery($connection, $query);
+
+                        if ($result) {
+                            while ($row = ($result->fetch_assoc()))
+                                $file_name = $row[$table];
+
+                            $query = "DELETE FROM $table WHERE id = '$file_id'";
+                            $result = dbQuery($connection, $query);
+
+                            if ($result) {
+                                if (unlink("../$table/$file_name")) {
+                                    $_SESSION["file_deleted"] = true;
+                                    header("Location: ../{$table}/{$table}.php");
+                                } else 
+                                    echo ERROR_DB; 
+                            } else 
+                                echo ERROR_DB;
+                        }
+                        break;
                 }
             }
             break;
@@ -355,8 +387,8 @@
         switch ($type) {
             case "user":
                 $query = "SELECT nome, cognome, password, email, telefono_fisso, telefono_mobile
-                        FROM utenti 
-                        WHERE id = '$userId'";
+                            FROM utenti 
+                            WHERE id = '$userId'";
                 $result = dbQuery($connection, $query);
 
                 if ($result) {
@@ -369,10 +401,12 @@
                         $_SESSION["pw_user_sel"] = $userId;
                     }
 
-                    echo "<br><section id='form'>
-                            <h2>Modifica anagrafica utente</h2>
-                            <h3>Cosa vuoi modificare?<br><br></h3>
-                            <h3>Nuovi dati</h3><br>
+                    echo "<br>
+                            <section id='form'>
+                                <h2>Modifica anagrafica utente</h2>
+                                <h3>Cosa vuoi modificare?<br><br></h3>
+                                <h3>Nuovi dati</h3><br>
+
                                 <form action='update.php' method='POST' id='form_update__user'>
                                     <input type='hidden' name='type' value='user'>
                                     <input type='hidden' name='user_id' value='$userId'>
@@ -418,7 +452,7 @@
 
                                     <input type='submit' value='AGGIORNA DATI'>
                                 </form>
-                        </section>";
+                            </section>";
                 }  else 
                     echo ERROR_DB;
                 break;
@@ -513,40 +547,42 @@
                         $tm = $row["telefono_mobile"];
                     }
 
-                    echo "<br><section id='form'>
+                    echo "<br>
+                            <section id='form'>
                                 <h2>Modifica anagrafica volontario</h2>
                                 <h3>Cosa vuoi modificare?<br><br></h3>
                                 <h3>Nuovi dati</h3><br>
-                                    <form action='update.php' method='POST' id='form_update__volunteer'>
-                                        <input type='hidden' name='type' value='volunteer'>
-                                        <input type='hidden' name='user_id' value='$userId'>
 
-                                        <div class='div__label'>
-                                            <label for='new_name'>Nome</label>
-                                            <label for='new_surname'>Cognome</label>
-                                        </div>
-                                        <div class='div__input'>
-                                            <input type='text' name='new_name' maxlength='255' placeholder='" . htmlspecialchars($name) . "'>
-                                            &nbsp;&nbsp;
-                                            <input type='text' name='new_surname' maxlength='255' placeholder='" . htmlspecialchars($surname) . "'>
-                                        </div>
-                                        
-                                        <label for='new_email'>Email</label>
-                                        <input type='email' name='new_email' maxlength='255' placeholder='" . htmlspecialchars($email) . "'>
+                                <form action='update.php' method='POST' id='form_update__volunteer'>
+                                    <input type='hidden' name='type' value='volunteer'>
+                                    <input type='hidden' name='user_id' value='$userId'>
 
-                                        <div class='div__label'>
-                                            <label for='new_tf'>Telefono fisso</label>
-                                            <label for='new_tm'>Telefono mobile</label>
-                                        </div>
-                                        <div class='div__input'>
-                                            <input type='number' id='new_tf' name='new_tf' placeholder='" . $tf . "'>
-                                            &nbsp;&nbsp;
-                                            <input type='number' id='new_tm' name='new_tm' placeholder='" . $tm . "'>
-                                        </div>
+                                    <div class='div__label'>
+                                        <label for='new_name'>Nome</label>
+                                        <label for='new_surname'>Cognome</label>
+                                    </div>
+                                    <div class='div__input'>
+                                        <input type='text' name='new_name' maxlength='255' placeholder='" . htmlspecialchars($name) . "'>
+                                        &nbsp;&nbsp;
+                                        <input type='text' name='new_surname' maxlength='255' placeholder='" . htmlspecialchars($surname) . "'>
+                                    </div>
+                                    
+                                    <label for='new_email'>Email</label>
+                                    <input type='email' name='new_email' maxlength='255' placeholder='" . htmlspecialchars($email) . "'>
 
-                                        <input type='submit' value='AGGIORNA DATI'>
-                                    </form>
-                                </section>";
+                                    <div class='div__label'>
+                                        <label for='new_tf'>Telefono fisso</label>
+                                        <label for='new_tm'>Telefono mobile</label>
+                                    </div>
+                                    <div class='div__input'>
+                                        <input type='number' id='new_tf' name='new_tf' placeholder='" . $tf . "'>
+                                        &nbsp;&nbsp;
+                                        <input type='number' id='new_tm' name='new_tm' placeholder='" . $tm . "'>
+                                    </div>
+
+                                    <input type='submit' value='AGGIORNA DATI'>
+                                </form>
+                            </section>";
                 } else 
                     echo ERROR_DB;
                 break;

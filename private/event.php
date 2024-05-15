@@ -35,7 +35,7 @@
                                     $stmt->execute();
                                     $result = $stmt->get_result();
                 
-                                    if ($result) {
+                                    if (!$stmt->error) {
                                         $_SESSION["added_to_event"] = true;
                                         header("Location: area_personale.php");
                                     } else {
@@ -82,7 +82,7 @@
                                             $stmt->execute();
                                             $result = $stmt->get_result();
                                             
-                                            if ($result) {
+                                            if (!$stmt->error) {
                                                 $_SESSION["user_modified"] = true;
                                                 header("Location: area_personale.php");
                                             } else {
@@ -110,7 +110,7 @@
                                 $stmt->execute();
                                 $result = $stmt->get_result();
 
-                                if ($result) {
+                                if (!$stmt->error) {
                                     $_SESSION["user_modified"] = true;
                                     header("Location: area_personale.php");
                                 } else {
@@ -137,7 +137,7 @@
                                     $stmt->execute();
                                     $result = $stmt->get_result();
                 
-                                    if ($result) {
+                                    if (!$stmt->error) {
                                         $_SESSION["added_to_event"] = true;
                                         header("Location: area_personale.php");
                                     } else {
@@ -184,7 +184,7 @@
                                             $stmt->execute();
                                             $result = $stmt->get_result();
                                             
-                                            if ($result) {
+                                            if (!$stmt->error) {
                                                 $_SESSION["user_modified"] = true;
                                                 header("Location: area_personale.php");
                                             } else {
@@ -212,7 +212,7 @@
                                 $stmt->execute();
                                 $result = $stmt->get_result();
 
-                                if ($result) {
+                                if (!$stmt->error) {
                                     $_SESSION["user_modified"] = true;
                                     header("Location: area_personale.php");
                                 } else {
@@ -236,7 +236,7 @@
                         $stmt->execute();
                         $result = $stmt->get_result();
 
-                        if ($result) {
+                        if (!$stmt->error) {
                             $_SESSION["event_created"] = true;
                             header("Location: area_personale.php");
                         } else {
@@ -258,7 +258,7 @@
                                 $stmt->execute();
                                 $result = $stmt->get_result();
 
-                                if ($result) {
+                                if (!$stmt->error) {
                                     $_SESSION["event_created"] = true;
                                     header("Location: area_personale.php");
                                 } else {

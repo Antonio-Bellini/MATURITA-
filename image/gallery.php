@@ -31,25 +31,31 @@
 ?>
 <body>
     <!-- Sezione delle immagini dei ragazzi -->
-    <section class="association__news">
-        <h2 class="news__title">Immagini dei ragazzi</h2>
-        <div id="news_container" class="news__blocks">
+    <section class="association__gallery">
+        <h2 class="gallery__title">Immagini dei ragazzi</h2>
+        
+        <div id="gallery_container" class="gallery__blocks">
             <?php
                 $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
                 $query = "SELECT id, path FROM images";
                 $result = dbQuery($connection, $query);
 
-                if (!$result->num_rows>0) 
+                if (!$result->num_rows > 0) 
                     echo "<h3>Nessuna immagine presente</h3>";
 
                 if ($result) {
-                    while ($row = ($result->fetch_assoc())) {
-                        echo "
-                            <div class='news__block'>
-                                <img src='" . $row["path"] . "' alt='Immagine'>";
-                                if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"])
-                                    echo "<button class='del_content_button' data-operation='delete' data-profile='home_images' data-user=" . $row["id"] . ">Elimina contenuto</button>";
-                        echo "</div>";
+                    while ($row = $result->fetch_assoc()) {
+                        if (strpos($row["path"], "ragazzi") === 0) {
+                            echo "
+                                <div class='gallery__block'>
+                                    <img src='" . $row["path"] . "' alt='Immagine'>
+                                    <div class='overlay'>
+                                        <button><a href='" . $row["path"] . "' target='_blank'>Apri in nuova scheda</a></button>
+                                    </div>";
+                                    if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"])
+                                        echo "<button class='delete_content_button' data-operation='delete' data-user='" . $row["id"] . "' data-profile='home_images'>Elimina contenuto</button>";
+                            echo "</div>";
+                        }
                     }
                 } else 
                     echo ERROR_DB;
@@ -76,7 +82,11 @@
 
                 <label for="image">Seleziona la foto</label><br>
                 <input type="file" id="image" class="modal__input" name="ragazzi__image" accept="image/*" required>
-                
+
+                <label>Oppure<br><br></label>
+
+                <label for="video">Seleziona il video</label><br>
+                <!-- <input type="file" id="video" class="modal__input" name="ragazzi__image" accept="video/*" required> -->
 
                 <input type="submit" id="saveButton" class="btn" value="SALVA">
             </form>

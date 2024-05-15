@@ -34,7 +34,7 @@
                         $stmt->execute();
                         $result = $stmt->get_result();
 
-                        if ($result) {
+                        if (!$stmt->error) {
                             $module_id = $connection->insert_id;
 
                             if ($assistedId != null) {
@@ -45,7 +45,7 @@
                                 $stmt->execute();
                                 $result = $stmt->get_result();
 
-                                if ($result) {
+                                if (!$stmt->error) {
                                     $_SESSION["file_uploaded"] = true;
                                     header("Location: ../private/area_personale.php");
                                 } else {
@@ -60,7 +60,7 @@
                                 $stmt->execute();
                                 $result = $stmt->get_result();
 
-                                if ($result) {
+                                if (!$stmt->error) {
                                     $_SESSION["file_uploaded"] = true;
                                     header("Location: ../private/area_personale.php");
                                 } else {
@@ -97,7 +97,7 @@
                     $stmt->execute();
                     $result = $stmt->get_result();
 
-                    if ($result) {
+                    if (!$stmt->error) {
                         $_SESSION["file_uploaded"] = true;
                         header("Location: ../" . $table . "/" . $table . ".php");
                     } else {
@@ -125,7 +125,7 @@
                     $stmt->execute();
                     $result = $stmt->get_result();
 
-                    if ($result) {
+                    if (!$stmt->error) {
                         $_SESSION["file_uploaded"] = true;
                         header("Location: ../private/area_personale.php");
                     } else {

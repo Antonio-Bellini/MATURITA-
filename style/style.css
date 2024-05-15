@@ -151,7 +151,8 @@ nav img {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 40px;
+  margin-bottom: 50px;
 }
 .about__title {
   font-size: 46px;
@@ -416,6 +417,87 @@ tr:nth-child(even) {
   height: 100%;
 }
 
+/* pagina galleria foto dinamica */
+.association__gallery {
+  text-align: center;
+  padding: 20px;
+}
+.gallery__blocks {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+}
+.gallery__block {
+  position: relative;
+  width: 600px;
+  height: 400px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  border-radius: 15px;
+}
+.gallery__block img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  border-radius: 10px;
+}
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.overlay button {
+  background-color: #ffffff;
+  color: #333333;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+.overlay button a {
+  text-decoration: none;
+  color: #333333;
+}
+.overlay button:hover {
+  background-color: #de6b63;
+  transition: 0.3s ease;
+}
+.gallery__block:hover .overlay {
+  opacity: 1;
+}
+.delete_content_button {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #ff6b6b;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+.delete_content_button:hover {
+  background-color: #ff4d4d; 
+}
+
 /* sezione iniziale della home (galleria scorrevole) */
 .body__main {
   width: 100%;
@@ -556,30 +638,30 @@ tr:nth-child(even) {
 }
 #add_content_button,
 .del_content_button {
-    display: inline-block;
-    padding: 10px 20px;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    text-align: center;
-    text-decoration: none;
-    transition: background-color 0.3s;
-    font-size: 16px;
-    margin-bottom: 15px;
+  display: inline-block;
+  padding: 10px 20px;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 0.3s;
+  font-size: 16px;
+  margin-bottom: 15px;
 }
 #add_content_button:hover,
 .del_content_button:hover {
-    background-color: #333;
+  background-color: #333;
 }
 #add_content_button {
-    margin-top: 20px;
-    margin-right: 10px;
-    background-color: #007bff;
+  margin-top: 20px;
+  margin-right: 10px;
+  background-color: #007bff;
 }
 .del_content_button {
-    margin-top: 20px;
-    background-color: #E83C2F;
+  margin-top: 20px;
+  background-color: #E83C2F;
 }
 
 /* Stile per il modale */
@@ -697,87 +779,73 @@ footer {
   margin-bottom: 20px;
 }
 
-  .footer__hr {
-      border: 2px solid #fff;
+.footer__hr {
+  border: 2px solid #fff;
   margin: 0 auto;
   width: 55%;
   border-radius: 5px;
-  }
-
-  .footer__content {
-      /* border: 1px solid red; */
-      flex-direction: row;
-      display: flex;
-      justify-content: space-evenly;
-      align-items: flex-start;
-  }
-
-  .footer__item1 {
-    /* border: 1px solid red; */
-    width: calc(50% - 20px);
-  }
-
-  .footer__item1 iframe {
-    width: 85%;
-    border-radius: 10px;
-    border: none;
-  }
-
-  .footer__item2 {
-    /* border: 1px solid red; */
-    width: calc(15% - 20px);
-    margin: 0 auto;
-    padding: top 0px;
-    text-align: left; 
-    font-size: 18px; 
-    line-height: 29px; 
+}
+.footer__content {
+  flex-direction: row;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: flex-start;
+}
+.footer__item1 {
+  width: calc(50% - 20px);
+}
+.footer__item1 iframe {
+  width: 85%;
+  border-radius: 10px;
+  border: none;
+}
+.footer__item2 {
+  width: calc(15% - 20px);
+  margin: 0 auto;
+  padding: top 0px;
+  text-align: left; 
+  font-size: 18px; 
+  line-height: 29px; 
+}
+.footer__item3 {
+  width: calc(22% - 20px);
+  margin: 0 auto;
+  padding: top 0px;
+  text-align: left; 
+  font-size: 18px; 
+  line-height: 33px; 
+}
+.footer__item4 {
+  width: calc(13% - 20px);
+  margin-right: 10px;
 }
 
-  .footer__item3 {
-    /* border: 1px solid red; */
-    width: calc(22% - 20px);
-    margin: 0 auto;
-    padding: top 0px;
-    text-align: left; 
-    font-size: 18px; 
-    line-height: 33px; 
-  }
+.footer__contact-info {
+  text-align: left;
+}
 
-  .footer__item4 {
-      /* border: 1px solid red;  */
-      width: calc(13% - 20px);
-      margin-right: 10px;
-  }
-
-  .footer__contact-info {
-      text-align: left;
-  }
-
-  .social_buttons {
-      display: flex;
-      justify-content: center;
-      margin-top: 20px;
-  }
-
-  .socialContainer {
-      margin: 0 10px;
-  }
+.social_buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+.socialContainer {
+  margin: 0 10px;
+}
 
 /* Stile per i link */
 .footer__link {
-  color: white; /* Imposta il colore del testo a bianco */
+  color: white;
   text-decoration: none;
 }
 
 /* Stile per i link visitati */
 .footer__link:visited {
-  color: white; /* Imposta il colore del testo dei link visitati a bianco */
+  color: white;
 }
-
-
-  .footer__link:hover {
-      text-decoration: underline;
-  }
+.footer__link:hover {
+  text-decoration: underline;
+}
 
 /* contenitore dei social nel footer */
 .socialContainer {
@@ -892,25 +960,21 @@ textarea {
   white-space: nowrap;
   text-align: center;
 }
-
 .scrollable-images img {
-  width: 500px; /* Imposta una larghezza fissa più grande per tutte le immagini */
-  height: auto; /* Mantiene il rapporto di aspetto originale */
+  width: 500px;
+  height: auto;
   display: inline-block;
-  margin: 5px; /* Aggiungi un po' di margine tra le immagini */
+  margin: 5px;
 }
-
 .image-container {
   display: inline-block;
-  vertical-align: top; /* Allinea le immagini in alto */
+  vertical-align: top; 
 }
-
 .offer-h1 {
   text-align: center;
 }
-
 .offer-h2 {
   text-align: center;
-  margin-top: 40px; /* Modifica questo valore per regolare lo spazio superiore */
-  margin-bottom: 20px; /* Modifica questo valore per regolare lo spazio inferiore */
+  margin-top: 40px; 
+  margin-bottom: 20px;
 }

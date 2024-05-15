@@ -31,7 +31,7 @@
                         $_SESSION["user_unknown"] = true;
                         header("Location: page_login.php");
                     } else {
-                        if ($result) {
+                        if (!$stmt->error) {
                             while ($row = $result->fetch_assoc()) {
                                 if (checkPassword($password, $row["password"])) {
                                     $_SESSION["is_logged"] = true;

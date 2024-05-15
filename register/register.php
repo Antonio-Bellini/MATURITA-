@@ -11,7 +11,7 @@
         if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) {
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 if (isset($_POST["form_user"])) {
-                    // ottengo i dati scritti nel form
+                    // ottengo i dati scritti nel form e li sanifico
                     $name = mysqli_real_escape_string($connection, $_POST['name']);
                     $surname = mysqli_real_escape_string($connection, $_POST["surname"]);
                     $username = mysqli_real_escape_string($connection, $_POST["username"]);
@@ -36,7 +36,7 @@
                     $stmt->execute();
                     $result = $stmt->get_result();
 
-                    if ($result) {
+                    if (!$stmt->error) {
                         $_SESSION["user_created"] = true;
                         header("Location: ../private/area_personale.php");
                     } else {
@@ -44,7 +44,7 @@
                         header("Location: ../private/area_personale.php");
                     }
                 } else if (isset($_POST["form_volunteer"])) {
-                    // ottengo i dati scritti nel form
+                    // ottengo i dati scritti nel form e li sanifico
                     $name = mysqli_real_escape_string($connection, $_POST["name"]);
                     $surname = mysqli_real_escape_string($connection, $_POST["surname"]);
                     $email = mysqli_real_escape_string($connection, $_POST["email"]);
@@ -71,6 +71,7 @@
 
                         if ($result) {
                             $lastId = $connection -> insert_id;
+
                             // inserimento dell'utente nel db
                             $stmt = $connection->prepare("INSERT INTO volontari(nome, cognome, email, telefono_fisso, telefono_mobile, id_liberatoria)
                                                             VALUES(?, ?, ?, ?, ?, ?)");
@@ -78,7 +79,7 @@
                             $stmt->execute();
                             $result = $stmt->get_result();
 
-                            if ($result) {
+                            if (!$stmt->error) {
                                 $_SESSION["user_created"] = true;
                                 header("Location: ../private/area_personale.php");
                             } else {
@@ -91,7 +92,7 @@
                         header("Location: ../private/area_personale.php");
                     }
                 } else if (isset($_POST["form_assisted"])) {
-                    // ottengo i dati dal form
+                    // ottengo i dati dal form e li sanifico
                     $name = mysqli_real_escape_string($connection, $_POST["name"]);
                     $surname = mysqli_real_escape_string($connection, $_POST["surname"]);
                     $notes = isset($_POST["notes"]) ? mysqli_real_escape_string($connection, $_POST["notes"]) : null;
@@ -131,7 +132,7 @@
                             $result = $stmt->get_result();
 
                             // inserimento dell'assistito nel db se il caricamento dei file é andato a buon fine
-                            if ($result) {
+                            if (!$stmt->error) {
                                 $rel_id = $connection->insert_id;
 
                                 $stmt = $connection->prepare("INSERT INTO assistiti(nome, cognome, anamnesi, note, id_referente, id_liberatoria)
@@ -140,7 +141,7 @@
                                 $stmt->execute();
                                 $result = $stmt->get_result();
 
-                                if ($result) {
+                                if (!$stmt->error) {
                                     $_SESSION["user_created"] = true;
                                     header("Location: ../private/area_personale.php");
                                 } else {
