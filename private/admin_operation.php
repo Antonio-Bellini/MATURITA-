@@ -174,7 +174,6 @@
                     } else
                         header("Location: ../index.php");
                     break;
-
             }
 
             show_footer2();

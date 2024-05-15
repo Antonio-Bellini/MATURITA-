@@ -34,32 +34,66 @@
 ?>
 
 <body>
-    <h1 class="offer-h1">Cosa Offre la Nostra Associazione</h1>
-    <h2 class="offer-h2">Ecco i nostri Listini:</h2>
+    <!-- Sezione delle immagini dei ragazzi -->
+    <section class="association__gallery">
+        <h1 class="gallery__title">Cosa offre la nostra associazione</h1>
+        
+        <div id="gallery_container" class="gallery__blocks">
+            <?php
+                $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
+                $query = "SELECT id, path FROM images";
+                $result = dbQuery($connection, $query);
 
-    <div class="image-gallery">
-        <div class="scrollable-images">
-            <?php 
-                // Directory contenente le immagini
-                $imageDirectory = 'image/offer';
+                if (!$result->num_rows > 0) 
+                    echo "<h3>Nessuna immagine presente</h3>";
 
-                // Ottenere elenco di file nella directory
-                $files = glob($imageDirectory . '/*');
-
-                // Mostrare le immagini
-                foreach ($files as $file) {
-                    if (is_file($file)) {
-                        echo "<div class='image-container'>
-                                <a href='$file' data-lightbox='image-gallery'><img src='$file' alt='offer_imgs'></a>
-                            </div>";
+                if ($result) {
+                    while ($row = $result->fetch_assoc()) {
+                        if (strpos($row["path"], "offer") === 0) {
+                            echo "
+                                <div class='gallery__block'>
+                                    <img src='image/" . $row["path"] . "' alt='Immagine'>
+                                    <div class='overlay'>
+                                        <button><a href='image/" . $row["path"] . "' target='_blank'>Apri in nuova scheda</a></button>
+                                    </div>";
+                                    if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"])
+                                        echo "<button class='delete_content_button' data-operation='delete' data-user='" . $row["id"] . "' data-profile='home_images'>Elimina contenuto</button>";
+                            echo "</div>";
+                        }
                     }
-                }
+                } else 
+                    echo ERROR_DB;
             ?>
         </div>
+
+        <?php
+            if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"])
+                echo "<button id='add_content_button'>Aggiungi contenuti</button>";
+        ?>
+    </section>
+
+    <!-- modale per inserire una nuova pagina -->
+    <div id="newNews_modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <br>
+
+            <h2>Inserimento di una nuova immagine</h2>
+            <br>
+            
+            <form action="private/update_home.php" enctype="multipart/form-data" method="POST">
+                <input type="hidden" name="type" value="home_offer">
+
+                <label for="image">Seleziona la foto</label><br>
+                <input type="file" id="image" class="modal__input" name="offer__image" accept="image/*" required>
+                
+                <input type="submit" id="saveButton" class="btn" value="SALVA">
+            </form>
+        </div>
     </div>
-    <br><br><br>
+
     <?php 
-    show_footer2();
+        show_footer2();
     ?>
 </body>
 </html>

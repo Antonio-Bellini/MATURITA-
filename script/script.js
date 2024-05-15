@@ -45,24 +45,38 @@ $(document).ready(function () {
     });
 
     // eliminazione di un contenuto news nella home
-    $(".del_content_button").on("click", function() {
+    $(".del_content_button, .delete_content_button").on("click", function() {
+        // controllo se si é cliccato il bottone nella gallery.php (delete_content_button)
+        let buttonClicked = $(this).hasClass('delete_content_button');
+        let pathPrefix = buttonClicked ? "../" : "";
+
+        // assegno i nuovi path in base al bottone cliccato
+        let path1 = pathPrefix + "util/ajax/send_data.php";
+        let path2 = pathPrefix + "private/crud.php";
+    
+        if (window.location.href.indexOf("offer.php") > -1) {
+            path1 = "util/ajax/send_data.php";
+            path2 = "private/crud.php";
+        }
+        
         let operation = $(this).data('operation');
         let user = $(this).data('user');
         let profile = $(this).data('profile');
-
+    
         let confirmed = confirm("Sei sicuro di voler procedere con l'eliminazione?\n\nATTENZIONE!\nQuesta azione è irreversibile e tutti i dati saranno persi in modo irrecuperabile.");
-
+        
         if (confirmed) {
             $.ajax({
                 type: "POST",
-                url: "util/ajax/send_data.php",
+                url: path1,
                 data: { operation: operation, user: user, profile: profile },
                 success: function (response) {
-                    window.location.href = "private/crud.php";
+                    window.location.href = path2;
                 }
             });
         }
     });
+    
 
     // controlli vari in fase di registrazione
     if (window.location.href.includes("register") > -1) {
@@ -298,6 +312,7 @@ $(document).ready(function () {
         });
     }    
 
+    // attivazione dello sfondo del bottone per mostrare la pagina in cui si é
     if (window.location.href.includes("bacheca.php")) {
         $("#bacheca").addClass("btn_sel");
     }
@@ -307,18 +322,7 @@ $(document).ready(function () {
     if (window.location.href.includes("crud_bacheca_newsletter.php")) {
         $("#newsletter").removeClass("btn_sel");
         $("#bacheca").removeClass("btn_sel");
-
     }
-
-    // controllo per limitare a max 255 caratteri l'input del numero di telefono
-    $('#new_tf, #new_tm, #phone_f, #phone_m').on("input", function() {
-        let input = $(this).val();
-        if (input > 15)
-            $(this).val(input.slice(0, 255));
-    });
-
-
-
     if (window.location.href.includes("about.php")) {
         $("#about").addClass("btn_sel");
     }
@@ -328,7 +332,13 @@ $(document).ready(function () {
     if (window.location.href.includes("gallery.php")) {
         $("#gallery").addClass("btn_sel");
     }
-    
+
+    // controllo per limitare a max 255 caratteri l'input del numero di telefono
+    $('#new_tf, #new_tm, #phone_f, #phone_m').on("input", function() {
+        let input = $(this).val();
+        if (input > 15)
+            $(this).val(input.slice(0, 255));
+    });    
 });
 
 // -------------------------- FUNZIONI AJAX ----------------------------- \\

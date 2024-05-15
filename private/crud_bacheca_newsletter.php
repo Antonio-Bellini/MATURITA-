@@ -33,10 +33,6 @@
                     case "del":
                         removeFromTable($table, $connection);
                         break;
-
-                    case null:
-                        header("Location: ../index.php");
-                        break;
                 }
             } catch(Exception $e) {
                 echo ERROR_GEN;
@@ -55,10 +51,6 @@
                     case "del":
                         removeFromTable($table, $connection);
                         break;
-
-                    case null:
-                        header("Location: ../index.php");
-                        break;
                 }
             } catch(Exception $e) {
                 echo ERROR_GEN;
@@ -76,10 +68,6 @@
 
                     case "del":
                         removeFromTable($table, $connection);
-                        break;
-
-                    case null:
-                        header("Location: ../index.php");
                         break;
                 }
             } catch(Exception $e) {
@@ -126,7 +114,9 @@
         echo "<br>
             <section id='form'>
                 <h2>Eliminazione di un contenuto dalla $table</h2>
-                <form action='delete_content.php' method='POST'>
+                <form action='crud.php' method='POST'>
+                    <input type='hidden' name='profile' value='bacheca_newsletter'>
+                    <input type='hidden' name='operation' value='delete'>
                     <br><br>";
 
         // se ci sono risultati nella tabella mostro cosa si puo eliminare
@@ -138,9 +128,9 @@
             mysqli_data_seek($result, 0);
         }
 
-        echo "  <div id='name_surname__label'>
-                    <label for='$table'>Seleziona il file che vuoi eliminare dalla $table</label>
-                </div>
+        echo "      <div id='name_surname__label'>
+                        <label for='$table'>Seleziona il file che vuoi eliminare dalla $table</label>
+                    </div>
                     <select name='file_id'>";
         while ($row = $result->fetch_assoc()) {
             echo "      <option value='" . $row["id"] . "'>" . $row["$table"] . " del " . $row["data"] . "</option>";

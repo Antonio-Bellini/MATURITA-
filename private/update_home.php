@@ -136,6 +136,33 @@
                     echo ERROR_GEN;
                 }
                 break;
+
+            case "home_offer":
+                $uploadDirectory = '../image/offer/'; 
+                $fileName = $_FILES['offer__image']['name'];
+                $fileTmpName = $_FILES['offer__image']['tmp_name'];
+                $newFilePath = $uploadDirectory . $fileName;
+
+                if (move_uploaded_file($fileTmpName, $newFilePath)) {
+                    $uploadedFileName = "offer/" . $fileName;
+
+                    $stmt = $connection->prepare("INSERT INTO images(path) VALUES(?)");
+                    $stmt->bind_param("s", $uploadedFileName);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+
+                    if (!$stmt->error) {
+                        $_SESSION["user_modified"] = true;
+                        header("Location: ../offer.php");
+                    } else {
+                        echo ERROR_DB;
+                    }
+
+                    $stmt->close();
+                } else {
+                    echo ERROR_GEN;
+                }
+                break;
         }
     } else 
         header("Location: ../index.php");
