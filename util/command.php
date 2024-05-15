@@ -320,7 +320,7 @@
 
         if ($result) {
             while ($row = ($result->fetch_assoc()))
-                echo "<br><h2>Benvenuto " . $row["nome"] . " " . $row["cognome"] . "</h2>";
+                echo "<br><h1>Benvenuto " . $row["nome"] . " " . $row["cognome"] . "</h1>";
         }
     }
 

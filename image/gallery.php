@@ -32,7 +32,7 @@
 <body>
     <!-- Sezione delle immagini dei ragazzi -->
     <section class="association__gallery">
-        <h2 class="gallery__title">Immagini dei ragazzi</h2>
+        <h1 class="gallery__title">Immagini dei ragazzi</h1>
         
         <div id="gallery_container" class="gallery__blocks">
             <?php
