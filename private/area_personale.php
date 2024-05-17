@@ -40,7 +40,7 @@
                     welcome($connection, $_SESSION["username"]);
                     $_SESSION["is_president"] = true;
                 
-                    echo "<br><br><h3>Cosa vuoi fare?</h3><br>";
+                    echo "<br><br><br><br><h2>Cosa vuoi fare?</h2><br>";
                     echo "  <section id='admin_btn'>
                                 <button class='btn' data-operation='view_assisted'>GESTIONE ASSISTITI</button>
                             </section><br><br>";
@@ -55,7 +55,7 @@
                     welcome($connection, $_SESSION["username"]);
                     $_SESSION["is_admin"] = true;
 
-                    echo "<br><br><h3>Cosa vuoi fare?</h3><br>";
+                    echo "<br><br><br><br><h2>Cosa vuoi fare?</h2><br>";
                     echo "  <section id='admin_btn'>
                                 <button class='btn' data-operation='view_user'>GESTIONE UTENTI</button>
                                 <button class='btn' data-operation='view_volunteer'>GESTIONE VOLONTARI</button>
@@ -74,7 +74,7 @@
                     welcome($connection, $_SESSION["username"]);
                     $_SESSION["is_terapist"] = true;
 
-                    echo "<br><br><h3>Cosa vuoi fare?</h3><br>";
+                    echo "<br><br><br><br><h2>Cosa vuoi fare?</h2><br>";
                     echo "  <section id='admin_btn'>
                                 <button class='btn' data-operation='view_assisted'>GESTIONE ASSISTITI</button>
                             </section><br><br>";

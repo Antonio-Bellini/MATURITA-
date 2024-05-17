@@ -34,8 +34,6 @@
     <br><br><br>
     <br><br><br>
     <br><br><br>
-    <?php 
-    show_footer2();
-    ?>
+    <?php show_footer(); ?>
 </body>
 </html>

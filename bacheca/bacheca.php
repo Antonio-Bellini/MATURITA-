@@ -42,7 +42,7 @@
         // ricerca di contenuti per range di date
         echo "<br><br>
             <section class='bacheca_newsletter__content'>
-                <h1>Bacheca dell'associazione</h1><br><br>
+                <h1 class='about__title'>Bacheca dell'associazione</h1><br><br>
                 <form id='form' action='" . htmlspecialchars($_SERVER["PHP_SELF"]) . "' method='POST'>
                     <h3>Ricerca dei contenuti in bacheca</h3>
                     <br><br>

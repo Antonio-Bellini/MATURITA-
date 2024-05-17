@@ -36,7 +36,7 @@
 <body>
     <!-- Sezione delle immagini dei ragazzi -->
     <section class="association__gallery">
-        <h1 class="gallery__title">Cosa offre la nostra associazione</h1>
+        <h1 class="about__title">Cosa offriamo</h1>
         
         <div id="gallery_container" class="gallery__blocks">
             <?php
@@ -92,8 +92,6 @@
         </div>
     </div>
 
-    <?php 
-        show_footer2();
-    ?>
+    <?php show_footer(); ?>
 </body>
 </html>
