@@ -129,7 +129,7 @@
                                 <li><a href='../bacheca/bacheca.php'                class='btn' id= 'bacheca'>Bacheca             </a></li>
                                 <li><a href='../private/area_personale.php'         class='btn' id= 'personal'>Area Personale      </a></li>";
                                 if (isset($_SESSION["is_logged"]) && $_SESSION["is_logged"]) 
-                                    echo "<li><a href='../private/crud.php?operation=LOGOUT'  class='btn'>Logout</a></li>";
+                                    echo "<li><a href='../private/crud.php?operation=LOGOUT'  class='btn_logout'>Logout &nbsp;&nbsp;<i class='fa fa-sign-out' aria-hidden='true'></i></a></li>";
                                 
                                 echo "
                             </ul>
@@ -159,7 +159,7 @@
                                 <li><a href='bacheca/bacheca.php'                class='btn' id= 'bacheca'>Bacheca             </a></li>
                                 <li><a href='private/area_personale.php'         class='btn' id= 'personal'>Area Personale      </a></li>";
                                 if (isset($_SESSION["is_logged"]) && $_SESSION["is_logged"]) 
-                                    echo "<li><a href='private/crud.php?operation=LOGOUT'  class='btn'>Logout</a></li>";
+                                    echo "<li><a href='private/crud.php?operation=LOGOUT'  class='btn_logout'>Logout &nbsp;&nbsp;<i class='fa fa-sign-out' aria-hidden='true'></i></a></li></a></li>";
                                 
                                 echo "
                             </ul>
@@ -320,7 +320,7 @@
 
         if ($result) {
             while ($row = ($result->fetch_assoc()))
-                echo "<br><h1>Benvenuto " . $row["nome"] . " " . $row["cognome"] . "</h1>";
+                echo "<br><br><h1>Benvenuto " . $row["nome"] . " " . $row["cognome"] . "</h1>";
         }
     }
 

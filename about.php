@@ -35,7 +35,7 @@
         <div class="about__container_sub">
             <div class="about__container_sub__other">
                 <h2>
-                    Perché crediamo <span class="highlight">fermamente</span> che anche nelle sfide più difficili, 
+                    Perché crediamo fermamente che anche nelle <span class="highlight">sfide più difficili</span>, 
                     esista sempre una luce da seguire.
                 </h2>
             </div>
@@ -56,15 +56,13 @@
             
             <div class="about__container_sub__other">
                 <h2>
-                    Perché crediamo che <span class="highlight">ogni passo avanti</span>, 
-                    anche il più piccolo, meriti di essere celebrato con gioia e gratitudine.
+                    Perché crediamo che ogni passo avanti , anche il più piccolo, meriti di
+                    essere celebrato con <span class="highlight">gioia e gratitudine</span>.
                 </h2>
             </div>
         </div>
     </div>
 
-    <?php
-        show_footer2();
-    ?>
+    <?php show_footer(); ?>
 </body>
 </html>

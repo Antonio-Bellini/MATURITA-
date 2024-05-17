@@ -71,18 +71,6 @@ nav {
 .nav_links ul li:first-child {
   margin-left: 0; 
 }
-.nav_links ul li a {
-  color: black; 
-  text-decoration: none;
-  font-size: 16px; 
-  padding: 10px 15px; 
-  border-radius: 10px; 
-  border: 1px solid #E83C2F;
-  transition: background-color 0.3s ease; 
-}
-.nav_links ul li a:hover {
-  background-color: #E83C2F;
-}
 nav img {
   width: 150px;
 }
@@ -92,27 +80,38 @@ nav img {
   display: inline-block;
   text-decoration: none;
   text-align: center;
-  color: black;
-  border: 1px solid #E83C2F;
+  color: #333;
   padding: 10px 20px;
-  border-radius: 3px;
+  border-radius: 5px;
   font-size: 18px;
-  background: transparent;
+  border: none;
+  background: #ffffff;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1), -2px -2px 5px rgba(255, 255, 255, 0.7);
   cursor: pointer;
-  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+  transition: background 0.3s, color 0.3s, box-shadow 0.3s;
 }
 .btn a {
   text-decoration: none;
   color: black;
 }
 .btn:hover {
-  background-color: #E83C2F;
-  color: #333;
+  background: #f0f0f0;
+  box-shadow: 2px 2px 5px #E83C2F;
 }
 
 /* bottone per mostrare la pagina selezionata */
-.btn_sel{
-  background: #E83C2F;
+.btn_sel {
+  display: inline-block;
+  text-decoration: none;
+  text-align: center;
+  color: #333;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 18px;
+  background: #ffffff;
+  box-shadow: 0 0 5px 1px #E83C2F;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s, box-shadow 0.3s;
 }
 
 /* bottone che indica che non é cliccabile perche disabilitato */
@@ -127,11 +126,30 @@ nav img {
   cursor: not-allowed; 
 }
 
+/* stile del bottone di logout */
+.btn_logout {
+  display: inline-block;
+  text-decoration: none;
+  text-align: center;
+  color: #333;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 18px;
+  background: linear-gradient(145deg, #E83C2F, #FF7F73); 
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+}
+.btn_logout:hover {
+  background: linear-gradient(145deg, #E83C2F, #FF7F73);
+  box-shadow: 0 0 15px 4px #E83C2F;
+}
+
 /* contenitore bottoni funzionalitá admin */
 #admin_btn {
   display: flex;
   justify-content: center;
-  flex-wrap: wrap; 
+  flex-wrap: wrap;
+  margin-bottom: 70px;
 }
 #admin_btn .btn {
   margin: 5px;
@@ -153,7 +171,7 @@ nav img {
   align-items: center;
   justify-content: center;
   padding: 40px;
-  margin-bottom: 50px;
+  margin-bottom: 150px;
 }
 .about__title {
   font-size: 46px;
@@ -421,7 +439,8 @@ tr:nth-child(even) {
 /* pagina galleria foto dinamica */
 .association__gallery {
   text-align: center;
-  padding: 20px;
+  padding: 40px;
+  margin-bottom: 150px;
 }
 .gallery__blocks {
   display: flex;

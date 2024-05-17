@@ -26,13 +26,11 @@
         check_operation();
 
         nav_menu();
-
-        
 ?>
 <body>
     <!-- Sezione delle immagini dei ragazzi -->
     <section class="association__gallery">
-        <h1 class="gallery__title">Immagini dei ragazzi</h1>
+        <h1 class="about__title">Immagini dei ragazzi</h1>
         
         <div id="gallery_container" class="gallery__blocks">
             <?php
@@ -83,18 +81,11 @@
                 <label for="image">Seleziona la foto</label><br>
                 <input type="file" id="image" class="modal__input" name="ragazzi__image" accept="image/*" required>
 
-                <label>Oppure<br><br></label>
-
-                <label for="video">Seleziona il video</label><br>
-                <!-- <input type="file" id="video" class="modal__input" name="ragazzi__image" accept="video/*" required> -->
-
                 <input type="submit" id="saveButton" class="btn" value="SALVA">
             </form>
         </div>
     </div>
 
-    <?php 
-        show_footer2();
-    ?>
+    <?php show_footer2(); ?>
 </body>
 </html>
