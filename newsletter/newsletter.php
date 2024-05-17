@@ -44,7 +44,7 @@
         // form per la ricerca di contenuti compresi in un range di date
         echo "<br><br>
                 <section class='bacheca_newsletter__content'>
-                    <h1>Newsletter dell'associazione</h1><br><br>
+                    <h1 class='about__title'>Newsletter dell'associazione</h1><br><br>
                     <form id='form' action='" . htmlspecialchars($_SERVER["PHP_SELF"]) . "' method='POST'>
                         <h3>Ricerca dei contenuti in newsletter</h3>
                         <br><br>
