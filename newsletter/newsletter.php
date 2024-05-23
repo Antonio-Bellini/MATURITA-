@@ -62,41 +62,73 @@
                     </form>
                 </section>";
 
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            if (!empty($_POST["newsletter_start"]) && !empty($_POST["newsletter_end"])) {
-                $starting_date = $_POST["newsletter_start"];
-                $finish_date = $_POST["newsletter_end"];
-            } else {
-                $finish_date = date("Y-m-d");
-                $starting_date = date("Y-m-d", strtotime("-1 year", strtotime($finish_date)));
+        if (($_SERVER["REQUEST_METHOD"] == "POST") || isset($_GET["page"])) {
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                if (!empty($_POST["bacheca_start"]) && !empty($_POST["bacheca_end"])) {
+                    $starting_date = $_POST["bacheca_start"];
+                    $finish_date = $_POST["bacheca_end"];
+                    $_SESSION["b_starting_date"] = $_POST["bacheca_start"];
+                    $_SESSION["b_finish_date"] = $_POST["bacheca_end"];
+                } else {                
+                    $finish_date = date("Y-m-d");
+                    $starting_date = date("Y-m-d", strtotime("-1 month", strtotime($finish_date)));
+                    $_SESSION["b_finish_date"] = date("Y-m-d");
+                    $_SESSION["b_starting_date"] = date("Y-m-d", strtotime("-1 month", strtotime($finish_date)));
+                }
             }
 
-            // eseguo la query usando prepared statement per evitare sql injection
-            $stmt = $connection->prepare("SELECT newsletter, data FROM newsletter WHERE data BETWEEN ? AND ?");
-            $stmt->bind_param("ss", $starting_date, $finish_date);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            
-            if (!$stmt->error) {
-                echo "  <section class='bacheca_newsletter__content'>
-                            <div class='bacheca_newsletter__list'>";
-                if ($result->num_rows === 0)
-                    echo "      <h3 id='bacheca_newsletter__title'>Nessun risultato trovato, prova con un intervallo di date diverso</h3>";
-                while ($row = ($result->fetch_assoc())) {
-                    echo "  <div class='bacheca_newsletter__list-item'>
-                                <div class='bacheca_newsletter__list__pdf-preview'>
-                                    <a href='" . $row["newsletter"] . "' target='_blank'>
-                                        <embed src='" . $row["newsletter"] ."' type='application/pdf'>
-                                        <div class='bacheca_newsletter__list-item__overlay'>
-                                            <button class='bacheca_newsletter__list-item__visualize'>Visualizza altro</button>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>";
-                }
-                echo "</div></section>";
+            // query per contare il numero totale di records e di conseguenza stampare i bottoni necessari
+            $query = "SELECT COUNT(id) AS total_records FROM newsletter";
+            $result = dbQuery($connection, $query);
 
-                $stmt->close();
+            if ($result) {
+                // salvo il numero totale di record per fare la paginazione
+                $row = $result->fetch_assoc();
+                $records = $row["total_records"];
+
+                $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+                $limit = 2;
+                $offset = ($page - 1) * $limit;
+
+                // eseguo la query usando prepared statement per evitare sql injection
+                $stmt = $connection->prepare("SELECT newsletter, data FROM newsletter WHERE data BETWEEN ? AND ? LIMIT ? OFFSET ?");
+                $stmt->bind_param("ssii", $_SESSION["b_starting_date"], $_SESSION["b_finish_date"], $limit, $offset);
+                $stmt->execute();
+                $result = $stmt->get_result();
+                
+                if (!$stmt->error) {
+                    echo "  <section class='bacheca_newsletter__content'>
+                                <div class='bacheca_newsletter__list'>";
+                    if ($result->num_rows === 0)
+                        echo "      <h3 id='bacheca_newsletter__title'>Nessun risultato trovato, prova con un intervallo di date diverso</h3>";
+                    while ($row = ($result->fetch_assoc())) {
+                        echo "  <div class='bacheca_newsletter__list-item'>
+                                    <div class='bacheca_newsletter__list__pdf-preview'>
+                                        <a href='" . $row["newsletter"] . "' target='_blank'>
+                                            <embed src='" . $row["newsletter"] ."' type='application/pdf'>
+                                            <div class='bacheca_newsletter__list-item__overlay'>
+                                                <button class='bacheca_newsletter__list-item__visualize'>Visualizza altro</button>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>";
+                    }
+                    echo "      </div>
+                                <div class='pagination'>";
+                                
+                    // stampa di n bottoni tanti quanti sono i record presenti
+                    $total_pages = ceil($records / 2);
+                    for ($i = 1; $i <= $total_pages; $i++) {
+                        echo "      <button class='pagination'>
+                                        <a href='newsletter.php?page=$i'>$i</a>
+                                    </button>";
+                    }
+                                    
+                    echo "      </div>
+                            </section>";
+
+                    $stmt->close();
+                }
             } else 
                 echo ERROR_DB;
         }

@@ -447,7 +447,7 @@
                                     </div>
 
                                     <label for='confirm_password'>Riscrivi la password inserita</label>
-                                    <input type='password' name='confirm_password' id='confirm_password' maxlength='255' required>
+                                    <input type='password' name='confirm_password' id='confirm_password' maxlength='255'>
                                     <span id='confirm_passwordError'></span>
 
                                     <input type='submit' value='AGGIORNA DATI'>
