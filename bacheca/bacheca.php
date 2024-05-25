@@ -64,15 +64,11 @@
         if (($_SERVER["REQUEST_METHOD"] == "POST") || isset($_GET["page"])) {
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 if (!empty($_POST["bacheca_start"]) && !empty($_POST["bacheca_end"])) {
-                    $starting_date = $_POST["bacheca_start"];
-                    $finish_date = $_POST["bacheca_end"];
                     $_SESSION["b_starting_date"] = $_POST["bacheca_start"];
                     $_SESSION["b_finish_date"] = $_POST["bacheca_end"];
-                } else {                
-                    $finish_date = date("Y-m-d");
-                    $starting_date = date("Y-m-d", strtotime("-1 month", strtotime($finish_date)));
+                } else {
                     $_SESSION["b_finish_date"] = date("Y-m-d");
-                    $_SESSION["b_starting_date"] = date("Y-m-d", strtotime("-1 month", strtotime($finish_date)));
+                    $_SESSION["b_starting_date"] = date("Y-m-d", strtotime("-1 month", strtotime($_SESSION["b_finish_date"])));
                 }
             }
 
