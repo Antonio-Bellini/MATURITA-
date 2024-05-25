@@ -64,12 +64,12 @@
 
         if (($_SERVER["REQUEST_METHOD"] == "POST") || isset($_GET["page"])) {
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                if (!empty($_POST["bacheca_start"]) && !empty($_POST["bacheca_end"])) {
-                    $_SESSION["b_starting_date"] = $_POST["bacheca_start"];
-                    $_SESSION["b_finish_date"] = $_POST["bacheca_end"];
+                if (!empty($_POST["newsletter_start"]) && !empty($_POST["newsletter_end"])) {
+                    $_SESSION["n_starting_date"] = $_POST["newsletter_start"];
+                    $_SESSION["n_finish_date"] = $_POST["newsletter_end"];
                 } else {                
-                    $_SESSION["b_finish_date"] = date("Y-m-d");
-                    $_SESSION["b_starting_date"] = date("Y-m-d", strtotime("-1 month", strtotime($_SESSION["b_finish_date"])));
+                    $_SESSION["n_finish_date"] = date("Y-m-d");
+                    $_SESSION["n_starting_date"] = date("Y-m-d", strtotime("-1 month", strtotime($_SESSION["n_finish_date"])));
                 }
             }
 
@@ -88,7 +88,7 @@
 
                 // eseguo la query usando prepared statement per evitare sql injection
                 $stmt = $connection->prepare("SELECT newsletter, data FROM newsletter WHERE data BETWEEN ? AND ? LIMIT ? OFFSET ?");
-                $stmt->bind_param("ssii", $_SESSION["b_starting_date"], $_SESSION["b_finish_date"], $limit, $offset);
+                $stmt->bind_param("ssii", $_SESSION["n_starting_date"], $_SESSION["n_finish_date"], $limit, $offset);
                 $stmt->execute();
                 $result = $stmt->get_result();
                 
