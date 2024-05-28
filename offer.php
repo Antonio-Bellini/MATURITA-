@@ -2,7 +2,6 @@
 <html lang="en">
 <?php
     include "util/constants.php";
-    include "util/cookie.php";
     include "util/command.php";
     include "util/connection.php";
 
@@ -27,7 +26,6 @@
             </style>
         </head>";
 
-        importActualStyle();
         check_operation();
 
         nav_menu2();

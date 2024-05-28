@@ -2,7 +2,6 @@
 <html lang="en">
 <?php
     include "../util/constants.php";
-    include "../util/cookie.php";
     include "../util/command.php";
 
     echo "
@@ -18,8 +17,6 @@
             <link rel='icon' href='../image/logos/logo.png' type='x-icon'>
             <title>Associazione Zero Tre</title>
         </head>";
-
-        importActualStyle();
 
         session_start();
 
