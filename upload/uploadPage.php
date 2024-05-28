@@ -10,10 +10,8 @@
 </head>
 <!-- STAMPA del BODY in BASE al COOKIE SALVATO -->
 <?php
-    include "../util/cookie.php";
     include "../util/command.php";
     include "../util/connection.php";
-    importActualStyle();
     session_start();
 
     nav_menu();

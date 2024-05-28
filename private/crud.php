@@ -2,17 +2,15 @@
     require_once("../util/constants.php");
     include("../util/connection.php");
     include("../util/command.php");
-    include("../util/cookie.php");
 
     echo "<script src='https://code.jquery.com/jquery-3.6.4.min.js'></script>";
     echo WEBALL;
     echo "<script src='../script/script.js'></script>";
     echo "<link rel='stylesheet' href='../style/style.css'>";
     echo "<title>Associazione Zero Tre</title>";
-    importActualStyle();
     session_start();
+
     $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
-    
     $operation = isset($_SESSION["operation"]) ? $_SESSION["operation"] : null;
 
     if (isset($_GET["operation"])) {

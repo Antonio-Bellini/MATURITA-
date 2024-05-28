@@ -2,7 +2,6 @@
     require_once("../util/constants.php");
     include("../util/connection.php");
     include("../util/command.php");
-    include("../util/cookie.php");
 
     session_start();
     
