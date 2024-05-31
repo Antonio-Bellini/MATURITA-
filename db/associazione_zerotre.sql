@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Mag 12, 2024 alle 16:48
+-- Creato il: Mag 31, 2024 alle 19:12
 -- Versione del server: 10.4.32-MariaDB
 -- Versione PHP: 8.2.12
 
@@ -74,15 +74,17 @@ CREATE TABLE `eventi` (
   `note` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `images`
+-- Struttura della tabella `immagini`
 --
 
-CREATE TABLE `images` (
+CREATE TABLE `immagini` (
   `id` int(11) NOT NULL,
-  `path` varchar(255) DEFAULT NULL
+  `path` varchar(255) DEFAULT NULL,
+  `id_titolo` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -171,6 +173,17 @@ CREATE TABLE `registro_associazione` (
 
 INSERT INTO `registro_associazione` (`id`, `anni_associazione`, `volontari_attivi`, `famiglie_aiutate`) VALUES
 (1, '1', '2', '3');
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `sezioni_foto`
+--
+
+CREATE TABLE `sezioni_foto` (
+  `id` int(11) NOT NULL,
+  `titolo` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -323,10 +336,11 @@ ALTER TABLE `eventi`
   ADD KEY `tipo_evento` (`tipo_evento`);
 
 --
--- Indici per le tabelle `images`
+-- Indici per le tabelle `immagini`
 --
-ALTER TABLE `images`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `immagini`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_titolo` (`id_titolo`);
 
 --
 -- Indici per le tabelle `liberatorie`
@@ -359,6 +373,12 @@ ALTER TABLE `profili`
 -- Indici per le tabelle `registro_associazione`
 --
 ALTER TABLE `registro_associazione`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indici per le tabelle `sezioni_foto`
+--
+ALTER TABLE `sezioni_foto`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -421,19 +441,19 @@ ALTER TABLE `bacheca`
 -- AUTO_INCREMENT per la tabella `eventi`
 --
 ALTER TABLE `eventi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=;
 
 --
--- AUTO_INCREMENT per la tabella `images`
+-- AUTO_INCREMENT per la tabella `immagini`
 --
-ALTER TABLE `images`
+ALTER TABLE `immagini`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT per la tabella `liberatorie`
 --
 ALTER TABLE `liberatorie`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT per la tabella `news`
@@ -457,6 +477,12 @@ ALTER TABLE `profili`
 -- AUTO_INCREMENT per la tabella `registro_associazione`
 --
 ALTER TABLE `registro_associazione`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT per la tabella `sezioni_foto`
+--
+ALTER TABLE `sezioni_foto`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
@@ -487,7 +513,7 @@ ALTER TABLE `utenti`
 -- AUTO_INCREMENT per la tabella `volontari`
 --
 ALTER TABLE `volontari`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- Limiti per le tabelle scaricate
@@ -514,10 +540,17 @@ ALTER TABLE `eventi`
   ADD CONSTRAINT `eventi_ibfk_1` FOREIGN KEY (`tipo_evento`) REFERENCES `tipi_evento` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Limiti per la tabella `immagini`
+--
+ALTER TABLE `immagini`
+  ADD CONSTRAINT `immagini_ibfk_1` FOREIGN KEY (`id_titolo`) REFERENCES `sezioni_foto` (`id`);
+
+--
 -- Limiti per la tabella `news`
 --
 ALTER TABLE `news`
-  ADD CONSTRAINT `news_ibfk_1` FOREIGN KEY (`id_image`) REFERENCES `images` (`id`)ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `news_ibfk_1` FOREIGN KEY (`id_image`) REFERENCES `immagini` (`id`),
+  ADD CONSTRAINT `news_ibfk_2` FOREIGN KEY (`id_image`) REFERENCES `immagini` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limiti per la tabella `profili`
