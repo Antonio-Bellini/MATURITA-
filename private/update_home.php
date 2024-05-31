@@ -81,7 +81,7 @@
                     $date = $_POST["news__date"];
                     $text = mysqli_real_escape_string($connection, $_POST["news__text"]);
 
-                    $stmt = $connection->prepare("INSERT INTO images(path) VALUES(?)");
+                    $stmt = $connection->prepare("INSERT INTO immagini(path, id_titolo) VALUES(?, null)");
                     $stmt->bind_param("s", $uploadedFileName);
                     $stmt->execute();
                     $result = $stmt->get_result();
@@ -114,12 +114,13 @@
                 $fileName = $_FILES['ragazzi__image']['name'];
                 $fileTmpName = $_FILES['ragazzi__image']['tmp_name'];
                 $newFilePath = $uploadDirectory . $fileName;
+                $section = $_POST["title"];
 
                 if (move_uploaded_file($fileTmpName, $newFilePath)) {
                     $uploadedFileName = "ragazzi/" . $fileName;
 
-                    $stmt = $connection->prepare("INSERT INTO images(path) VALUES(?)");
-                    $stmt->bind_param("s", $uploadedFileName);
+                    $stmt = $connection->prepare("INSERT INTO immagini(path, id_titolo) VALUES(?, ?)");
+                    $stmt->bind_param("ss", $uploadedFileName, $section);
                     $stmt->execute();
                     $result = $stmt->get_result();
 
@@ -145,7 +146,7 @@
                 if (move_uploaded_file($fileTmpName, $newFilePath)) {
                     $uploadedFileName = "offer/" . $fileName;
 
-                    $stmt = $connection->prepare("INSERT INTO images(path) VALUES(?)");
+                    $stmt = $connection->prepare("INSERT INTO immagini(path, id_titolo) VALUES(?, null)");
                     $stmt->bind_param("s", $uploadedFileName);
                     $stmt->execute();
                     $result = $stmt->get_result();
@@ -158,9 +159,23 @@
                     }
 
                     $stmt->close();
-                } else {
+                } else
                     echo ERROR_GEN;
-                }
+                break;
+
+            case "home_imgSection":
+                $sectionTitle = mysqli_real_escape_string($connection, $_POST["section_title"]);
+
+                $stmt = $connection->prepare("INSERT INTO sezioni_foto(titolo) VALUES(?)");
+                $stmt->bind_param("s", $sectionTitle);
+                $stmt->execute();
+                $result = $stmt->get_result();
+            
+                if (!$stmt->$error) {
+                    $_SESSION["user_modified"] = true;
+                    header("Location: ../image/gallery.php");
+                } else 
+                    echo ERROR_DB;
                 break;
         }
     } else 

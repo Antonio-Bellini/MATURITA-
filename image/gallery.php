@@ -33,34 +33,53 @@
         <div id="gallery_container" class="gallery__blocks">
             <?php
                 $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
-                $query = "SELECT id, path FROM images";
+                $query = "SELECT i.id, i.path, s.titolo 
+                          FROM immagini i
+                          INNER JOIN sezioni_foto s ON i.id_titolo = s.id";
                 $result = dbQuery($connection, $query);
-
-                if (!$result->num_rows > 0) 
+                
+                if (!$result->num_rows > 0) {
                     echo "<h3>Nessuna immagine presente</h3>";
+                } else {
+                    $images_by_category = [];
+                
+                    while ($row = ($result->fetch_assoc())) {
+                        $category = $row['titolo'];
+                        if (!isset($images_by_category[$category]))
+                            $images_by_category[$category] = [];
 
-                if ($result) {
-                    while ($row = $result->fetch_assoc()) {
-                        if (strpos($row["path"], "ragazzi") === 0) {
-                            echo "
-                                <div class='gallery__block'>
-                                    <img src='" . $row["path"] . "' alt='Immagine'>
+                        $images_by_category[$category][] = $row;
+                    }
+                
+                    // genero un container per ogni sezione
+                    foreach ($images_by_category as $category => $images) {
+                        echo "<div class='category-block'>";
+                        echo "  <h3>" . htmlspecialchars($category) . "</h3>";
+                
+                        foreach ($images as $image) {
+                            echo "<div class='gallery__block'>
+                                    <img src='" . htmlspecialchars($image['path']) . "' alt='Immagine'>
                                     <div class='overlay'>
-                                        <button><a href='" . $row["path"] . "' target='_blank'>Apri in nuova scheda</a></button>
+                                        <button><a href='" . htmlspecialchars($image['path']) . "' target='_blank'>Apri in nuova scheda</a></button>
                                     </div>";
-                                    if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"])
-                                        echo "<button class='delete_content_button' data-operation='delete' data-user='" . $row["id"] . "' data-profile='home_images'>Elimina contenuto</button>";
+                            if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']) {
+                                echo "<button class='delete_content_button' data-operation='delete' data-user='" . htmlspecialchars($image['id']) . "' data-profile='home_images'>Elimina contenuto</button>";
+                            }
                             echo "</div>";
                         }
+                
+                        echo "</div>";
                     }
-                } else 
-                    echo ERROR_DB;
+                }   
             ?>
         </div>
 
         <?php
-            if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"])
-                echo "<button id='add_content_button'>Aggiungi contenuti</button>";
+            if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) {
+                echo "<button class='add_content_button' id='add_content_button'>Aggiungi contenuti</button><br>";
+                echo "<button class='add_content_button' id='add_title_button'>Aggiungi titolo sezione</button>";
+                echo "<button class='del_content_button3' id='del_content_button'>Elimina titolo sezione</button>";
+            }
         ?>
     </section>
 
@@ -79,7 +98,74 @@
                 <label for="image">Seleziona la foto</label><br>
                 <input type="file" id="image" class="modal__input" name="ragazzi__image" accept="image/*" required>
 
+                <label for="title">In quale categoria vuoi aggiungere la foto?</label><br>
+                <select name="title">
+                    <?php
+                        $query = "SELECT id, titolo FROM sezioni_foto";
+                        $result = dbQuery($connection, $query);
+
+                        if ($result) {
+                            while ($row = ($result->fetch_assoc()))
+                                echo "<option value='" . $row["id"] . "'>" . $row["titolo"] . "</option>";
+                        } else
+                            echo ERROR_DB;
+                    ?>
+                </select>
+
                 <input type="submit" id="saveButton" class="btn" value="SALVA">
+            </form>
+        </div>
+    </div>
+
+    <!-- modale per inserire una nuova sezione -->
+    <div id="newTitle_modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <br>
+
+            <h2>Inserimento di una nuova sezione</h2>
+            <br>
+
+            <form action="../private/update_home.php" method="POST">
+                <input type="hidden" name="type" value="home_imgSection">
+
+                <label for="title">Seleziona il titolo della sezione</label><br>
+                <input type="text" id="title" class="modal__input" name="section_title" required>
+
+                <input type="submit" id="saveButton" class="btn" value="SALVA">
+            </form>
+        </div>
+    </div>
+
+    <!-- modale per eliminare una sezione -->
+    <div id="delTitle_modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <br>
+
+            <h2>Quale sezione vuoi cancellare?</h2>
+            <br>
+
+            <form action="../private/crud.php" method="POST">
+                <input type="hidden" name="profile" value="home_imgSection">
+                <input type="hidden" name="operation" value="delete">
+
+                <label for="title">Quale sezione vuoi cancellare?</label><br>
+                <label for="title">ATTENZIONE! Non puoi eliminare una sezione se ci sono delle foto al suo interno</label><br>
+                <select name="section">
+                    <?php
+                        $query = "SELECT id, titolo FROM sezioni_foto";
+                        $result = dbQuery($connection, $query);
+
+                        if ($result) {
+                            while ($row = ($result->fetch_assoc()))
+                                echo "<option value='" . $row["id"] . "'>" . $row["titolo"] . "</option>";
+                        } else 
+                            echo ERROR_DB;
+                    ?>
+                </select>
+
+                <input type="submit" id="saveButton" class="btn" value="ELIMINA">
             </form>
         </div>
     </div>

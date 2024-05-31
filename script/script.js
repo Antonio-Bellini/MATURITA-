@@ -75,8 +75,7 @@ $(document).ready(function () {
                 }
             });
         }
-    });
-    
+    });  
 
     // controlli vari in fase di registrazione
     if (window.location.href.includes("register") > -1) {
@@ -192,9 +191,16 @@ $(document).ready(function () {
     $("#add_content_button").click(function() {
         $("#newNews_modal").css("display", "block");
     });
+    $("#add_title_button").click(function() {
+        $("#newTitle_modal").css("display", "block");
+    });
     // chiudo la modale quando si clicca la x
     $(".close").click(function() {
         $(".modal").css("display", "none");
+    });
+    // eliminazione di una sezione della galleria
+    $("#del_content_button").on("click", function() {
+        $("#delTitle_modal").css("display", "block");
     });
     // salvo i dati inseriti
     $("#saveButton").click(function() {

@@ -85,7 +85,7 @@
                 $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
                 $query = "SELECT n.id, i.path, n.titolo, n.data, n.testo 
                             FROM news n
-                            INNER JOIN images i ON n.id_image = i.id";
+                            INNER JOIN immagini i ON n.id_image = i.id";
                 $result = dbQuery($connection, $query);
 
                 if (!$result->num_rows>0) 
@@ -112,7 +112,7 @@
 
         <?php
             if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"])
-                echo "<button id='add_content_button'>Aggiungi contenuti</button>";
+                echo "<button class='add_content_button' id='add_content_button'>Aggiungi contenuti</button>";
         ?>
     </section>
 
