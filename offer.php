@@ -39,7 +39,7 @@
         <div id="gallery_container" class="gallery__blocks">
             <?php
                 $connection = connectToDatabase(DB_HOST, DB_ADMIN, ADMIN_PW, DB_NAME);
-                $query = "SELECT id, path FROM images";
+                $query = "SELECT id, path FROM immagini";
                 $result = dbQuery($connection, $query);
 
                 if (!$result->num_rows > 0) 

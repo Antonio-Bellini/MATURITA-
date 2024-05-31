@@ -29,7 +29,7 @@
 
                     // inserimento  dell'utente nel db
                     $password_enc = encryptPassword($password_clear);
-                    $stmt = $connection->prepare("INSERT INTO utenti(nome, cognome, username, password, email, telefono_fisso, telefono_mobile, note, id_profilo)
+                    $stmt = $connection->prepare("INSERT INTO utenti(nome, cognome, username, password, email, telefono_fisso, telefono_mobile, note, id_tipo_profilo)
                                                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
                     $stmt->bind_param("ssssssssi", $name, $surname, $username, $password_enc, $email, $phone_f, $phone_m, $notes, $profile);
                     $stmt->execute();

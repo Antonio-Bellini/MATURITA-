@@ -139,12 +139,12 @@
                         if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) {
                             $is_deletable = false;
 
-                            $query = "SELECT id_profilo FROM utenti WHERE id = $userId";
+                            $query = "SELECT id_tipo_profilo FROM utenti WHERE id = $userId";
                             $result = dbQuery($connection, $query);
 
                             if ($result) {
                                 while ($row = ($result->fetch_assoc())) {
-                                    if ($row["id_profilo"] != 2)
+                                    if ($row["id_tipo_profilo"] != 2)
                                         $is_deletable = true;
                                 }
 
@@ -272,7 +272,7 @@
 
                     case "home_news":
                         $file_name = null;
-                        $query = "SELECT i.id, i.path FROM images i
+                        $query = "SELECT i.id, i.path FROM immagini i
                                     INNER JOIN news n ON n.id_image = i.id 
                                     WHERE n.id = $userId";
                         $result = dbQuery($connection, $query);
@@ -289,7 +289,7 @@
                                     $result = dbQuery($connection, $query);
 
                                     if ($result) {
-                                        $query = "DELETE FROM images WHERE id = $image_id";
+                                        $query = "DELETE FROM immagini WHERE id = $image_id";
                                         $result = dbQuery($connection, $query);
 
                                         if ($result) {
@@ -308,7 +308,7 @@
 
                     case "home_images":
                         $file_name = null;
-                        $query = "SELECT id, path FROM images WHERE id = $userId";
+                        $query = "SELECT id, path FROM immagini WHERE id = $userId";
                         $result = dbQuery($connection, $query);
 
                         if ($result) {
@@ -319,7 +319,7 @@
 
                             if (file_exists($file_name)) {
                                 if (unlink($file_name)) {
-                                    $query = "DELETE FROM images WHERE id = $userId";
+                                    $query = "DELETE FROM immagini WHERE id = $userId";
                                     $result = dbQuery($connection, $query);
 
                                     if ($result) {
@@ -359,6 +359,18 @@
                             } else 
                                 echo ERROR_DB;
                         }
+                        break;
+
+                    case "home_imgSection":
+                        $section = $_POST["section"];
+                        $query = "DELETE FROM sezioni_foto WHERE id=$section";
+                        $result = dbQuery($connection, $query);
+
+                        if ($result) {
+                            $_SESSION["file_deleted"] = true;
+                            header("Location: ../image/gallery.php");
+                        } else 
+                            echo ERROR_DB;
                         break;
                 }
             }
