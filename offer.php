@@ -66,7 +66,7 @@
 
         <?php
             if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"])
-                echo "<button id='add_content_button'>Aggiungi contenuti</button>";
+                echo "<button class='add_content_button' id='add_content_button'>Aggiungi contenuti</button>";
         ?>
     </section>
 
@@ -79,8 +79,8 @@
             <h2>Inserimento di una nuova immagine</h2>
             <br>
             
-            <form action="private/update_home.php" enctype="multipart/form-data" method="POST">
-                <input type="hidden" name="type" value="home_offer">
+            <form action="private/update.php" enctype="multipart/form-data" method="POST">
+                <input type="hidden" name="type" value="offer_img">
 
                 <label for="image">Seleziona la foto</label><br>
                 <input type="file" id="image" class="modal__input" name="offer__image" accept="image/*" required>

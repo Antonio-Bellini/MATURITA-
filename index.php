@@ -122,8 +122,8 @@
             <span class="close">&times;</span>
             <br>
             
-            <form action="private/update_home.php" method="POST">
-                <input type="hidden" name="type" value="home_info">
+            <form action="private/update.php" method="POST">
+                <input type="hidden" name="type" value="index_info">
 
                 <label for="newYears">Anni di attività:</label>
                 <input type="number" id="newYears" class="modal__input" name="newYears">
@@ -148,8 +148,8 @@
             <h2>Inserimento di una news</h2>
             <br>
             
-            <form action="private/update_home.php" enctype="multipart/form-data" method="POST">
-                <input type="hidden" name="type" value="home_news">
+            <form action="private/update.php" enctype="multipart/form-data" method="POST">
+                <input type="hidden" name="type" value="index_news">
 
                 <label for="image">Seleziona la foto</label><br>
                 <input type="file" id="image" class="modal__input" name="news__image" accept="image/*" required>
