@@ -92,8 +92,8 @@
             <h2>Inserimento di una nuova immagine</h2>
             <br>
             
-            <form action="../private/update_home.php" enctype="multipart/form-data" method="POST">
-                <input type="hidden" name="type" value="home_images">
+            <form action="../private/update.php" enctype="multipart/form-data" method="POST">
+                <input type="hidden" name="type" value="gallery_img">
 
                 <label for="image">Seleziona la foto</label><br>
                 <input type="file" id="image" class="modal__input" name="ragazzi__image" accept="image/*" required>
@@ -126,8 +126,8 @@
             <h2>Inserimento di una nuova sezione</h2>
             <br>
 
-            <form action="../private/update_home.php" method="POST">
-                <input type="hidden" name="type" value="home_imgSection">
+            <form action="../private/update.php" method="POST">
+                <input type="hidden" name="type" value="gallery_section">
 
                 <label for="title">Seleziona il titolo della sezione</label><br>
                 <input type="text" id="title" class="modal__input" name="section_title" required>

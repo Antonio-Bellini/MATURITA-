@@ -452,13 +452,13 @@
                                         <input type='password' name='old_psw' id='old_psw'>
                                         &nbsp;&nbsp;
                                         <input type='password' name='new_psw' id='new_psw' maxlength='255'>
-                                        <span id='passwordError'></span>
+                                        <span class='span_error' id='passwordError'></span>
                                         <span id='togglePassword' class='toggle-password span_error'>👁️</span>
                                     </div>
 
                                     <label for='confirm_password'>Riscrivi la password inserita</label>
                                     <input type='password' name='confirm_password' id='confirm_password' maxlength='255'>
-                                    <span id='confirm_passwordError'></span>
+                                    <span class='span_error' id='confirm_passwordError'></span>
 
                                     <input type='submit' value='AGGIORNA DATI'>
                                 </form>

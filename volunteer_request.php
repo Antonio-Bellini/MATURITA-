@@ -68,9 +68,12 @@
                         .then(() => {
                             btn.value = 'Inviato';
                             alert('Email inviata correttamente, ti ricontatteremo presto!');
+                            this.reset();
+                            btn.value = 'Invia';
                         }, (err) => {
                             btn.value = 'Errore';
                             alert(JSON.stringify(err));
+                            btn.value = 'Invia';
                         });
                 });
             </script>";
