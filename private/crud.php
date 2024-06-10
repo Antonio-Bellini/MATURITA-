@@ -168,27 +168,86 @@
 
                     case "assisted":
                         if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) {
-                            $query = "DELETE FROM assistiti WHERE id = '$userId'";
+                            $query = "SELECT anamnesi, id_liberatoria, liberatoria 
+                                        FROM assistiti a 
+                                        INNER JOIN liberatorie l ON l.id = a.id_liberatoria
+                                        WHERE a.id = '$userId'";
                             $result = dbQuery($connection, $query);
 
                             if ($result) {
-                                $_SESSION["user_deleted"] = true;
-                                header("Location: area_personale.php");
-                            } else 
-                                echo ERROR_DB;
+                                while ($row = ($result->fetch_assoc())) {
+                                    $releaseId = $row["id_liberatoria"];
+                                    $release = $row["liberatoria"];
+                                    $medical = $row["anamnesi"];
+                                }
+
+                                if (file_exists("../upload/" . $release)) {
+                                    if (unlink("../upload/" . $release)) {
+                                        $query = "DELETE FROM liberatorie WHERE id = '$releaseId'";
+                                        $result = dbQuery($connection, $query);
+
+                                        if ($result) {
+                                            if (file_exists("../upload/" . $medical)) {
+                                                if (unlink("../upload/" . $medical)) {
+                                                    $query = "DELETE FROM assistiti WHERE id = '$userId'";
+                                                    $result = dbQuery($connection, $query);
+                    
+                                                    if ($result) {
+                                                        $_SESSION["user_deleted"] = true;
+                                                        header("Location: area_personale.php");
+                                                    } else 
+                                                        echo ERROR_DB;
+                                                } else 
+                                                    echo ERROR_GEN;
+                                            } else 
+                                                echo ERROR_GEN;
+                                        } else 
+                                            echo ERROR_DB;
+                                    } else 
+                                    echo ERROR_GEN;
+                                } else 
+                                    echo ERROR_GEN;
+                            }
                         }
                         break;
 
                     case "volunteer":
                         if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"]) {
-                            $query = "DELETE FROM volontari WHERE id = '$userId'";
+                            $release = null;
+                            $releaseId = null;
+                            $query = "SELECT id_liberatoria, liberatoria 
+                                        FROM volontari v
+                                        INNER JOIN liberatorie l ON v.id_liberatoria = l.id
+                                        WHERE v.id = '$userId'";
                             $result = dbQuery($connection, $query);
 
                             if ($result) {
-                                $_SESSION["user_deleted"] = true;
-                                header("Location: area_personale.php");
-                            } else 
-                                echo ERROR_DB;
+                                while ($row = ($result->fetch_assoc())) {
+                                    $release = $row["liberatoria"];
+                                    $releaseId = $row["id_liberatoria"];
+                                }
+
+                                if (file_exists("../upload/" . $release)) {
+                                    if (unlink("../upload/" . $release)) {
+                                        $query = "DELETE FROM liberatorie WHERE id = '$releaseId'";
+                                        $result = dbQuery($connection, $query);
+
+                                        if ($result) {
+                                            $query = "DELETE FROM volontari WHERE id = '$userId'";
+                                            $result = dbQuery($connection, $query);
+                
+                                            if ($result) {
+                                                $_SESSION["user_deleted"] = true;
+                                                header("Location: area_personale.php");
+                                            } else 
+                                                echo ERROR_DB;
+                                        } else 
+                                            echo ERRO_DB;
+                                    } else  
+                                        echo ERROR_GEN;
+                                } else  
+                                    echo ERROR_GEN;
+                            }
                         }
                         break;
 
