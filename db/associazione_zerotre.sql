@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Mag 31, 2024 alle 19:12
+-- Creato il: Giu 10, 2024 alle 17:22
 -- Versione del server: 10.4.32-MariaDB
 -- Versione PHP: 8.2.12
 
@@ -73,7 +73,6 @@ CREATE TABLE `eventi` (
   `data` date DEFAULT NULL,
   `note` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
 
 -- --------------------------------------------------------
 
@@ -272,8 +271,7 @@ CREATE TABLE `utenti` (
 --
 
 INSERT INTO `utenti` (`id`, `nome`, `cognome`, `username`, `password`, `email`, `telefono_fisso`, `telefono_mobile`, `note`, `id_tipo_profilo`) VALUES
-(1, 'Jacopo', 'Bordoni', 'bordo', 'f4fe48ee352b291c8eed01cc05f571391f600fa88173b27e8ba824e2788bb9e04ad9949be4afd5d6552a69ba250592a602f1395aca9e6ba298b7d55fa299ab15:at!<3W,N6M5S}(.yhTr*-d[vT1xqP*4F', 'bordo@gmail.com', '', '123456789', 'sono l admin di prova', 2),
-(2, 'Antonio', 'Bellini', 'anto', '7b105600f371d78b9397e7f0e177df7034da7002f45d02a2dcbf0d6969d5a4762f4a016bcfef6662ceb68d0068b9c93cdaab1362f3a15b15ad14db84b13c205f:o|*z30k/$SZEk/0kz+s4{rXsKlJmP!dq', 'anto@gmail.com', '', '123456789', 'sono un genitore di prova', 4);
+(1, 'Gianfranco', 'Lanza', 'lanza', '8d2495acbc5f5fb36231ee5b05cd8e6a9e204fdda78437ec69e5f35c507c72085ce0679d310948426aa8e71ed331537c2de12151aef1875abb6960a6f6670556:$FF98p0Q#yoW&{s3OgpPmzSP[xd$i<!o', 'bordo@gmail.com', '', '123456789', 'sono l admin di prova', 2),
 
 -- --------------------------------------------------------
 
@@ -429,7 +427,7 @@ ALTER TABLE `volontari_evento`
 -- AUTO_INCREMENT per la tabella `assistiti`
 --
 ALTER TABLE `assistiti`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT per la tabella `bacheca`
@@ -441,7 +439,7 @@ ALTER TABLE `bacheca`
 -- AUTO_INCREMENT per la tabella `eventi`
 --
 ALTER TABLE `eventi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT per la tabella `immagini`
@@ -507,7 +505,7 @@ ALTER TABLE `tipi_profilo`
 -- AUTO_INCREMENT per la tabella `utenti`
 --
 ALTER TABLE `utenti`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT per la tabella `volontari`
