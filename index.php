@@ -38,10 +38,21 @@
                 <button id="btn_volunteer_donation" onclick="window.open('https://buy.stripe.com/7sI4gE1ACbz61c46oo', '_blank')">DONA ORA</button>
             </p>
         </div>
-        <div class="body__main_gallery">
-            <img class="photo" src="image/content/foto2.jpg" alt="immagine 2 della premiazione">
-            <img class="photo" src="image/content/foto3.jpg" alt="immagine 3 della premiazione">
-        </div>
+        <?php
+            // script per lo scorrimento di tutte le foto nella home
+            $directory = 'image/content';
+            $images = scandir($directory);
+
+            echo '<div class="body__main_gallery">';
+
+            foreach ($images as $image) {
+                if ($image !== '.' && $image !== '..')
+                    echo '<img class="photo" src="' . $directory . '/' . $image . '" alt="immagine ' . $image . '">';
+            }
+
+            echo '</div>';
+        ?>
+
     </section>
 
 
