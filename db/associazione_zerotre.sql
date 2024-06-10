@@ -271,7 +271,7 @@ CREATE TABLE `utenti` (
 --
 
 INSERT INTO `utenti` (`id`, `nome`, `cognome`, `username`, `password`, `email`, `telefono_fisso`, `telefono_mobile`, `note`, `id_tipo_profilo`) VALUES
-(1, 'Gianfranco', 'Lanza', 'lanza', '8d2495acbc5f5fb36231ee5b05cd8e6a9e204fdda78437ec69e5f35c507c72085ce0679d310948426aa8e71ed331537c2de12151aef1875abb6960a6f6670556:$FF98p0Q#yoW&{s3OgpPmzSP[xd$i<!o', 'bordo@gmail.com', '', '123456789', 'sono l admin di prova', 2),
+(1, 'Gianfranco', 'Lanza', 'lanza', 'ca889ee717d75c7c54a7a3239db3d2869554064c7f96c71387c6dff644b0d6291802b6ee7dd61c7d7c7580965f89dd77a3f867d5092fb4169b06492f793c6c13:mL.>4G7!LFvN&}hGJ54su?Z.h9;J*_fv', 'bordo@gmail.com', '', '123456789', 'sono l admin di prova', 2);
 
 -- --------------------------------------------------------
 
@@ -547,8 +547,7 @@ ALTER TABLE `immagini`
 -- Limiti per la tabella `news`
 --
 ALTER TABLE `news`
-  ADD CONSTRAINT `news_ibfk_1` FOREIGN KEY (`id_image`) REFERENCES `immagini` (`id`),
-  ADD CONSTRAINT `news_ibfk_2` FOREIGN KEY (`id_image`) REFERENCES `immagini` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `news_ibfk_1` FOREIGN KEY (`id_image`) REFERENCES `immagini` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limiti per la tabella `profili`
@@ -567,8 +566,7 @@ ALTER TABLE `utenti`
 -- Limiti per la tabella `volontari`
 --
 ALTER TABLE `volontari`
-  ADD CONSTRAINT `volontari_ibfk_1` FOREIGN KEY (`id_liberatoria`) REFERENCES `liberatorie` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `volontari_ibfk_2` FOREIGN KEY (`id_liberatoria`) REFERENCES `liberatorie` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+  ADD CONSTRAINT `volontari_ibfk_1` FOREIGN KEY (`id_liberatoria`) REFERENCES `liberatorie` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Limiti per la tabella `volontari_evento`
