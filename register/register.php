@@ -97,16 +97,16 @@
                     $notes = isset($_POST["notes"]) ? mysqli_real_escape_string($connection, $_POST["notes"]) : null;
                     $parent = null;
                     
-                    $uploadDirectory = '../upload/medical_module/'; 
+                    $uploadDirectoryM = '../upload/medical_module/'; 
                 
-                    $fileName = $_FILES['med']['name'];
-                    $fileTmpName = $_FILES['med']['tmp_name'];
+                    $fileNameM = $_FILES['med']['name'];
+                    $fileTmpNameM = $_FILES['med']['tmp_name'];
                 
                     // Aggiungi il nome del file al percorso della cartella di destinazione
-                    $newFilePath = $uploadDirectory . $fileName;
+                    $newFilePathM = $uploadDirectoryM . $fileNameM;
                 
-                    if(move_uploaded_file($fileTmpName, $newFilePath)) {
-                        $uploadedFileName = "medical_module/" . $fileName;
+                    if(move_uploaded_file($fileTmpNameM, $newFilePathM)) {
+                        $uploadedFileNameM = "medical_module/" . $fileNameM;
 
                         if (isset($_POST["parent"]))
                             $parent = $_POST["parent"];
@@ -114,19 +114,19 @@
                             $parent = $_SESSION["user_id"];
 
                         // caricamento della liberatoria in locale
-                        $fileName = $_FILES['rel']['name'];
-                        $fileTmpName = $_FILES['rel']['tmp_name'];
-                        $uploadDirectory = '../upload/release_module/';
+                        $fileNameR = $_FILES['rel']['name'];
+                        $fileTmpNameR = $_FILES['rel']['tmp_name'];
+                        $uploadDirectoryR = '../upload/release_module/';
 
-                        $newFilePath = $uploadDirectory . $fileName;
+                        $newFilePathR = $uploadDirectoryR . $fileNameR;
 
-                        if (move_uploaded_file($fileTmpName, $newFilePath)) {
-                            $uploadedFileName = "release_module/" . $fileName;
+                        if (move_uploaded_file($fileTmpNameR, $newFilePathR)) {
+                            $uploadedFileNameR = "release_module/" . $fileNameR;
                             
                             // inserimento della liberatoria nel db
                             $stmt = $connection->prepare("INSERT INTO liberatorie(liberatoria) 
                                                             VALUES(?)");
-                            $stmt->bind_param("s", $uploadedFileName);
+                            $stmt->bind_param("s", $uploadedFileNameR);
                             $stmt->execute();
                             $result = $stmt->get_result();
 
@@ -136,7 +136,7 @@
 
                                 $stmt = $connection->prepare("INSERT INTO assistiti(nome, cognome, anamnesi, note, id_referente, id_liberatoria)
                                                             VALUES(?, ?, ?, ?, ?, ?)");
-                                $stmt->bind_param("ssssii", $name, $surname, $uploadedFileName, $notes, $parent, $rel_id);
+                                $stmt->bind_param("ssssii", $name, $surname, $uploadedFileNameM, $notes, $parent, $rel_id);
                                 $stmt->execute();
                                 $result = $stmt->get_result();
 

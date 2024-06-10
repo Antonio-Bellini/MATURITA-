@@ -34,7 +34,6 @@ $(document).ready(function () {
                 let user = $(this).data('user');
                 let profile = $(this).data('profile');
                 modify_delete_Profile(operation, user, profile);
-                window.location.href = "../area_personale.php";
             }
         } else {
             let operation = $(this).data('operation');
